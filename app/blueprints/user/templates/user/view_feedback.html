@@ -214,13 +214,13 @@
                 <!-- Replace with your content -->
                 <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
                   <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                      <dl class="pull-right text-center">
+                      <dl class="pull-right text-right">
+                          <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                              <span style="color:#00b300"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i>{{ feedback.votes }}</span>
+                          </dd>
                           <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
                             Votes
                           </dt>
-                          <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                              <span style="color:green"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i>{{ feedback.votes }}</span>
-                          </dd>
                         </dl>
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
                         {{ feedback.title }}

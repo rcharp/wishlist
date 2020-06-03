@@ -231,17 +231,48 @@ def dashboard():
 @login_required
 @csrf.exempt
 def feedback():
+    f = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    f.sort(key=lambda x: x.votes, reverse=True)
+    statuses = Status.query.all()
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=f, statuses=statuses)
+
+
+@user.route('/feedback/<sort>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def sort(sort):
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+
+    if sort == 'newest':
+        feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    elif sort == 'oldest':
+        feedbacks.sort(key=lambda x: x.created_on)
+
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def view_feedback(feedback_id):
-    feedback = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=feedback)
+    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f)
+
+
+# Votes -------------------------------------------------------------------
+@user.route('/add_vote', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def add_vote():
+    if request.method == 'POST':
+        if 'feedback_id' in request.form:
+            feedback_id = request.form['feedback_id']
+
+            from app.blueprints.api.api_functions import add_vote
+            add_vote(feedback_id, current_user.id)
+
+    return redirect(url_for('user.feedback'))
 
 
 # Roadmap -------------------------------------------------------------------

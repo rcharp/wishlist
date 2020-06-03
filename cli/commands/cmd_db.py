@@ -13,6 +13,7 @@ from app.blueprints.user.models import User
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.vote import Vote
 from app.blueprints.api.models.workspace import Workspace
 
 # Create an app context for the database connection.

@@ -2,11 +2,14 @@
   <dictionary name="Ricky">
     <words>
       <w>autosave</w>
+      <w>feedbacks</w>
       <w>onmouseenter</w>
       <w>onmouseleave</w>
       <w>onmousenter</w>
       <w>readding</w>
+      <w>roadmap</w>
       <w>tbody</w>
+      <w>upvoted</w>
     </words>
   </dictionary>
 </component>
