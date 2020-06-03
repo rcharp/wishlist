@@ -231,10 +231,14 @@ def dashboard():
 @login_required
 @csrf.exempt
 def feedback():
-    f = Feedback.query.filter(Feedback.user_id == current_user.id).all()
-    f.sort(key=lambda x: x.votes, reverse=True)
+    feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+
+    for f in feedback:
+        f.votes = int(f.votes)
+
+    feedback.sort(key=lambda x: x.votes, reverse=True)
     statuses = Status.query.all()
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=f, statuses=statuses)
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
 
 
 @user.route('/feedback/<sort>', methods=['GET','POST'])
@@ -248,11 +252,16 @@ def sort(sort):
         feedbacks.sort(key=lambda x: x.created_on, reverse=True)
     elif sort == 'oldest':
         feedbacks.sort(key=lambda x: x.created_on)
+    else:
+        for f in feedbacks:
+            f.votes = int(f.votes)
+
+        feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
-@user.route('/feedback/<feedback_id>', methods=['GET','POST'])
+@user.route('/view/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def view_feedback(feedback_id):
@@ -268,7 +277,6 @@ def add_vote():
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
-
             from app.blueprints.api.api_functions import add_vote
             add_vote(feedback_id, current_user.id)
 

@@ -262,12 +262,12 @@
                         {% for feedback in feedbacks %}
                             <div class="bg-white overflow-hidden shadow rounded-lg" style="margin-bottom:20px;">
                                 <div style="padding:10px 25px 0 0;">
-                                    <div class="pull-right text-right">
+                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
                                           <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
-                                              <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}<br />
+                                              <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                           </span>
-                                            <span style="font-size:14px;">votes</span>
-                                      </div>
+                                          <span style="font-size:14px;">votes</span>
+                                    </div>
                                 </div>
                               <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
                                 <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
@@ -349,7 +349,7 @@
 
 
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-{#        <script src="../../../../static/oneui/assets/js/core/jquery.min.js"></script>#}
+        <script src="../../../../static/oneui/assets/js/core/jquery.min.js"></script>
 {#        <script src="../../../../static/oneui/assets/js/core/bootstrap.min.js"></script>#}
 {#        <script src="../../../../static/oneui/assets/js/core/jquery.slimscroll.min.js"></script>#}
 {#        <script src="../../../../static/oneui/assets/js/core/jquery.scrollLock.min.js"></script>#}
@@ -426,6 +426,26 @@
 
                     dropdown.style.display = 'none';
                 }
+            }
+
+            function Vote(feedback_id) {
+                $.ajax({
+                    url: '{{ url_for("user.add_vote") }}',
+                    type: 'POST',
+                    beforeSend: UpdateVote(feedback_id),
+                    data: {'feedback_id': feedback_id},
+                    success: function (response) {
+                    },
+                    error: function (xhr) {
+                        window.location.href = '{{ url_for('user.feedback') }}';
+                    }
+                });
+            }
+
+            function UpdateVote(feedback_id) {
+                var votes = document.getElementById(feedback_id + '-votes').innerText;
+                var count = parseInt(votes);
+                document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
             }
         </script>
 

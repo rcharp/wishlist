@@ -80,7 +80,8 @@ def add_vote(feedback_id, user_id):
         f.save()
 
         return v
-    except:
+    except Exception as e:
+        print_traceback(e)
         return None
 
 
