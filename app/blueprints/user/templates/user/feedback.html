@@ -193,7 +193,7 @@
                         From: "transform opacity-100 scale-100"
                         To: "transform opacity-0 scale-95"
                     -->
-                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;">
+                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
                       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Your Profile</a>
                         <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
@@ -248,55 +248,93 @@
                                   From: "transform opacity-100 scale-100"
                                   To: "transform opacity-0 scale-95"
                               -->
-                              <div id="sort-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg transform opacity-0 scale-95" style="z-index:999;">
+                              <div id="sort-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg transform opacity-0 scale-95" style="z-index:999; display:none;" onmouseleave="ShowDropdown(this.id)">
                                 <div class="rounded-md bg-white shadow-xs">
                                   <div class="py-1">
                                     <a href="#" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most Recent</a>
                                     <a href="#" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Oldest</a>
-                                    <a href="#" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Votes</a>
+                                    <a href="#" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most upvoted</a>
                                   </div>
                                 </div>
                               </div>
                             </div>
                         </div>
-                        <div class="bg-white shadow overflow-hidden sm:rounded-md">
-                          <ul>
-                            {% for feedback in feedbacks %}
-                                <li {% if not loop.last %}style="border-bottom:1px solid #e5e5e5"{% endif %}>
-                                  <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out" style="margin-bottom:0;">
-                                    <div class="flex items-center px-4 py-4 sm:px-6">
-                                      <div class="min-w-0 flex-1 flex items-center">
-                                        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                                          <div>
-                                            <div class="text-sm leading-5 font-medium text-indigo-600 truncate" style="font-size:16px;">{{ feedback.title }}</div>
-                                            <div class="mt-2 flex items-center text-sm leading-5 text-gray-500" style="color:green;font-size:24px;">
-                                              <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> &nbsp;
-                                              <span class="truncate">{{ feedback.votes }}</span>
-                                            </div>
+                        {% for feedback in feedbacks %}
+                            <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
+                                <div class="bg-white overflow-hidden shadow rounded-lg" style="margin-bottom:20px;">
+                                    <div style="padding:10px 20px 0 0;">
+                                        <div class="pull-right">
+                                              <span class="h-12 w-12" style="color:green;font-size:24px;">
+                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}
+                                              </span>
                                           </div>
-                                          <div class="hidden md:block">
-                                            <div>
-                                              <div class="text-sm leading-5 text-gray-900">
-                                                <time datetime="2020-01-07">{{ feedback.created_on|datetime_filter }}</time>
-                                              </div>
-                                              <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
-                                                  <span class="truncate">{{ feedback.email }}</span>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    </div>
+                                  <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
+                                    <div class="text-lg leading-5 font-medium text-indigo-600 truncate">{{ feedback.title }}
+                                    </div>
+                                  </div>
+                                     <div class="pull-right" style="padding:20px 25px 0 0;">
+                                        <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                           <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                         </svg>
                                       </div>
-                                    </div>
-                                  </a>
-                                </li>
-                            {% endfor %}
-                          </ul>
-                        </div>
+                                  <div class="px-4 py-5 sm:p-6 truncate">
+                                    {{ feedback.description }}
+                                  </div>
+                                  <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                                      <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                      <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                          {{ feedback.status }}
+                                      </span>
+                                  </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+{#                        <div class="bg-white shadow overflow-hidden sm:rounded-md">#}
+{#                          <ul>#}
+{#                          {% for feedback in feedbacks %}#}
+{#                            <li>#}
+{#                              <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">#}
+{#                                <div class="flex items-center px-4 py-4 sm:px-6">#}
+{#                                  <div class="min-w-0 flex-1 flex items-center">#}
+{#                                    <div class="flex-shrink-0">#}
+{#                                        <span class="h-12 w-12" style="color:green;font-size:24px;"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}</span>#}
+{#                                    </div>#}
+{#                                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">#}
+{#                                      <div>#}
+{#                                        <div class="text-sm leading-5 font-medium text-indigo-600 truncate">{{ feedback.title }}#}
+{#                                        </div>#}
+{#                                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">#}
+{#                                          <i class="si si-clock" style="margin-right:5px;"></i>#}
+{#                                          <span class="truncate">{{ feedback.created_on|datetime_filter }}#}
+{#                                          </span>#}
+{#                                        </div>#}
+{#                                      </div>#}
+{#                                      <div class="hidden md:block">#}
+{#                                        <div>#}
+{#                                          <div class="text-sm leading-5 text-gray-900">#}
+{#                                            Applied on#}
+{#                                            <time datetime="2020-01-07">January 7, 2020#}
+{#                                            </time>#}
+{#                                          </div>#}
+{#                                          <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">#}
+{#                                              <span class="truncate">{{ feedback.description }}</span>#}
+{#                                          </div>#}
+{#                                        </div>#}
+{#                                      </div>#}
+{#                                    </div>#}
+{#                                  </div>#}
+{#                                  <div>#}
+{#                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">#}
+{#                                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>#}
+{#                                    </svg>#}
+{#                                  </div>#}
+{#                                </div>#}
+{#                              </a>#}
+{#                            </li>#}
+{#                            {% endfor %}#}
+{#                          </ul>#}
+{#                        </div>#}
                     {% endif %}
                 <!-- /End replace -->
               </div>
@@ -373,12 +411,16 @@
                     dropdown.classList.remove('scale-95');
                     dropdown.classList.add('opacity-100');
                     dropdown.classList.add('scale-100');
+
+                    dropdown.style.display = '';
                 }
                 else {
                     dropdown.classList.remove('opacity-100');
                     dropdown.classList.remove('scale-100');
                     dropdown.classList.add('opacity-0');
                     dropdown.classList.add('scale-95');
+
+                    dropdown.style.display = 'none';
                 }
             }
         </script>

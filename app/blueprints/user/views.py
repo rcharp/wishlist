@@ -39,6 +39,7 @@ from app.blueprints.billing.charge import (
 )
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.workspace import Workspace
 
 user = Blueprint('user', __name__, template_folder='templates')
@@ -231,7 +232,8 @@ def dashboard():
 @csrf.exempt
 def feedback():
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks)
+    statuses = Status.query.all()
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
 
 
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])

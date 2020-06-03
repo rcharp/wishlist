@@ -5,148 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/api/models/workspace.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-announcement.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-archive.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-arrow-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-arrow-left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-arrow-right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-arrow-up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-at-symbol.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-book.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-bookmark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-briefcase.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-browser.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-building.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-calander.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-call-incoming.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-call-outgoing.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-call.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-camera.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cart.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-chat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-check-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cheveron-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cheveron-left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cheveron-right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cheveron-up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-clip.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-clipboard.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-clock.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-code.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-cog.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-comment.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-compass.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-currency-dollar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-dashboard.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-desktop.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-discount.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-download.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-duplicate.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-emotion-happy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-emotion-sad.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-exclamation.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-external-link.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-file-blank.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-file-minus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-file-plus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-file.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-film.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-filter.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-flag.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-folder-minus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-folder-plus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-folder.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-globe.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-graph-bar.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-grid.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-group.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-hashtag.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-heart.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-help.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-home.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-image.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-inbox.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-information.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-key.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-link.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-location.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-lock-closed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-lock-open.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-mail.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-map.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-menu.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-microphone.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-minus-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-minus-square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-minus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-mobile.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-moon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-more-horiz.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-music.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-news.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-notification.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-plus-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-plus-square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-plus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-print.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-puzzle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-refresh.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-repeat.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-rocket.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-search.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-server.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-speaker.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-star.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-store.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-tablet.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-tag.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-thumb-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-thumb-up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-trash.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-trending-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-trending-up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-trophy.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-upload.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-user-check.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-user-minus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-user-plus.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-video.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-view.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-x-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-x-square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-x.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-zoom-in.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/hero/svg/icon-zoom-out.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/icons/icons.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/static/logo/favicon-white.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/blueprints/api/models/status.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/includes/title.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/commands/data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wishlist_CLI.egg-info/entry_points.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Wishlist_CLI.egg-info/entry_points.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/api/api_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/api_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/domain.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/domain.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/drops.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/drops.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/mail/purchase_email.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/mail/reservation_email.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/mail/secured_domain.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/logo/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/logo/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/500.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/layouts/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cli/commands/cmd_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli/commands/cmd_db.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -161,8 +30,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="445">
-              <caret line="224" column="126" selection-start-line="224" selection-start-column="126" selection-end-line="224" selection-end-column="126" />
+            <state relative-caret-position="193">
+              <caret line="235" column="114" selection-start-line="235" selection-start-column="114" selection-end-line="235" selection-end-column="114" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -173,7 +42,7 @@
       <file leaf-file-name="add_feedback.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="1799">
               <caret line="272" column="24" lean-forward="true" selection-start-line="259" selection-start-column="18" selection-end-line="272" selection-end-column="24" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -184,18 +53,43 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="feedback.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="feedback.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="227" column="39" selection-start-line="227" selection-start-column="36" selection-end-line="227" selection-end-column="39" />
+            <state relative-caret-position="315">
+              <caret line="285" column="240" selection-start-line="285" selection-start-column="240" selection-end-line="285" selection-end-column="240" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#div#3;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#4;n#div#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cli/commands/data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="status.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/status.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -204,8 +98,8 @@
       <file leaf-file-name="view_feedback.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="223" column="29" lean-forward="true" selection-start-line="216" selection-start-column="22" selection-end-line="223" selection-end-column="29" />
+            <state relative-caret-position="1789">
+              <caret line="229" column="24" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -213,8 +107,8 @@
       <file leaf-file-name="cmd_db.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="94" column="22" selection-start-line="94" selection-start-column="22" selection-end-line="94" selection-end-column="22" />
+            <state relative-caret-position="275">
+              <caret line="144" column="26" selection-start-line="144" selection-start-column="26" selection-end-line="144" selection-end-column="26" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -222,21 +116,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="268" column="75" selection-start-line="268" selection-start-column="75" selection-end-line="268" selection-end-column="75" />
+            <state relative-caret-position="224">
+              <caret line="122" column="68" lean-forward="true" selection-start-line="122" selection-start-column="68" selection-end-line="122" selection-end-column="68" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#2;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#6;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#dt#0;n#dl#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#span#0;n#dt#0;n#dl#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -249,24 +145,33 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="title.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/includes/title.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="7" lean-forward="true" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#span#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>your profil</find>
-      <find>showdrop</find>
-      <find>site_colo</find>
-      <find>src=</find>
-      <find>{{ 'site'|site_name_filter }}&quot;</find>
       <find>static/favicon.ico</find>
       <find>static/favicon</find>
       <find>favicon.ico</find>
@@ -284,17 +189,21 @@
       <find>form</find>
       <find>datetime_fil</find>
       <find>email add</find>
-      <find>cancel</find>
       <find>glob</find>
       <find>globe</find>
       <find>settings</find>
-      <find>sort-dropdown</find>
       <find>baloo</find>
       <find>votes</find>
+      <find>add a wo</find>
       <find>pul</find>
+      <find>v1.0</find>
+      <find>cancel</find>
+      <find>most vot</find>
+      <find>status</find>
+      <find>sort-dropdown</find>
+      <find>Feedback</find>
     </findStrings>
     <replaceStrings>
-      <replace>AddToBoardView</replace>
       <replace>list['name']</replace>
       <replace>_project</replace>
       <replace>name</replace>
@@ -324,6 +233,7 @@
       <replace>Feedback</replace>
       <replace>&quot;{{ 'site'|site_name_filter }}&quot;</replace>
       <replace>workspace</replace>
+      <replace>Status</replace>
     </replaceStrings>
     <dirStrings>
       <dir>app/static/pay</dir>
@@ -345,10 +255,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/blueprints/api/models/workspaces.py" />
-        <option value="$PROJECT_DIR$/app/static/actions/style.css" />
-        <option value="$PROJECT_DIR$/app/static/oneui/assets/less/modules/oneui.navigation.less" />
-        <option value="$PROJECT_DIR$/app/static/oneui/assets/css/oneui.css" />
         <option value="$PROJECT_DIR$/app/blueprints/wiki/templates/wiki/edit.html" />
         <option value="$PROJECT_DIR$/app/static/oneui/assets/js/app.js" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.html" />
@@ -388,14 +294,18 @@
         <option value="$PROJECT_DIR$/app/blueprints/api/api_functions.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" />
         <option value="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" />
-        <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
-        <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/include/title.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/cli/commands/seed.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/cli/commands/data.py" />
+        <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
+        <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/api/models/status.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
       </list>
     </option>
   </component>
@@ -455,41 +365,6 @@
             <path>
               <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
               <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
               <item name="cli" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -510,6 +385,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML&#10;requirements.txt" />
     <property name="jsx.switch.disabled" value="true" />
@@ -521,11 +397,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/blueprints/user/templates/user" />
+      <recent name="$PROJECT_DIR$/app/blueprints/user/templates/user/includes" />
       <recent name="$PROJECT_DIR$/app/blueprints/api/models" />
+      <recent name="$PROJECT_DIR$/app/blueprints/user/templates/user" />
       <recent name="$PROJECT_DIR$/app/static/icons/hero" />
       <recent name="$PROJECT_DIR$/app/static/logo" />
-      <recent name="$PROJECT_DIR$/app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -570,8 +446,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
@@ -626,12 +502,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/static/actions/font.css" />
-    <entry file="file://$PROJECT_DIR$/app/blueprints/wiki/templates/wiki/new.html" />
-    <entry file="file://$PROJECT_DIR$/app/blueprints/wiki/templates/wiki/notes.html" />
-    <entry file="file://$PROJECT_DIR$/app/blueprints/admin/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/emails.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -790,16 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -888,18 +748,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="272" column="24" lean-forward="true" selection-start-line="259" selection-start-column="18" selection-end-line="272" selection-end-column="24" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/api/api_functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="413">
@@ -910,72 +758,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/feedback.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="94" selection-start-line="16" selection-start-column="94" selection-end-line="16" selection-end-column="94" />
+        <state relative-caret-position="120">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="94" column="22" selection-start-line="94" selection-start-column="22" selection-end-line="94" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="224" column="126" selection-start-line="224" selection-start-column="126" selection-end-line="224" selection-end-column="126" />
-          <folding>
-            <element signature="e#0#171#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="223" column="29" lean-forward="true" selection-start-line="216" selection-start-column="22" selection-end-line="223" selection-end-column="29" />
+        <state relative-caret-position="1789">
+          <caret line="229" column="24" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="227" column="39" selection-start-line="227" selection-start-column="36" selection-end-line="227" selection-end-column="39" />
+        <state relative-caret-position="1799">
+          <caret line="272" column="24" lean-forward="true" selection-start-line="259" selection-start-column="18" selection-end-line="272" selection-end-column="24" />
           <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#2;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/includes/title.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="7" lean-forward="true" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="268" column="75" selection-start-line="268" selection-start-column="75" selection-end-line="268" selection-end-column="75" />
+        <state relative-caret-position="224">
+          <caret line="122" column="68" lean-forward="true" selection-start-line="122" selection-start-column="68" selection-end-line="122" selection-end-column="68" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#2;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#6;n#nav#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#dt#0;n#dl#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#span#0;n#dt#0;n#dl#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -983,6 +831,69 @@
             <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#a#0;n#li#0;n#ul#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="e#19575#19581#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/mdl/BS4/assets/scss/bootstrap/scss/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="7667" column="1" selection-start-line="7667" selection-start-column="1" selection-end-line="7667" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="235" column="114" selection-start-line="235" selection-start-column="114" selection-end-line="235" selection-end-column="114" />
+          <folding>
+            <element signature="e#0#171#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cli/commands/data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cli/commands/cmd_db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="144" column="26" selection-start-line="144" selection-start-column="26" selection-end-line="144" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/status.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="285" column="240" selection-start-line="285" selection-start-column="240" selection-end-line="285" selection-end-column="240" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#3;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#4;n#div#0;n#a#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

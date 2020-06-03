@@ -1,11 +1,17 @@
 import click
 import random
+from cli.commands.data import (
+    statuses,
+    titles,
+    descriptions
+)
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
 from app.blueprints.api.api_functions import generate_id
 from app.blueprints.user.models import User
 from app.blueprints.billing.models.customer import Customer
+from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.workspace import Workspace
 
@@ -90,16 +96,32 @@ def seed_customer():
 
 
 @click.command()
+def seed_status():
+
+    for status in statuses():
+        params = {
+            'status_id': generate_id(Status),
+            'name': status['name'],
+            'color': status['color']
+        }
+
+        Status(**params).save()
+
+    return
+
+
+@click.command()
 def seed_data():
 
     for x in range(1, 10):
         params = {
             'user_id': 1,
             'feedback_id': generate_id(Feedback),
-            'title': 'Feedback ' + str(x),
+            'title': random.choice(titles()),
             'email': app.config['SEED_MEMBER_EMAIL'],
-            'description': "Lorem ipsum",
-            'votes': random.randint(10, 1000)
+            'description': random.choice(descriptions()),
+            'votes': random.randint(10, 1000),
+            'status': random.choice(statuses())['name']
         }
 
         Feedback(**params).save()
@@ -120,6 +142,7 @@ def reset(ctx, with_testdb):
     """
     ctx.invoke(init, with_testdb=with_testdb)
     ctx.invoke(seed)
+    ctx.invoke(seed_status)
     ctx.invoke(seed_data)
 
     return None
