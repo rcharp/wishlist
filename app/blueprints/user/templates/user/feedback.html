@@ -276,15 +276,22 @@
                                     </a>
                                 </div>
                               </div>
-                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
-                                 <div class="pull-right" style="padding:20px 25px 0 0;">
+                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
+                                 <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
                                     <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
                                     </svg>
                                   </div>
-                                  <div class="px-4 py-5 sm:p-6 truncate">
-                                    {{ feedback.description }}
-                                  </div>
+{#                                  <div class="px-4 py-5 sm:p-6 truncate">#}
+{#                                      <p>#}
+{#                                    {{ feedback.description }}#}
+{#                                      </p>#}
+{#                                  </div>#}
+                                    <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                      <dt class="text-sm leading-5 font-medium text-gray-500 sm:mt-0 sm:col-span-3">
+                                        {{ feedback.description }}
+                                      </dt>
+                                    </div>
                                 </a>
                               <div class="bg-gray-50 px-4 py-4 sm:px-6">
                                   <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
