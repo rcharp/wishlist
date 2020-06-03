@@ -3,6 +3,8 @@ import random
 import traceback
 from app.extensions import db
 from sqlalchemy import exists
+from app.blueprints.api.models.workspace import Workspace
+from app.blueprints.api.models.feedback import Feedback
 
 
 def generate_id(table, size=8):
@@ -15,6 +17,52 @@ def generate_id(table, size=8):
         return id
     else:
         generate_id(table)
+
+
+def generate_alphanumeric_id(table, size=8):
+    # Generate a random 7-character record id
+    chars = string.digits + string.ascii_lowercase
+    id = ''.join(random.choice(chars) for _ in range(size))
+
+    # Check to make sure there isn't already that id in the database
+    if not db.session.query(exists().where(table.id == id)).scalar():
+        return id
+    else:
+        generate_id(table)
+
+
+def create_workspace(user_id, title, domain, description):
+    try:
+        id = generate_id(Workspace, size=8)
+        w = Workspace()
+        w.admin_id = user_id
+        w.title = title
+        w.workspace_id = id
+        w.domain = domain
+        w.description = description
+        w.save()
+
+        return w
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
+def create_feedback(user_id, email, title, description):
+    try:
+        id = generate_id(Feedback, size=8)
+        f = Feedback()
+        f.user_id = user_id
+        f.email = email
+        f.title = title
+        f.feedback_id = id
+        f.description = description
+        f.save()
+
+        return f
+    except Exception as e:
+        print_traceback(e)
+        return None
 
 
 def print_traceback(e):

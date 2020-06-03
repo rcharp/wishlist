@@ -1,10 +1,13 @@
 import click
-
+import random
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
+from app.blueprints.api.api_functions import generate_id
 from app.blueprints.user.models import User
 from app.blueprints.billing.models.customer import Customer
+from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.workspace import Workspace
 
 # Create an app context for the database connection.
 app = create_app()
@@ -87,6 +90,24 @@ def seed_customer():
 
 
 @click.command()
+def seed_data():
+
+    for x in range(1, 10):
+        params = {
+            'user_id': 1,
+            'feedback_id': generate_id(Feedback),
+            'title': 'Feedback ' + str(x),
+            'email': app.config['SEED_MEMBER_EMAIL'],
+            'description': "Lorem ipsum",
+            'votes': random.randint(10, 1000)
+        }
+
+        Feedback(**params).save()
+
+    return
+
+
+@click.command()
 @click.option('--with-testdb/--no-with-testdb', default=False,
               help='Create a test db too?')
 @click.pass_context
@@ -99,6 +120,7 @@ def reset(ctx, with_testdb):
     """
     ctx.invoke(init, with_testdb=with_testdb)
     ctx.invoke(seed)
+    ctx.invoke(seed_data)
 
     return None
 

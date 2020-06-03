@@ -18,6 +18,7 @@ from flask_login import (
 
 import time
 import random
+from operator import attrgetter
 
 from lib.safe_next_url import safe_next_url
 from app.blueprints.user.decorators import anonymous_required
@@ -37,6 +38,8 @@ from app.blueprints.billing.charge import (
     get_card
 )
 from app.blueprints.billing.models.customer import Customer
+from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.workspace import Workspace
 
 user = Blueprint('user', __name__, template_folder='templates')
 
@@ -215,11 +218,40 @@ def update_credentials():
 @login_required
 @csrf.exempt
 def dashboard():
+    workspaces = Workspace.query.filter(Workspace.admin_id == current_user.id).all()
+    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+
+    popular = max(feedbacks, key=attrgetter('votes'))
+    return render_template('user/dashboard.html', current_user=current_user, workspaces=workspaces, feedbacks=feedbacks, most_popular=popular)
+
+
+# Feedback -------------------------------------------------------------------
+@user.route('/feedback', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def feedback():
+    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks)
+
+
+@user.route('/feedback/<feedback_id>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def view_feedback(feedback_id):
+    feedback = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=feedback)
+
+
+# Roadmap -------------------------------------------------------------------
+@user.route('/roadmap', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def roadmap():
 
     # if current_user.role == 'admin':
         # return redirect(url_for('admin.dashboard'))
 
-    return render_template('user/dashboard.html', current_user=current_user)
+    return render_template('user/roadmap.html', current_user=current_user)
 
 
 # Settings -------------------------------------------------------------------
@@ -235,6 +267,73 @@ def settings():
     card = get_card(c)
 
     return render_template('user/settings.html', current_user=current_user, card=card)
+
+
+# Actions -------------------------------------------------------------------
+@user.route('/add_workspace', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def add_workspace():
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            domain = request.form['domain']
+            description = request.form['description']
+
+            from app.blueprints.api.api_functions import create_workspace
+            w = create_workspace(current_user.id, title, domain, description)
+
+            if w is not None:
+                flash("Successfully created your workspace.", "success")
+            else:
+                flash("There was an error creating your workspace.", "error")
+
+            return redirect(url_for('user.dashboard'))
+        except Exception:
+            flash("There was an error creating your workspace.", "error")
+            return redirect(url_for('user.dashboard'))
+
+    return render_template('user/add_workspace.html', current_user=current_user)
+
+
+@user.route('/add_feedback', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def add_feedback():
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+            email = request.form['email']
+
+            from app.blueprints.api.api_functions import create_feedback
+            f = create_feedback(current_user.id, email, title, description)
+
+            if f is not None:
+                flash("Successfully created your workspace.", "success")
+            else:
+                flash("There was an error creating your workspace.", "error")
+
+            return redirect(url_for('user.feedback'))
+        except Exception:
+            flash("There was an error creating your workspace.", "error")
+            return redirect(url_for('user.feedback'))
+
+    return render_template('user/add_feedback.html', current_user=current_user)
+
+
+# @user.route('/old', methods=['GET','POST'])
+# @login_required
+# @csrf.exempt
+# def old():
+#
+#     if current_user.role == 'admin':
+#         return redirect(url_for('admin.dashboard'))
+#
+#     c = Customer.query.filter(Customer.user_id == current_user.id).scalar()
+#     card = get_card(c)
+#
+#     return render_template('user/settings_old.html', current_user=current_user, card=card)
 
 
 # Contact us -------------------------------------------------------------------
