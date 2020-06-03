@@ -262,11 +262,12 @@
                         {% for feedback in feedbacks %}
                             <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
                                 <div class="bg-white overflow-hidden shadow rounded-lg" style="margin-bottom:20px;">
-                                    <div style="padding:10px 20px 0 0;">
-                                        <div class="pull-right">
-                                              <span class="h-12 w-12" style="color:green;font-size:24px;">
-                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}
+                                    <div style="padding:10px 25px 0 0;">
+                                        <div class="pull-right text-right">
+                                              <span class="h-10 w-10" style="color:#00cc00;font-size:24px;margin-bottom:0;">
+                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}<br />
                                               </span>
+                                                <span style="font-size:14px;">votes</span>
                                           </div>
                                     </div>
                                   <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
