@@ -98,7 +98,6 @@ def seed_customer():
 
 @click.command()
 def seed_status():
-
     for status in statuses():
         params = {
             'status_id': generate_id(Status),
@@ -114,7 +113,10 @@ def seed_status():
 @click.command()
 def seed_data():
 
+    s = list(Status.query.all())
+
     for x in range(1, 31):
+        status = random.choice(s)
         params = {
             'user_id': 1,
             'feedback_id': generate_id(Feedback),
@@ -122,7 +124,8 @@ def seed_data():
             'email': app.config['SEED_MEMBER_EMAIL'],
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
-            'status': random.choice(statuses())['name']
+            # 'status_id': status.status_id,
+            'status': status.name
         }
 
         Feedback(**params).save()

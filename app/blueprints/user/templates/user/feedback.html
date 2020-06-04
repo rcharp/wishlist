@@ -215,14 +215,14 @@
                       <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 text-center" style="display:flex; align-items:center;">
                           <span class="inline-flex rounded-md shadow-sm text-gray-300" id="add_feedback" style="float:none;margin:0 auto;">
                               <a href="{{ url_for('user.add_feedback') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                  <i class="si si-plus"></i>&nbsp; Add feedback
+                                  <i class="si si-plus"></i>&nbsp; Submit feedback
                               </a>
                             </span>
                       </div>
                     {% else %}
                         <span class="inline-flex rounded-md shadow-sm text-gray-300" id="add_feedback" style="margin-bottom:20px;">
                           <a href="{{ url_for('user.add_feedback') }}" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                              <i class="si si-plus"></i>&nbsp; Add feedback
+                              <i class="si si-plus"></i>&nbsp; Submit feedback
                           </a>
                         </span>
                         <div class="pull-right">
@@ -259,93 +259,105 @@
                               </div>
                             </div>
                         </div>
-                        {% for feedback in feedbacks %}
-                            <div class="bg-white overflow-hidden shadow rounded-lg" style="margin-bottom:20px;">
-                                <div style="padding:10px 25px 0 0;">
-                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
-                                          <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
-                                              <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
-                                          </span>
-                                          <span style="font-size:14px;">votes</span>
+
+                        <div class="mt-5 grid grid-cols-3 gap-5 sm:grid-cols-3">
+                            <!-- submit box -->
+                        <div>
+                            <div class="bg-white overflow-hidden shadow rounded-lg">
+                              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                <form action="{{ url_for('user.add_feedback') }}" method="post">
+                                  <div>
+                                    <div>
+                                      <div class="mt-6 grid grid-cols-1 col-gap-4 sm:grid-cols-6">
+                                       <div class="sm:col-span-4">
+                                          <label for="email" class="text-sm font-medium leading-5 text-gray-700">
+                                            Email address <span style="color:red">*</span>
+                                          </label>
+                                          <div class="mt-1 rounded-md shadow-sm">
+                                            <input id="email" name="email" type="email" required class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                          </div>
+                                        </div>
+
+                                        <div class="sm:col-span-4">
+                                          <label for="title" class="text-sm font-medium leading-5 text-gray-700">
+                                            Title <span style="color:red">*</span>
+                                          </label>
+                                          <div class="mt-1 rounded-md shadow-sm">
+                                            <input id="title" name="title" required type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                          </div>
+                                        </div>
+
+                                        <div class="sm:col-span-6">
+                                          <label for="description" class="text-sm font-medium leading-5 text-gray-700">
+                                            Description <span style="color:red">*</span>
+                                          </label>
+                                          <div class="mt-1 rounded-md shadow-sm">
+                                            <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
-                                </div>
-                              <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
-                                <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
-                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
-                                        {{ feedback.title }}
-                                    </a>
-                                </div>
-                              </div>
-                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
-                                 <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
-                                    <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                                    </svg>
                                   </div>
-{#                                  <div class="px-4 py-5 sm:p-6 truncate">#}
-{#                                      <p>#}
-{#                                    {{ feedback.description }}#}
-{#                                      </p>#}
-{#                                  </div>#}
-                                    <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                                      <dt class="text-sm leading-5 font-medium text-gray-500 sm:mt-0 sm:col-span-3">
-                                        {{ feedback.description }}
-                                      </dt>
+                                  <div class="mt-4 mb-4 border-t border-gray-200 pt-5">
+                                    <div class="flex justify-end">
+                                      <span class="inline-flex rounded-md shadow-sm">
+                                        <a href="{{ url_for('user.feedback') }}" class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                                          Cancel
+                                        </a>
+                                      </span>
+                                      <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                          Submit
+                                        </button>
+                                      </span>
                                     </div>
-                                </a>
-                              <div class="bg-gray-50 px-4 py-4 sm:px-6">
-                                  <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
-                                  <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
-                                      {{ feedback.status }}
-                                  </span>
+                                  </div>
+                                </form>
                               </div>
                             </div>
-                        {% endfor %}
-{#                        <div class="bg-white shadow overflow-hidden sm:rounded-md">#}
-{#                          <ul>#}
-{#                          {% for feedback in feedbacks %}#}
-{#                            <li>#}
-{#                              <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">#}
-{#                                <div class="flex items-center px-4 py-4 sm:px-6">#}
-{#                                  <div class="min-w-0 flex-1 flex items-center">#}
-{#                                    <div class="flex-shrink-0">#}
-{#                                        <span class="h-12 w-12" style="color:green;font-size:24px;"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> {{ feedback.votes }}</span>#}
-{#                                    </div>#}
-{#                                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">#}
-{#                                      <div>#}
-{#                                        <div class="text-sm leading-5 font-medium text-indigo-600 truncate">{{ feedback.title }}#}
-{#                                        </div>#}
-{#                                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">#}
-{#                                          <i class="si si-clock" style="margin-right:5px;"></i>#}
-{#                                          <span class="truncate">{{ feedback.created_on|datetime_filter }}#}
-{#                                          </span>#}
-{#                                        </div>#}
-{#                                      </div>#}
-{#                                      <div class="hidden md:block">#}
-{#                                        <div>#}
-{#                                          <div class="text-sm leading-5 text-gray-900">#}
-{#                                            Applied on#}
-{#                                            <time datetime="2020-01-07">January 7, 2020#}
-{#                                            </time>#}
-{#                                          </div>#}
-{#                                          <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">#}
-{#                                              <span class="truncate">{{ feedback.description }}</span>#}
-{#                                          </div>#}
-{#                                        </div>#}
-{#                                      </div>#}
-{#                                    </div>#}
-{#                                  </div>#}
-{#                                  <div>#}
-{#                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">#}
-{#                                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>#}
-{#                                    </svg>#}
-{#                                  </div>#}
-{#                                </div>#}
-{#                              </a>#}
-{#                            </li>#}
-{#                            {% endfor %}#}
-{#                          </ul>#}
-{#                        </div>#}
+                        </div>
+                            <!-- end submit box -->
+
+                            <div class="sm:col-span-2">
+                            {% for feedback in feedbacks %}
+                                <div class="bg-white overflow-hidden shadow rounded-lg sm:row-span-1" style="margin-bottom:20px;">
+                                    <div style="padding:10px 25px 0 0;">
+                                        <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
+                                              <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
+                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
+                                              </span>
+                                              <span style="font-size:14px;">votes</span>
+                                        </div>
+                                    </div>
+                                  <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
+                                    <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
+                                        <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
+                                            {{ feedback.title }}
+                                        </a>
+                                    </div>
+                                  </div>
+                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
+                                     <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
+                                        <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                      </div>
+                                        <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                          <dt class="text-sm leading-5 font-medium text-gray-500 sm:mt-0 sm:col-span-3">
+                                            {{ feedback.description }}
+                                          </dt>
+                                        </div>
+                                    </a>
+                                  <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                                      <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                      <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                          {{ feedback.status }}
+                                      </span>
+                                  </div>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
                     {% endif %}
                 <!-- /End replace -->
               </div>

@@ -58,6 +58,8 @@ def create_feedback(user_id, email, title, description):
         f.title = title
         f.feedback_id = id
         f.description = description
+        f.votes = 1
+        f.status = 'In backlog'
         f.save()
 
         return f

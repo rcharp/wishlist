@@ -179,7 +179,7 @@
                   <!-- Profile dropdown -->
                   <div class="ml-3 relative">
                     <div>
-                      <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown();">
+                      <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
                         <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                       </button>
                     </div>
@@ -193,11 +193,11 @@
                         From: "transform opacity-100 scale-100"
                         To: "transform opacity-0 scale-95"
                     -->
-                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95">
+                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
                       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Your Profile</a>
-                        <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Settings</a>
-                        <a href="{{ url_for('user.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Sign out</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Your Profile</a>
+                        <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
+                        <a href="{{ url_for('user.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
                       </div>
                     </div>
                   </div>
@@ -207,116 +207,163 @@
 
             <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-                  <i class="si si-clock pull-right"></i>
-              </div><br />
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Replace with your content -->
-                <div>
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    Stats
-                  </h3>
-                  <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-                    <div class="bg-white overflow-hidden shadow rounded-lg">
-                      <div class="px-4 py-5 sm:p-6">
-                        <dl>
-                          <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Open issues
-                          </dt>
-                          <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                            {{ feedbacks|length }}
-                          </dd>
-                        </dl>
+                {% if feedbacks|length < 1 %}
+                      <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 text-center" style="display:flex; align-items:center;">
+                          <span class="inline-flex rounded-md shadow-sm text-gray-300" id="add_feedback" style="float:none;margin:0 auto;">
+                              <a href="{{ url_for('user.add_feedback') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                  <i class="si si-plus"></i>&nbsp; Submit feedback
+                              </a>
+                            </span>
                       </div>
-                    </div>
-                    <div class="bg-white overflow-hidden shadow rounded-lg">
-                      <div class="px-4 py-5 sm:p-6">
-                        {% if most_popular %}
-                            <dl class="pull-right text-center">
-                              <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                                <span style="color:#00b300;font-size:24px;"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i>{{ most_popular.votes }}</span>
-                              </dt>
-                            </dl>
-                        {% endif %}
-                        <dl>
-                          <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Most votes
-                          </dt>
-                          <dd class="mt-1 text-xl leading-9 font-semibold text-gray-900">
-                            {% if most_popular %}{{ most_popular.title }}{% else %}'N/A'{% endif %}
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                    <div class="bg-white overflow-hidden shadow rounded-lg">
-                      <div class="px-4 py-5 sm:p-6">
-                        <dl>
-                          <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                            Avg. Click Rate
-                          </dt>
-                          <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                            24.57%
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                </div><br /><br />
-                {% if workspaces|length < 1 %}
-                  <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 text-center" style="display:flex; align-items:center;">
-                      <span class="inline-flex rounded-md shadow-sm text-gray-300" id="add_workspace" style="float:none;margin:0 auto;">
-                          <a href="{{ url_for('user.add_feedback') }}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base leading-6 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                              <i class="si si-plus"></i>&nbsp; Add feedback
-                          </a>
-                        </span>
-                  </div>
-                {% else %}
-                    <span class="inline-flex rounded-md shadow-sm text-gray-300" id="add_workspace" style="margin-bottom:20px;">
-                      <a href="{{ url_for('user.add_feedback') }}" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                          <i class="si si-plus"></i>&nbsp; Add feedback
-                      </a>
-                    </span>
-                    <div class="bg-white shadow overflow-hidden sm:rounded-md">
-                      <ul>
-                        {% for workspace in workspaces %}
-                            <li {% if not loop.last %}style="border-bottom:1px solid #e5e5e5"{% endif %}>
-                              <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out" style="margin-bottom:0;">
-                                <div class="flex items-center px-4 py-4 sm:px-6">
-                                  <div class="min-w-0 flex-1 flex items-center">
-                                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                                      <div>
-                                        <div class="text-sm leading-5 font-medium text-indigo-600 truncate">{{ workspace.title }}</div>
-                                        <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
-                                          <i class="si si-globe" style="margin-right:10px;"></i> &nbsp;
-                                          <span class="truncate">{{ workspace.domain }}</span>
-                                        </div>
-                                      </div>
-                                      <div class="hidden md:block">
-                                        <div>
-                                          <div class="text-sm leading-5 text-gray-900">
-                                            Created
-                                            <time datetime="2020-01-07">{{ workspace.created_on|datetime_filter }}</time>
-                                          </div>
-                                          <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
-                                              <span class="truncate">{{ workspace.description }}</span>
-                                          </div>
-                                        </div>
+                    {% else %}
+                        <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right">
+                            <div class="sm:col-span-3"></div>
+                            <div class="pull-right sm:col-span-1">
+                                <div class="relative inline-block text-left">
+                                  <div>
+                                    <span class="rounded-md shadow-sm">
+                                      <button type="button" onclick="ShowDropdown('sort-dropdown-menu');" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150">
+                                        {% if sort == 'votes' %}Sorted by: Most votes{% elif sort == 'oldest' %}Sorted by: Oldest{% else %}Sorted by: Most recent{% endif %}
+                                        <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                        </svg>
+                                      </button>
+                                    </span>
+                                  </div>
+
+                                  <!--
+                                    Dropdown panel, show/hide based on dropdown state.
+
+                                    Entering: "transition ease-out duration-100"
+                                      From: "transform opacity-0 scale-95"
+                                      To: "transform opacity-100 scale-100"
+                                    Leaving: "transition ease-in duration-75"
+                                      From: "transform opacity-100 scale-100"
+                                      To: "transform opacity-0 scale-95"
+                                  -->
+                                  <div id="sort-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg transform opacity-0 scale-95" style="z-index:999; display:none;" onmouseleave="ShowDropdown(this.id)">
+                                    <div class="rounded-md bg-white shadow-xs">
+                                      <div class="py-1">
+                                        <a href="{{ url_for('user.sort', sort='newest') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'newest' or not sort %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most Recent</a>
+                                        <a href="{{ url_for('user.sort', sort='oldest') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'oldest' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Oldest</a>
+                                        <a href="{{ url_for('user.sort', sort='votes') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'votes' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most votes</a>
                                       </div>
                                     </div>
                                   </div>
-                                  <div>
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">
+                            <!-- submit box -->
+                        <div class="sm:col-span-1">
+                            <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
+                              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                <form action="{{ url_for('user.add_feedback') }}" method="post">
+                                  <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                      <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                          Submit feedback
+                                        </div>
+{#                                       <div class="sm:col-span-6">#}
+{#                                          <div class="mt-1 mb-2 rounded-md shadow-sm">#}
+{#                                            <input id="email" name="email" placeholder="Email address" type="email" required class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />#}
+{#                                          </div>#}
+{#                                        </div>#}
+
+                                    <div class="sm:col-span-6">
+                                      <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                        <input id="title" name="title" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                      </div>
+                                    </div>
+
+                                    <div class="sm:col-span-6">
+                                      <div class="mt-1 rounded-md shadow-sm">
+                                        <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="mt-4 mb-4 border-t border-gray-200 pt-5">
+                                    <div class="flex justify-end">
+                                      <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                          Submit
+                                        </button>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+
+                            <div class="bg-white overflow-hidden shadow rounded-lg">
+                              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                  <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                      <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                          Filter by Status
+                                      </div>
+
+                                      {% for status in statuses %}
+                                          <div class="sm:col-span-6 mb-3 ml-1">
+                                              <div class="flex items-center">
+                                                <input id="status-{{ status.status_id }}" name="{{ status.name }}" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out status-checkbox" onchange="FilterByStatus()" />
+                                                <label for="status-{{ status.status_id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                  {{ status.name }}
+                                                </label>
+                                              </div>
+                                          </div>
+                                      {% endfor %}
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                            <!-- end submit box -->
+
+                            <div class="sm:col-span-3">
+                            {% for feedback in feedbacks %}
+                                <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}">
+                                    <div style="padding:10px 25px 0 0;">
+                                        <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
+                                              <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
+                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
+                                              </span>
+                                              <span style="font-size:14px;">{% if feedback.votes != 1 %}votes{% else %}vote{% endif %}</span>
+                                        </div>
+                                    </div>
+                                  <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
+                                    <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
+                                        <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
+                                            {{ feedback.title }}
+                                        </a>
+                                    </div>
+                                  </div>
+                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
+                                     <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
+                                        <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                        </svg>
+                                      </div>
+                                        <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                          <dt class="text-sm leading-5 font-medium text-gray-500 sm:mt-0 sm:col-span-3">
+                                            {{ feedback.description }}
+                                          </dt>
+                                        </div>
+                                    </a>
+                                  <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                                      <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                      {% if feedback.status %}
+                                          <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                              {{ feedback.status }}
+                                          </span>
+                                      {% endif %}
                                   </div>
                                 </div>
-                              </a>
-                            </li>
-                        {% endfor %}
-                      </ul>
-                    </div>
-                {% endif %}
-                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                <!-- /End replace -->
+              </div>
             </main>
           </div>
         </div>
@@ -383,19 +430,71 @@
 {#        </script>#}
 
         <script>
-            function ShowDropdown() {
-                var dropdown = document.getElementById("user-dropdown-menu");
+            function ShowDropdown(id) {
+                var dropdown = document.getElementById(id);
                 if (dropdown.classList.contains('opacity-0')){
                     dropdown.classList.remove('opacity-0');
                     dropdown.classList.remove('scale-95');
                     dropdown.classList.add('opacity-100');
                     dropdown.classList.add('scale-100');
+
+                    dropdown.style.display = '';
                 }
                 else {
                     dropdown.classList.remove('opacity-100');
                     dropdown.classList.remove('scale-100');
                     dropdown.classList.add('opacity-0');
                     dropdown.classList.add('scale-95');
+
+                    dropdown.style.display = 'none';
+                }
+            }
+
+            function Vote(feedback_id) {
+                $.ajax({
+                    url: '{{ url_for("user.add_vote") }}',
+                    type: 'POST',
+                    beforeSend: UpdateVote(feedback_id),
+                    data: {'feedback_id': feedback_id},
+                    success: function (response) {
+                    },
+                    error: function (xhr) {
+                        window.location.href = '{{ url_for('user.feedback') }}';
+                    }
+                });
+            }
+
+            function UpdateVote(feedback_id) {
+                var votes = document.getElementById(feedback_id + '-votes').innerText;
+                var count = parseInt(votes);
+                document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+            }
+
+            function FilterByStatus(){
+                var checked = document.querySelectorAll('input:checked');
+                var items = document.getElementsByClassName('feedback-item');
+
+                if (checked.length === 0){
+                    for (var i = 0; i < items.length; i++){
+                        items[i].style.display = '';
+                    }
+
+                    return;
+                }
+
+                var statuses = [];
+
+                for (var i = 0; i< checked.length; i++){
+                    statuses.push(checked[i].name);
+                }
+
+                for (var i = 0; i < items.length; i++){
+                    var status = items[i].getAttribute('data-status');
+                    if (!statuses.includes(status)){
+                        items[i].style.display = 'none';
+                    }else {
+                        items[i].style.display = '';
+                    }
                 }
             }
         </script>

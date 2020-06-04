@@ -1,8 +1,8 @@
 def statuses():
     return [{'name': 'In backlog', 'color': 'blue'},
-            {'name': 'Already exists', 'color': 'red'},
             {'name': 'In planning', 'color': 'orange'},
             {'name': 'In development', 'color': 'green'},
+            {'name': 'Already exists', 'color': 'red'},
             {'name': 'Shipped', 'color': 'yellow'},
             {'name': 'In beta', 'color': 'purple'},
             {'name': 'Future', 'color': 'gray'}]

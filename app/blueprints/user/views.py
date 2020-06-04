@@ -219,11 +219,16 @@ def update_credentials():
 @login_required
 @csrf.exempt
 def dashboard():
-    workspaces = Workspace.query.filter(Workspace.admin_id == current_user.id).all()
+    # workspaces = Workspace.query.filter(Workspace.admin_id == current_user.id).all()
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    statuses = Status.query.all()
 
-    popular = max(feedbacks, key=attrgetter('votes'))
-    return render_template('user/dashboard.html', current_user=current_user, workspaces=workspaces, feedbacks=feedbacks, most_popular=popular)
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    # popular = max(feedbacks, key=attrgetter('votes'))
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
 
 
 # Feedback -------------------------------------------------------------------
@@ -232,16 +237,17 @@ def dashboard():
 @csrf.exempt
 def feedback():
     feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    statuses = Status.query.all()
 
     for f in feedback:
         f.votes = int(f.votes)
 
     feedback.sort(key=lambda x: x.votes, reverse=True)
-    statuses = Status.query.all()
+
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
 
 
-@user.route('/feedback/<sort>', methods=['GET','POST'])
+@user.route('/dashboard/<sort>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def sort(sort):
@@ -258,7 +264,7 @@ def sort(sort):
 
         feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
 @user.route('/feedback/<status>', methods=['GET','POST'])
@@ -353,7 +359,7 @@ def add_workspace():
     return render_template('user/add_workspace.html', current_user=current_user)
 
 
-@user.route('/add_feedback', methods=['GET','POST'])
+@user.route('/add_feedback', methods=['POST'])
 @login_required
 @csrf.exempt
 def add_feedback():
@@ -361,20 +367,15 @@ def add_feedback():
         try:
             title = request.form['title']
             description = request.form['description']
-            email = request.form['email']
+            # email = request.form['email']
 
             from app.blueprints.api.api_functions import create_feedback
-            f = create_feedback(current_user.id, email, title, description)
+            f = create_feedback(current_user.id, None, title, description)
 
-            if f is not None:
-                flash("Successfully created your workspace.", "success")
-            else:
-                flash("There was an error creating your workspace.", "error")
-
-            return redirect(url_for('user.feedback'))
+            return redirect(url_for('user.dashboard'))
         except Exception:
-            flash("There was an error creating your workspace.", "error")
-            return redirect(url_for('user.feedback'))
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.dashboard'))
 
     return render_template('user/add_feedback.html', current_user=current_user)
 

@@ -207,8 +207,7 @@
 
             <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Add feedback</h1>
-                  <i class="si si-clock pull-right"></i>
+                <h1 class="text-2xl font-semibold text-gray-900">Submit feedback</h1>
               </div>
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <form action="{{ url_for('user.add_feedback') }}" method="post">
@@ -238,22 +237,22 @@
                             Description <span style="color:red">*</span>
                           </label>
                           <div class="mt-1 rounded-md shadow-sm">
-                            <textarea id="description" name="description" required rows="3" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                            <textarea id="description" name="description" required placeholder="What would you like to share?" rows="3" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                           </div>
-                          <p class="mt-2 text-sm text-gray-500">What is the feedback?</p>
+{#                          <p class="mt-2 text-sm text-gray-500">What is the feedback?</p>#}
                         </div>
 
-                        <div class="sm:col-span-4">
-                          <label for="domain" class="block text-sm font-medium leading-5 text-gray-700">
-                            Tags
-                          </label>
-                          <div class="mt-1 flex rounded-md shadow-sm">
-                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                              https://
-                            </span>
-                            <input id="domain" name="domain" class="flex-1 form-input block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                          </div>
-                        </div>
+{#                        <div class="sm:col-span-4">#}
+{#                          <label for="domain" class="block text-sm font-medium leading-5 text-gray-700">#}
+{#                            Tags#}
+{#                          </label>#}
+{#                          <div class="mt-1 flex rounded-md shadow-sm">#}
+{#                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">#}
+{#                              https://#}
+{#                            </span>#}
+{#                            <input id="domain" name="domain" class="flex-1 form-input block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5" />#}
+{#                          </div>#}
+{#                        </div>#}
                       </div>
                     </div>
                   </div>
@@ -266,7 +265,7 @@
                       </span>
                       <span class="ml-3 inline-flex rounded-md shadow-sm">
                         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                          Save
+                          Submit
                         </button>
                       </span>
                     </div>
