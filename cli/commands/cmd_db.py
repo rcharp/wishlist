@@ -114,7 +114,7 @@ def seed_status():
 @click.command()
 def seed_data():
 
-    for x in range(1, 10):
+    for x in range(1, 31):
         params = {
             'user_id': 1,
             'feedback_id': generate_id(Feedback),
