@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/static/js/scripts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/js/jq-paginator 2.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +24,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="256" column="34" lean-forward="true" selection-start-line="256" selection-start-column="34" selection-end-line="256" selection-end-column="34" />
+            <state relative-caret-position="399">
+              <caret line="284" column="110" selection-start-line="284" selection-start-column="110" selection-end-line="284" selection-end-column="110" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -41,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="feedback.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="feedback.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="279" column="75" selection-start-line="279" selection-start-column="75" selection-end-line="279" selection-end-column="75" />
+            <state relative-caret-position="174">
+              <caret line="160" column="30" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="30" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -57,6 +61,7 @@
                 <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#a#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -64,24 +69,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="status.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/status.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="9" selection-start-line="15" selection-start-column="9" selection-end-line="15" selection-end-column="9" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="view_feedback.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="view_feedback.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="960">
-              <caret line="218" column="56" selection-start-line="218" selection-start-column="50" selection-end-line="218" selection-end-column="56" />
+            <state relative-caret-position="147">
+              <caret line="283" column="28" selection-start-line="283" selection-start-column="28" selection-end-line="283" selection-end-column="28" />
               <folding>
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#dd#0;n#dl#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -100,8 +97,8 @@
       <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="265" column="105" selection-start-line="265" selection-start-column="105" selection-end-line="265" selection-end-column="138" />
+            <state relative-caret-position="174">
+              <caret line="160" column="26" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="26" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -143,22 +140,15 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="HTML File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>i class</find>
-      <find>fa-</find>
-      <find>site_name</find>
-      <find>form</find>
-      <find>datetime_fil</find>
-      <find>email add</find>
-      <find>glob</find>
       <find>globe</find>
       <find>settings</find>
       <find>baloo</find>
@@ -180,8 +170,15 @@
       <find>Feedback</find>
       <find>green</find>
       <find>thumb</find>
-      <find>descrip</find>
       <find>add fee</find>
+      <find>descrip</find>
+      <find>Vote</find>
+      <find>showdropdown</find>
+      <find>created on</find>
+      <find>add feedback</find>
+      <find>clock</find>
+      <find>label for</find>
+      <find>label</find>
     </findStrings>
     <replaceStrings>
       <replace>_project</replace>
@@ -235,7 +232,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/static/oneui/assets/js/app.js" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.html" />
         <option value="$PROJECT_DIR$/app/blueprints/wiki/templates/wiki/new.html" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/sidebar.html" />
@@ -276,16 +272,17 @@
         <option value="$PROJECT_DIR$/cli/commands/data.py" />
         <option value="$PROJECT_DIR$/app/blueprints/api/models/status.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" />
         <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
         <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
         <option value="$PROJECT_DIR$/app/blueprints/api/models/vote.py" />
         <option value="$PROJECT_DIR$/app/blueprints/api/api_functions.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/static/js/scripts.js" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" />
       </list>
     </option>
   </component>
@@ -351,46 +348,14 @@
               <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
               <item name="wishlist" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
               <item name="wishlist" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
@@ -465,8 +430,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
@@ -521,16 +486,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/extensions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/api/db_engine.py" />
     <entry file="file://$PROJECT_DIR$/app/blueprints/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -858,30 +813,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html">
+    <entry file="file://$PROJECT_DIR$/app/static/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="218" column="56" selection-start-line="218" selection-start-column="50" selection-end-line="218" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#dd#0;n#dl#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="202">
+          <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="256" column="34" lean-forward="true" selection-start-line="256" selection-start-column="34" selection-end-line="256" selection-end-column="34" />
+        <state relative-caret-position="399">
+          <caret line="284" column="110" selection-start-line="284" selection-start-column="110" selection-end-line="284" selection-end-column="110" />
           <folding>
             <element signature="e#0#171#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="160" column="30" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="30" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#a#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="265" column="105" selection-start-line="265" selection-start-column="105" selection-end-line="265" selection-end-column="138" />
+        <state relative-caret-position="174">
+          <caret line="160" column="26" selection-start-line="160" selection-start-column="21" selection-end-line="160" selection-end-column="26" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -905,23 +879,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html">
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="279" column="75" selection-start-line="279" selection-start-column="75" selection-end-line="279" selection-end-column="75" />
+        <state relative-caret-position="147">
+          <caret line="283" column="28" selection-start-line="283" selection-start-column="28" selection-end-line="283" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#2;n#div#2;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#span#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#dd#0;n#dl#0;n#div#0;n#div#0;n#div#1;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

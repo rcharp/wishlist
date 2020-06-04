@@ -261,12 +261,28 @@ def sort(sort):
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
+@user.route('/feedback/<status>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def filter(status):
+    feedbacks = Feedback.query.filter(and_(Feedback.user_id == current_user.id, Feedback.status == status)).all()
+    statuses = Status.query.all()
+
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.votes, reverse=True)
+
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter)
+
+
 @user.route('/view/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def view_feedback(feedback_id):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f)
+    statuses = Status.query.all()
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
 
 
 # Votes -------------------------------------------------------------------
