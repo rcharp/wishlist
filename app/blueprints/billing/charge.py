@@ -14,7 +14,7 @@ site_name = "NameCatcher.io"
 # The main checkout function for charging a user's card. Used for both reserving and purchasing a domain.
 def stripe_checkout(email, domain, price, purchase=False):
     try:
-        from app.blueprints.user.models import User
+        from app.blueprints.user.models.user import User
         from app.blueprints.billing.models.customer import Customer
 
         # Get the current user

@@ -1,6 +1,6 @@
 from sqlalchemy import func
 
-from app.blueprints.user.models import db, User
+from app.blueprints.user.models.user import db, User
 from app.blueprints.billing.models.subscription import Subscription
 
 

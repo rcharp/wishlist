@@ -8,7 +8,7 @@ import sqlalchemy as sa
 from lib.flask_mailplus import send_template_message
 from app.extensions import cache, db
 from app.app import create_celery_app
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 
 
 celery = create_celery_app()

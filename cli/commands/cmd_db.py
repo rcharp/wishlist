@@ -9,7 +9,7 @@ from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
 from app.blueprints.api.api_functions import generate_id
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback

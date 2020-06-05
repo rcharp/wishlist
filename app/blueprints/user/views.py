@@ -22,7 +22,7 @@ from operator import attrgetter
 
 from lib.safe_next_url import safe_next_url
 from app.blueprints.user.decorators import anonymous_required
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User, Domain
 from app.blueprints.user.forms import (
     LoginForm,
     BeginPasswordResetForm,
@@ -33,7 +33,7 @@ from app.blueprints.user.forms import (
 
 from app.extensions import cache, csrf, timeout, db
 from importlib import import_module
-from sqlalchemy import or_, and_, exists, inspect
+from sqlalchemy import or_, and_, exists, inspect, func
 from app.blueprints.billing.charge import (
     get_card
 )
@@ -146,7 +146,6 @@ def password_reset():
 @user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-# @cache.cached(timeout=timeout)
 def signup():
     form = SignupForm()
 
@@ -155,24 +154,73 @@ def signup():
             flash('There is already an account with this email. Please login.', 'error')
             return redirect(url_for('user.login'))
 
+        if db.session.query(exists().where(func.lower(Domain.name) == request.form.get('domain').lower())).scalar():
+            flash('That domain is already in use. Please try another.', 'error')
+            return render_template('user/signup.html', form=form)
+
         u = User()
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
+        u.role = 'creator'
         u.save()
+
+        # Create the domain from the form
+        from app.blueprints.api.api_functions import create_domain
+        create_domain(u, form)
 
         if login_user(u):
 
-            from app.blueprints.user.tasks import send_welcome_email
-            from app.blueprints.contact.mailerlite import create_subscriber
+            # from app.blueprints.user.tasks import send_welcome_email
+            # from app.blueprints.contact.mailerlite import create_subscriber
 
-            send_welcome_email.delay(current_user.email)
-            create_subscriber(current_user.email)
+            # send_welcome_email.delay(current_user.email)
+            # create_subscriber(current_user.email)
 
             flash("You've successfully signed up!", 'success')
             return redirect(url_for('user.dashboard'))
 
     return render_template('user/signup.html', form=form)
+
+
+# @user.route('/signup', methods=['GET', 'POST'])
+# @anonymous_required()
+# @csrf.exempt
+# def signup():
+#     from app.blueprints.api.api_functions import validate_signup, populate_signup, print_traceback
+#
+#     form = SignupForm(request.form)
+#
+#     try:
+#         if request.method == 'POST':
+#             print("posting")
+#             if form.validate():
+#                 print("form is valid")
+#                 if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+#                     flash('There is already an account with this email. Please login.', 'error')
+#                     return redirect(url_for('user.login'))
+#
+#                 u = User()
+#
+#                 populate_signup(request, u)
+#                 u.password = User.encrypt_password(request.form.get('password'))
+#                 u.save()
+#
+#                 if login_user(u):
+#
+#                     from app.blueprints.user.tasks import send_welcome_email
+#                     from app.blueprints.contact.mailerlite import create_subscriber
+#
+#                     send_welcome_email.delay(current_user.email)
+#                     create_subscriber(current_user.email)
+#
+#                     flash("You've successfully signed up!", 'success')
+#                     return redirect(url_for('user.dashboard'))
+#             print("form not valid")
+#     except Exception as e:
+#         print_traceback(e)
+#
+#     return render_template('user/signup.html', form=form)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])

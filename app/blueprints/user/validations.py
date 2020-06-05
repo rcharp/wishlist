@@ -1,6 +1,6 @@
 from wtforms.validators import ValidationError
 
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 
 
 def ensure_identity_exists(form, field):

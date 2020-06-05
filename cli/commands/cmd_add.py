@@ -7,7 +7,7 @@ from faker import Faker
 
 from app.app import create_app
 from app.extensions import db
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 from app.blueprints.billing.models.invoice import Invoice
 
 # Create an app context for the database connection.

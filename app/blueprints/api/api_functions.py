@@ -1,8 +1,11 @@
 import string
 import random
+import pytz
 import traceback
+from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists
+from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.workspace import Workspace
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.vote import Vote
@@ -90,3 +93,28 @@ def add_vote(feedback_id, user_id):
 def print_traceback(e):
     traceback.print_tb(e.__traceback__)
     print(e)
+
+
+def create_domain(user, form):
+    d = Domain()
+    d.domain_id = generate_id(Domain)
+    d.name = form.domain.data
+    d.company = form.company.data
+    d.user_id = user.id
+    d.admin_email = user.email
+    d.save()
+
+    return d
+
+
+def validate_signup(request):
+    return True
+
+
+def populate_signup(request, user):
+    user.created_on = dt.now().replace(tzinfo=pytz.utc)
+    user.updated_on = dt.now().replace(tzinfo=pytz.utc)
+    user.role = request.form['role']
+    user.is_active = True
+    user.name = request.form['name']
+    user.email = request.form['email']

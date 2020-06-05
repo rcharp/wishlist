@@ -10,19 +10,35 @@
       {% call f.form_tag('user.signup') %}
         <legend>Sign up</legend>
 
-        {% call f.form_group(form.email, css_class='sm-margin-bottom',
+        {% call f.form_group(form.name, css_class='sm-margin-bottom',
                              autofocus='autofocus',
+                             placeholder='Name') %}
+        {% endcall %}
+
+        {% call f.form_group(form.email, css_class='sm-margin-bottom',
                              placeholder='Email address') %}
         {% endcall %}
 
-        {% call f.form_group(form.password, css_class='sm-margin-bottom') %}
+        {% call f.form_group(form.company, css_class='sm-margin-bottom',
+                             placeholder='Company name') %}
         {% endcall %}
 
-        {% call f.form_group(form.confirm, css_class='sm-margin-bottom') %}
+         <div id="domain-group" class="input-group" style="margin-bottom:25px;">
+            {% call f.form_group(form.domain, css_class='sm-margin-bottom',
+                placeholder='Domain') %}
+            {% endcall %}
+            <span class="input-group-addon bg-white">.getwishlist.io</span>
+         </div>
+
+        {% call f.form_group(form.password, css_class='sm-margin-bottom',
+                placeholder='Password') %}
         {% endcall %}
+
+{#        {% call f.form_group(form.confirm, css_class='sm-margin-bottom') %}#}
+{#        {% endcall %}#}
 
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6" style="float:none;margin:0 auto;">
             <button type="submit" class="btn btn-block btn-primary" style="background-color:#5c90d2">
               Sign Up
             </button>
@@ -30,7 +46,7 @@
         </div>
         <div class="row"><br /></div>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-8" style="width:100%;">
             <div style="height:100%;border:none;">
               <span style="font-size:16px;">Already registered? &nbsp;<a href="{{ url_for('user.login') }}">Login</a></span>
              </div>
@@ -40,4 +56,10 @@
     <small>By signing up you agree to our <a href="{{ url_for('page.privacy') }}">Privacy Policy</a> and <a href="{{ url_for('page.terms') }}">Terms of Service</a></small>
     </div>
   </div>
+
+    <script>
+        document.getElementById("company").addEventListener("keyup", function(){
+            document.getElementById("domain").value = document.getElementById("company").value;
+        });
+    </script>
 {% endblock %}

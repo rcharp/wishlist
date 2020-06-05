@@ -37,7 +37,7 @@
 {# Render a form group with errors for various field types. #}
 {%- macro form_group(f, css_class='') -%}
   {% if f.errors %}
-    {% set css_class = css_class + ' has-error ' + kwargs.pop('class', '') %}
+      {% set css_class = css_class + ' has-error ' + kwargs.pop('class', '') %}
   {% endif %}
 
   {% if f.type == 'BooleanField' %}
@@ -45,7 +45,7 @@
     {{ checkbox_field(f, **kwargs) }}
   {% else %}
     <div class="form-group {{ css_class }}">
-    {{ field_label(f) }}
+{#    {{ field_label(f) }}#}
     {{ field(f, **kwargs) }}
   {% endif %}
 

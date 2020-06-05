@@ -221,7 +221,7 @@ def cancel():
             email = current_user.email
 
             # Delete the user.
-            from app.blueprints.user.models import User
+            from app.blueprints.user.models.user import User
             u = User.query.filter(User.id == current_user.id).scalar()
 
             if u is None:

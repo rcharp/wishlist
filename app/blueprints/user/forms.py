@@ -5,7 +5,7 @@ from wtforms_components import EmailField, Email
 from wtforms_alchemy import Unique
 
 from lib.util_wtforms import ModelForm
-from app.blueprints.user.models import User, db
+from app.blueprints.user.models.user import User, Domain, db
 from app.blueprints.user.validations import ensure_identity_exists, \
     ensure_existing_password_matches
 
@@ -31,18 +31,30 @@ class PasswordResetForm(Form):
 
 
 class SignupForm(ModelForm):
+    name = StringField(validators=[
+        DataRequired()
+    ])
+
     email = EmailField(validators=[
         DataRequired(),
         Email(),
-        Unique(
-            User.email,
-            get_session=lambda: db.session
-        )
+        # Unique(
+        #     User.email,
+        #     get_session=lambda: db.session,
+        #     message='This email is already in use. Login instead?'
+        # )
     ])
 
-    password = PasswordField('Password', [DataRequired(), EqualTo("confirm", message="Passwords don't match!"), Length(8, 128)])
-    confirm = PasswordField("Repeat Password", [DataRequired(), EqualTo("password", message="Passwords don't match!"),
-                                                Length(8, 128)])
+    company = StringField(validators=[
+        DataRequired()
+    ])
+
+    domain = StringField(validators=[
+        DataRequired()
+    ])
+
+    password = PasswordField('Password', [DataRequired(), Length(8, 128)])
+    # confirm = PasswordField("Repeat Password", [DataRequired(), EqualTo("password", message="Passwords don't match!"), Length(8, 128)])
 
 
 class WelcomeForm(ModelForm):

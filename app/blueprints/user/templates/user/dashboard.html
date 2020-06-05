@@ -248,67 +248,73 @@
 
                 <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">
                     <!-- submit box -->
-                <div class="sm:col-span-1">
-                    <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
-                      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                        <form action="{{ url_for('user.add_feedback') }}" method="post">
-                          <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
-                              <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
-                                  Submit feedback
-                                </div>
-{#                                       <div class="sm:col-span-6">#}
-{#                                          <div class="mt-1 mb-2 rounded-md shadow-sm">#}
-{#                                            <input id="email" name="email" placeholder="Email address" type="email" required class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />#}
-{#                                          </div>#}
-{#                                        </div>#}
+                    <div class="sm:col-span-1">
+                        <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
+                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            <form action="{{ url_for('user.add_feedback') }}" method="post">
+                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                      Submit feedback
+                                    </div>
+    {#                                       <div class="sm:col-span-6">#}
+    {#                                          <div class="mt-1 mb-2 rounded-md shadow-sm">#}
+    {#                                            <input id="email" name="email" placeholder="Email address" type="email" required class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />#}
+    {#                                          </div>#}
+    {#                                        </div>#}
 
-                            <div class="sm:col-span-6">
-                              <div class="mt-1 mb-3 rounded-md shadow-sm">
-                                <input id="title" name="title" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                              </div>
-                            </div>
-
-                            <div class="sm:col-span-6">
-                              <div class="mt-1 rounded-md shadow-sm">
-                                <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="mt-4 mb-4 border-t border-gray-200 pt-5">
-                            <div class="flex justify-end">
-                              <span class="ml-3 inline-flex rounded-md shadow-sm">
-                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                                  Submit
-                                </button>
-                              </span>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-
-                    <div class="bg-white overflow-hidden shadow rounded-lg">
-                      <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                          <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
-                              <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
-                                  Filter by Status
-                              </div>
-
-                              {% for status in statuses %}
-                                  <div class="sm:col-span-6 {% if loop.last %}mb-6{% else %}mb-3{% endif %} ml-1">
-                                      <div class="flex items-center">
-                                        <input id="status-{{ status.status_id }}" name="{{ status.name }}" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out status-checkbox" onchange="FilterByStatus()" />
-                                        <label for="status-{{ status.status_id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
-                                          {{ status.name }}
-                                        </label>
-                                      </div>
+                                <div class="sm:col-span-6">
+                                  <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                    <input id="title" name="title" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                   </div>
-                              {% endfor %}
+                                </div>
+
+                                <div class="sm:col-span-6">
+                                  <div class="mt-1 rounded-md shadow-sm">
+                                    <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="mt-4 mb-4 border-t border-gray-200 pt-5">
+                                <div class="flex justify-end">
+                                  <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                      Submit
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>
+                            </form>
                           </div>
-                      </div>
+                        </div>
+
+                        <div class="mt-4 mb-4 text-center">
+                            <a href="{{ url_for('user.dashboard') }}">
+                                Powered by <u>Wishlist</u>
+                            </a>
+                        </div>
+
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                      Filter by Status
+                                  </div>
+
+                                  {% for status in statuses %}
+                                      <div class="sm:col-span-6 {% if loop.last %}mb-6{% else %}mb-3{% endif %} ml-1">
+                                          <div class="flex items-center">
+                                            <input id="status-{{ status.status_id }}" name="{{ status.name }}" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out status-checkbox" onchange="FilterByStatus()" />
+                                            <label for="status-{{ status.status_id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                              {{ status.name }}
+                                            </label>
+                                          </div>
+                                      </div>
+                                  {% endfor %}
+                              </div>
+                          </div>
+                        </div>
                     </div>
-                </div>
-                <!-- end submit box -->
+                    <!-- end submit box -->
 
                     <div class="sm:col-span-3">
                     {% if feedbacks|length >0 %}

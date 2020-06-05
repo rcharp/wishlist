@@ -20,7 +20,7 @@ from wtforms_alchemy import Unique
 
 from lib.locale import Currency
 from lib.util_wtforms import ModelForm, choices_from_dict
-from app.blueprints.user.models import db, User
+from app.blueprints.user.models.user import db, User
 # from app.blueprints.billing.models.coupon import Coupon
 
 

@@ -13,7 +13,7 @@ from app.blueprints.api.api_functions import print_traceback
 from app.blueprints.user.decorators import role_required
 from app.blueprints.billing.models.subscription import Subscription
 from app.blueprints.billing.models.invoice import Invoice
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 from app.blueprints.admin.forms import (
     SearchForm,
     BulkDeleteForm,
