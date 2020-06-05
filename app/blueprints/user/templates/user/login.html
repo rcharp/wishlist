@@ -4,7 +4,11 @@
 {% block title %}Login - {{ 'site_name'|site_name_filter }}{% endblock %}
 
 {% block body %}
-  <div class="row">
+    <head>
+        <!-- Tailwind CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+    </head>
+  <div class="row" style="margin-top:50px;">
     <div class="block-content" style="width:50%;min-width:300px;max-width:350px;margin:0 auto;
     border:1px solid #c5c5c5;border-radius:4px; padding:20px;float:none;margin-top:50px; background-color:#fff;">
       {% call f.form_tag('user.login') %}
@@ -19,8 +23,8 @@
 
         <div class="row">
           <div class="col-md-6">
-            <button type="submit" class="btn btn-block btn-primary" style="background-color:#5c90d2">
-              Log in
+            <button type="submit" class="btn btn-block bg-indigo-500 text-white-800">
+                <span style="color:white">Log In</span>
             </button>
           </div>
           <div class="col-md-6">

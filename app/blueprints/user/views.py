@@ -267,7 +267,10 @@ def update_credentials():
 @login_required
 @csrf.exempt
 def dashboard():
-    # workspaces = Workspace.query.filter(Workspace.admin_id == current_user.id).all()
+
+    if current_user.role == 'admin':
+        return redirect(url_for('admin.dashboard'))
+
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -428,18 +431,38 @@ def add_feedback():
     return render_template('user/add_feedback.html', current_user=current_user)
 
 
-# @user.route('/old', methods=['GET','POST'])
-# @login_required
-# @csrf.exempt
-# def old():
-#
-#     if current_user.role == 'admin':
-#         return redirect(url_for('admin.dashboard'))
-#
-#     c = Customer.query.filter(Customer.user_id == current_user.id).scalar()
-#     card = get_card(c)
-#
-#     return render_template('user/settings_old.html', current_user=current_user, card=card)
+# Demo -------------------------------------------------------------------
+@user.route('/demo', methods=['GET','POST'])
+@csrf.exempt
+def demo():
+    feedbacks = Feedback.query.filter(Feedback.user_id == 2).all()
+    statuses = Status.query.all()
+
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+
+
+@user.route('/demo_feedback', methods=['POST'])
+@login_required
+@csrf.exempt
+def demo_feedback():
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+
+            from app.blueprints.api.api_functions import create_feedback
+            f = create_feedback(2, None, title, description)
+
+            return redirect(url_for('user.demo'))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.demo'))
+
+    return render_template('user/add_feedback.html', current_user=current_user)
 
 
 # Contact us -------------------------------------------------------------------

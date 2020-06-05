@@ -33,18 +33,8 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/vendor/font-awesome.min.css') }}">
 
-    <!-- Theme CSS -->
-    <!-- Animation library for notifications   -->
-
-    <!--  Light Bootstrap Table core CSS    --
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles/theme/light-bootstrap-dashboard.css?v=1.4.0') }}"-->
-
     <!-- Bootstrap Theme -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles/theme/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/theme/bootstrap.min.css') }}">
 
       <!-- Javascript loader -->
 
@@ -55,144 +45,158 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
 
-    <!-- Lite elements -->
-
-    <!-- Bootstrap Core CSS -->
-    <!--<link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='page/assets/plugins/bootstrap/css/bootstrap.min.css') }}">-->
-    <!--<link rel="stylesheet" type="text/css" href="../../blueprints/page/templates/assets/plugins/bootstrap/css/bootstrap.min.css">-->
-
     <!-- Custom CSS -->
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='page/lite/css/style.css') }}">
-    <!--<link rel="stylesheet" type="text/css" href="../../blueprints/page/templates/lite/css/style.css">-->
-
-    <!-- chartist CSS --
-    <link href="../../blueprints/page/templates/assets/plugins/chartist-js/dist/chartist.min.css" rel="stylesheet">
-    <link href="../../blueprints/page/templates/assets/plugins/chartist-js/dist/chartist-init.css" rel="stylesheet">
-    <link href="../../blueprints/page/templates/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
-    <!--This page css - Morris CSS --
-    <link href="../../blueprints/page/templates/assets/plugins/c3-master/c3.min.css" rel="stylesheet">
-
-    <!-- You can change the theme colors from here -->
-    <!--link href="../../blueprints/page/templates/lite/css/colors/blue.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-    <!-- end Lite elements -->
-
-
-
-
-    <script
-      src="https://code.jquery.com/jquery-1.12.2.min.js"
-      integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk="
-      crossorigin="anonymous"></script>
-    <script src="https://js.stripe.com/v2/"></script>
-
-    {% if config['ANALYTICS_GOOGLE_UA'] %}
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.gmail-analytics.com/analytics.js','ga');
-
-        ga('create', "{{ config['ANALYTICS_GOOGLE_UA'] }}", 'auto');
-        ga('send', 'pageview');
-      </script>
-    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='page/lite/css/style.css') }}">
 
   </head>
-  {% block litebody %}{% endblock %}
-  <body class="font-w300;" style="margin:auto;width:100%;max-width:100%;overflow-x:hidden;padding-bottom:0; background-color:#fff;">
-    {% block header %}{% endblock %}
+  <body class="font-w300 flex-parent" style="margin:auto;width:100%;max-width:100%;overflow-x:hidden;padding-bottom:0; background-color:#fff;">
+    {% block header %}
+    {% endblock %}
 
-    {% if request.path != '/demo' and request.path != '/inbox' and request.path != '/refresh'
-    and request.path != '/rules' and not ('/add' in request.path) and not ('/parse' in request.path)
-    and not ('/export' in request.path) and not ('/view_email' in request.path) %}
-    <main class="container"style="min-height:850px;">
+    <main class="container fkex-child" {#style="min-height:850px;"#}>
       {{ flash.render() }}
 
-      <div class="md-margin-top">{% block heading %}{% endblock %}</div>
-      {% block body %}{% endblock %}
+      {% block heading %}{% endblock %}
+      {% block body %}
+            <div>
+              <nav class="bg-indigo-700">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0">
+                        <img class="h-8 w-8" src="/img/logos/workflow-mark-on-brand.svg" alt="Workflow logo" />
+                      </div>
+                      <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline">
+                          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-indigo-800 focus:outline-none focus:text-white focus:bg-indigo-600">Dashboard
+                          </a>
+                          <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Team
+                          </a>
+                          <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Projects
+                          </a>
+                          <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Calendar
+                          </a>
+                          <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Reports
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="hidden md:block">
+                      <div class="ml-4 flex items-center md:ml-6">
+                        <button class="p-1 border-2 border-transparent text-indigo-300 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-indigo-600" aria-label="Notifications">
+                          <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                          </svg>
+                        </button>
+
+                        <!-- Profile dropdown -->
+                        <div class="ml-3 relative">
+                          <div>
+                            <button class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid" id="user-menu" aria-label="User menu" aria-haspopup="true">
+                              <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                            </button>
+                          </div>
+                          <!--
+                            Profile dropdown panel, show/hide based on dropdown state.
+
+                            Entering: "transition ease-out duration-100"
+                              From: "transform opacity-0 scale-95"
+                              To: "transform opacity-100 scale-100"
+                            Leaving: "transition ease-in duration-75"
+                              From: "transform opacity-100 scale-100"
+                              To: "transform opacity-0 scale-95"
+                          -->
+                          <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+                            <div class="py-1 rounded-md bg-white shadow-xs">
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile
+                              </a>
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings
+                              </a>
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="-mr-2 flex md:hidden">
+                      <!-- Mobile menu button -->
+                      <button class="inline-flex items-center justify-center p-2 rounded-md text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600 focus:text-white">
+                        <!-- Menu open: "hidden", Menu closed: "block" -->
+                        <svg class="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Menu open: "block", Menu closed: "hidden" -->
+                        <svg class="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!--
+                  Mobile menu, toggle classes based on menu state.
+
+                  Open: "block", closed: "hidden"
+                -->
+                <div class="hidden md:hidden">
+                  <div class="px-2 pt-2 pb-3 sm:px-3">
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-indigo-800 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard
+                    </a>
+                    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Team
+                    </a>
+                    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Projects
+                    </a>
+                    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Calendar
+                    </a>
+                    <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Reports
+                    </a>
+                  </div>
+                  <div class="pt-4 pb-3 border-t border-gray-700">
+                    <div class="flex items-center px-5">
+                      <div class="flex-shrink-0">
+                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                      </div>
+                      <div class="ml-3">
+                        <div class="text-base font-medium leading-none text-white">Tom Cook
+                        </div>
+                        <div class="mt-1 text-sm font-medium leading-none text-indigo-300">tom@example.com
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-3 px-2" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                      <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600" role="menuitem">Your Profile
+                      </a>
+                      <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600" role="menuitem">Settings
+                      </a>
+                      <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600" role="menuitem">Sign out
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+
+              <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                  <h1 class="text-3xl font-bold leading-tight text-gray-900">
+                    Dashboard
+                  </h1>
+                </div>
+              </header>
+              <main>
+                <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                  <!-- Replace with your content -->
+                  <div class="px-4 py-4 sm:px-0">
+                    <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                  </div>
+                  <!-- /End replace -->
+                </div>
+              </main>
+            </div>
+      {% endblock %}
     </main>
-    {% endif %}
     <br /><br />
     {% block footer %}{% endblock %}
-    <!--footer class="footer text-center" style="font-family: 'Gotham', sans-serif;">
-      <div class="container">
-        <ul class="list-inline">
-          <li class="text-muted">Domain &copy; {{ current_year() }}</li>
-
-        </ul>
-      </div>
-    </footer-->
-
-<!-- Footer -->
-        <footer class="footer section bg-light-primary text-gray pt-2">
-            <div class="container" style="min-width:80%; max-width:95%;">
-                <!-- Empty Space --
-                <div class="lg-space"></div>
-                <!--/ End Empty Space --
-                <div class="row">
-                    <div class="col-10 col-lg-8 mx-auto">
-                        <div class="row">
-                            <ul class="nav col flex-column sm-font-size">
-                                <li class="nav-link nav-head text-uppercase font-weight__500 text-black base-font-size font-family-secondary">Company</li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Features</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Pricing</a></li>
-                            </ul>
-                            <ul class="nav col flex-column sm-font-size">
-                                <li class="nav-link nav-head text-uppercase font-weight__500 text-black base-font-size font-family-secondary">Support</li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Help</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">FAQ</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Contact</a></li>
-                            </ul>
-                            <ul class="nav col flex-column sm-font-size">
-                                <li class="nav-link nav-head text-uppercase font-weight__500 text-black base-font-size font-family-secondary">Legal</li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Terms</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Privacy</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Policy</a></li>
-                            </ul>
-                            <ul class="nav col flex-column sm-font-size">
-                                <li class="nav-link nav-head text-uppercase font-weight__500 text-black base-font-size font-family-secondary">Press</li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Press Release</a></li>
-                                <li class="nav-item"><a href="#" class="nav-link text-gray">Press Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Empty Space --
-                <div class="lg-space"></div>
-                <!--/ End Empty Space -->
-                <div class="row align-items-center">
-                    <div class="col-8 col-lg-8 pr-lg-0" style="padding:0;float:right">
-                        <div class="credit sm-font-size text-right text-lg-right text-dark-gray">
-                            <a href="{{ url_for('user.contact') }}">Contact Us</a> | <a href="{{ url_for('page.privacy') }}">Privacy Policy</a> | <a href="{{ url_for('page.terms') }}">Terms of Service</a>
-
-                        </div>
-                        <div class="copyright xs-font-size text-right text-lg-right">
-                            &copy; 2020 {{ 'site_name'|site_name_filter }}. All Rights Reserved.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!--/ End Footer -->
-
-    <script
-      src="{{ url_for('static', filename='scripts/vendor/bootstrap.min.js') }}">
-    </script>
-    <script
-      src="{{ url_for('static', filename='scripts/vendor/moment.min.js') }}">
-    </script>
-    <script
-      src="{{ url_for('static', filename='scripts/main.js') }}">
-    </script>
   </body>
 </html>

@@ -5,6 +5,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists
+from app.blueprints.api.godaddy import create_subdomain
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.workspace import Workspace
 from app.blueprints.api.models.feedback import Feedback
@@ -96,15 +97,22 @@ def print_traceback(e):
 
 
 def create_domain(user, form):
-    d = Domain()
-    d.domain_id = generate_id(Domain)
-    d.name = form.domain.data
-    d.company = form.company.data
-    d.user_id = user.id
-    d.admin_email = user.email
-    d.save()
+    try:
+        d = Domain()
+        d.domain_id = generate_id(Domain)
+        d.name = form.domain.data
+        d.company = form.company.data
+        d.user_id = user.id
+        d.admin_email = user.email
+        d.save()
 
-    return d
+        if create_subdomain(form.domain.data):
+            return d
+        else:
+            d.delete()
+    except Exception as e:
+        print_traceback(e)
+        return None
 
 
 def validate_signup(request):

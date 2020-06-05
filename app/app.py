@@ -167,6 +167,7 @@ def template_processors(app):
     app.jinja_env.filters['dict_filter'] = dict_filter
     app.jinja_env.filters['today_filter'] = today_filter
     app.jinja_env.filters['site_name_filter'] = site_name_filter
+    app.jinja_env.filters['site_url_filter'] = site_url_filter
     app.jinja_env.filters['site_color_filter'] = site_color_filter
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
@@ -317,6 +318,10 @@ def today_filter(arg):
 
 def site_name_filter(arg):
     return 'Wishlist'
+
+
+def site_url_filter(arg):
+    return 'getwishlist.io'
 
 
 def site_color_filter(arg):

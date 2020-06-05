@@ -7,14 +7,14 @@
     <div class="col-md-4">
       <div class="panel panel-default text-center">
         <div class="panel-heading">
-          <a href="{{ url_for('admin.backorders') }}">Backorders</a>
+          <a href="{{ url_for('admin.users') }}">Users</a>
           <span class="pull-right text-muted">
-            {{ group_and_count_backorders.total }}
+            {{ group_and_count_users.total }}
           </span>
         </div>
         <div class="panel-body">
             <h4>Secured</h4><hr />
-          {% for item in group_and_count_backorders.query %}
+          {% for item in group_and_count_users.query %}
             <h5>
                 {{ item[1] }}
               <span class="text-muted">({{ item[0] }})</span>
@@ -47,24 +47,6 @@
             </div>
           {% endfor %}
         </div>
-            <form class="form-horizontal push-5-t" action="{{ url_for('admin.update_domains') }}" method="post">
-                <div class="form-group">
-                    <br />
-                    <div class="col-xs-12" style="width:40%;min-width:350px;margin:0 auto;float:none;">
-                        <input class="form-control" id="selection" name="selection" type="hidden" value="false" />
-                        <button class="btn btn-sm btn-success" id="submit-button" type="submit" style="width:60%;min-width:220px;min-height:60px; margin:0 auto;font-size:18px;padding:10px;white-space:normal;"><i class="push-5-r"></i>Update Domains</button>
-                    </div>
-                </div>
-            </form>
-            <form class="form-horizontal push-5-t" action="{{ url_for('admin.update_domains') }}" method="post">
-                <div class="form-group">
-                    <br />
-                    <div class="col-xs-12" style="width:40%;min-width:350px;margin:0 auto;float:none;">
-                        <input class="form-control" id="selection" name="selection" type="hidden" value="true" />
-                        <button class="btn btn-sm btn-primary" id="submit-button" type="submit" style="width:60%;min-width:220px;min-height:60px; margin:0 auto;font-size:18px;padding:10px;white-space:normal;"><i class="push-5-r"></i>Update Selections</button>
-                    </div>
-                </div>
-            </form>
             <form class="form-horizontal push-5-t" action="{{ url_for('api.test') }}" method="post">
                 <div class="form-group">
                     <br />

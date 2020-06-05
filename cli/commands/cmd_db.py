@@ -72,14 +72,15 @@ def seed():
         'password': app.config['SEED_ADMIN_PASSWORD']
     }
 
-    member2 = {
-        'role': 'member',
-        'email': app.config['SEED_TEST_EMAIL'],
+    demo = {
+        'role': 'creator',
+        'email': 'demo@getwishlist.io',
+        'username': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD']
     }
 
     User(**member).save()
-    User(**member2).save()
+    User(**demo).save()
 
     return User(**params).save()
 
@@ -118,10 +119,10 @@ def seed_data():
     for x in range(1, 31):
         status = random.choice(s)
         params = {
-            'user_id': 1,
+            'user_id': 2,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': app.config['SEED_MEMBER_EMAIL'],
+            'email': 'demo@getwishlist.io',
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             # 'status_id': status.status_id,

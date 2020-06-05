@@ -1,9 +1,5 @@
-from flask import flash
-import requests
-import json
-from app.blueprints.page.date import get_creation_date
-from celery.result import AsyncResult
+from app.blueprints.api.godaddy import create_subdomain
 
 
 def test():
-    return
+    return create_subdomain()
