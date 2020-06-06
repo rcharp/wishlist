@@ -101,7 +101,7 @@
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto">
                   <nav class="px-2">
-                    <a href="{{ url_for('user.domain', domain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                    <a href="{{ url_for('user.dashboard', domain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
                         <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
                         Dashboard
                       </a>
@@ -133,7 +133,7 @@
               <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <nav class="flex-1 px-2 bg-indigo-800">
-                  <a href="{{ url_for('user.domain', domain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                  <a href="{{ url_for('user.dashboard', domain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
                     <i class="si si-grid" style="padding-left:5px;margin-right:15px;"></i>
                     Dashboard
                   </a>
@@ -200,7 +200,7 @@
                     -->
                     <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
                       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        {% if current_user.domain %}<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.domain|title }}</a>{% endif %}
+                        {% if current_user.dashboard %}<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.dashboard|title }}</a>{% endif %}
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</a>
                         <div class="border-t border-gray-100"></div>
                         <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
@@ -295,7 +295,7 @@
                         </div>
 
                         <div class="mt-4 mb-4 text-center">
-                            <a href="{{ url_for('user.domain', domain=subdomain) }}">
+                            <a href="{{ url_for('user.dashboard', domain=subdomain) }}">
                                 Powered by <u>Wishlist</u>
                             </a>
                         </div>
