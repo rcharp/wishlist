@@ -29,7 +29,7 @@ def home():
 @login_required
 @csrf.exempt
 def subdomain(domain):
-    return redirect(url_for('user.subdomain'))
+    return redirect(url_for('user.subdomain', domain=domain))
 
 
 @page.route('/terms')
