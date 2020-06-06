@@ -115,7 +115,7 @@
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Actions</li>
                                 <li>
-                                    <a tabindex="-1" href="{{ url_for('user.dashboard') }}">
+                                    <a tabindex="-1" href="{{ url_for('user.subdomain', domain=subdomain) }}">
                                         <i class="si si-grid pull-right"></i>My Dashboard
                                     </a>
                                 </li>
@@ -200,7 +200,7 @@
                                                 <div style="text-align:center; font-size:24px;"><br /><br />
                                                     Whoops, looks like an error occured.<br /><br />
 
-                                                    Please click <a href="{{ url_for('user.dashboard') }}"><span style="color:#0073ff">here</span></a> to return to your dashboard.
+                                                    Please click <a href="{{ url_for('user.subdomain', domain=subdomain) }}"><span style="color:#0073ff">here</span></a> to return to your dashboard.
                                                 </div>
                                             </div>
                                             <!-- END Bootstrap Login -->
