@@ -29,9 +29,7 @@ def home():
 @login_required
 @csrf.exempt
 def subdomain(domain):
-    print(domain)
-    return render_template('page/index.html',
-                           plans=settings.STRIPE_PLANS)
+    return redirect(url_for('user.dashboard'))
 
 
 @page.route('/terms')
