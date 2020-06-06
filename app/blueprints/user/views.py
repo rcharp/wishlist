@@ -286,7 +286,7 @@ def dashboard():
 @csrf.exempt
 def subdomain(domain):
     if not domain:
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.settings'))
 
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()

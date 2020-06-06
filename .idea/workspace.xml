@@ -4,7 +4,9 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="" />
+    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +23,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="289" selection-start-line="289" selection-end-line="289" />
+            <state relative-caret-position="346">
+              <caret line="288" column="46" selection-start-line="288" selection-start-column="46" selection-end-line="288" selection-end-column="46" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -35,6 +37,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="290">
               <caret line="139" column="120" lean-forward="true" selection-start-line="139" selection-start-column="120" selection-end-line="139" selection-end-column="120" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="132" column="29" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -101,7 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cards</find>
       <find>feedback</find>
       <find>add_feed</find>
       <find>already exists.</find>
@@ -126,10 +136,11 @@
       <find>app.route</find>
       <find>url_for('user.dashboard')</find>
       <find>{{ url_for('user.dashboard'</find>
-      <find>dashboard(</find>
       <find>href=&quot;{{ url_for('user.dashboard')</find>
       <find>user.dashboard</find>
       <find>user.subdomain</find>
+      <find>dashboard(</find>
+      <find>dashboard</find>
       <find>user.subd</find>
     </findStrings>
     <replaceStrings>
@@ -160,8 +171,8 @@
       <replace>&lt;i class=&quot;si si-user h-8 w-8 rounded-full&quot;&gt;&lt;/i&gt;</replace>
       <replace>&lt;i class=&quot;si si-user&quot;&gt;&lt;/i&gt;</replace>
       <replace>{{ url_for('user.dashboard', domain=''</replace>
-      <replace>domain</replace>
       <replace>href=&quot;{{ url_for('user.subdomain', domain=subdomain)</replace>
+      <replace>domain</replace>
       <replace>User</replace>
     </replaceStrings>
     <dirStrings>
@@ -232,9 +243,9 @@
         <option value="$PROJECT_DIR$/config/settings.py" />
         <option value="$PROJECT_DIR$/app/blueprints/page/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
       </list>
     </option>
   </component>
@@ -307,7 +318,24 @@
               <item name="wishlist" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="blueprints" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wishlist" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="blueprints" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wishlist" type="b2602c69:ProjectViewProjectNode" />
@@ -497,13 +525,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/blueprints/api/models/workspace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="389">
@@ -971,6 +992,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="132" column="29" selection-start-line="132" selection-start-column="20" selection-end-line="132" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
@@ -980,8 +1008,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="289" selection-start-line="289" selection-end-line="289" />
+        <state relative-caret-position="346">
+          <caret line="288" column="46" selection-start-line="288" selection-start-column="46" selection-end-line="288" selection-end-column="46" />
           <folding>
             <element signature="e#0#171#0" expanded="true" />
           </folding>
