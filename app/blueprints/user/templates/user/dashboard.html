@@ -125,11 +125,11 @@
                   <span style="font-size:32px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ 'site'|site_name_filter }} <span style="font-size:14px;">v1.0</span></span>
               </div>
 
-                {% if current_user.domain %}
+              {% if domain %}
                   <div class="flex items-center flex-shrink-0 px-4">
-                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ current_user.domain|lower }}.{{ 'site'|site_url_filter }}</span>
+                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ domain }}.{{ 'site'|site_url_filter }}</span>
                   </div>
-                {% endif %}
+              {% endif %}
               <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <nav class="flex-1 px-2 bg-indigo-800">
