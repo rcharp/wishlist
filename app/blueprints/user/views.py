@@ -289,7 +289,6 @@ def dashboard():
 def subdomain(domain):
     # if current_user.role == 'admin':
     #     return redirect(url_for('admin.dashboard'))
-    print(domain)
 
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()

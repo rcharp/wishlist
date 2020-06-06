@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/colorlib/form/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/colorlib/form/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/oneui/assets/js/plugins/highlightjs/highlight.pack.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/oneui/assets/js/plugins/highlightjs/highlight.pack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/page/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/page/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/scripts/easyPaginate/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/scripts/easyPaginate/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/material/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/material/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cli/commands/cmd_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli/commands/cmd_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pyasn1_modules/rfc2459.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pyasn1_modules/rfc2459.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pyasn1_modules/rfc3279.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pyasn1_modules/rfc3279.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/rsa/pkcs1_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rsa/pkcs1_v2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +23,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="288" column="22" lean-forward="true" selection-start-line="288" selection-start-column="22" selection-end-line="288" selection-end-column="22" />
+            <state relative-caret-position="223">
+              <caret line="290" column="53" selection-start-line="290" selection-start-column="53" selection-end-line="290" selection-end-column="53" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -284,10 +269,10 @@
         <option value="$PROJECT_DIR$/cli/commands/cmd_db.py" />
         <option value="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/page/views.py" />
         <option value="$PROJECT_DIR$/app/app.py" />
         <option value="$PROJECT_DIR$/ngrok.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
       </list>
     </option>
   </component>
@@ -1037,8 +1022,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="288" column="22" lean-forward="true" selection-start-line="288" selection-start-column="22" selection-end-line="288" selection-end-column="22" />
+        <state relative-caret-position="223">
+          <caret line="290" column="53" selection-start-line="290" selection-start-column="53" selection-end-line="290" selection-end-column="53" />
           <folding>
             <element signature="e#0#171#0" expanded="true" />
           </folding>
