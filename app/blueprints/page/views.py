@@ -25,6 +25,15 @@ def home():
                            plans=settings.STRIPE_PLANS)
 
 
+@page.route('/', subdomain="<domain>", methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def subdomain(domain):
+    print(domain)
+    return render_template('page/index.html',
+                           plans=settings.STRIPE_PLANS)
+
+
 @page.route('/terms')
 def terms():
     return render_template('page/terms.html')

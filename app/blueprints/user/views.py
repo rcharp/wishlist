@@ -282,6 +282,25 @@ def dashboard():
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
 
 
+# Dashboard -------------------------------------------------------------------
+@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def subdomain(domain):
+    # if current_user.role == 'admin':
+    #     return redirect(url_for('admin.dashboard'))
+    print(domain)
+
+    feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
+    statuses = Status.query.all()
+
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+
+
 # Feedback -------------------------------------------------------------------
 @user.route('/feedback', methods=['GET','POST'])
 @login_required

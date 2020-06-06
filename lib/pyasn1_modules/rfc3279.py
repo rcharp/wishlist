@@ -73,7 +73,7 @@ class DHPublicKey(univ.Integer):
 
 class ValidationParms(univ.Sequence):
     componentType = namedtype.NamedTypes(
-        namedtype.NamedType('seed', univ.BitString()),
+        namedtype.NamedType('seed_users', univ.BitString()),
         namedtype.NamedType('pgenCounter', univ.Integer())
     )
 
@@ -167,7 +167,7 @@ class Curve(univ.Sequence):
     componentType = namedtype.NamedTypes(
         namedtype.NamedType('a', FieldElement()),
         namedtype.NamedType('b', FieldElement()),
-        namedtype.OptionalNamedType('seed', univ.BitString())
+        namedtype.OptionalNamedType('seed_users', univ.BitString())
     )
 
 

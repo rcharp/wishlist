@@ -313,7 +313,7 @@ dhpublicnumber = univ.ObjectIdentifier('1.2.840.10046.2.1')
 
 class ValidationParms(univ.Sequence):
     componentType = namedtype.NamedTypes(
-        namedtype.NamedType('seed', univ.BitString()),
+        namedtype.NamedType('seed_users', univ.BitString()),
         namedtype.NamedType('pgenCounter', univ.Integer())
     )
 
