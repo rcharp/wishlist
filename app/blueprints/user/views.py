@@ -263,29 +263,15 @@ def update_credentials():
 
 
 # Dashboard -------------------------------------------------------------------
-@user.route('/dashboard', methods=['GET','POST'])
+@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def dashboard():
+def dashboard(domain):
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
 
-    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
-    statuses = Status.query.all()
-
-    for f in feedbacks:
-        f.votes = int(f.votes)
-
-    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    # popular = max(feedbacks, key=attrgetter('votes'))
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
-
-
-# Dashboard -------------------------------------------------------------------
-@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
-@csrf.exempt
-def subdomain(domain):
+    # feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()
 
@@ -293,7 +279,21 @@ def subdomain(domain):
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=domain)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=domain)
+
+
+# # Subdomain -------------------------------------------------------------------
+# @user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
+# @csrf.exempt
+# def subdomain(domain):
+#     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
+#     statuses = Status.query.all()
+#
+#     for f in feedbacks:
+#         f.votes = int(f.votes)
+#
+#     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+#     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=domain)
 
 
 # Feedback -------------------------------------------------------------------

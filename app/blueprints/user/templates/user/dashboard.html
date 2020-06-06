@@ -101,7 +101,7 @@
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto">
                   <nav class="px-2">
-                    <a href="{{ url_for('user.dashboard') }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                    <a href="{{ url_for('user.dashboard', domain='') }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
                         <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
                         Dashboard
                       </a>
@@ -125,15 +125,15 @@
                   <span style="font-size:32px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ 'site'|site_name_filter }} <span style="font-size:14px;">v1.0</span></span>
               </div>
 
-              {% if domain %}
+              {% if subdomain %}
                   <div class="flex items-center flex-shrink-0 px-4">
-                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ domain }}.{{ 'site'|site_url_filter }}</span>
+                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ subdomain }}.{{ 'site'|site_url_filter }}</span>
                   </div>
               {% endif %}
               <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <nav class="flex-1 px-2 bg-indigo-800">
-                  <a href="{{ url_for('user.dashboard') }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
+                  <a href="{{ url_for('user.dashboard', domain='') }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
                     <i class="si si-grid" style="padding-left:5px;margin-right:15px;"></i>
                     Dashboard
                   </a>
@@ -295,7 +295,7 @@
                         </div>
 
                         <div class="mt-4 mb-4 text-center">
-                            <a href="{{ url_for('user.dashboard') }}">
+                            <a href="{{ url_for('user.dashboard', domain='') }}">
                                 Powered by <u>Wishlist</u>
                             </a>
                         </div>
