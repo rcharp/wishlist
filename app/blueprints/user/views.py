@@ -286,6 +286,7 @@ def dashboard():
 @user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
 @csrf.exempt
 def subdomain(domain):
+    print(domain)
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()
 
