@@ -263,22 +263,26 @@ def update_credentials():
 
 
 # Dashboard -------------------------------------------------------------------
-@user.route('/dashboard', methods=['GET','POST'])
+@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def dashboard():
+def dashboard(domain):
 
-    if current_user.role == 'admin':
-        return redirect(url_for('admin.dashboard'))
+    if not domain:
+        return redirect(url_for('user.settings'))
 
-    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    # if current_user.role == 'admin':
+    #     return redirect(url_for('admin.dashboard'))
+
+    # feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+    feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=domain)
 
 
 # Subdomain -------------------------------------------------------------------
