@@ -293,7 +293,7 @@ def subdomain(domain):
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain="wishlist")
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=domain)
 
 
 # Feedback -------------------------------------------------------------------

@@ -79,7 +79,7 @@ def create_app(settings_override=None):
 
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
-    # app.config["SERVER_NAME"] = "getwishlist.io"
+    app.config["SERVER_NAME"] = app.config.get('SERVER_NAME')
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
