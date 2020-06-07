@@ -22,26 +22,26 @@ def home():
         return redirect(url_for('user.dashboard'))
 
     return render_template('page/index.html',
-                           plans=settings.STRIPE_PLANS)
+                           plans=settings.STRIPE_PLANS, subdomain='<subdomain>')
 
 
 @page.route('/', subdomain="<domain>", methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def subdomain():
-    return redirect(url_for('user.subdomain', domain=domain))
+    return redirect(url_for('user.subdomain', subdomain='<subdomain>'))
 
 
 @page.route('/terms')
 def terms():
-    return render_template('page/terms.html')
+    return render_template('page/terms.html', subdomain='<subdomain>')
 
 
 @page.route('/privacy')
 def privacy():
-    return render_template('page/privacy.html')
+    return render_template('page/privacy.html', subdomain='<subdomain>')
 
 
 @page.route('/index')
 def index():
-    return render_template('page/index.html', plans=settings.STRIPE_PLANS)
+    return render_template('page/index.html', plans=settings.STRIPE_PLANS, subdomain='<subdomain>')

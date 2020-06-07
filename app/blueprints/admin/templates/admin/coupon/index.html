@@ -11,7 +11,7 @@
       {{ f.search('admin.coupons') }}
     </div>
     <div class="col-md-6">
-      <a href="{{ url_for('admin.coupons_new') }}"
+      <a href="{{ url_for('admin.coupons_new', subdomain=subdomain) }}"
          class="btn btn-primary pull-right">
         Create coupon
       </a>
@@ -26,7 +26,7 @@
     {% else %}
       <p>
          There are no coupons present,
-         you should <a href="{{ url_for('admin.coupons_new') }}">create one</a>.
+         you should <a href="{{ url_for('admin.coupons_new', subdomain=subdomain) }}">create one</a>.
        </p>
     {% endif %}
   {% else %}

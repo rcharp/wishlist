@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-6">
           <div class="visible-xs visible-sm sm-margin-top"></div>
-          <a href="{{ url_for('admin.users') }}"
+          <a href="{{ url_for('admin.users', subdomain=subdomain) }}"
               class="btn btn-default btn-block">
             Cancel
           </a>
@@ -94,7 +94,7 @@
             {% call f.form_tag('admin.users_cancel_subscription') %}
               <input type="hidden" id="id" name="id" value="{{ user.id }}"/>
               <button type="submit" class="btn btn-danger">
-                <img src="{{ url_for('static', filename='images/spinner.gif') }}"
+                <img src="{{ url_for('static', filename='images/spinner.gif', subdomain=subdomain) }}"
                     class="spinner"
                     width="16" height="11" alt="Spinner"/>
                   Cancel subscription

@@ -28,4 +28,4 @@ def index():
         flash('Thanks for your email! You can expect a response shortly.', 'success')
         return redirect(url_for('contact.index'))
 
-    return render_template('contact/index.html', form=form)
+    return render_template('contact/index.html', form=form, subdomain='<subdomain>')

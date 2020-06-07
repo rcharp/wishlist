@@ -4,7 +4,7 @@
     <div class="alert alert-warning" role="alert">
       <div class="container">
         Your credit card is going to expire soon,
-        <a href="{{ url_for('billing.update_payment_method') }}">
+        <a href="{{ url_for('billing.update_payment_method', subdomain=subdomain) }}">
           please update it</a>
         .
       </div>
@@ -43,7 +43,7 @@
             {% else %}
               <button id="submit_{{ plan.id }}" name="submit_{{ plan.id }}"
                       class="btn btn-primary btn-lg btn-block">
-                <img src="{{ url_for('static', filename='images/spinner.gif') }}"
+                <img src="{{ url_for('static', filename='images/spinner.gif', subdomain=subdomain) }}"
                      class="spinner"
                      width="16" height="11" alt="Spinner"/>
                 Choose plan
@@ -54,7 +54,7 @@
                class="btn btn-primary btn-lg btn-block">Sign up now</a>
           {% endif %}
         {% else %}
-          <a href="{{ url_for('user.signup') }}"
+          <a href="{{ url_for('user.signup', subdomain=subdomain) }}"
              class="btn btn-primary btn-lg btn-block">
           {% if request.path == '/' %}
             Try for free

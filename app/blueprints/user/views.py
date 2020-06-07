@@ -76,14 +76,14 @@ def login(subdomain):
 
                 next_url = request.form.get('next')
 
-                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard', subdomain=subdomain)
+                if next_url == url_for('user.login') or next_url == '' or next_url is None:
+                    next_url = url_for('user.dashboard')
 
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)
 
                 if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard', subdomain=subdomain))
+                    return redirect(url_for('admin.dashboard'))
             else:
                 flash('This account has been disabled.', 'error')
         else:
@@ -102,7 +102,7 @@ def logout(subdomain):
     logout_user()
 
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login', subdomain=subdomain))
+    return redirect(url_for('user.login'))
 
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
@@ -116,7 +116,7 @@ def begin_password_reset(subdomain):
         flash('An email has been sent to {0}.'.format(u.email), 'success')
         return redirect(url_for('user.login', subdomain=subdomain))
 
-    return render_template('user/begin_password_reset.html', form=form, subdomain=subdomain)
+    return render_template('user/begin_password_reset.html', form=form)
 
 
 @user.route('/account/password_reset', methods=['GET', 'POST'])
@@ -130,7 +130,7 @@ def password_reset(subdomain):
         if u is None:
             flash('Your reset token has expired or was tampered with.',
                   'error')
-            return redirect(url_for('user.begin_password_reset', subdomain=subdomain))
+            return redirect(url_for('user.begin_password_reset'))
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
@@ -138,7 +138,7 @@ def password_reset(subdomain):
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            return redirect(url_for('user.dashboard'))
 
     return render_template('user/password_reset.html', form=form, subdomain=subdomain)
 
@@ -152,7 +152,7 @@ def signup(subdomain):
     if form.validate_on_submit():
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
             flash('There is already an account with this email. Please login.', 'error')
-            return redirect(url_for('user.login', subdomain=subdomain))
+            return redirect(url_for('user.login'))
 
         if db.session.query(exists().where(func.lower(Domain.name) == request.form.get('domain').lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
@@ -178,7 +178,7 @@ def signup(subdomain):
             # create_subscriber(current_user.email)
 
             flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            return redirect(url_for('user.dashboard'))
 
     return render_template('user/signup.html', form=form, subdomain=subdomain)
 
@@ -228,7 +228,7 @@ def signup(subdomain):
 def welcome(subdomain):
     if current_user.username:
         flash('You already picked a username.', 'warning')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return redirect(url_for('user.dashboard'))
 
     form = WelcomeForm()
 
@@ -237,7 +237,7 @@ def welcome(subdomain):
         current_user.save()
 
         flash('Your username has been set.', 'success')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return redirect(url_for('user.dashboard'))
 
     return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
 
@@ -257,7 +257,7 @@ def update_credentials(subdomain):
         current_user.save()
 
         flash('Your sign in settings have been updated.', 'success')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return redirect(url_for('user.dashboard'))
 
     return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
 
@@ -343,7 +343,7 @@ def filter(status, subdomain):
 
     feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter)
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter, subdomain=subdomain)
 
 
 @user.route('/view/<feedback_id>', methods=['GET','POST'])
@@ -352,7 +352,7 @@ def filter(status, subdomain):
 def view_feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain)
 
 
 # Votes -------------------------------------------------------------------
@@ -378,7 +378,7 @@ def roadmap(subdomain):
     # if current_user.role == 'admin':
         # return redirect(url_for('admin.dashboard'))
 
-    return render_template('user/roadmap.html', current_user=current_user)
+    return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
 # Settings -------------------------------------------------------------------
@@ -393,7 +393,7 @@ def settings(subdomain):
     c = Customer.query.filter(Customer.user_id == current_user.id).scalar()
     card = get_card(c)
 
-    return render_template('user/settings.html', current_user=current_user, card=card)
+    return render_template('user/settings.html', current_user=current_user, card=card, subdomain=subdomain)
 
 
 # Actions -------------------------------------------------------------------
@@ -420,7 +420,7 @@ def add_workspace(subdomain):
             flash("There was an error creating your workspace.", "error")
             return redirect(url_for('user.dashboard'))
 
-    return render_template('user/add_workspace.html', current_user=current_user)
+    return render_template('user/add_workspace.html', current_user=current_user, subdomain=subdomain)
 
 
 @user.route('/add_feedback', methods=['POST'])
@@ -441,7 +441,7 @@ def add_feedback(subdomain):
             flash("Uh oh, something went wrong!", "error")
             return redirect(url_for('user.dashboard'))
 
-    return render_template('user/add_feedback.html', current_user=current_user)
+    return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
 
 
 # Contact us -------------------------------------------------------------------
@@ -454,4 +454,4 @@ def contact(subdomain):
 
         flash('Thanks for your email! You can expect a response shortly.', 'success')
         return redirect(url_for('user.contact'))
-    return render_template('user/contact.html', current_user=current_user)
+    return render_template('user/contact.html', current_user=current_user, subdomain=subdomain)

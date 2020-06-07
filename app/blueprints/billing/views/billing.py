@@ -36,7 +36,7 @@ def pricing():
     form = UpdateSubscriptionForm()
 
     return render_template('page/pricing.html', form=form,
-                           plans=settings.STRIPE_PLANS)
+                           plans=settings.STRIPE_PLANS, subdomain='<subdomain>')
 
 
 # @billing.route('/create', methods=['GET', 'POST'])
@@ -137,7 +137,7 @@ def create():
         #
         #     return redirect(url_for('user.dashboard'))
 
-        return render_template('user/checkout.html')
+        return render_template('user/checkout.html', subdomain='<subdomain>')
         # return render_template('billing/payment_method.html', form=form, plan=subscription_plan)
         # return render_template('billing/payment_method.html', form=form)
     except Exception as e:
@@ -187,7 +187,7 @@ def update():
         return render_template('billing/pricing.html',
                             form=form,
                             plans=settings.STRIPE_PLANS,
-                            active_plan=active_plan)
+                            active_plan=active_plan, subdomain='<subdomain>')
     except Exception as e:
         print_traceback(e)
 
@@ -245,7 +245,7 @@ def cancel():
                   'success')
             return redirect(url_for('user.logout'))
 
-    return render_template('billing/cancel.html', form=form)
+    return render_template('billing/cancel.html', form=form, subdomain='<subdomain>')
 
 
 @billing.route('/update_payment_method', methods=['GET', 'POST'])
@@ -283,7 +283,7 @@ def update_payment_method():
         return redirect(url_for('user.dashboard'))
 
     return render_template('billing/payment_method.html', form=form,
-                           plan=active_plan, card_last4=str(card.last4))
+                           plan=active_plan, card_last4=str(card.last4), subdomain='<subdomain>')
 
 
 @billing.route('/billing_details')
@@ -303,4 +303,4 @@ def billing_details():
         coupon = None
 
     return render_template('billing/billing_details.html',
-                           invoices=invoices, upcoming=upcoming, coupon=coupon)
+                           invoices=invoices, upcoming=upcoming, coupon=coupon, subdomain='<subdomain>')

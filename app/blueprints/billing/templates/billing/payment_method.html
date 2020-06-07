@@ -89,24 +89,24 @@
         </div>
 
         <button type="submit" class="btn btn-primary btn-block lg-margin-bottom">
-          <img src="{{ url_for('static', filename='images/spinner.gif') }}"
+          <img src="{{ url_for('static', filename='images/spinner.gif', subdomain=subdomain) }}"
                class="spinner"
                width="16" height="11" alt="Spinner"/>
           {{ button }}
         </button>
 
         <div class="text-center quarter-faded">
-          <img src="{{ url_for('static', filename='images/cc/visa.png') }}"
+          <img src="{{ url_for('static', filename='images/cc/visa.png', subdomain=subdomain) }}"
                 width="40" height="24" class="cc-images" alt="Visa"/>
-          <img src="{{ url_for('static', filename='images/cc/mastercard.png') }}"
+          <img src="{{ url_for('static', filename='images/cc/mastercard.png', subdomain=subdomain) }}"
                 width="40" height="24" class="cc-images"
                 alt="Mastercard"/>
-          <img src="{{ url_for('static', filename='images/cc/american-express.png') }}"
+          <img src="{{ url_for('static', filename='images/cc/american-express.png', subdomain=subdomain) }}"
                 width="40" height="24" class="cc-images"
                 alt="American Express"/>
-          <img src="{{ url_for('static', filename='images/cc/jcb.png') }}"
+          <img src="{{ url_for('static', filename='images/cc/jcb.png', subdomain=subdomain) }}"
                 width="40" height="24" class="cc-images" alt="J.C.B"/>
-          <img src="{{ url_for('static', filename='images/cc/diners-club.png') }}"
+          <img src="{{ url_for('static', filename='images/cc/diners-club.png', subdomain=subdomain) }}"
                 width="40" height="24" class="cc-images"
                 alt="Diner's Club"/>
 
