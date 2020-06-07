@@ -281,11 +281,10 @@ def update_credentials():
 
 
 # Subdomain -------------------------------------------------------------------
-@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
+@user.route('/dashboard', methods=['GET','POST'])
 @csrf.exempt
-def dashboard(domain):
-    if not domain:
-        domain = 'demo'
+def dashboard():
+    domain = 'demo'
 
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()
