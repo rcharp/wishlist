@@ -22,7 +22,7 @@ class Feedback(ResourceMixin, db.Model):
                            index=True, nullable=True, primary_key=False, unique=False)
     status_id = db.Column(db.Integer, db.ForeignKey('statuses.status_id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
-    domain_id = db.Column(db.Integer, db.ForeignKey('domains._domain_id', onupdate='CASCADE', ondelete='CASCADE'),
+    domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
                           index=True, nullable=True, primary_key=False, unique=False)
     domain = db.Column(db.Integer, db.ForeignKey('domains.name', onupdate='CASCADE', ondelete='CASCADE'),
                           index=True, nullable=True, primary_key=False, unique=False)
