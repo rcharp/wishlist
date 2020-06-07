@@ -456,7 +456,7 @@
                     success: function (response) {
                     },
                     error: function (xhr) {
-                        window.location.href = '{{ url_for('user.demo') }}';
+                        window.location.href = '{{ url_for('user.demo', subdomain=subdomain) }}';
                     }
                 });
             }
