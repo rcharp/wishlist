@@ -5,16 +5,156 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/admin/templates/admin/user/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/admin/templates/admin/user/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/macros/billing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/macros/billing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/pricing.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/domain.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/domain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/drops.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/drops.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/begin_password_reset.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/begin_password_reset.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_animations.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_animations.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_calendar.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_calendar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_chartjs_v2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_chartjs_v2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_charts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_gallery_advanced.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_gallery_advanced.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_gallery_simple.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_gallery_simple.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_images.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_images.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps_full.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps_full.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps_vector.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_maps_vector.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_rating.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_rating.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_scrolling.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_scrolling.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_sliders.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_sliders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_syntax_highlighting.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_syntax_highlighting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_treeview.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_comp_treeview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_editors.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_editors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_elements.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_elements.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_pickers_more.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_pickers_more.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_premade.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_premade.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_validation.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_validation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_wizard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_forms_wizard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_api.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_api.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_default.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_default.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_default_flipped.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_default_flipped.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_header_static.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_header_static.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_native_scrolling.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_native_scrolling.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_overlay_hoverable.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_overlay_hoverable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_overlay_open.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_side_overlay_open.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_sidebar_hidden.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_sidebar_hidden.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_sidebar_mini_hoverable.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_layouts_sidebar_mini_hoverable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_auth.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_auth.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_blank.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_blank.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_contacts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_dashboard_v2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_dashboard_v2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_orders.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_orders.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_product_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_product_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_ecom_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_errors.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_errors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_faq.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_faq.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_files.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_files.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_discussion.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_discussion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_new_topic.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_new_topic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_topics.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_forum_topics.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_inbox.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_inbox.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_invoice.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_invoice.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile_edit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile_v2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_profile_v2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_tickets.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_pages_tickets.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_datatables.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_datatables.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_pricing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_responsive.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_responsive.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_styles.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_styles.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_tools.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_tables_tools.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_activity.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_activity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks_api.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks_api.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks_draggable.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_blocks_draggable.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_buttons.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_buttons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_cards.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_cards.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_fixed.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_fixed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_full.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_full.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_popup.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_chat_popup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_color_themes.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_color_themes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_grid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_grid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_icons.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_icons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_modals_tooltips.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_modals_tooltips.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_navigation.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_navigation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_ribbons.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_ribbons.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_tabs.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_tabs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_tiles.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_tiles.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_timeline.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_timeline.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_timeline_social.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_timeline_social.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_typography.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_typography.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_widgets.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/base_ui_widgets.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_customers.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_customers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_sales.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/bd_settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_about.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_classic.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_classic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_grid.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_grid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_story.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_story.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_story_cover.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_blog_story_cover.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_checkout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_product.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_products.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_products.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_ecom_search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_course.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_course.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_courses.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_courses.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_lesson.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_elearning_lesson.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_features.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_features.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_home_header_nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_home_header_nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_pricing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_support.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_support.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_team.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_team.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_agency.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_agency.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_guide.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_guide.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_package.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/pages/frontend_travel_package.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/password_reset.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/password_reset.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/layouts/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/app.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/layouts/base_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/base_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/layouts/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/layouts/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,8 +172,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="367" lean-forward="true" selection-start-line="367" selection-end-line="367" />
+            <state relative-caret-position="204">
+              <caret line="368" column="50" lean-forward="true" selection-start-line="368" selection-start-column="50" selection-end-line="368" selection-end-column="50" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -44,32 +184,8 @@
       <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="299" column="56" selection-start-line="299" selection-start-column="56" selection-end-line="299" selection-end-column="56" />
-              <folding>
-                <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#div#0;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#a#2;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="384">
+              <caret line="305" column="56" selection-start-line="305" selection-start-column="56" selection-end-line="305" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -120,7 +236,7 @@
         <entry file="file://$PROJECT_DIR$/app/app.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="282">
-              <caret line="99" column="55" selection-start-line="99" selection-start-column="55" selection-end-line="99" selection-end-column="55" />
+              <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -532,6 +648,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="996" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="14" side_tool="true" />
@@ -539,8 +656,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.32258064" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30830282" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
@@ -1021,7 +1138,7 @@
     <entry file="file://$PROJECT_DIR$/app/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
-          <caret line="99" column="55" selection-start-line="99" selection-start-column="55" selection-end-line="99" selection-end-column="55" />
+          <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1030,39 +1147,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="299" column="56" selection-start-line="299" selection-start-column="56" selection-end-line="299" selection-end-column="56" />
-          <folding>
-            <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#0;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#a#2;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="384">
+          <caret line="305" column="56" selection-start-line="305" selection-start-column="56" selection-end-line="305" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="367" lean-forward="true" selection-start-line="367" selection-end-line="367" />
+        <state relative-caret-position="204">
+          <caret line="368" column="50" lean-forward="true" selection-start-line="368" selection-start-column="50" selection-end-line="368" selection-end-column="50" />
           <folding>
             <element signature="e#0#171#0" expanded="true" />
           </folding>
