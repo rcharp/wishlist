@@ -263,6 +263,19 @@ def update_credentials():
 
 
 # Dashboard -------------------------------------------------------------------
+@user.route('/dashboard', methods=['GET','POST'])
+@csrf.exempt
+def dashboard():
+    feedbacks = Feedback.query.all()
+    statuses = Status.query.all()
+
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+
+
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def dashboard(subdomain):
