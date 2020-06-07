@@ -28,7 +28,7 @@ def home():
 @page.route('/', subdomain="<domain>", methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def subdomain(domain):
+def subdomain():
     return redirect(url_for('user.subdomain', domain=domain))
 
 

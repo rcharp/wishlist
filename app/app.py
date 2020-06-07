@@ -97,7 +97,7 @@ def create_app(settings_override=None):
     app.register_blueprint(admin)
     app.register_blueprint(page)
     app.register_blueprint(contact)
-    app.register_blueprint(user)
+    app.register_blueprint(user, subdomain='<domain>')
     app.register_blueprint(api)
     app.register_blueprint(billing)
     app.register_blueprint(errors)
