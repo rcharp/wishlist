@@ -19,6 +19,7 @@ from flask_login import (
 import time
 import random
 from operator import attrgetter
+from flask_cors import cross_origin
 
 from lib.safe_next_url import safe_next_url
 from app.blueprints.user.decorators import anonymous_required
@@ -278,6 +279,7 @@ def root_dashboard():
 
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def dashboard(subdomain):
     feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()

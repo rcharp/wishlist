@@ -12,11 +12,13 @@ from sqlalchemy import and_, exists, text
 from importlib import import_module
 import os
 import random
+from flask_cors import cross_origin
 
 page = Blueprint('page', __name__, template_folder='templates')
 
 
 @page.route('/')
+@cross_origin()
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('user.dashboard'))
@@ -26,15 +28,18 @@ def home():
 
 
 @page.route('/terms')
+@cross_origin()
 def terms():
     return render_template('page/terms.html')
 
 
 @page.route('/privacy')
+@cross_origin()
 def privacy():
     return render_template('page/privacy.html')
 
 
 @page.route('/index')
+@cross_origin()
 def index():
     return render_template('page/index.html', plans=settings.STRIPE_PLANS)

@@ -46,7 +46,8 @@
 {##}
 {#        <!-- Bootstrap and OneUI CSS framework -->#}
 {#        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">#}
-        <link rel="stylesheet" id="css-main" href="../../../../static/icons/icons.css">
+{#        <link rel="stylesheet" id="css-main" href="../../../../static/icons/icons.css">#}
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css') }}">
 {##}
 {#        <!-- Shepherd JS -->#}
 {#        <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>#}
@@ -376,7 +377,8 @@
 
 
         <!-- jQuery -->
-        {#<script src="../../../../static/oneui/assets/js/core/jquery.min.js"></script>#}
+{#        <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js') }}"></script>#}
+        <script src="../../../../static/oneui/assets/js/core/jquery.min.js"></script>
 
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
 {#        <script src="../../../../static/oneui/assets/js/core/bootstrap.min.js"></script>#}
