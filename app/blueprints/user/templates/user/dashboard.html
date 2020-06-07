@@ -463,7 +463,7 @@
             }
 
             function Vote(feedback_id) {
-                var url = "{{ url_for(path, subdomain='DUMMY_VALUE') }}";
+                var url = "{{ url_for('user.add_vote', subdomain='DUMMY_VALUE') }}";
                 $.ajax({
                     url: FormatSubdomain(url, '{{ subdomain }}'),
                     type: 'POST',
@@ -510,11 +510,11 @@
                 }
             }
 
-            function GetSubdomain(){
+            {#function GetSubdomain(){
                 var sub = window.location.host.split(".")[0];
                 alert(sub);
                 return sub;
-            }
+            }#}
 
             function FormatSubdomain(url, s){
                 return url.replace(/DUMMY_VALUE/, s);
