@@ -10,7 +10,6 @@ from app.app import create_app
 from app.extensions import db
 from app.blueprints.api.api_functions import generate_id
 from app.blueprints.user.models.user import User
-from app.blueprints.user.models.domain import Domain
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback
@@ -50,7 +49,7 @@ def init(with_testdb):
 
 
 @click.command()
-def seed_users():
+def seed():
     """
     Seed the database with an initial user.
 
@@ -77,7 +76,6 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'domain': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD']
     }
 
@@ -88,7 +86,7 @@ def seed_users():
 
 
 @click.command()
-def seed_customers():
+def seed_customer():
     params = {
         'user_id': 1,
         'customer_id': app.config['SEED_CUSTOMER_ID'],
@@ -114,23 +112,9 @@ def seed_status():
 
 
 @click.command()
-def seed_domains():
-    demo = {
-        'domain_id': generate_id(Domain),
-        'name': 'demo',
-        'company': 'Demo',
-        'admin_email': 'demo@getwishlist.io',
-        'user_id': 2
-    }
+def seed_data():
 
-    Domain(**demo).save()
-
-
-@click.command()
-def seed_feedback():
-    u = User.query.filter(User.id == 2).scalar()
     s = list(Status.query.all())
-    d = Domain.query.filter(Domain.user_id == u.id).scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -138,12 +122,11 @@ def seed_feedback():
             'user_id': 2,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': u.email,
+            'email': 'demo@getwishlist.io',
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
-            'status_id': status.status_id,
-            'status': status.name,
-            'domain_id': d.domain_id
+            # 'status_id': status.status_id,
+            'status': status.name
         }
 
         Feedback(**params).save()
@@ -157,16 +140,15 @@ def seed_feedback():
 @click.pass_context
 def reset(ctx, with_testdb):
     """
-    Init and seed_users automatically.
+    Init and seed automatically.
 
     :param with_testdb: Create a test database
     :return: None
     """
     ctx.invoke(init, with_testdb=with_testdb)
-    ctx.invoke(seed_users)
-    ctx.invoke(seed_domains)
+    ctx.invoke(seed)
     ctx.invoke(seed_status)
-    ctx.invoke(seed_feedback)
+    ctx.invoke(seed_data)
 
     return None
 
@@ -186,5 +168,5 @@ def backup():
 
 
 cli.add_command(init)
-cli.add_command(seed_users)
+cli.add_command(seed)
 cli.add_command(reset)

@@ -5,14 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/api/models/feedback.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/colorlib/form/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/colorlib/form/vendor/jquery/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/oneui/assets/js/plugins/highlightjs/highlight.pack.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/oneui/assets/js/plugins/highlightjs/highlight.pack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/page/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/page/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/static/scripts/easyPaginate/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/scripts/easyPaginate/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/404.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/material/assets/plugins/chartist-plugin-tooltip-master/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/material/assets/plugins/chartist-plugin-tooltip-master/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli/commands/cmd_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli/commands/cmd_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pyasn1_modules/rfc2459.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pyasn1_modules/rfc2459.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pyasn1_modules/rfc3279.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pyasn1_modules/rfc3279.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/rsa/pkcs1_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/rsa/pkcs1_v2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,11 +57,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="290" column="73" lean-forward="true" selection-start-line="290" selection-start-column="73" selection-end-line="290" selection-end-column="73" />
+            <state relative-caret-position="178">
+              <caret line="59" column="27" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="27" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -39,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="103" column="49" selection-start-line="103" selection-start-column="41" selection-end-line="103" selection-end-column="49" />
+            <state relative-caret-position="294">
+              <caret line="264" column="42" selection-start-line="264" selection-start-column="42" selection-end-line="264" selection-end-column="42" />
               <folding>
                 <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -83,7 +113,7 @@
         <entry file="file://$PROJECT_DIR$/app/blueprints/page/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="310">
-              <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
+              <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -95,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/config/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -107,7 +137,7 @@
         <entry file="file://$PROJECT_DIR$/app/app.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="282">
-              <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+              <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -150,7 +180,6 @@
       <find>():</find>
       <find>subdomain=su</find>
       <find>(domain):</find>
-      <find>subdomain</find>
       <find>dashboard(</find>
       <find>subdomain='&lt;domain&gt;',</find>
       <find>url_for</find>
@@ -164,13 +193,14 @@
       <find>href=&quot;{{ url_for('user.welcome')</find>
       <find>href=&quot;{{ url_for('user.update_credentials')</find>
       <find>href=&quot;{{ url_for('user.contact')</find>
-      <find>subdomain=</find>
-      <find>user.das</find>
       <find>domain=subdomain</find>
       <find>window.location.href =</find>
       <find>window.location.href='{{ url_for('user.dashboard'</find>
       <find>window.location.href</find>
       <find>user.dashboard</find>
+      <find>subdomain=</find>
+      <find>user.das</find>
+      <find>subdomain</find>
     </findStrings>
     <replaceStrings>
       <replace>user.dashboard', domain=subdomain)</replace>
@@ -201,8 +231,8 @@
       <replace>href=&quot;{{ url_for('user.contact', subdomain=subdomain)</replace>
       <replace>'{{ url_for('user.dashboard', subdomain=subdomain) }}'&quot;</replace>
       <replace>subdomain=subdomain</replace>
-      <replace>subdomain=subdomain</replace>
       <replace>window.location.href='{{ url_for('user.dashboard', subdomain=subdomain</replace>
+      <replace>subdomain=subdomain</replace>
     </replaceStrings>
     <dirStrings>
       <dir>app/static/pay</dir>
@@ -272,9 +302,9 @@
         <option value="$PROJECT_DIR$/app/templates/layouts/base.html" />
         <option value="$PROJECT_DIR$/app/app.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
       </list>
     </option>
   </component>
@@ -955,7 +985,7 @@
     <entry file="file://$PROJECT_DIR$/config/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="41" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
@@ -965,7 +995,7 @@
     <entry file="file://$PROJECT_DIR$/app/blueprints/page/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
-          <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
+          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
@@ -1009,17 +1039,27 @@
     <entry file="file://$PROJECT_DIR$/app/app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
-          <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+          <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="59" column="27" selection-start-line="59" selection-start-column="27" selection-end-line="59" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#171#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="103" column="49" selection-start-line="103" selection-start-column="41" selection-end-line="103" selection-end-column="49" />
+        <state relative-caret-position="294">
+          <caret line="264" column="42" selection-start-line="264" selection-start-column="42" selection-end-line="264" selection-end-column="42" />
           <folding>
             <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1032,16 +1072,6 @@
             <element signature="n#style#0;n#i#0;n#a#2;n#nav#0;n#div#2;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="290" column="73" lean-forward="true" selection-start-line="290" selection-start-column="73" selection-end-line="290" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#171#0" expanded="true" />
           </folding>
         </state>
       </provider>

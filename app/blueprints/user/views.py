@@ -262,47 +262,31 @@ def update_credentials():
     return render_template('user/update_credentials.html', form=form)
 
 
-# # Dashboard -------------------------------------------------------------------
-# @user.route('/dashboard', methods=['GET','POST'])
-# @login_required
-# @csrf.exempt
-# def dashboard():
-#     # if current_user.role == 'admin':
-#     #     return redirect(url_for('admin.dashboard'))
-#
-#     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
-#     statuses = Status.query.all()
-#
-#     for f in feedbacks:
-#         f.votes = int(f.votes)
-#
-#     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-#     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
-
-
-# Subdomain -------------------------------------------------------------------
-# defaults={'subdomain': ''},
-@user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
+# Dashboard -------------------------------------------------------------------
+@user.route('/dashboard', methods=['GET','POST'])
+@login_required
 @csrf.exempt
-def dashboard(subdomain):
-    if not subdomain:
-        subdomain = 'demo'
+def dashboard():
 
-    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+    if current_user.role == 'admin':
+        return redirect(url_for('admin.dashboard'))
+
+    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
+    # popular = max(feedbacks, key=attrgetter('votes'))
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
 
 
 # Feedback -------------------------------------------------------------------
 @user.route('/feedback', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def feedback(domain):
+def feedback():
     feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -317,7 +301,7 @@ def feedback(domain):
 @user.route('/dashboard/<sort>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def sort(sort, domain):
+def sort(sort):
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -337,7 +321,7 @@ def sort(sort, domain):
 @user.route('/feedback/<status>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def filter(status, domain):
+def filter(status):
     feedbacks = Feedback.query.filter(and_(Feedback.user_id == current_user.id, Feedback.status == status)).all()
     statuses = Status.query.all()
 
@@ -352,7 +336,7 @@ def filter(status, domain):
 @user.route('/view/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def view_feedback(feedback_id, domain):
+def view_feedback(feedback_id):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
@@ -362,7 +346,7 @@ def view_feedback(feedback_id, domain):
 @user.route('/add_vote', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_vote(domain):
+def add_vote():
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
@@ -376,7 +360,7 @@ def add_vote(domain):
 @user.route('/roadmap', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def roadmap(domain):
+def roadmap():
 
     # if current_user.role == 'admin':
         # return redirect(url_for('admin.dashboard'))
@@ -388,7 +372,7 @@ def roadmap(domain):
 @user.route('/settings', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def settings(domain):
+def settings():
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
@@ -403,7 +387,7 @@ def settings(domain):
 @user.route('/add_workspace', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_workspace(domain):
+def add_workspace():
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -429,7 +413,7 @@ def add_workspace(domain):
 @user.route('/add_feedback', methods=['POST'])
 @login_required
 @csrf.exempt
-def add_feedback(domain):
+def add_feedback():
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -447,10 +431,44 @@ def add_feedback(domain):
     return render_template('user/add_feedback.html', current_user=current_user)
 
 
+# Demo -------------------------------------------------------------------
+@user.route('/demo', methods=['GET','POST'])
+@csrf.exempt
+def demo():
+    feedbacks = Feedback.query.filter(Feedback.user_id == 2).all()
+    statuses = Status.query.all()
+
+    for f in feedbacks:
+        f.votes = int(f.votes)
+
+    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+
+
+@user.route('/demo_feedback', methods=['POST'])
+@login_required
+@csrf.exempt
+def demo_feedback():
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+
+            from app.blueprints.api.api_functions import create_feedback
+            f = create_feedback(2, None, title, description)
+
+            return redirect(url_for('user.demo'))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.demo'))
+
+    return render_template('user/add_feedback.html', current_user=current_user)
+
+
 # Contact us -------------------------------------------------------------------
 @user.route('/contact', methods=['GET','POST'])
 @csrf.exempt
-def contact(domain):
+def contact():
     if request.method == 'POST':
         from app.blueprints.user.tasks import send_contact_us_email
         send_contact_us_email.delay(request.form['email'], request.form['message'])

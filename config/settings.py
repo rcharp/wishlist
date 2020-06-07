@@ -3,7 +3,6 @@ import os
 from celery.schedules import crontab
 
 PRODUCTION = True
-SERVER_NAME = os.environ.get('SERVER_NAME', None)
 
 DEBUG = True
 LOG_LEVEL = 'DEBUG'  # CRITICAL / ERROR / WARNING / INFO / DEBUG

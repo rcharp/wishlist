@@ -2,7 +2,6 @@ from sqlalchemy import or_
 
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
-from app.blueprints.api.models.vote import Vote
 
 
 class Feedback(ResourceMixin, db.Model):
@@ -17,18 +16,13 @@ class Feedback(ResourceMixin, db.Model):
     description = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
     status = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    # favorite = db.Column('favorite', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
-    vote_id = db.relationship(Vote, uselist=False, lazy='subquery',
-                                backref='feedback', passive_deletes=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
                            index=True, nullable=True, primary_key=False, unique=False)
-    status_id = db.Column(db.Integer, db.ForeignKey('statuses.status_id', onupdate='CASCADE', ondelete='CASCADE'),
+    status_id = db.Column(db.Integer, db.ForeignKey('statuses.id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
-    domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
-                          index=True, nullable=True, primary_key=False, unique=False)
-    domain = db.Column(db.String(255), db.ForeignKey('domains.name', onupdate='CASCADE', ondelete='CASCADE'),
-                          index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.
