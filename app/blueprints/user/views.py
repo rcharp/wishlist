@@ -281,11 +281,10 @@ def update_credentials():
 
 
 # Subdomain -------------------------------------------------------------------
-@user.route('/dashboard', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/dashboard', methods=['GET','POST'])
 @csrf.exempt
-def dashboard(domain):
-    if not domain:
-        domain = 'demo'
+def dashboard():
+    domain = 'demo'
 
     feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
     statuses = Status.query.all()
@@ -298,10 +297,10 @@ def dashboard(domain):
 
 
 # Feedback -------------------------------------------------------------------
-@user.route('/feedback', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/feedback', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def feedback(domain):
+def feedback():
     feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -316,7 +315,7 @@ def feedback(domain):
 @user.route('/dashboard/<sort>', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def sort(sort, domain):
+def sort(sort):
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -336,7 +335,7 @@ def sort(sort, domain):
 @user.route('/feedback/<status>', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def filter(status, domain):
+def filter(status):
     feedbacks = Feedback.query.filter(and_(Feedback.user_id == current_user.id, Feedback.status == status)).all()
     statuses = Status.query.all()
 
@@ -351,7 +350,7 @@ def filter(status, domain):
 @user.route('/view/<feedback_id>', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def view_feedback(feedback_id, domain):
+def view_feedback(feedback_id):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
@@ -361,7 +360,7 @@ def view_feedback(feedback_id, domain):
 @user.route('/add_vote', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_vote(domain):
+def add_vote():
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
@@ -375,7 +374,7 @@ def add_vote(domain):
 @user.route('/roadmap', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def roadmap(domain):
+def roadmap():
 
     # if current_user.role == 'admin':
         # return redirect(url_for('admin.dashboard'))
@@ -387,7 +386,7 @@ def roadmap(domain):
 @user.route('/settings', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def settings(domain):
+def settings():
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
@@ -402,7 +401,7 @@ def settings(domain):
 @user.route('/add_workspace', subdomain='<domain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_workspace(domain):
+def add_workspace():
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -428,7 +427,7 @@ def add_workspace(domain):
 @user.route('/add_feedback', subdomain='<domain>', methods=['POST'])
 @login_required
 @csrf.exempt
-def add_feedback(domain):
+def add_feedback():
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -449,7 +448,7 @@ def add_feedback(domain):
 # Contact us -------------------------------------------------------------------
 @user.route('/contact', subdomain='<domain>', methods=['GET','POST'])
 @csrf.exempt
-def contact(domain):
+def contact():
     if request.method == 'POST':
         from app.blueprints.user.tasks import send_contact_us_email
         send_contact_us_email.delay(request.form['email'], request.form['message'])
