@@ -265,7 +265,7 @@ def update_credentials():
 # Dashboard -------------------------------------------------------------------
 @user.route('/dashboard', methods=['GET','POST'])
 @csrf.exempt
-def dashboard():
+def root_dashboard():
     feedbacks = Feedback.query.all()
     statuses = Status.query.all()
 
