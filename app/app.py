@@ -75,7 +75,7 @@ def create_app(settings_override=None):
     :param settings_override: Override settings
     :return: Flask app
     """
-    app = Flask(__name__, instance_relative_config=True, subdomain_matching=True)
+    app = Flask(__name__, instance_relative_config=True, subdomain_matching=True, static_folder='static')
 
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
@@ -87,7 +87,6 @@ def create_app(settings_override=None):
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
     app.config['SQLALCHEMY_POOL_TIMEOUT'] = 120
     app.static_url_path = '/static'
-    app.static_folder = 'static'
 
     if settings_override:
         app.config.update(settings_override)
