@@ -46,7 +46,7 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 
 # Login and Credentials -------------------------------------------------------------------
-@user.route('/login', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/login', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
 def login():
@@ -105,7 +105,7 @@ def logout():
     return redirect(url_for('user.login'))
 
 
-@user.route('/account/begin_password_reset', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/account/begin_password_reset', methods=['GET', 'POST'])
 @anonymous_required()
 def begin_password_reset():
     form = BeginPasswordResetForm()
@@ -119,7 +119,7 @@ def begin_password_reset():
     return render_template('user/begin_password_reset.html', form=form)
 
 
-@user.route('/account/password_reset', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/account/password_reset', methods=['GET', 'POST'])
 @anonymous_required()
 def password_reset():
     form = PasswordResetForm(reset_token=request.args.get('reset_token'))
@@ -143,7 +143,7 @@ def password_reset():
     return render_template('user/password_reset.html', form=form)
 
 
-@user.route('/signup', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
 def signup():
@@ -183,7 +183,7 @@ def signup():
     return render_template('user/signup.html', form=form)
 
 
-# @user.route('/signup', subdomain='<domain>', methods=['GET', 'POST'])
+# @user.route('/signup', methods=['GET', 'POST'])
 # @anonymous_required()
 # @csrf.exempt
 # def signup():
@@ -223,7 +223,7 @@ def signup():
 #     return render_template('user/signup.html', form=form)
 
 
-@user.route('/welcome', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
     if current_user.username:
@@ -242,7 +242,7 @@ def welcome():
     return render_template('user/welcome.html', form=form, payment=current_user.payment_id)
 
 
-@user.route('/settings/update_credentials', subdomain='<domain>', methods=['GET', 'POST'])
+@user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @login_required
 def update_credentials():
     form = UpdateCredentials(current_user, uid=current_user.id)
@@ -263,7 +263,7 @@ def update_credentials():
 
 
 # # Dashboard -------------------------------------------------------------------
-# @user.route('/dashboard', subdomain='<domain>', methods=['GET','POST'])
+# @user.route('/dashboard', methods=['GET','POST'])
 # @login_required
 # @csrf.exempt
 # def dashboard():
@@ -281,24 +281,24 @@ def update_credentials():
 
 
 # Subdomain -------------------------------------------------------------------
-@user.route('/dashboard', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def dashboard(domain):
-    if not domain:
-        domain = 'demo'
+def dashboard(subdomain):
+    if not subdomain:
+        subdomain = 'demo'
 
-    feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
+    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=domain)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
 
 
 # Feedback -------------------------------------------------------------------
-@user.route('/feedback', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/feedback', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def feedback(domain):
@@ -313,7 +313,7 @@ def feedback(domain):
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
 
 
-@user.route('/dashboard/<sort>', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/dashboard/<sort>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def sort(sort, domain):
@@ -333,7 +333,7 @@ def sort(sort, domain):
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
-@user.route('/feedback/<status>', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/feedback/<status>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def filter(status, domain):
@@ -348,7 +348,7 @@ def filter(status, domain):
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter)
 
 
-@user.route('/view/<feedback_id>', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/view/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def view_feedback(feedback_id, domain):
@@ -358,7 +358,7 @@ def view_feedback(feedback_id, domain):
 
 
 # Votes -------------------------------------------------------------------
-@user.route('/add_vote', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/add_vote', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def add_vote(domain):
@@ -372,7 +372,7 @@ def add_vote(domain):
 
 
 # Roadmap -------------------------------------------------------------------
-@user.route('/roadmap', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/roadmap', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def roadmap(domain):
@@ -384,7 +384,7 @@ def roadmap(domain):
 
 
 # Settings -------------------------------------------------------------------
-@user.route('/settings', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/settings', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def settings(domain):
@@ -399,7 +399,7 @@ def settings(domain):
 
 
 # Actions -------------------------------------------------------------------
-@user.route('/add_workspace', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/add_workspace', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def add_workspace(domain):
@@ -425,7 +425,7 @@ def add_workspace(domain):
     return render_template('user/add_workspace.html', current_user=current_user)
 
 
-@user.route('/add_feedback', subdomain='<domain>', methods=['POST'])
+@user.route('/add_feedback', methods=['POST'])
 @login_required
 @csrf.exempt
 def add_feedback(domain):
@@ -447,7 +447,7 @@ def add_feedback(domain):
 
 
 # Contact us -------------------------------------------------------------------
-@user.route('/contact', subdomain='<domain>', methods=['GET','POST'])
+@user.route('/contact', methods=['GET','POST'])
 @csrf.exempt
 def contact(domain):
     if request.method == 'POST':
