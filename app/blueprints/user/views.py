@@ -263,10 +263,10 @@ def update_credentials():
 
 
 # Dashboard -------------------------------------------------------------------
-@user.route('/dashboard', subdomain="<domain>", methods=['GET','POST'])
+@user.route('/dashboard', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def dashboard(domain):
+def dashboard():
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
