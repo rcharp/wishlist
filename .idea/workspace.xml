@@ -71,7 +71,7 @@
       <find>hello</find>
       <find>url_for(</find>
       <find>[url_for]\?.*/g</find>
-      <find>') }}&quot;</find>
+      <find />
       <find>render_template('</find>
       <find>():</find>
       <find>subdomain=su</find>
@@ -80,18 +80,18 @@
       <find>subdomain='&lt;domain&gt;',</find>
       <find>url_for</find>
       <find>render_template('user/</find>
-      <find>href=&quot;{{ url_for('user.settings')</find>
-      <find>href=&quot;{{ url_for('user.login')</find>
-      <find>href=&quot;{{ url_for('user.logout')</find>
-      <find>href=&quot;{{ url_for('user.begin_password_reset')</find>
-      <find>href=&quot;{{ url_for('user.password_reset')</find>
-      <find>href=&quot;{{ url_for('user.signup')</find>
-      <find>href=&quot;{{ url_for('user.welcome')</find>
-      <find>href=&quot;{{ url_for('user.update_credentials')</find>
-      <find>href=&quot;{{ url_for('user.contact')</find>
+      <find />
+      <find />
+      <find />
+      <find />
+      <find />
+      <find />
+      <find />
+      <find />
+      <find />
       <find>domain=subdomain</find>
-      <find>window.location.href =</find>
-      <find>window.location.href='{{ url_for('user.dashboard'</find>
+      <find />
+      <find />
       <find>window.location.href</find>
       <find>user.dashboard</find>
       <find>subdomain=</find>
@@ -100,34 +100,34 @@
       <find>dashboard</find>
     </findStrings>
     <replaceStrings>
-      <replace>user.dashboard', domain=subdomain)</replace>
+      <replace />
       <replace>'user.dashboard'</replace>
       <replace>domain</replace>
-      <replace>url_for('user.dashboard', domain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.dashboard', domain=subdomain) }}&quot;</replace>
+      <replace />
+      <replace />
       <replace />
       <replace>)</replace>
-      <replace>subdomain='&lt;domain&gt;', methods</replace>
-      <replace>', subdomain=GetSubdomain();) }}&quot;</replace>
-      <replace>', subdomain=GetSubdomain()) }}&quot;</replace>
-      <replace>, subdomain=</replace>
-      <replace>, subdomain=subdomain</replace>
-      <replace>', subdomain=subdomain) }}&quot;</replace>
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
       <replace>(subdomain):</replace>
-      <replace>) }}&quot;</replace>
+      <replace />
       <replace>():</replace>
       <replace>subdomain=sub</replace>
-      <replace>href=&quot;{{ url_for('user.settings', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.login', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.logout', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.begin_password_reset', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.signup', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.welcome', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.update_credentials', subdomain=subdomain)</replace>
-      <replace>href=&quot;{{ url_for('user.contact', subdomain=subdomain)</replace>
-      <replace>'{{ url_for('user.dashboard', subdomain=subdomain) }}'&quot;</replace>
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
+      <replace />
       <replace>subdomain=subdomain</replace>
-      <replace>window.location.href='{{ url_for('user.dashboard', subdomain=subdomain</replace>
+      <replace />
       <replace>subdomain=subdomain</replace>
       <replace>User</replace>
     </replaceStrings>
@@ -236,8 +236,8 @@
       <path value="$PROJECT_DIR$/app/templates/mdl/BS4/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="73" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1680" />
     <option name="height" value="996" />
   </component>
