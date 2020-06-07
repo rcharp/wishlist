@@ -125,9 +125,9 @@
                   <span style="font-size:32px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ 'site'|site_name_filter }} <span style="font-size:14px;">v1.0</span></span>
               </div>
 
-                {% if current_user.domain %}
+                {% if subdomain %}
                   <div class="flex items-center flex-shrink-0 px-4">
-                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ current_user.domain|lower }}.{{ 'site'|site_url_filter }}</span>
+                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ subdomain|lower }}.{{ 'site'|site_url_filter }}</span>
                   </div>
                 {% endif %}
               <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
@@ -200,7 +200,7 @@
                     -->
                     <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
                       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        {% if current_user.domain %}<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.domain|title }}</a>{% endif %}
+                        {% if subdomain %}<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ subdomain|title }}</a>{% endif %}
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</a>
                         <div class="border-t border-gray-100"></div>
                         <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
