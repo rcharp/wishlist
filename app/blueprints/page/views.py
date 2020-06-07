@@ -25,13 +25,6 @@ def home():
                            plans=settings.STRIPE_PLANS)
 
 
-@page.route('/', subdomain="<domain>", methods=['GET','POST'])
-@login_required
-@csrf.exempt
-def subdomain(domain):
-    return redirect(url_for('user.subdomain', domain=domain))
-
-
 @page.route('/terms')
 def terms():
     return render_template('page/terms.html')

@@ -77,7 +77,6 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'domain': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD']
     }
 
@@ -127,10 +126,9 @@ def seed_domains():
 
 
 @click.command()
-def seed_feedback():
-    u = User.query.filter(User.id == 2).scalar()
+def seed_data():
+
     s = list(Status.query.all())
-    d = Domain.query.filter(Domain.user_id == u.id).scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -138,12 +136,11 @@ def seed_feedback():
             'user_id': 2,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': u.email,
+            'email': 'demo@getwishlist.io',
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
-            'status_id': status.status_id,
-            'status': status.name,
-            'domain_id': d.domain_id
+            # 'status_id': status.status_id,
+            'status': status.name
         }
 
         Feedback(**params).save()
@@ -166,7 +163,7 @@ def reset(ctx, with_testdb):
     ctx.invoke(seed_users)
     ctx.invoke(seed_domains)
     ctx.invoke(seed_status)
-    ctx.invoke(seed_feedback)
+    ctx.invoke(seed_data)
 
     return None
 

@@ -75,11 +75,13 @@ def create_app(settings_override=None):
     :param settings_override: Override settings
     :return: Flask app
     """
-    app = Flask(__name__, instance_relative_config=True, subdomain_matching=True)
+    app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
-    app.config["SERVER_NAME"] = app.config.get('SERVER_NAME')
+
+    # Set the app server name
+    app.config['SERVER_NAME'] = app.config.get('SERVER_NAME')
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
