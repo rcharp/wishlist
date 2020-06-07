@@ -463,8 +463,9 @@
             }
 
             function Vote(feedback_id) {
+                var url = 'user.add_vote';
                 $.ajax({
-                    url: FormatSubdomain('user.add_vote', '{{ subdomain }}'),
+                    url: FormatSubdomain(url, '{{ subdomain }}'),
                     type: 'POST',
                     beforeSend: UpdateVote(feedback_id),
                     data: {'feedback_id': feedback_id},
