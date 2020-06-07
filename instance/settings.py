@@ -5,10 +5,6 @@ PASSWORD = 'hyrule724'
 
 PRODUCTION = False
 
-SERVER_NAME = 'localhost:5000'
-SECRET_KEY = 'hyrule724'
-CRYPTO_KEY = '1MQkYzBdtbrul6-luLdpLPuOCosCLbADga6mQZACCZ0='
-
 DOMAIN = 'getwishlist.io'
 IP_ADDRESS = '192.168.0.1'
 
@@ -89,6 +85,10 @@ SEED_TEST_EMAIL = 'head2dasky@gmail.com'
 SEED_ADMIN_PASSWORD = 'hyrule724'
 
 SEED_CUSTOMER_ID = 'cus_Gpvj1EwzERfYxe'
+
+SERVER_NAME = 'localhost:5000'
+SECRET_KEY = 'hyrule724'
+CRYPTO_KEY = '1MQkYzBdtbrul6-luLdpLPuOCosCLbADga6mQZACCZ0='
 
 # Mailerlite
 MAILERLITE_API_KEY = 'ddd236782e686e86c817ddffe98eb43e'

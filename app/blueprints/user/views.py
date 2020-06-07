@@ -266,6 +266,10 @@ def update_credentials():
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def dashboard(subdomain):
+
+    if current_user.role == 'admin':
+        return redirect(url_for('admin.dashboard'))
+
     feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
