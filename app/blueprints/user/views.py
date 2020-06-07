@@ -76,14 +76,14 @@ def login(subdomain):
 
                 next_url = request.form.get('next')
 
-                if next_url == url_for('user.login') or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard')
+                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
+                    next_url = url_for('user.dashboard', subdomain=subdomain)
 
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)
 
                 if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
+                    return redirect(url_for('admin.dashboard', subdomain=subdomain))
             else:
                 flash('This account has been disabled.', 'error')
         else:
@@ -93,7 +93,7 @@ def login(subdomain):
         if len(form.errors) > 0:
             print(form.errors)
 
-    return render_template('user/login.html', form=form)
+    return render_template('user/login.html', form=form, subdomain=subdomain)
 
 
 @user.route('/logout')
@@ -102,7 +102,7 @@ def logout(subdomain):
     logout_user()
 
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login'))
+    return redirect(url_for('user.login', subdomain=subdomain))
 
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
@@ -114,9 +114,9 @@ def begin_password_reset(subdomain):
         u = User.initialize_password_reset(request.form.get('identity'))
 
         flash('An email has been sent to {0}.'.format(u.email), 'success')
-        return redirect(url_for('user.login'))
+        return redirect(url_for('user.login', subdomain=subdomain))
 
-    return render_template('user/begin_password_reset.html', form=form)
+    return render_template('user/begin_password_reset.html', form=form, subdomain=subdomain)
 
 
 @user.route('/account/password_reset', methods=['GET', 'POST'])
@@ -130,7 +130,7 @@ def password_reset(subdomain):
         if u is None:
             flash('Your reset token has expired or was tampered with.',
                   'error')
-            return redirect(url_for('user.begin_password_reset'))
+            return redirect(url_for('user.begin_password_reset', subdomain=subdomain))
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
@@ -138,9 +138,9 @@ def password_reset(subdomain):
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/password_reset.html', form=form)
+    return render_template('user/password_reset.html', form=form, subdomain=subdomain)
 
 
 @user.route('/signup', methods=['GET', 'POST'])
@@ -152,11 +152,11 @@ def signup(subdomain):
     if form.validate_on_submit():
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
             flash('There is already an account with this email. Please login.', 'error')
-            return redirect(url_for('user.login'))
+            return redirect(url_for('user.login', subdomain=subdomain))
 
         if db.session.query(exists().where(func.lower(Domain.name) == request.form.get('domain').lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
-            return render_template('user/signup.html', form=form)
+            return render_template('user/signup.html', form=form, subdomain=subdomain)
 
         u = User()
 
@@ -178,9 +178,9 @@ def signup(subdomain):
             # create_subscriber(current_user.email)
 
             flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/signup.html', form=form)
+    return render_template('user/signup.html', form=form, subdomain=subdomain)
 
 
 # @user.route('/signup', methods=['GET', 'POST'])
@@ -228,7 +228,7 @@ def signup(subdomain):
 def welcome(subdomain):
     if current_user.username:
         flash('You already picked a username.', 'warning')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     form = WelcomeForm()
 
@@ -237,9 +237,9 @@ def welcome(subdomain):
         current_user.save()
 
         flash('Your username has been set.', 'success')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, payment=current_user.payment_id)
+    return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
 
 
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
@@ -257,9 +257,9 @@ def update_credentials(subdomain):
         current_user.save()
 
         flash('Your sign in settings have been updated.', 'success')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/update_credentials.html', form=form)
+    return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
 
 
 # # Dashboard -------------------------------------------------------------------
@@ -308,7 +308,7 @@ def feedback(subdomain):
 
     feedback.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses, subdomain=subdomain)
 
 
 @user.route('/dashboard/<sort>', methods=['GET','POST'])
@@ -328,7 +328,7 @@ def sort(sort, subdomain):
 
         feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort, subdomain=subdomain)
 
 
 @user.route('/feedback/<status>', methods=['GET','POST'])
