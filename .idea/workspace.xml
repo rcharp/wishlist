@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="292" column="30" lean-forward="true" selection-start-line="292" selection-start-column="30" selection-end-line="292" selection-end-column="30" />
+            <state relative-caret-position="342">
+              <caret line="372" lean-forward="true" selection-start-line="372" selection-end-line="372" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -33,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="127" column="29" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="29" />
+            <state relative-caret-position="294">
+              <caret line="299" column="56" selection-start-line="299" selection-start-column="56" selection-end-line="299" selection-end-column="56" />
               <folding>
                 <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -156,13 +156,11 @@
       <find>'user.dashboard', domain=subdomain</find>
       <find>url_for('user.dashboard')</find>
       <find>href=&quot;{{ url_for('user.dashboard') }}&quot;</find>
-      <find>subdomain='&lt;domain&gt;',</find>
       <find>methods</find>
       <find>, domain=subdomain)</find>
       <find>user.subd</find>
       <find>') }}&quot;</find>
       <find>dummy</find>
-      <find>url_for</find>
       <find>.replac</find>
       <find>FormatSubdomain</find>
       <find>) }}&quot;</find>
@@ -173,9 +171,11 @@
       <find>render_template('</find>
       <find>():</find>
       <find>subdomain=su</find>
-      <find>dashboard(</find>
       <find>(domain):</find>
       <find>subdomain</find>
+      <find>dashboard(</find>
+      <find>subdomain='&lt;domain&gt;',</find>
+      <find>url_for</find>
     </findStrings>
     <replaceStrings>
       <replace>Vote</replace>
@@ -206,8 +206,8 @@
       <replace>, subdomain=subdomain</replace>
       <replace>', subdomain=subdomain) }}&quot;</replace>
       <replace>(subdomain):</replace>
-      <replace>():</replace>
       <replace>) }}&quot;</replace>
+      <replace>():</replace>
     </replaceStrings>
     <dirStrings>
       <dir>app/static/pay</dir>
@@ -275,11 +275,11 @@
         <option value="$PROJECT_DIR$/config/settings.py" />
         <option value="$PROJECT_DIR$/app/blueprints/page/views.py" />
         <option value="$PROJECT_DIR$/app/templates/layouts/base.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
-        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
         <option value="$PROJECT_DIR$/app/app.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
         <option value="$PROJECT_DIR$/app/blueprints/user/views.py" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
+        <option value="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" />
       </list>
     </option>
   </component>
@@ -1021,10 +1021,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="372" lean-forward="true" selection-start-line="372" selection-end-line="372" />
+          <folding>
+            <element signature="e#0#171#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="127" column="29" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="29" />
+        <state relative-caret-position="294">
+          <caret line="299" column="56" selection-start-line="299" selection-start-column="56" selection-end-line="299" selection-end-column="56" />
           <folding>
             <element signature="n#style#0;n#i#0;n#a#0;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#1;n#nav#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1048,16 +1058,6 @@
             <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="292" column="30" lean-forward="true" selection-start-line="292" selection-start-column="30" selection-end-line="292" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#171#0" expanded="true" />
           </folding>
         </state>
       </provider>
