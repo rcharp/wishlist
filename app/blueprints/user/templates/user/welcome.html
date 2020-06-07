@@ -16,7 +16,7 @@
 
       <p>
         Take a look at what you'll gain by
-        <a href="{{ url_for('billing.pricing', subdomain=subdomain) }}">becoming a paid member</a>.
+        <a href="{{ url_for('billing.pricing') }}">becoming a paid member</a>.
       </p><br /><br />
     </div>
   {% endif %}
@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-6">
             <div class="visible-xs visible-sm sm-margin-top"></div>
-            <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}"
+            <a href="{{ url_for('user.dashboard', domain=subdomain) }}"
                class="btn btn-default btn-block">
               Do it later
             </a>

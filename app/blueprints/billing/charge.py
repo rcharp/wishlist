@@ -256,7 +256,7 @@ def get_card(c):
 # Not used yet -----------------------------------------------------------------
 # Confirm an existing payment
 # Not currently used
-# def charge_card():
+# def charge_card(domain):
 #     stripe.api_key = current_app.config.get('STRIPE_KEY')
 #     return stripe.PaymentIntent.create(
 #         amount=9900,

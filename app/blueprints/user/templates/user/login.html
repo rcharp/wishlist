@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-6">
             <div class="visible-xs visible-sm sm-margin-top"></div>
-            <a href="{{ url_for('user.signup', subdomain=subdomain) }}"
+            <a href="{{ url_for('user.signup') }}"
                class="btn btn-default btn-block">
               Sign Up
             </a>
@@ -38,11 +38,11 @@
       {% endcall %}
 
       <div class="text-center md-margin-top">
-        <a href="{{ url_for('user.begin_password_reset', subdomain=subdomain) }}" class="text-muted">
+        <a href="{{ url_for('user.begin_password_reset') }}" class="text-muted">
           Forgot your password?
         </a>
       </div><br />
-        <small>By logging in you agree to our <a href="{{ url_for('page.privacy', subdomain=subdomain) }}">Privacy Policy</a> and <a href="{{ url_for('page.terms', subdomain=subdomain) }}">Terms of Service</a></small>
+        <small>By logging in you agree to our <a href="{{ url_for('page.privacy') }}">Privacy Policy</a> and <a href="{{ url_for('page.terms') }}">Terms of Service</a></small>
     </div>
   </div>
 {% endblock %}

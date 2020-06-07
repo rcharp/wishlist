@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-md-6">
             <button type="submit" class="btn btn-danger btn-block">
-              <img src="{{ url_for('static', filename='images/spinner.gif', subdomain=subdomain) }}"
+              <img src="{{ url_for('static', filename='images/spinner.gif') }}"
                    class="spinner"
                    width="16" height="11" alt="Spinner"/>
               Yes, delete my account
@@ -39,7 +39,7 @@
           </div>
           <div class="col-md-6">
             <div class="visible-xs visible-sm sm-margin-top"></div>
-            <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}"
+            <a href="{{ url_for('user.dashboard', domain=subdomain) }}"
                class="btn btn-default btn-block">
               No, take me back
             </a>
