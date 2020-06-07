@@ -86,7 +86,6 @@ def create_app(settings_override=None):
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
     app.config['SQLALCHEMY_POOL_TIMEOUT'] = 120
-    app.static_url_path = '/static'
 
     if settings_override:
         app.config.update(settings_override)
