@@ -516,7 +516,7 @@
             }
 
             function FormatSubdomain(path, s){
-                var parse_url = "{{url_for(path, subdomain='DUMMY_VALUE') }}".replace(/DUMMY_VALUE/, s);
+                return "{{ url_for(path, subdomain='DUMMY_VALUE') }}".replace(/DUMMY_VALUE/, s);
             }
         </script>
 
