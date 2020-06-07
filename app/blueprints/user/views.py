@@ -281,7 +281,8 @@ def update_credentials():
 
 
 # Subdomain -------------------------------------------------------------------
-@user.route('/dashboard', defaults={'subdomain': ''}, subdomain='<subdomain>', methods=['GET','POST'])
+# defaults={'subdomain': ''},
+@user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def dashboard(subdomain):
     if not subdomain:
