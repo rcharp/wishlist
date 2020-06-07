@@ -49,7 +49,7 @@ user = Blueprint('user', __name__, template_folder='templates')
 @user.route('/login', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def login():
+def login(subdomain):
 
     # This redirects to the link that the button was sending to before login
     form = LoginForm(next=request.args.get('next'))
@@ -98,7 +98,7 @@ def login():
 
 @user.route('/logout')
 @login_required
-def logout():
+def logout(subdomain):
     logout_user()
 
     flash('You have been logged out.', 'success')
@@ -107,7 +107,7 @@ def logout():
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def begin_password_reset():
+def begin_password_reset(subdomain):
     form = BeginPasswordResetForm()
 
     if form.validate_on_submit():
@@ -121,7 +121,7 @@ def begin_password_reset():
 
 @user.route('/account/password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def password_reset():
+def password_reset(subdomain):
     form = PasswordResetForm(reset_token=request.args.get('reset_token'))
 
     if form.validate_on_submit():
@@ -146,7 +146,7 @@ def password_reset():
 @user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def signup():
+def signup(subdomain):
     form = SignupForm()
 
     if form.validate_on_submit():
@@ -186,7 +186,7 @@ def signup():
 # @user.route('/signup', methods=['GET', 'POST'])
 # @anonymous_required()
 # @csrf.exempt
-# def signup():
+# def signup(subdomain):
 #     from app.blueprints.api.api_functions import validate_signup, populate_signup, print_traceback
 #
 #     form = SignupForm(request.form)
@@ -225,7 +225,7 @@ def signup():
 
 @user.route('/welcome', methods=['GET', 'POST'])
 @login_required
-def welcome():
+def welcome(subdomain):
     if current_user.username:
         flash('You already picked a username.', 'warning')
         return redirect(url_for('user.dashboard'))
@@ -244,7 +244,7 @@ def welcome():
 
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @login_required
-def update_credentials():
+def update_credentials(subdomain):
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
@@ -266,7 +266,7 @@ def update_credentials():
 # @user.route('/dashboard', methods=['GET','POST'])
 # @login_required
 # @csrf.exempt
-# def dashboard():
+# def dashboard(subdomain):
 #     # if current_user.role == 'admin':
 #     #     return redirect(url_for('admin.dashboard'))
 #
@@ -283,24 +283,23 @@ def update_credentials():
 # Subdomain -------------------------------------------------------------------
 @user.route('/dashboard', methods=['GET','POST'])
 @csrf.exempt
-def dashboard():
-    domain = 'demo'
+def dashboard(subdomain):
 
-    feedbacks = Feedback.query.filter(Feedback.domain == domain).all()
+    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=domain)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
 
 
 # Feedback -------------------------------------------------------------------
 @user.route('/feedback', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def feedback():
+def feedback(subdomain):
     feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -315,7 +314,7 @@ def feedback():
 @user.route('/dashboard/<sort>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def sort(sort, domain):
+def sort(sort, subdomain):
     feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
     statuses = Status.query.all()
 
@@ -335,7 +334,7 @@ def sort(sort, domain):
 @user.route('/feedback/<status>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def filter(status, domain):
+def filter(status, subdomain):
     feedbacks = Feedback.query.filter(and_(Feedback.user_id == current_user.id, Feedback.status == status)).all()
     statuses = Status.query.all()
 
@@ -350,7 +349,7 @@ def filter(status, domain):
 @user.route('/view/<feedback_id>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def view_feedback(feedback_id, domain):
+def view_feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
@@ -360,7 +359,7 @@ def view_feedback(feedback_id, domain):
 @user.route('/add_vote', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_vote():
+def add_vote(subdomain):
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
@@ -374,7 +373,7 @@ def add_vote():
 @user.route('/roadmap', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def roadmap():
+def roadmap(subdomain):
 
     # if current_user.role == 'admin':
         # return redirect(url_for('admin.dashboard'))
@@ -386,7 +385,7 @@ def roadmap():
 @user.route('/settings', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def settings():
+def settings(subdomain):
 
     if current_user.role == 'admin':
         return redirect(url_for('admin.dashboard'))
@@ -401,7 +400,7 @@ def settings():
 @user.route('/add_workspace', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_workspace():
+def add_workspace(subdomain):
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -427,7 +426,7 @@ def add_workspace():
 @user.route('/add_feedback', methods=['POST'])
 @login_required
 @csrf.exempt
-def add_feedback():
+def add_feedback(subdomain):
     if request.method == 'POST':
         try:
             title = request.form['title']
@@ -448,7 +447,7 @@ def add_feedback():
 # Contact us -------------------------------------------------------------------
 @user.route('/contact', methods=['GET','POST'])
 @csrf.exempt
-def contact():
+def contact(subdomain):
     if request.method == 'POST':
         from app.blueprints.user.tasks import send_contact_us_email
         send_contact_us_email.delay(request.form['email'], request.form['message'])
