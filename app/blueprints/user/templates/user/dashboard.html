@@ -342,12 +342,12 @@
                                 </div>
                               <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
                                 <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
-                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
+                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer">
                                         {{ feedback.title }}
                                     </a>
                                 </div>
                               </div>
-                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
+                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
                                     <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
@@ -464,14 +464,13 @@
 
             function Vote(feedback_id) {
                 $.ajax({
-                    url: '{{ url_for("user.add_vote") }}',
+                    url: FormatSubdomain('user.add_vote', '{{ subdomain }}'),
                     type: 'POST',
                     beforeSend: UpdateVote(feedback_id),
                     data: {'feedback_id': feedback_id},
                     success: function (response) {
                     },
                     error: function (xhr) {
-                        window.location.href = '{{ url_for('user.feedback') }}';
                     }
                 });
             }
@@ -514,6 +513,10 @@
                 var sub = window.location.host.split(".")[0];
                 alert(sub);
                 return sub;
+            }
+
+            function FormatSubdomain(path, s){
+                var parse_url = "{{url_for(path, subdomain='DUMMY_VALUE') }}".replace(/DUMMY_VALUE/, s);
             }
         </script>
 
