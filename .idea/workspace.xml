@@ -4,7 +4,29 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="" />
+    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/billing_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/billing/templates/billing/cancel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404 2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/errors/templates/errors/500.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/callback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/page/templates/page/pricing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/add_workspace.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/demo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/roadmap.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/settings_old.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/update_credentials.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/view_feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/welcome.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/errors/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/errors/500.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/errors/500.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,8 +43,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="136" column="16" lean-forward="true" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
+            <state relative-caret-position="255">
+              <caret line="140" column="43" lean-forward="true" selection-start-line="140" selection-start-column="43" selection-end-line="140" selection-end-column="43" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -143,7 +165,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>dashboard</find>
       <find>url_for('user.subdomain', domain=subdomain)</find>
       <find>user.domain</find>
       <find>user.dashboard')</find>
@@ -173,9 +194,9 @@
       <find>subdomain='&lt;domain&gt;',</find>
       <find>url_for</find>
       <find>render_template('user/</find>
+      <find>domain=subdomain</find>
     </findStrings>
     <replaceStrings>
-      <replace>from app.blueprints.user.models</replace>
       <replace>&quot;{{ 'site'|site_name_filter }}&quot;</replace>
       <replace>from app.blueprints.user.models.user import User</replace>
       <replace>workspace</replace>
@@ -205,6 +226,7 @@
       <replace>) }}&quot;</replace>
       <replace>():</replace>
       <replace>subdomain=sub</replace>
+      <replace>subdomain=subdomain</replace>
     </replaceStrings>
     <dirStrings>
       <dir>app/static/pay</dir>
@@ -1051,8 +1073,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="136" column="16" lean-forward="true" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
+        <state relative-caret-position="255">
+          <caret line="140" column="43" lean-forward="true" selection-start-line="140" selection-start-column="43" selection-end-line="140" selection-end-column="43" />
           <folding>
             <element signature="e#0#171#0" expanded="true" />
           </folding>
