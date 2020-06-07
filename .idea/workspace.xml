@@ -4,10 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/blueprints/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/blueprints/user/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="f629596e-fb69-4f01-83d3-bc794c931257" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="372" lean-forward="true" selection-start-line="372" selection-end-line="372" />
+            <state relative-caret-position="195">
+              <caret line="136" column="16" lean-forward="true" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
               <folding>
                 <element signature="e#0#171#0" expanded="true" />
               </folding>
@@ -33,7 +30,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
@@ -146,7 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user.dashboard</find>
       <find>dashboard</find>
       <find>url_for('user.subdomain', domain=subdomain)</find>
       <find>user.domain</find>
@@ -176,9 +172,9 @@
       <find>dashboard(</find>
       <find>subdomain='&lt;domain&gt;',</find>
       <find>url_for</find>
+      <find>render_template('user/</find>
     </findStrings>
     <replaceStrings>
-      <replace>Vote</replace>
       <replace>from app.blueprints.user.models</replace>
       <replace>&quot;{{ 'site'|site_name_filter }}&quot;</replace>
       <replace>from app.blueprints.user.models.user import User</replace>
@@ -208,6 +204,7 @@
       <replace>(subdomain):</replace>
       <replace>) }}&quot;</replace>
       <replace>():</replace>
+      <replace>subdomain=sub</replace>
     </replaceStrings>
     <dirStrings>
       <dir>app/static/pay</dir>
@@ -1021,16 +1018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="372" lean-forward="true" selection-start-line="372" selection-end-line="372" />
-          <folding>
-            <element signature="e#0#171#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/blueprints/user/templates/user/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -1058,6 +1045,16 @@
             <element signature="n#style#0;n#div#0;n#a#0;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#div#2;n#div#0;n#div#1;n#div#1;n#div#0;n#main#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/blueprints/user/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="136" column="16" lean-forward="true" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#171#0" expanded="true" />
           </folding>
         </state>
       </provider>
