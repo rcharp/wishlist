@@ -58,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/app/templates/layouts/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="443">
-              <caret line="201" column="6" lean-forward="true" selection-start-line="201" selection-start-column="6" selection-end-line="203" selection-end-column="7" />
+              <caret line="201" column="6" selection-start-line="201" selection-start-column="6" selection-end-line="203" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -973,7 +973,7 @@
     <entry file="file://$PROJECT_DIR$/app/templates/layouts/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
-          <caret line="201" column="6" lean-forward="true" selection-start-line="201" selection-start-column="6" selection-end-line="203" selection-end-column="7" />
+          <caret line="201" column="6" selection-start-line="201" selection-start-column="6" selection-end-line="203" selection-end-column="7" />
         </state>
       </provider>
     </entry>

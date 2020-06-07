@@ -463,7 +463,7 @@
             }
 
             function Vote(feedback_id) {
-                var url = 'user.add_vote';
+                var url = "{{ url_for(path, subdomain='DUMMY_VALUE') }}";
                 $.ajax({
                     url: FormatSubdomain(url, '{{ subdomain }}'),
                     type: 'POST',
@@ -516,8 +516,8 @@
                 return sub;
             }
 
-            function FormatSubdomain(path, s){
-                return "{{ url_for(path, subdomain='DUMMY_VALUE') }}".replace(/DUMMY_VALUE/, s);
+            function FormatSubdomain(url, s){
+                return url.replace(/DUMMY_VALUE/, s);
             }
         </script>
 
