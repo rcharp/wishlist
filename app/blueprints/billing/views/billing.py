@@ -243,7 +243,7 @@ def cancel():
 
             flash('Sorry to see you go! Your subscription has been canceled.',
                   'success')
-            return redirect(url_for('user.logout'))
+            return redirect(url_for('user.logout', subdomain=subdomain))
 
     return render_template('billing/cancel.html', form=form)
 

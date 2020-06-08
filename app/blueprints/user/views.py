@@ -53,11 +53,7 @@ user = Blueprint('user', __name__, template_folder='templates')
 @csrf.exempt
 def login(subdomain):
 
-    if not subdomain or subdomain == '<invalid>':
-        form = NoCompanyLoginForm(next=request.args.get('next'))
-    else:
-        # This redirects to the link that the button was sending to before login
-        form = LoginForm(next=request.args.get('next'))
+    form = LoginForm(next=request.args.get('next'))
 
     # This redirects to dashboard always.
     # form = LoginForm(next=url_for('user.dashboard'))
@@ -77,21 +73,67 @@ def login(subdomain):
             # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
             # 3) Add a checkbox to the login form with the id/name 'remember'
 
+            if login_user(u, remember=True) and u.is_active():
+                u.update_activity_tracking(request.remote_addr)
+
+                next_url = request.form.get('next')
+
+                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
+                    next_url = url_for('user.dashboard', subdomain=u.domain)
+
+                if next_url:
+                    return redirect(safe_next_url(next_url), code=307)
+
+                if current_user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+            else:
+                flash('This account has been disabled.', 'error')
+        else:
+            flash('Your username/email or password is incorrect.', 'error')
+
+    else:
+        if len(form.errors) > 0:
+            print(form.errors)
+
+    return render_template('user/login.html', subdomain=subdomain, form=form)
+
+
+@user.route('/login', methods=['GET', 'POST'])
+@anonymous_required()
+@csrf.exempt
+def no_company_login():
+
+    form = NoCompanyLoginForm(next=request.args.get('next'))
+
+    if form.validate_on_submit():
+
+        u = User.find_by_identity(request.form.get('identity'))
+
+        if u and u.is_active() and u.authenticated(password=request.form.get('password')):
+            # As you can see remember me is always enabled, this was a design
+            # decision I made because more often than not users want this
+            # enabled. This allows for a less complicated login form.
+            #
+            # If however you want them to be able to select whether or not they
+            # should remain logged in then perform the following 3 steps:
+            # 1) Replace 'True' below with: request.form.get('remember', False)
+            # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
+            # 3) Add a checkbox to the login form with the id/name 'remember'
+
             # If the user doesn't have a company, make them sign up for one
-            if not subdomain or subdomain == '<invalid>':
-                subdomain = request.form.get('domain')
+            subdomain = request.form.get('domain')
 
-                if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                    flash('That domain is already in use. Please try another.', 'error')
-                    return render_template('user/login.html', form=form, subdomain=subdomain)
+            if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                flash('That domain is already in use. Please try another.', 'error')
+                return render_template('user/login.html', form=form)
 
-                # Create the domain from the form
-                from app.blueprints.api.api_functions import create_domain
-                if create_domain(u, form):
+            # Create the domain from the form
+            from app.blueprints.api.api_functions import create_domain
+            if create_domain(u, form):
 
-                    u.domain = subdomain
-                    u.role = 'creator'
-                    u.save()
+                u.domain = subdomain
+                u.role = 'creator'
+                u.save()
 
             if login_user(u, remember=True) and u.is_active():
                 u.update_activity_tracking(request.remote_addr)
@@ -118,18 +160,18 @@ def login(subdomain):
     return render_template('user/login.html', form=form)
 
 
-@user.route('/logout')
+@user.route('/logout', subdomain='<subdomain>')
 @login_required
-def logout():
+def logout(subdomain):
     logout_user()
 
     flash('You have been logged out.', 'success')
     return redirect(url_for('user.login', subdomain=subdomain))
 
 
-@user.route('/account/begin_password_reset', methods=['GET', 'POST'])
+@user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
-def begin_password_reset():
+def begin_password_reset(subdomain):
     form = BeginPasswordResetForm()
 
     if form.validate_on_submit():
@@ -141,9 +183,9 @@ def begin_password_reset():
     return render_template('user/begin_password_reset.html', form=form)
 
 
-@user.route('/account/password_reset', methods=['GET', 'POST'])
+@user.route('/account/password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
-def password_reset():
+def password_reset(subdomain):
     form = PasswordResetForm(reset_token=request.args.get('reset_token'))
 
     if form.validate_on_submit():
@@ -152,7 +194,7 @@ def password_reset():
         if u is None:
             flash('Your reset token has expired or was tampered with.',
                   'error')
-            return redirect(url_for('user.begin_password_reset'))
+            return redirect(url_for('user.begin_password_reset', subdomain=subdomain))
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
@@ -160,15 +202,15 @@ def password_reset():
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/password_reset.html', form=form)
+    return render_template('user/password_reset.html', subdomain=subdomain, form=form)
 
 
-@user.route('/signup', methods=['GET', 'POST'])
+@user.route('/signup', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def signup():
+def signup(subdomain):
     form = SignupForm()
 
     if form.validate_on_submit():
@@ -180,7 +222,7 @@ def signup():
 
         if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
-            return render_template('user/signup.html', form=form)
+            return render_template('user/signup.html', subdomain=subdomain, form=form)
 
         u = User()
 
@@ -203,7 +245,7 @@ def signup():
             flash("You've successfully signed up!", 'success')
             return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/signup.html', form=form)
+    return render_template('user/signup.html', subdomain=subdomain, form=form)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])

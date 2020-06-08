@@ -72,4 +72,4 @@ def logout(client):
     :param client: Flask client
     :return: Flask response
     """
-    return client.get(url_for('user.logout'), follow_redirects=True)
+    return client.get(url_for('user.logout', subdomain=subdomain), follow_redirects=True)
