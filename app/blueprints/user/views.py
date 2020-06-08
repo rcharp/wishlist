@@ -310,11 +310,10 @@ def feedback():
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
 
 
-@user.route('/dashboard/<sort>', methods=['GET','POST'])
-@login_required
+@user.route('/dashboard/<sort>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def sort(sort):
-    feedbacks = Feedback.query.filter(Feedback.user_id == current_user.id).all()
+def sort(sort, subdomain):
+    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
     if sort == 'newest':
@@ -330,11 +329,10 @@ def sort(sort):
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
 
 
-@user.route('/feedback/<status>', methods=['GET','POST'])
-@login_required
+@user.route('/feedback/<status>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def filter(status):
-    feedbacks = Feedback.query.filter(and_(Feedback.user_id == current_user.id, Feedback.status == status)).all()
+def filter(status, subdomain):
+    feedbacks = Feedback.query.filter(and_(Feedback.domain == subdomain, Feedback.status == status)).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
@@ -345,13 +343,12 @@ def filter(status):
     return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter)
 
 
-@user.route('/view/<feedback_id>', methods=['GET','POST'])
-@login_required
+@user.route('/view/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def view_feedback(feedback_id):
+def view_feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain)
 
 
 # Votes -------------------------------------------------------------------
