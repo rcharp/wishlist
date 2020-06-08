@@ -63,21 +63,24 @@ def seed_users():
         'role': 'admin',
         'email': app.config['SEED_ADMIN_EMAIL'],
         'username': app.config['SEED_ADMIN_USERNAME'],
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Admin'
     }
 
     member = {
         'role': 'member',
         'email': app.config['SEED_MEMBER_EMAIL'],
         'username': app.config['SEED_MEMBER_USERNAME'],
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Ricky'
     }
 
     demo = {
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Demo User'
     }
 
     User(**member).save()
