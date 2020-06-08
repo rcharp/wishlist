@@ -26,6 +26,7 @@ from app.blueprints.user.decorators import anonymous_required
 from app.blueprints.user.models.user import User, Domain
 from app.blueprints.user.forms import (
     LoginForm,
+    NoCompanyLoginForm,
     BeginPasswordResetForm,
     PasswordResetForm,
     SignupForm,
@@ -47,13 +48,16 @@ user = Blueprint('user', __name__, template_folder='templates')
 
 
 # Login and Credentials -------------------------------------------------------------------
-@user.route('/login', methods=['GET', 'POST'])
+@user.route('/login', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def login():
+def login(subdomain):
 
-    # This redirects to the link that the button was sending to before login
-    form = LoginForm(next=request.args.get('next'))
+    if not subdomain or subdomain == '<invalid>':
+        form = NoCompanyLoginForm(next=request.args.get('next'))
+    else:
+        # This redirects to the link that the button was sending to before login
+        form = LoginForm(next=request.args.get('next'))
 
     # This redirects to dashboard always.
     # form = LoginForm(next=url_for('user.dashboard'))
@@ -72,13 +76,30 @@ def login():
             # 1) Replace 'True' below with: request.form.get('remember', False)
             # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
             # 3) Add a checkbox to the login form with the id/name 'remember'
+
+            # If the user doesn't have a company, make them sign up for one
+            if not subdomain or subdomain == '<invalid>':
+                subdomain = request.form.get('domain')
+
+                if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                    flash('That domain is already in use. Please try another.', 'error')
+                    return render_template('user/login.html', form=form)
+
+                # Create the domain from the form
+                from app.blueprints.api.api_functions import create_domain
+                if create_domain(u, form):
+
+                    u.domain = subdomain
+                    u.role = 'creator'
+                    u.save()
+
             if login_user(u, remember=True) and u.is_active():
                 u.update_activity_tracking(request.remote_addr)
 
                 next_url = request.form.get('next')
 
                 if next_url == url_for('user.login') or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard')
+                    next_url = url_for('user.dashboard', subdomain=u.domain)
 
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)

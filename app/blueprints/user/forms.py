@@ -18,6 +18,20 @@ class LoginForm(Form):
     # remember = BooleanField('Stay signed in')
 
 
+class NoCompanyLoginForm(Form):
+    next = HiddenField()
+    identity = StringField('Username or email',
+                           [DataRequired(), Length(3, 254)])
+    company = StringField(validators=[
+        DataRequired()
+    ])
+    domain = StringField(validators=[
+        DataRequired()
+    ])
+    password = PasswordField('Password', [DataRequired(), Length(8, 128)])
+    # remember = BooleanField('Stay signed in')
+
+
 class BeginPasswordResetForm(Form):
     identity = StringField('Username or email',
                            [DataRequired(),
