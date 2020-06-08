@@ -155,7 +155,9 @@ def signup():
             flash('There is already an account with this email. Please login.', 'error')
             return redirect(url_for('user.login'))
 
-        if db.session.query(exists().where(func.lower(Domain.name) == request.form.get('domain').lower())).scalar():
+        subdomain = request.form.get('domain')
+
+        if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
             return render_template('user/signup.html', form=form)
 
@@ -171,7 +173,6 @@ def signup():
         create_domain(u, form)
 
         if login_user(u):
-
             # from app.blueprints.user.tasks import send_welcome_email
             # from app.blueprints.contact.mailerlite import create_subscriber
 
@@ -179,7 +180,7 @@ def signup():
             # create_subscriber(current_user.email)
 
             flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     return render_template('user/signup.html', form=form)
 

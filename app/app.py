@@ -82,7 +82,10 @@ def create_app(settings_override=None):
     app.config.from_pyfile('settings.py', silent=True)
 
     # Set the app server name
-    app.config['SERVER_NAME'] = 'getwishlist.io'
+    if app.config.get('PRODUCTION'):
+        app.config['SERVER_NAME'] = 'getwishlist.io'
+    else:
+        app.config['SERVER_NAME'] = 'localhost:5000'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
