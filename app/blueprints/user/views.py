@@ -167,10 +167,15 @@ def logout(subdomain):
 
     flash('You have been logged out.', 'success')
 
-    if not subdomain or subdomain == '<invalid>':
-        return redirect(url_for('user.no_company_login'))
-    else:
-        return redirect(url_for('user.login', subdomain=subdomain))
+    return redirect(url_for('user.login', subdomain=subdomain))
+
+
+@user.route('/logout')
+@login_required
+def no_company_logout():
+    logout_user()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('user.no_company_login'))
 
 
 @user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
