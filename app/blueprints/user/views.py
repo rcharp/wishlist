@@ -281,7 +281,10 @@ def root_dashboard():
 @csrf.exempt
 @cross_origin()
 def dashboard(subdomain):
-    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+    if not subdomain or subdomain == '<invalid>':
+        subdomain = 'demo'
+    else:
+        feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
