@@ -83,7 +83,7 @@ def login(subdomain):
 
                 if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
                     flash('That domain is already in use. Please try another.', 'error')
-                    return render_template('user/login.html', form=form)
+                    return render_template('user/login.html', form=form, subdomain=subdomain)
 
                 # Create the domain from the form
                 from app.blueprints.api.api_functions import create_domain
