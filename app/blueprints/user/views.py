@@ -291,6 +291,31 @@ def add_feedback(subdomain):
 
 
 '''
+Add feedback to the list
+'''
+@user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
+@login_required
+@csrf.exempt
+def update_feedback(subdomain):
+    if request.method == 'POST':
+        try:
+            feedback_id = request.form['feedback_id']
+            title = request.form['title']
+            description = request.form['description']
+            status_id = request.form['status']
+
+            from app.blueprints.api.api_functions import update_feedback
+            f = update_feedback(feedback_id, subdomain, title, description, status_id)
+
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+    return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
+
+
+'''
 Sort the feedback by newest, oldest, or most votes
 '''
 @user.route('/dashboard/<sort>', subdomain='<subdomain>', methods=['GET','POST'])
