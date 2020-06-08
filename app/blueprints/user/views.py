@@ -283,8 +283,8 @@ def root_dashboard():
 def dashboard(subdomain):
     if not subdomain or subdomain == '<invalid>':
         subdomain = 'demo'
-    else:
-        feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+
+    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
 
     for f in feedbacks:
