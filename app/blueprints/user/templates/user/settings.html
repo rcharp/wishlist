@@ -105,7 +105,7 @@
                         <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
                         Dashboard
                       </a>
-                      <a href="{{ url_for('user.settings') }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
+                      <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
                           <i class="fa fa-gear" style="padding-left:5px;margin-right:15px;"></i>
                         Settings
                       </a>
@@ -132,15 +132,15 @@
                     <i class="si si-grid" style="padding-left:5px;margin-right:15px;"></i>
                     Dashboard
                   </a>
-                    <a href="{{ url_for('user.feedback') }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
+                    <div class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
                       <i class="si si-bubbles" style="padding-left:5px;margin-right:15px;"></i>
                     Feedback
-                  </a>
+                  </div>
                     <a href="{{ url_for('user.roadmap') }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
                       <i class="si si-map" style="padding-left:5px;margin-right:15px;"></i>
                     Roadmap
                   </a>
-                  <a href="{{ url_for('user.settings') }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
+                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
                       <i class="si si-settings" style="padding-left:5px;margin-right:15px;"></i>
                     Settings
                   </a>
@@ -196,7 +196,7 @@
                     <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95">
                       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Your Profile</a>
-                        <a href="{{ url_for('user.settings') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Settings</a>
+                        <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Settings</a>
                         <a href="{{ url_for('user.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Sign out</a>
                       </div>
                     </div>

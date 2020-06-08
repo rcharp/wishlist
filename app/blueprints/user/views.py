@@ -184,46 +184,6 @@ def signup():
     return render_template('user/signup.html', form=form)
 
 
-# @user.route('/signup', methods=['GET', 'POST'])
-# @anonymous_required()
-# @csrf.exempt
-# def signup():
-#     from app.blueprints.api.api_functions import validate_signup, populate_signup, print_traceback
-#
-#     form = SignupForm(request.form)
-#
-#     try:
-#         if request.method == 'POST':
-#             print("posting")
-#             if form.validate():
-#                 print("form is valid")
-#                 if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
-#                     flash('There is already an account with this email. Please login.', 'error')
-#                     return redirect(url_for('user.login'))
-#
-#                 u = User()
-#
-#                 populate_signup(request, u)
-#                 u.password = User.encrypt_password(request.form.get('password'))
-#                 u.save()
-#
-#                 if login_user(u):
-#
-#                     from app.blueprints.user.tasks import send_welcome_email
-#                     from app.blueprints.contact.mailerlite import create_subscriber
-#
-#                     send_welcome_email.delay(current_user.email)
-#                     create_subscriber(current_user.email)
-#
-#                     flash("You've successfully signed up!", 'success')
-#                     return redirect(url_for('user.dashboard'))
-#             print("form not valid")
-#     except Exception as e:
-#         print_traceback(e)
-#
-#     return render_template('user/signup.html', form=form)
-
-
 @user.route('/welcome', methods=['GET', 'POST'])
 @login_required
 def welcome():
@@ -295,21 +255,43 @@ def dashboard(subdomain):
 
 
 # Feedback -------------------------------------------------------------------
-@user.route('/feedback', methods=['GET','POST'])
+'''
+View feedback details
+'''
+@user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
+@csrf.exempt
+def feedback(feedback_id, subdomain):
+    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    statuses = Status.query.all()
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain)
+
+
+'''
+Add feedback to the list
+'''
+@user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
 @login_required
 @csrf.exempt
-def feedback():
-    feedback = Feedback.query.filter(Feedback.user_id == current_user.id).all()
-    statuses = Status.query.all()
+def add_feedback(subdomain):
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
 
-    for f in feedback:
-        f.votes = int(f.votes)
+            from app.blueprints.api.api_functions import create_feedback
+            f = create_feedback(current_user.id, subdomain, None, title, description)
 
-    feedback.sort(key=lambda x: x.votes, reverse=True)
+            return redirect(url_for('user.dashboard'))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.dashboard'))
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedback, statuses=statuses)
+    return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
 
 
+'''
+Sort the feedback by newest, oldest, or most votes
+'''
 @user.route('/dashboard/<sort>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def sort(sort, subdomain):
@@ -329,6 +311,9 @@ def sort(sort, subdomain):
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort, subdomain=subdomain)
 
 
+'''
+Filter feedback by status
+'''
 @user.route('/feedback/<status>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def filter(status, subdomain):
@@ -340,18 +325,13 @@ def filter(status, subdomain):
 
     feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter, subdomain=subdomain)
-
-
-@user.route('/view/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
-@csrf.exempt
-def view_feedback(feedback_id, subdomain):
-    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-    statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter, subdomain=subdomain)
 
 
 # Votes -------------------------------------------------------------------
+'''
+Add or remove a vote
+'''
 @user.route('/add_vote', methods=['GET','POST'])
 @login_required
 @csrf.exempt
@@ -370,10 +350,6 @@ def add_vote():
 @login_required
 @csrf.exempt
 def roadmap():
-
-    # if current_user.role == 'admin':
-        # return redirect(url_for('admin.dashboard'))
-
     return render_template('user/roadmap.html', current_user=current_user)
 
 
@@ -413,61 +389,6 @@ def add_workspace():
             return redirect(url_for('user.dashboard'))
 
     return render_template('user/add_workspace.html', current_user=current_user)
-
-
-@user.route('/add_feedback', methods=['POST'])
-@login_required
-@csrf.exempt
-def add_feedback():
-    if request.method == 'POST':
-        try:
-            title = request.form['title']
-            description = request.form['description']
-            # email = request.form['email']
-
-            from app.blueprints.api.api_functions import create_feedback
-            f = create_feedback(current_user.id, None, title, description)
-
-            return redirect(url_for('user.dashboard'))
-        except Exception:
-            flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.dashboard'))
-
-    return render_template('user/add_feedback.html', current_user=current_user)
-
-
-# Demo -------------------------------------------------------------------
-@user.route('/demo', methods=['GET','POST'])
-@csrf.exempt
-def demo():
-    feedbacks = Feedback.query.filter(Feedback.user_id == 2).all()
-    statuses = Status.query.all()
-
-    for f in feedbacks:
-        f.votes = int(f.votes)
-
-    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
-
-
-@user.route('/demo_feedback', methods=['POST'])
-@login_required
-@csrf.exempt
-def demo_feedback():
-    if request.method == 'POST':
-        try:
-            title = request.form['title']
-            description = request.form['description']
-
-            from app.blueprints.api.api_functions import create_feedback
-            f = create_feedback(2, None, title, description)
-
-            return redirect(url_for('user.demo'))
-        except Exception:
-            flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.demo'))
-
-    return render_template('user/add_feedback.html', current_user=current_user)
 
 
 # Contact us -------------------------------------------------------------------

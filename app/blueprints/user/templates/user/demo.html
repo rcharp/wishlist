@@ -241,9 +241,9 @@
                           <div id="sort-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg transform opacity-0 scale-95" style="z-index:999; display:none;" onmouseleave="ShowDropdown(this.id)">
                             <div class="rounded-md bg-white shadow-xs">
                               <div class="py-1">
-                                <a href="{{ url_for('user.sort', sort='newest') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'newest' or not sort %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most Recent</a>
-                                <a href="{{ url_for('user.sort', sort='oldest') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'oldest' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Oldest</a>
-                                <a href="{{ url_for('user.sort', sort='votes') }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'votes' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most votes</a>
+                                <a href="{{ url_for('user.sort', sort='newest', subdomain=subdomain) }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'newest' or not sort %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most Recent</a>
+                                <a href="{{ url_for('user.sort', sort='oldest', subdomain=subdomain) }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'oldest' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Oldest</a>
+                                <a href="{{ url_for('user.sort', sort='votes', subdomain=subdomain) }}" class="block px-4 py-2 text-sm leading-5 {% if sort == 'votes' %}bg-indigo-100 text-indigo-600{% else %}text-gray-700{% endif %} hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 remove-margin">Most votes</a>
                               </div>
                             </div>
                           </div>
@@ -329,12 +329,12 @@
                                 </div>
                               <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
                                 <div class="text-lg leading-5 font-medium text-indigo-600 truncate">
-                                    <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer">
+                                    <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer">
                                         {{ feedback.title }}
                                     </a>
                                 </div>
                               </div>
-                                <a href="{{ url_for('user.view_feedback', feedback_id=feedback.feedback_id) }}" style="cursor:pointer;">
+                                <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
                                     <svg class="h-7 w-7 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
