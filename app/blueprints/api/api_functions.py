@@ -53,13 +53,14 @@ def create_workspace(user_id, title, domain, description):
         return None
 
 
-def create_feedback(user_id, domain, email, title, description):
+def create_feedback(user, domain, email, title, description):
     try:
         d = domain.query.filter(Domain.name == domain).scalar()
 
         id = generate_id(Feedback, size=8)
         f = Feedback()
-        f.user_id = user_id
+        f.user_id = user.id
+        f.username = user.name
         f.email = email
         f.title = title
         f.feedback_id = id
