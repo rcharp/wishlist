@@ -119,41 +119,7 @@
             </div>
           </div>
 
-          <!-- Static sidebar for desktop -->
-          <div class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64 bg-indigo-800 pt-5 pb-4">
-              <div class="flex items-center flex-shrink-0 px-4">
-                  <span style="font-size:32px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ 'site'|site_name_filter }} <span style="font-size:14px;">v1.0</span></span>
-              </div>
-
-                {% if subdomain %}
-                  <div class="flex items-center flex-shrink-0 px-4">
-                      <span style="font-size:16px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ subdomain|lower }}.{{ 'site'|site_url_filter }}</span>
-                  </div>
-                {% endif %}
-              <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
-                <!-- Sidebar component, swap this element with another sidebar if you like -->
-                <nav class="flex-1 px-2 bg-indigo-800">
-                  <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
-                    <i class="si si-grid" style="padding-left:5px;margin-right:15px;"></i>
-                    Dashboard
-                  </a>
-                  <div class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-bubbles" style="padding-left:5px;margin-right:15px;"></i>
-                    Feedback
-                  </div>
-                  <a href="{{ url_for('user.roadmap', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-map" style="padding-left:5px;margin-right:15px;"></i>
-                    Roadmap
-                  </a>
-                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-settings" style="padding-left:5px;margin-right:15px;"></i>
-                    Settings
-                  </a>
-                </nav>
-              </div>
-            </div>
-          </div>
+          {% include '/user/includes/sidebar.html' ignore missing %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
@@ -181,34 +147,9 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                     </svg>
                   </button>
-
-                  <!-- Profile dropdown -->
-                  <div class="ml-3 relative">
-                    <div>
-                      <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
-                        <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                      </button>
-                    </div>
-                    <!--
-                      Profile dropdown panel, show/hide based on dropdown state.
-
-                      Entering: "transition ease-out duration-100"
-                        From: "transform opacity-0 scale-95"
-                        To: "transform opacity-100 scale-100"
-                      Leaving: "transition ease-in duration-75"
-                        From: "transform opacity-100 scale-100"
-                        To: "transform opacity-0 scale-95"
-                    -->
-                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
-                      <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        {% if subdomain %}<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ subdomain|title }}</a>{% endif %}
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</a>
-                        <div class="border-t border-gray-100"></div>
-                        <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
-                        <a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
-                      </div>
-                    </div>
-                  </div>
+                    {% if current_user.is_authenticated %}
+                        {% include '/user/includes/user_dropdown.html' ignore missing %}
+                    {% endif %}
                 </div>
               </div>
             </div>
@@ -355,7 +296,7 @@
                                       </dt>
                                     </div>
                                 </a>
-                              <div class="bg-gray-50 px-4 py-4 sm:px-6">
+                              <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
                                   <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
                                   {% if feedback.status %}
                                       <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">

@@ -129,6 +129,7 @@ def seed_domains():
 def seed_data():
 
     s = list(Status.query.all())
+    d = Domain.query.filter(Domain.name == 'demo').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -137,10 +138,13 @@ def seed_data():
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
             'email': 'demo@getwishlist.io',
+            'username': "demo",
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
-            # 'status_id': status.status_id,
-            'status': status.name
+            'status_id': status.status_id,
+            'status': status.name,
+            'domain': 'demo',
+            'domain_id': d.domain_id
         }
 
         Feedback(**params).save()

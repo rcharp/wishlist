@@ -46,7 +46,7 @@
 {##}
 {#        <!-- Bootstrap and OneUI CSS framework -->#}
 {#        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">#}
-        <link rel="stylesheet" id="css-main" href="../../../../static/oneui/assets/css/oneui.css">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
 {##}
 {#        <!-- Shepherd JS -->#}
 {#        <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>#}
@@ -118,36 +118,7 @@
             </div>
           </div>
 
-          <!-- Static sidebar for desktop -->
-          <div class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64 bg-indigo-800 pt-5 pb-4">
-              <div class="flex items-center flex-shrink-0 px-4">
-                  <span style="font-size:28px;color:#ffffff;font-family:'Baloo Bhaina 2">{{ 'site'|site_name_filter }}</span>
-{#                <img class="h-8 w-auto" src="../../../../static/logo/logo.png" alt="{{ 'site'|site_name_filter }}" style="margin-right:15px;" />#}
-              </div>
-              <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
-                <!-- Sidebar component, swap this element with another sidebar if you like -->
-                <nav class="flex-1 px-2 bg-indigo-800">
-                  <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-indigo-300 rounded-md hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                    <i class="si si-grid" style="padding-left:5px;margin-right:15px;"></i>
-                    Dashboard
-                  </a>
-                    <div class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-bubbles" style="padding-left:5px;margin-right:15px;"></i>
-                    Feedback
-                  </div>
-                    <a href="{{ url_for('user.roadmap') }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-indigo-900 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-map" style="padding-left:5px;margin-right:15px;"></i>
-                    Roadmap
-                  </a>
-                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                      <i class="si si-settings" style="padding-left:5px;margin-right:15px;"></i>
-                    Settings
-                  </a>
-                </nav>
-              </div>
-            </div>
-          </div>
+          {% include '/user/includes/sidebar.html' %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
@@ -176,31 +147,9 @@
                     </svg>
                   </button>
 
-                  <!-- Profile dropdown -->
-                  <div class="ml-3 relative">
-                    <div>
-                      <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown();">
-                        <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                      </button>
-                    </div>
-                    <!--
-                      Profile dropdown panel, show/hide based on dropdown state.
-
-                      Entering: "transition ease-out duration-100"
-                        From: "transform opacity-0 scale-95"
-                        To: "transform opacity-100 scale-100"
-                      Leaving: "transition ease-in duration-75"
-                        From: "transform opacity-100 scale-100"
-                        To: "transform opacity-0 scale-95"
-                    -->
-                    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transform opacity-0 scale-95">
-                      <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Your Profile</a>
-                        <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Settings</a>
-                        <a href="{{ url_for('user.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150" role="menuitem">Sign out</a>
-                      </div>
-                    </div>
-                  </div>
+                  {% if current_user.is_authenticated %}
+                        {% include '/user/includes/user_dropdown.html' ignore missing %}
+                  {% endif %}
                 </div>
               </div>
             </div>
