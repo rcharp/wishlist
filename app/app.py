@@ -32,6 +32,7 @@ from app.extensions import (
     db,
     login_manager,
     cache,
+    cors
 )
 
 
@@ -75,7 +76,7 @@ def create_app(settings_override=None):
     :param settings_override: Override settings
     :return: Flask app
     """
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, subdomain_matching=True)
 
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
@@ -86,6 +87,11 @@ def create_app(settings_override=None):
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
     app.config['SQLALCHEMY_POOL_TIMEOUT'] = 120
+    app.static_folder = 'static'
+    app.static_url_path = '/static'
+
+    # CORS
+    app.config['CORS_HEADERS'] = 'Content-Type'
 
     if settings_override:
         app.config.update(settings_override)
@@ -151,6 +157,7 @@ def extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
+    cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
 
     return None
 

@@ -67,7 +67,7 @@
     <meta name="google-site-verification" content="A3JHJGcgOh_pEwMkwnH4Z6_H9o9oSWAWU-TdCXbJdNw" />
 
     <!-- Bootstrap and OneUI CSS framework -->
-    <link rel="stylesheet" id="css-main" href="../../../../static/oneui/assets/css/oneui.css">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
 
     <!-- MailerLite Universal -->
     <script>
@@ -169,7 +169,7 @@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Actions</li>
                                     <li>
-                                        <a tabindex="-1" href="{{ url_for('user.dashboard') }}">
+                                        <a tabindex="-1" href="{{ url_for('user.dashboard', subdomain=subdomain) }}">
                                             <i class="si si-layers pull-right"></i>Dashboard
                                         </a>
                                     </li>
@@ -188,7 +188,7 @@
                     <ul class="nav-header pull-left">
                         <li>
                             <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-                            <button class="btn btn-default pull-right" style="margin-top:0px;" data-toggle="modal" onclick="window.location.href='{{ url_for('user.dashboard') }}'" type="button">
+                            <button class="btn btn-default pull-right" style="margin-top:0px;" data-toggle="modal" onclick="window.location.href='{{ url_for('user.dashboard', subdomain=subdomain) }}" }}'" type="button">
                                 <i class="si si-home"></i>
                             </button>
                         </li>

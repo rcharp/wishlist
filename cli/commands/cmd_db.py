@@ -63,21 +63,24 @@ def seed_users():
         'role': 'admin',
         'email': app.config['SEED_ADMIN_EMAIL'],
         'username': app.config['SEED_ADMIN_USERNAME'],
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Admin'
     }
 
     member = {
         'role': 'member',
         'email': app.config['SEED_MEMBER_EMAIL'],
         'username': app.config['SEED_MEMBER_USERNAME'],
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Ricky'
     }
 
     demo = {
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'password': app.config['SEED_ADMIN_PASSWORD']
+        'password': app.config['SEED_ADMIN_PASSWORD'],
+        'name': 'Demo User'
     }
 
     User(**member).save()
@@ -129,6 +132,7 @@ def seed_domains():
 def seed_data():
 
     s = list(Status.query.all())
+    d = Domain.query.filter(Domain.name == 'demo').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -137,10 +141,13 @@ def seed_data():
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
             'email': 'demo@getwishlist.io',
+            'username': "demo",
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
-            # 'status_id': status.status_id,
-            'status': status.name
+            'status_id': status.status_id,
+            'status': status.name,
+            'domain': 'demo',
+            'domain_id': d.domain_id
         }
 
         Feedback(**params).save()

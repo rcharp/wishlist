@@ -4,11 +4,12 @@ import pytz
 import traceback
 from datetime import datetime as dt
 from app.extensions import db
-from sqlalchemy import exists
+from sqlalchemy import exists, and_
 from app.blueprints.api.godaddy import create_subdomain
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.workspace import Workspace
 from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.vote import Vote
 
 
@@ -53,17 +54,39 @@ def create_workspace(user_id, title, domain, description):
         return None
 
 
-def create_feedback(user_id, email, title, description):
+def create_feedback(user, domain, email, title, description):
     try:
+        d = Domain.query.filter(Domain.name == domain).scalar()
+
         id = generate_id(Feedback, size=8)
         f = Feedback()
-        f.user_id = user_id
+        f.user_id = user.id
+        f.username = user.username
         f.email = email
         f.title = title
         f.feedback_id = id
         f.description = description
         f.votes = 1
+        f.domain_id = d.domain_id
+        f.domain = d.name
         f.status = 'In backlog'
+        f.save()
+
+        return f
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
+def update_feedback(feedback_id, domain, title, description, status_id):
+    try:
+        s = Status.query.filter(Status.status_id == status_id).scalar()
+
+        f = Feedback.query.filter(and_(Feedback.domain == domain, Feedback.feedback_id == feedback_id)).scalar()
+        f.title = title
+        f.description = description
+        f.status = s.name
+        f.status_id = s.status_id
         f.save()
 
         return f
