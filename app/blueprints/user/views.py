@@ -326,7 +326,7 @@ def sort(sort, subdomain):
 
         feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, sort=sort, subdomain=subdomain)
 
 
 @user.route('/feedback/<status>', subdomain='<subdomain>', methods=['GET','POST'])
@@ -340,7 +340,7 @@ def filter(status, subdomain):
 
     feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter)
+    return render_template('user/feedback.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter, subdomain=subdomain)
 
 
 @user.route('/view/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
@@ -378,18 +378,14 @@ def roadmap():
 
 
 # Settings -------------------------------------------------------------------
-@user.route('/settings', methods=['GET','POST'])
+@user.route('/settings', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def settings():
-
-    if current_user.role == 'admin':
-        return redirect(url_for('admin.dashboard'))
-
+def settings(subdomain):
     c = Customer.query.filter(Customer.user_id == current_user.id).scalar()
     card = get_card(c)
 
-    return render_template('user/settings.html', current_user=current_user, card=card)
+    return render_template('user/settings.html', current_user=current_user, card=card, subdomain=subdomain)
 
 
 # Actions -------------------------------------------------------------------
