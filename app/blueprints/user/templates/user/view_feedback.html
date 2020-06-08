@@ -198,7 +198,7 @@
                 </span><br /><br />
                 {% endif %}
                 <!-- Replace with your content -->
-                <form action="{{ url_for('user.update_feedback') }}" method="post">
+                <form action="{{ url_for('user.update_feedback', subdomain=subdomain) }}" method="post">
                     <input type="hidden" name="feedback_id" value="{{ feedback.feedback_id }}" />
                     <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
                       <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
