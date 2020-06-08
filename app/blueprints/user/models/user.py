@@ -15,6 +15,7 @@ from itsdangerous import URLSafeTimedSerializer, \
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.user.models.domain import Domain
+from app.blueprints.api.models.feedback import Feedback
 from app.extensions import db
 
 

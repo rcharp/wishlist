@@ -60,7 +60,7 @@ def create_feedback(user, domain, email, title, description):
         id = generate_id(Feedback, size=8)
         f = Feedback()
         f.user_id = user.id
-        f.username = user.name
+        f.username = user.username
         f.email = email
         f.title = title
         f.feedback_id = id

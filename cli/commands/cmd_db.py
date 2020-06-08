@@ -77,7 +77,6 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'name': 'Demo User',
         'password': app.config['SEED_ADMIN_PASSWORD']
     }
 
@@ -138,7 +137,7 @@ def seed_data():
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
             'email': 'demo@getwishlist.io',
-            'username': "Demo User",
+            'username': "demo",
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
