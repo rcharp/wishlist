@@ -27,6 +27,12 @@ def home():
                            plans=settings.STRIPE_PLANS)
 
 
+@page.route('/', subdomain='<subdomain>')
+@cross_origin()
+def subdomain(subdomain):
+    return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+
 @page.route('/terms')
 @cross_origin()
 def terms():
