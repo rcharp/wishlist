@@ -157,7 +157,7 @@ def extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
-    cors(app)
+    cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
 
     return None
 
