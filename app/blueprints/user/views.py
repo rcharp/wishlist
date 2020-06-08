@@ -282,10 +282,10 @@ def add_feedback(subdomain):
             from app.blueprints.api.api_functions import create_feedback
             f = create_feedback(current_user, subdomain, None, title, description)
 
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
         except Exception:
             flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.dashboard'))
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
 
@@ -333,25 +333,25 @@ def filter(status, subdomain):
 '''
 Add or remove a vote
 '''
-@user.route('/add_vote', methods=['GET','POST'])
+@user.route('/add_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_vote():
+def add_vote(subdomain):
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
             from app.blueprints.api.api_functions import add_vote
             add_vote(feedback_id, current_user.id)
 
-    return redirect(url_for('user.feedback'))
+    return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
 # Roadmap -------------------------------------------------------------------
-@user.route('/roadmap', methods=['GET','POST'])
+@user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def roadmap():
-    return render_template('user/roadmap.html', current_user=current_user)
+def roadmap(subdomain):
+    return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
 # Settings -------------------------------------------------------------------
