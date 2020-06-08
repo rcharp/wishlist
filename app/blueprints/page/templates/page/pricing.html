@@ -169,7 +169,7 @@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Actions</li>
                                     <li>
-                                        <a tabindex="-1" href="{{ url_for('user.dashboard') }}">
+                                        <a tabindex="-1" href="{{ url_for('user.dashboard', subdomain=subdomain) }}">
                                             <i class="si si-layers pull-right"></i>Dashboard
                                         </a>
                                     </li>
@@ -188,7 +188,7 @@
                     <ul class="nav-header pull-left">
                         <li>
                             <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-                            <button class="btn btn-default pull-right" style="margin-top:0px;" data-toggle="modal" onclick="window.location.href='{{ url_for('user.dashboard') }}'" type="button">
+                            <button class="btn btn-default pull-right" style="margin-top:0px;" data-toggle="modal" onclick="window.location.href='{{ url_for('user.dashboard', subdomain=subdomain) }}" }}'" type="button">
                                 <i class="si si-home"></i>
                             </button>
                         </li>
