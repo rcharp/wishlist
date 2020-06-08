@@ -98,7 +98,7 @@ def login(subdomain):
 
                 next_url = request.form.get('next')
 
-                if next_url == url_for('user.login') or next_url == '' or next_url is None:
+                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
                     next_url = url_for('user.dashboard', subdomain=u.domain)
 
                 if next_url:
@@ -124,7 +124,7 @@ def logout():
     logout_user()
 
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login'))
+    return redirect(url_for('user.login', subdomain=subdomain))
 
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
@@ -136,7 +136,7 @@ def begin_password_reset():
         u = User.initialize_password_reset(request.form.get('identity'))
 
         flash('An email has been sent to {0}.'.format(u.email), 'success')
-        return redirect(url_for('user.login'))
+        return redirect(url_for('user.login', subdomain=subdomain))
 
     return render_template('user/begin_password_reset.html', form=form)
 
@@ -174,7 +174,7 @@ def signup():
     if form.validate_on_submit():
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
             flash('There is already an account with this email. Please login.', 'error')
-            return redirect(url_for('user.login'))
+            return redirect(url_for('user.login', subdomain=subdomain))
 
         subdomain = request.form.get('domain')
 

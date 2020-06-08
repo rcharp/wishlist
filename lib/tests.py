@@ -59,7 +59,7 @@ def login(client, username='', password=''):
     """
     user = dict(identity=username, password=password)
 
-    response = client.post(url_for('user.login'), data=user,
+    response = client.post(url_for('user.login', subdomain=subdomain), data=user,
                            follow_redirects=True)
 
     return response
