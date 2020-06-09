@@ -102,6 +102,7 @@ def login(subdomain):
 @anonymous_required()
 @csrf.exempt
 def no_company_login():
+    return redirect(url_for('user.no_company_signup'))
 
     form = NoCompanyLoginForm(next=request.args.get('next'))
 
