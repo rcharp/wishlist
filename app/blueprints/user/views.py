@@ -103,7 +103,7 @@ def login(subdomain):
 @csrf.exempt
 def no_company_login(email):
 
-    form = NoCompanyLoginForm(next=request.args.get('next'))
+    form = NoCompanyLoginForm(next=request.args.get('next'), identity=email)
 
     if form.validate_on_submit():
 
