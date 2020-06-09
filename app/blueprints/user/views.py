@@ -98,12 +98,12 @@ def login(subdomain):
     return render_template('user/login.html', subdomain=subdomain, form=form)
 
 
-@user.route('/login/<email>', methods=['GET', 'POST'])
+@user.route('/login', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def no_company_login(email):
+def no_company_login():
 
-    form = NoCompanyLoginForm(next=request.args.get('next'), identity=email)
+    form = NoCompanyLoginForm(next=request.args.get('next'))
 
     if form.validate_on_submit():
 
@@ -173,10 +173,9 @@ def logout(subdomain):
 @user.route('/logout')
 @login_required
 def no_company_logout():
-    e = current_user.email
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.no_company_login', email=e))
+    return redirect(url_for('user.no_company_login'))
 
 
 @user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
@@ -267,7 +266,7 @@ def no_company_signup():
     if form.validate_on_submit():
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
             flash('There is already an account with this email. Please login.', 'error')
-            return redirect(url_for('user.no_company_login', email=request.form.get('email')))
+            return redirect(url_for('user.no_company_login'))
 
         subdomain = request.form.get('domain')
 
