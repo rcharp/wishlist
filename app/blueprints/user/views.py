@@ -296,7 +296,7 @@ def no_company_signup():
             flash("You've successfully signed up!", 'success')
             return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/signup.html', subdomain=subdomain, form=form)
+    return render_template('user/signup.html', form=form)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])
