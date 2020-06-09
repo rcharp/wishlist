@@ -98,10 +98,10 @@ def login(subdomain):
     return render_template('user/login.html', subdomain=subdomain, form=form)
 
 
-@user.route('/login', methods=['GET', 'POST'])
+@user.route('/login/<email>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def no_company_login():
+def no_company_login(email):
 
     form = NoCompanyLoginForm(next=request.args.get('next'))
 
@@ -173,9 +173,10 @@ def logout(subdomain):
 @user.route('/logout')
 @login_required
 def no_company_logout():
+    e = current_user.email
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.no_company_login'))
+    return redirect(url_for('user.no_company_login', email=e))
 
 
 @user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
@@ -226,6 +227,47 @@ def signup(subdomain):
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
             flash('There is already an account with this email. Please login.', 'error')
             return redirect(url_for('user.login', subdomain=subdomain))
+
+        subdomain = request.form.get('domain')
+
+        if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+            flash('That domain is already in use. Please try another.', 'error')
+            return render_template('user/signup.html', subdomain=subdomain, form=form)
+
+        u = User()
+
+        form.populate_obj(u)
+        u.password = User.encrypt_password(request.form.get('password'))
+        u.role = 'creator'
+        u.save()
+
+        # Create the domain from the form
+        from app.blueprints.api.api_functions import create_domain
+        create_domain(u, form)
+
+        if login_user(u):
+            # from app.blueprints.user.tasks import send_welcome_email
+            # from app.blueprints.contact.mailerlite import create_subscriber
+
+            # send_welcome_email.delay(current_user.email)
+            # create_subscriber(current_user.email)
+
+            flash("You've successfully signed up!", 'success')
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+    return render_template('user/signup.html', subdomain=subdomain, form=form)
+
+
+@user.route('/signup', methods=['GET', 'POST'])
+@anonymous_required()
+@csrf.exempt
+def no_company_signup():
+    form = SignupForm()
+
+    if form.validate_on_submit():
+        if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+            flash('There is already an account with this email. Please login.', 'error')
+            return redirect(url_for('user.no_company_login', email=request.form.get('email')))
 
         subdomain = request.form.get('domain')
 
