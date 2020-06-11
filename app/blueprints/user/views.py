@@ -79,7 +79,7 @@ def login(subdomain):
                 next_url = request.form.get('next')
 
                 if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard', subdomain=u.domain)
+                    next_url = url_for('user.dashboard', subdomain=subdomain)
 
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)
