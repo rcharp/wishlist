@@ -211,7 +211,13 @@
                               </dt>
                             </dl>
                           {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
-                            <input name="title" type="text" class="text-lg leading-6 font-medium text-gray-900" value="{{ feedback.title }}" />
+                              <div>
+                                  <label for="title" class="sr-only">Title
+                                  </label>
+                                  <div class="relative rounded-md shadow-sm">
+                                    <input id="title" name="title" class="form-input block w-full sm:text-sm sm:leading-5" value="{{ feedback.title }}" placeholder="Enter a title" required />
+                                  </div>
+                                </div>
                           {% else %}
                             <h3 class="text-lg leading-6 font-medium text-gray-900">
                                 {{ feedback.title }}
