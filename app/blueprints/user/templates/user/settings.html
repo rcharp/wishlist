@@ -148,7 +148,9 @@
                   </button>
 
                   {% if current_user.is_authenticated %}
-                        {% include '/user/includes/user_dropdown.html' ignore missing %}
+                      {% include '/user/includes/user_dropdown.html' ignore missing %}
+                  {% else %}
+                      {% include '/user/includes/header_buttons.html' ignore missing %}
                   {% endif %}
                 </div>
               </div>
