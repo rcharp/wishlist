@@ -125,7 +125,16 @@ def seed_domains():
         'user_id': 2
     }
 
+    wishlist = {
+        'domain_id': generate_id(Domain),
+        'name': 'wishlist',
+        'company': 'Wishlist',
+        'admin_email': app.config['SEED_MEMBER_EMAIL'],
+        'user_id': 1
+    }
+
     Domain(**demo).save()
+    Domain(**wishlist).save()
 
 
 @click.command()
@@ -133,6 +142,7 @@ def seed_data():
 
     s = list(Status.query.all())
     d = Domain.query.filter(Domain.name == 'demo').scalar()
+    w = Domain.query.filter(Domain.name == 'wishlist').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -146,8 +156,26 @@ def seed_data():
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
             'status': status.name,
-            'domain': 'demo',
+            'domain': d.name,
             'domain_id': d.domain_id
+        }
+
+        Feedback(**params).save()
+
+    for x in range(1, 11):
+        status = random.choice(s)
+        params = {
+            'user_id': 1,
+            'feedback_id': generate_id(Feedback),
+            'title': random.choice(titles()),
+            'email': app.config['SEED_MEMBER_EMAIL'],
+            'username': "ricky",
+            'description': random.choice(descriptions()),
+            'votes': random.randint(10, 1000),
+            'status_id': status.status_id,
+            'status': status.name,
+            'domain': w.name,
+            'domain_id': w.domain_id
         }
 
         Feedback(**params).save()
