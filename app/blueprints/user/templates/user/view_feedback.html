@@ -202,7 +202,7 @@
                     <input type="hidden" name="feedback_id" value="{{ feedback.feedback_id }}" />
                     <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
                       <div class="px-4 py-5 border-b border-gray-200 sm:px-6 sm:grid-cols-3">
-                          <div class="sm:col-span-2">
+                          <dl class="sm:col-span-2">
                               {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
                                   <div>
                                       <label for="title" class="sr-only">Title
@@ -219,8 +219,8 @@
                                 <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
                                   {{ feedback.created_on|datetime_filter }}
                                 </p>
-                         </div>
-                        <div class="sm:col-span-1">
+                         </dl>
+                        <dl class="sm:col-span-1">
                           <dl class="pull-right text-right">
                               <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
                                   <span style="color:#00b300"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i>{{ feedback.votes }}</span>
@@ -229,7 +229,7 @@
                                 Votes
                               </dt>
                             </dl>
-                         </div>
+                         </dl>
                       </div>
                       <div class="px-4 py-5 sm:p-0">
                         <dl>
