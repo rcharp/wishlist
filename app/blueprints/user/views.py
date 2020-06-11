@@ -373,6 +373,13 @@ def dashboard(subdomain):
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
 
 
+@user.route('/dashboard', methods=['GET','POST'])
+@csrf.exempt
+@cross_origin()
+def demo():
+    return redirect(url_for('user.dashboard', subdomain='demo'))
+
+
 # Feedback -------------------------------------------------------------------
 '''
 View feedback details
