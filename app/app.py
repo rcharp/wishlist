@@ -182,6 +182,7 @@ def template_processors(app):
     app.jinja_env.filters['site_color_filter'] = site_color_filter
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
+    app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env
@@ -353,3 +354,7 @@ def shuffle_filter(arg):
 
 def percent_filter(arg):
     return float(100 / len(arg))
+
+
+def default_profile_image_url(arg):
+    return 'https://scontent.ftpa1-2.fna.fbcdn.net/v/t1.0-9/23471937_10155779109118398_6528989144266130489_n.jpg?_nc_cat=104&_nc_sid=09cbfe&_nc_ohc=fMD4100xS9wAX8vx9MW&_nc_ht=scontent.ftpa1-2.fna&oh=dc95db0c4dbf170940ac87c45678ccb9&oe=5F09350D'
