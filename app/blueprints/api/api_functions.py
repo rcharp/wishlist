@@ -141,13 +141,13 @@ def create_domain(user, form):
         d.save()
 
         if create_subdomain(form.domain.data):
-            return d
+            return True
         else:
             d.delete()
-            return None
+            return False
     except Exception as e:
         print_traceback(e)
-        return None
+        return False
 
 
 def create_subdomain(subdomain):
