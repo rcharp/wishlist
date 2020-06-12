@@ -123,7 +123,7 @@ def login_anon():
             subdomain = request.form.get('domain')
 
             if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                flash(Markup("That domain wasn't found. Please try again or <a href='{{ url_for(\'user.signup_anon\'}}'>create a new company.</a>."),
+                flash(Markup("That domain wasn't found. Please try again or <a href='{{ url_for(\'user.signup_anon\'}}'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
                       category='error')
                 return render_template('user/login.html', form=form)
 
