@@ -144,6 +144,7 @@ def create_domain(user, form):
             return d
         else:
             d.delete()
+            return None
     except Exception as e:
         print_traceback(e)
         return None

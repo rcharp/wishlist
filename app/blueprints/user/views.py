@@ -221,10 +221,6 @@ def signup_anon():
         u.role = 'creator'
         u.save()
 
-        # Create the domain from the form
-        from app.blueprints.api.api_functions import create_domain
-        create_domain(u, form)
-
         if login_user(u):
             # from app.blueprints.user.tasks import send_welcome_email
             # from app.blueprints.contact.mailerlite import create_subscriber
@@ -232,8 +228,14 @@ def signup_anon():
             # send_welcome_email.delay(current_user.email)
             # create_subscriber(current_user.email)
 
-            flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            # Create the domain from the form
+            from app.blueprints.api.api_functions import create_domain
+            if create_domain(u, form) is not None:
+                flash("You've successfully signed up!", 'success')
+                return redirect(url_for('user.dashboard', subdomain='demo'))
+            else:
+                flash("There was an error creating this domain. Please try again.", 'error')
+                return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     return render_template('user/signup.html', form=form)
 
