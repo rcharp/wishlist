@@ -105,6 +105,10 @@ STRIPE_TEST_PUBLISHABLE_KEY = os.environ.get('STRIPE_TEST_PUBLISHABLE_KEY', None
 STRIPE_API_VERSION = '2018-02-28'
 STRIPE_AUTHORIZATION_LINK = os.environ.get('STRIPE_CONNECT_AUTHORIZE_LINK', None)
 
+# Heroku
+HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY', None)
+HEROKU_TOKEN = os.environ.get('HEROKU_TOKEN', None)
+
 # Change this to the live key when ready to take payments
 STRIPE_KEY = STRIPE_SECRET_KEY
 

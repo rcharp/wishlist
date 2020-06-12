@@ -5,7 +5,6 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
-from app.blueprints.api.godaddy import create_subdomain
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.workspace import Workspace
 from app.blueprints.api.models.feedback import Feedback
@@ -148,6 +147,16 @@ def create_domain(user, form):
     except Exception as e:
         print_traceback(e)
         return None
+
+
+def create_subdomain(subdomain):
+    # Create the subdomain in Heroku
+    from app.blueprints.api.dns.heroku import create_subdomain
+    create_subdomain(subdomain)
+
+    # Create the DNS in CloudFlare
+    from app.blueprints.api.dns.cloudflare import create_dns
+    create_dns()
 
 
 def validate_signup(request):

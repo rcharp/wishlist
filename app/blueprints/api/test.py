@@ -1,4 +1,4 @@
-from app.blueprints.api.godaddy import create_subdomain
+from app.blueprints.api.dns.godaddy import create_subdomain
 
 
 def test():

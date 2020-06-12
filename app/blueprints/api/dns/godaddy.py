@@ -3,7 +3,7 @@ import requests
 from flask import current_app
 
 
-def create_subdomain(subdomain, test=False):
+def create_godaddy_subdomain(subdomain, test=False):
     try:
         # Get the GoDaddy keys
         api_key = current_app.config.get('GODADDY_TEST_API_KEY') if test else current_app.config.get('GODADDY_API_KEY')
