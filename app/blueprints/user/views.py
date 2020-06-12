@@ -42,7 +42,7 @@ from app.blueprints.billing.charge import (
 from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.status import Status
-from app.blueprints.api.models.workspace import Workspace
+from app.blueprints.api.models.vote import Vote
 
 user = Blueprint('user', __name__, template_folder='templates')
 
@@ -414,6 +414,9 @@ def add_feedback(subdomain):
     return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
 
 
+'''
+Adding feedback to the demo
+'''
 @user.route('/add_feedback', methods=['POST'])
 @login_required
 @csrf.exempt
@@ -422,7 +425,7 @@ def add_feedback_anon():
 
 
 '''
-Add feedback to the list
+Update the feedback
 '''
 @user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
 @login_required
@@ -489,15 +492,21 @@ def filter(status, subdomain):
 '''
 Add or remove a vote
 '''
-@user.route('/add_vote', subdomain='<subdomain>', methods=['GET','POST'])
+@user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_vote(subdomain):
+def update_vote(subdomain):
     if request.method == 'POST':
         if 'feedback_id' in request.form:
             feedback_id = request.form['feedback_id']
-            from app.blueprints.api.api_functions import add_vote
-            add_vote(feedback_id, current_user.id)
+            from app.blueprints.api.api_functions import add_vote, remove_vote
+
+            vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id)).scalar()
+            if vote is None:
+                add_vote(feedback_id, current_user.id)
+            else:
+                remove_vote(feedback_id, vote)
+            # if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar():
 
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 

@@ -114,6 +114,18 @@ def add_vote(feedback_id, user_id):
         return None
 
 
+def remove_vote(feedback_id, vote):
+    try:
+        vote.delete()
+
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        f.votes -= 1
+        f.save()
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
 def print_traceback(e):
     traceback.print_tb(e.__traceback__)
     print(e)
