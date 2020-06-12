@@ -1,2 +1,2 @@
-def create_dns():
+def create_dns(subdomain, dns):
     return
