@@ -527,7 +527,6 @@ def roadmap(subdomain):
 def settings(subdomain):
     c = Customer.query.filter(Customer.user_id == current_user.id).scalar()
     card = get_card(c)
-
     domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
 
     return render_template('user/settings.html', current_user=current_user, card=card, domain=domain, subdomain=subdomain)

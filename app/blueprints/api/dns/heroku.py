@@ -12,12 +12,12 @@ def create_subdomain(subdomain):
 
         if d is not None:
             dns = d.cname
-            print(dns)
 
-            # Create the DNS in cloudflare
+            # Create the DNS in CloudFlare
             from app.blueprints.api.dns.cloudflare import create_dns
-            create_dns(subdomain, dns)
-        return True
+            return create_dns(subdomain, dns)
+
+        return False
     except Exception as e:
         print_traceback(e)
         return False
