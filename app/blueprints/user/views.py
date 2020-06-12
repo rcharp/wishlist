@@ -26,7 +26,7 @@ from app.blueprints.user.decorators import anonymous_required
 from app.blueprints.user.models.user import User, Domain
 from app.blueprints.user.forms import (
     LoginForm,
-    NoCompanyLoginForm,
+    LoginFormAnon,
     BeginPasswordResetForm,
     PasswordResetForm,
     SignupForm,
@@ -102,12 +102,10 @@ def login(subdomain):
 @anonymous_required()
 @csrf.exempt
 def login_anon():
-    return redirect(url_for('user.signup_anon'))
 
-    form = NoCompanyLoginForm(next=request.args.get('next'))
+    form = LoginFormAnon(next=request.args.get('next'))
 
     if form.validate_on_submit():
-
         u = User.find_by_identity(request.form.get('identity'))
 
         if u and u.is_active() and u.authenticated(password=request.form.get('password')):
@@ -124,17 +122,10 @@ def login_anon():
             # If the user doesn't have a company, make them sign up for one
             subdomain = request.form.get('domain')
 
-            if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                flash('That domain is already in use. Please try another.', 'error')
+            if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                flash(Markup("That domain wasn't found. Please try again or <a href='{{ url_for(\'user.signup_anon\'}}'>create a new company.</a>."),
+                      category='error')
                 return render_template('user/login.html', form=form)
-
-            # Create the domain from the form
-            from app.blueprints.api.api_functions import create_domain
-            if create_domain(u, form):
-
-                u.domain = subdomain
-                u.role = 'creator'
-                u.save()
 
             if login_user(u, remember=True) and u.is_active():
                 u.update_activity_tracking(request.remote_addr)
@@ -391,6 +382,14 @@ def feedback(feedback_id, subdomain):
     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain)
 
 
+@user.route('/feedback/<feedback_id>', methods=['GET','POST'])
+@csrf.exempt
+def feedback_anon(feedback_id):
+    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    statuses = Status.query.all()
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses)
+
+
 '''
 Add feedback to the list
 '''
@@ -528,6 +527,13 @@ def settings(subdomain):
     card = get_card(c)
 
     return render_template('user/settings.html', current_user=current_user, card=card, subdomain=subdomain)
+
+
+@user.route('/settings', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def settings_anon():
+    return redirect(url_for('user.login_anon'))
 
 
 # Actions -------------------------------------------------------------------

@@ -18,14 +18,11 @@ class LoginForm(Form):
     # remember = BooleanField('Stay signed in')
 
 
-class NoCompanyLoginForm(Form):
+class LoginFormAnon(Form):
     next = HiddenField()
     identity = StringField('Username or email',
                            [DataRequired(), Length(3, 254)])
-    company = StringField(validators=[
-        DataRequired()
-    ])
-    domain = StringField(validators=[
+    domain = StringField('Domain to login to', validators=[
         DataRequired()
     ])
     password = PasswordField('Password', [DataRequired(), Length(8, 128)])
