@@ -1,6 +1,7 @@
 import CloudFlare
 from flask import current_app
 
+
 def create_dns(subdomain, dns):
     from app.blueprints.api.api_functions import print_traceback
     zone_name = 'getwishlist.io'
@@ -19,7 +20,7 @@ def create_dns(subdomain, dns):
         # exit('/zones.get - %s - api call failed' % (e))
 
     if len(zones) == 0:
-        exit('No zones found')
+        return False
 
     # extract the zone_id which is needed to process that zone
     zone = zones[0]
@@ -27,7 +28,7 @@ def create_dns(subdomain, dns):
 
     # request the DNS records from that zone
     try:
-        record = {'name': subdomain, 'type':'CNAME', 'content': dns}
+        record = {'name': subdomain, 'type':'CNAME', 'content': dns, 'proxied': True}
         r = cf.zones.dns_records.post(zone_id, data=record)
         return True
     except CloudFlare.exceptions.CloudFlareAPIError as e:
