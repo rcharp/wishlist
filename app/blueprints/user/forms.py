@@ -58,7 +58,7 @@ class SignupForm(ModelForm):
 
     domain = StringField(validators=[
         DataRequired(),
-        Regexp('[A-Za-z]', message='Only letters are allowed for domain names.'),
+        Regexp('^[A-Za-z]+$', message='Only letters are allowed for domain names.'),
     ])
 
     password = PasswordField('Password', [DataRequired(), Length(8, 128)])
