@@ -155,7 +155,9 @@
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Replace with your content -->
                 <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right">
-                    <div class="sm:col-span-3"></div>
+                    <div class="sm:col-span-3">
+                        <div class="search-results" style="display:none">Showing results for '<span id="search-term"></span>'</div>
+                    </div>
                     <div class="pull-right sm:col-span-1">
                         <div class="relative inline-block text-left">
                           <div>
@@ -440,9 +442,13 @@
             }
 
             function SearchFeedback(e){
+                var count = 0;
                 var input = '';
+
                 input += e.value;
+
                 var items = document.getElementsByClassName('feedback-item');
+                document.getElementById('search-term').innerText = input;
 
                 for (var i = 0; i < items.length; i++) {
                     var item = items[i];
@@ -452,6 +458,14 @@
                     else {
                         item.style.display = '';
                     }
+                    count += 1;
+                }
+
+                if (count > 0){
+                    document.getElementById('search-results').style.display = '';
+                }
+                else {
+                    document.getElementById('search-results').style.display = 'none';
                 }
             }
 
