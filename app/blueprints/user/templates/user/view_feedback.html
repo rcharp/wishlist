@@ -260,7 +260,11 @@
                               Requested By
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                              {{ feedback.username }}
+                            {% if feedback.username and false %}
+                                {{ feedback.username }}
+                            {% else %}
+                                {{ feedback.fullname }}
+                            {% endif %}
                             </dd>
                           </div>
                         </dl>
