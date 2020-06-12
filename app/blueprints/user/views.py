@@ -396,9 +396,14 @@ def feedback_anon(feedback_id):
 Add feedback to the list
 '''
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
-@login_required
+# @login_required
 @csrf.exempt
 def add_feedback(subdomain):
+
+    # If there is no user, redirect them to the login for this domain
+    if not current_user.is_authenticated:
+        return redirect(url_for('user.login', subdomain=subdomain))
+
     if request.method == 'POST':
         try:
             title = request.form['title']
