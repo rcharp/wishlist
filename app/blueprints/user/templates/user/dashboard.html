@@ -296,7 +296,7 @@
                                 By: {% if feedback.username %}
                                         {{ feedback.username }}
                                     {% else %}
-                                        {{ feedback.name }}
+                                        {{ feedback.fullname }}
                                     {% endif %}
                                 {% if feedback.status %}
                                     <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">

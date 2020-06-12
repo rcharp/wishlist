@@ -138,11 +138,14 @@ def seed_domains():
 
 
 @click.command()
-def seed_data():
+def seed_feedback():
 
     s = list(Status.query.all())
     d = Domain.query.filter(Domain.name == 'demo').scalar()
     w = Domain.query.filter(Domain.name == 'wishlist').scalar()
+
+    d_u = User.query.filter(User.username == 'demo').scalar()
+    w_u = User.query.filter(User.username == 'ricky').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -150,8 +153,9 @@ def seed_data():
             'user_id': 2,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': 'demo@getwishlist.io',
-            'username': "demo",
+            'email': d_u.email,
+            'username': d_u.username,
+            'fullname': d_u.name,
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
@@ -168,8 +172,9 @@ def seed_data():
             'user_id': 1,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': app.config['SEED_MEMBER_EMAIL'],
-            'username': "ricky",
+            'email': w_u.email,
+            'username': w_u.username,
+            'fullname': w_u.name,
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
@@ -198,7 +203,7 @@ def reset(ctx, with_testdb):
     ctx.invoke(seed_users)
     ctx.invoke(seed_domains)
     ctx.invoke(seed_status)
-    ctx.invoke(seed_data)
+    ctx.invoke(seed_feedback)
 
     return None
 
