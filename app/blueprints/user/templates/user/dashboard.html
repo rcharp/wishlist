@@ -418,15 +418,15 @@
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);
 
-                if (document.getElementById('vote-' + feedback_id).classList.contains('text-indigo-600')){
+                if (document.getElementById('votes-' + feedback_id).classList.contains('text-indigo-600')){
                     document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
-                    document.getElementById('vote-' + feedback_id).classList.remove('text-indigo-600');
-                    document.getElementById('vote-' + feedback_id).classList.add('text-green-600');
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-indigo-600');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-green-600');
                 }
                 else{
                     document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
-                    document.getElementById('vote-' + feedback_id).classList.remove('text-green-600');
-                    document.getElementById('vote-' + feedback_id).classList.add('text-indigo-600');
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-green-600');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
                 }
 
             }
