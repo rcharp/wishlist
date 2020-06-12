@@ -22,6 +22,8 @@ class Feedback(ResourceMixin, db.Model):
                            index=True, nullable=True, primary_key=False, unique=False)
     username = db.Column(db.String(255), db.ForeignKey('users.username', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
+    name = db.Column(db.String(255), db.ForeignKey('users.name', onupdate='CASCADE', ondelete='CASCADE'),
+                         index=True, nullable=True, primary_key=False, unique=False)
     status_id = db.Column(db.Integer, db.ForeignKey('statuses.status_id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
     domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
