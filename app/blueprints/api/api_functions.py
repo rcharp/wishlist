@@ -101,7 +101,6 @@ def add_vote(feedback_id, user_id):
         v.feedback_id = feedback_id
         v.vote_id = generate_id(Vote)
         v.user_id = user_id
-        v.voted = True
         v.save()
 
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
