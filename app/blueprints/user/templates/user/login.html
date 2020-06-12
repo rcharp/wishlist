@@ -38,7 +38,7 @@
         </div>
       {% endcall %}
     {% else %}
-        {% call f.form_tag('user.no_company_login') %}
+        {% call f.form_tag('user.login_anon') %}
         <legend>Start your free 14-day trial</legend>
 
         {% call f.form_group(form.identity, css_class='sm-margin-bottom', placeholder="Username or email",

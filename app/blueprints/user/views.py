@@ -101,8 +101,8 @@ def login(subdomain):
 @user.route('/login', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def no_company_login():
-    return redirect(url_for('user.no_company_signup'))
+def login_anon():
+    return redirect(url_for('user.signup_anon'))
 
     form = NoCompanyLoginForm(next=request.args.get('next'))
 
@@ -205,7 +205,7 @@ def signup(subdomain):
 @user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def no_company_signup():
+def signup_anon():
     form = SignupForm()
 
     if form.validate_on_submit():
@@ -215,7 +215,7 @@ def no_company_signup():
             u = User.query.filter(User.email == request.form.get('email')).scalar()
             if u.domain is not None:
                 return redirect(url_for('user.login', subdomain=u.domain))
-            return redirect(url_for('user.no_company_login'))
+            return redirect(url_for('user.login_anon'))
 
         subdomain = request.form.get('domain')
 
@@ -258,10 +258,10 @@ def logout(subdomain):
 
 @user.route('/logout')
 @login_required
-def no_company_logout():
+def logout_anon():
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.no_company_login'))
+    return redirect(url_for('user.login_anon'))
 
 
 @user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
@@ -412,6 +412,13 @@ def add_feedback(subdomain):
             return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
+
+
+@user.route('/add_feedback', methods=['POST'])
+@login_required
+@csrf.exempt
+def add_feedback_anon():
+    return redirect(url_for('user.signup_anon'))
 
 
 '''

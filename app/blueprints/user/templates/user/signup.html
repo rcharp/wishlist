@@ -56,7 +56,7 @@
         </div>
       {% endcall %}<br />
     {% else %}
-        {% call f.form_tag('user.no_company_signup') %}
+        {% call f.form_tag('user.signup_anon') %}
         <legend>Sign up</legend>
 
         {% call f.form_group(form.name, css_class='sm-margin-bottom',
