@@ -9,7 +9,8 @@
   <div class="ml-3 relative">
     <div>
       <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
-        <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+        <img class="h-8 w-8 rounded-full" src="https://scontent.ftpa1-2.fna.fbcdn.net/v/t1.0-9/23471937_10155779109118398_6528989144266130489_n.jpg?_nc_cat=104&_nc_sid=09cbfe&_nc_ohc=fMD4100xS9wAX8vx9MW&_nc_ht=scontent.ftpa1-2.fna&oh=dc95db0c4dbf170940ac87c45678ccb9&oe=5F09350D" alt="" />
+{#        <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />#}
       </button>
     </div>
     <!--
@@ -24,7 +25,11 @@
     -->
     <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
       <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-        {% if current_user.is_authenticated %}<div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.name|title }}</div>{% endif %}
+        {% if current_user.is_authenticated %}
+            <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
+                {{ current_user.name|title }}
+            </div>
+        {% endif %}
         <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</div>
         <div class="border-t border-gray-100"></div>
         <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
