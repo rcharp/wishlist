@@ -52,6 +52,21 @@ class SignupForm(ModelForm):
         Unique(User.email, get_session=lambda: db.session, message='This email is already in use. Login instead?')
     ])
 
+    password = PasswordField('Password', [DataRequired(), Length(8, 128)])
+    # confirm = PasswordField("Repeat Password", [DataRequired(), EqualTo("password", message="Passwords don't match!"), Length(8, 128)])
+
+
+class SignupFormAnon(ModelForm):
+    name = StringField(validators=[
+        DataRequired()
+    ])
+
+    email = EmailField(validators=[
+        DataRequired(),
+        Email(),
+        Unique(User.email, get_session=lambda: db.session, message='This email is already in use. Login instead?')
+    ])
+
     company = StringField(validators=[
         DataRequired()
     ])

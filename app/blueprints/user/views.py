@@ -165,9 +165,9 @@ def signup(subdomain):
 
         subdomain = request.form.get('domain').replace(' ', '')
 
-        if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-            flash('That domain is already in use. Please try another.', 'error')
-            return render_template('user/signup.html', subdomain=subdomain, form=form)
+        # if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+        #     flash('That domain is already in use. Please try another.', 'error')
+        #     return render_template('user/signup.html', subdomain=subdomain, form=form)
 
         u = User()
 
@@ -184,8 +184,8 @@ def signup(subdomain):
             # create_subscriber(current_user.email)
 
             # Create the domain from the form
-            from app.blueprints.api.api_functions import create_domain
-            create_domain(u, form)
+            # from app.blueprints.api.api_functions import create_domain
+            # create_domain(u, form)
 
             flash("You've successfully signed up!", 'success')
             return redirect(url_for('user.dashboard', subdomain=subdomain))
