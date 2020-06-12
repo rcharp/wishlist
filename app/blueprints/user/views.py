@@ -338,7 +338,7 @@ def update_credentials():
 # Dashboard -------------------------------------------------------------------
 @user.route('/dashboard', methods=['GET','POST'])
 @csrf.exempt
-def root_dashboard():
+def dashboard_anon():
     feedbacks = Feedback.query.all()
     statuses = Status.query.all()
 
@@ -361,6 +361,10 @@ def dashboard(subdomain):
 
     for f in feedbacks:
         f.votes = int(f.votes)
+        if current_user.is_authenticated:
+            if db.session.query(exists().where(and_(Vote.user_id == current_user.id, Vote.feedback_id == f.feedback_id))).scalar():
+                f.voted = True
+                f.save()
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
@@ -515,7 +519,6 @@ def update_vote(subdomain):
                 add_vote(feedback_id, current_user.id)
             else:
                 remove_vote(feedback_id, vote)
-            # if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar():
 
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 

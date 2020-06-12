@@ -263,8 +263,8 @@
                         {% for feedback in feedbacks %}
                             <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}">
                                 <div style="padding:10px 25px 0 0;">
-                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
-                                          <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
+                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}', '{{ feedback.voted }}')">
+                                          <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not feedback.voted %}text-indigo-600{% else %}text-green-600{% endif %}" style="font-size:24px;margin-bottom:0;">
                                               <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                           </span>
                                           <span style="font-size:14px;">{% if feedback.votes != 1 %}votes{% else %}vote{% endif %}</span>
@@ -400,12 +400,12 @@
                 }
             }
 
-            function Vote(feedback_id) {
+            function Vote(feedback_id, voted) {
                 var url = ReplaceSubdomain('{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}');
                 $.ajax({
                     url: url,
                     type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
+                    beforeSend: UpdateVote(feedback_id, voted),
                     data: {'feedback_id': feedback_id},
                     success: function (response) {
                     },
@@ -414,10 +414,21 @@
                 });
             }
 
-            function UpdateVote(feedback_id) {
+            function UpdateVote(feedback_id, voted) {
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);
-                document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+
+                if (voted === false){
+                    document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+                    document.getElementById('vote-' + feedback_id).classList.remove('text-indigo-600');
+                    document.getElementById('vote-' + feedback_id).classList.add('text-green-600');
+                }
+                else{
+                    document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
+                    document.getElementById('vote-' + feedback_id).classList.remove('text-green-600');
+                    document.getElementById('vote-' + feedback_id).classList.add('text-indigo-600');
+                }
+
             }
 
             function FilterByStatus(){
