@@ -1,5 +1,5 @@
-from app.blueprints.api.dns.godaddy import create_subdomain
+from app.blueprints.api.dns.heroku import create_subdomain
 
 
 def test():
-    return create_subdomain()
+    return create_subdomain('test')
