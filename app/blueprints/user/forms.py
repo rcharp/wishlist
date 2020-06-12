@@ -49,11 +49,7 @@ class SignupForm(ModelForm):
     email = EmailField(validators=[
         DataRequired(),
         Email(),
-        # Unique(
-        #     User.email,
-        #     get_session=lambda: db.session,
-        #     message='This email is already in use. Login instead?'
-        # )
+        Unique(User.email, get_session=lambda: db.session, message='This email is already in use. Login instead?')
     ])
 
     company = StringField(validators=[
