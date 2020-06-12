@@ -442,7 +442,6 @@
             }
 
             function SearchFeedback(e){
-                var count = 0;
                 var input = '';
 
                 input += e.value;
@@ -458,10 +457,9 @@
                     else {
                         item.style.display = '';
                     }
-                    count += 1;
                 }
 
-                if (count > 0){
+                if (input){
                     document.getElementById('search-results').style.display = '';
                 }
                 else {
