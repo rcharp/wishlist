@@ -276,6 +276,7 @@
                                         {{ feedback.title }}
                                     </a>
                                 </div>
+                                <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
@@ -290,7 +291,6 @@
                                     </div>
                                 </a>
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
-                                  <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
                                   {% if feedback.status %}
                                       <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
                                           {{ feedback.status }}
