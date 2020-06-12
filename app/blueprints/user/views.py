@@ -446,8 +446,10 @@ def update_feedback(subdomain):
             status_id = request.form['status']
 
             from app.blueprints.api.api_functions import update_feedback
-            f = update_feedback(feedback_id, subdomain, title, description, status_id)
+            if update_feedback(feedback_id, subdomain, title, description, status_id) is not None:
+                return redirect(url_for('user.feedback', feedback_id=feedback_id, subdomain=subdomain))
 
+            flash("Uh oh, something went wrong!", "error")
             return redirect(url_for('user.dashboard', subdomain=subdomain))
         except Exception:
             flash("Uh oh, something went wrong!", "error")
