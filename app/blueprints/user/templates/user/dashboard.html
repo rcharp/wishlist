@@ -231,7 +231,7 @@
 
                         <div class="mt-4 mb-4 text-center">
                             <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}">
-                                Powered by <u>Wishlist</u>
+                                Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
                             </a>
                         </div>
 
@@ -276,7 +276,9 @@
                                         {{ feedback.title }}
                                     </a>
                                 </div>
-                                <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                <span class="text-sm leading-5 font-medium text-gray-500">
+                                    <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                </span>
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
