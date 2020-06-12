@@ -510,13 +510,16 @@ Add or remove a vote
 @csrf.exempt
 def update_vote(subdomain):
     if request.method == 'POST':
-        if 'feedback_id' in request.form:
+        if 'feedback_id' in request.form and 'user_id' in request.form:
             feedback_id = request.form['feedback_id']
+            user_id = request.form['user_id']
             from app.blueprints.api.api_functions import add_vote, remove_vote
 
-            vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id)).scalar()
+            vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
+            print(vote)
             if vote is None:
-                add_vote(feedback_id, current_user.id)
+                add_vote(feedback_id, user_id)
+                # return jsonify({'error': e.user_message})
             else:
                 remove_vote(feedback_id, vote)
 

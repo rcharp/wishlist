@@ -406,7 +406,7 @@
                     url: url,
                     type: 'POST',
                     beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id},
+                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                     },
                     error: function (xhr) {
