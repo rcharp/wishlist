@@ -263,7 +263,7 @@
                         {% for feedback in feedbacks %}
                             <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}">
                                 <div style="padding:10px 25px 0 0;">
-                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}', '{{ feedback.voted }}')">
+                                    <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
                                           <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not feedback.voted %}text-indigo-600{% else %}text-green-600{% endif %}" style="font-size:24px;margin-bottom:0;">
                                               <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                           </span>
@@ -400,12 +400,12 @@
                 }
             }
 
-            function Vote(feedback_id, voted) {
+            function Vote(feedback_id) {
                 var url = ReplaceSubdomain('{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}');
                 $.ajax({
                     url: url,
                     type: 'POST',
-                    beforeSend: UpdateVote(feedback_id, voted),
+                    beforeSend: UpdateVote(feedback_id),
                     data: {'feedback_id': feedback_id},
                     success: function (response) {
                     },
@@ -414,7 +414,7 @@
                 });
             }
 
-            function UpdateVote(feedback_id, voted) {
+            function UpdateVote(feedback_id) {
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);
 
