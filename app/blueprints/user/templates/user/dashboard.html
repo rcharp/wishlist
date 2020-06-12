@@ -487,7 +487,8 @@
             }
 
             function ReplaceSubdomain(url){
-                return url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
+                var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
+                return new_url;
             }
         </script>
 
