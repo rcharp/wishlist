@@ -8,7 +8,7 @@ from cli.commands.data import (
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
-from app.blueprints.api.api_functions import generate_id
+from app.blueprints.api.api_functions import generate_id, generate_name
 from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.billing.models.customer import Customer
@@ -155,7 +155,7 @@ def seed_feedback():
             'title': random.choice(titles()),
             'email': d_u.email,
             'username': d_u.username,
-            'fullname': d_u.name,
+            'fullname': generate_name(),
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
@@ -174,7 +174,7 @@ def seed_feedback():
             'title': random.choice(titles()),
             'email': w_u.email,
             'username': w_u.username,
-            'fullname': w_u.name,
+            'fullname': generate_name(),
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,

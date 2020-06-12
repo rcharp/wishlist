@@ -1,6 +1,7 @@
 import string
 import random
 import pytz
+import names
 import traceback
 from datetime import datetime as dt
 from app.extensions import db
@@ -167,3 +168,7 @@ def populate_signup(request, user):
     user.is_active = True
     user.name = request.form['name']
     user.email = request.form['email']
+
+
+def generate_name():
+    return names.get_first_name()

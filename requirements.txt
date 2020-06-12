@@ -47,6 +47,7 @@ pur==5.2.1
 Werkzeug==0.14.1
 repos==0.0.1
 pprint==0.1
+names==0.3.0
 
 # APIs
 
