@@ -153,11 +153,7 @@ def create_domain(user, form):
 def create_subdomain(subdomain):
     # Create the subdomain in Heroku
     from app.blueprints.api.dns.heroku import create_subdomain
-    create_subdomain(subdomain)
-
-    # Create the DNS in CloudFlare
-    from app.blueprints.api.dns.cloudflare import create_dns
-    create_dns()
+    return create_subdomain(subdomain)
 
 
 def validate_signup(request):
