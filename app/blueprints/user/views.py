@@ -515,13 +515,16 @@ def update_vote(subdomain):
             user_id = request.form['user_id']
             from app.blueprints.api.api_functions import add_vote, remove_vote
 
-            vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
-            print(vote)
-            if vote is None:
-                add_vote(feedback_id, user_id)
-                # return jsonify({'error': e.user_message})
-            else:
+            print(user_id)
+            print(feedback_id)
+
+            if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
+                vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
                 remove_vote(feedback_id, vote)
+            else:
+                add_vote(feedback_id, user_id)
+
+            return jsonify({'success': 'Success'})
 
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
