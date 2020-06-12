@@ -106,11 +106,7 @@
 
     <script>
         document.getElementById("company").addEventListener("keyup", function(){
-            document.getElementById("domain").value = document.getElementById("company").value.toLowerCase();
-        });
-
-        $( document ).ready(function() {
-            document.body.classList = 'bg-inidgo-500';
+            document.getElementById("domain").value = document.getElementById("company").value.toLowerCase().replace(" ",'');
         });
     </script>
 {% endblock %}

@@ -163,7 +163,7 @@ def signup(subdomain):
             flash('There is already an account with this email. Please login.', 'error')
             return redirect(url_for('user.login', subdomain=subdomain))
 
-        subdomain = request.form.get('domain')
+        subdomain = request.form.get('domain').replace(' ', '')
 
         if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
@@ -176,16 +176,16 @@ def signup(subdomain):
         u.role = 'creator'
         u.save()
 
-        # Create the domain from the form
-        from app.blueprints.api.api_functions import create_domain
-        create_domain(u, form)
-
         if login_user(u):
             # from app.blueprints.user.tasks import send_welcome_email
             # from app.blueprints.contact.mailerlite import create_subscriber
 
             # send_welcome_email.delay(current_user.email)
             # create_subscriber(current_user.email)
+
+            # Create the domain from the form
+            from app.blueprints.api.api_functions import create_domain
+            create_domain(u, form)
 
             flash("You've successfully signed up!", 'success')
             return redirect(url_for('user.dashboard', subdomain=subdomain))
@@ -208,7 +208,7 @@ def signup_anon():
                 return redirect(url_for('user.login', subdomain=u.domain))
             return redirect(url_for('user.login_anon'))
 
-        subdomain = request.form.get('domain')
+        subdomain = request.form.get('domain').replace(' ', '')
 
         if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
             flash('That domain is already in use. Please try another.', 'error')
