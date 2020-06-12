@@ -230,11 +230,11 @@ def signup_anon():
 
             # Create the domain from the form
             from app.blueprints.api.api_functions import create_domain
-            if create_domain(u, form) is not None:
-                flash("You've successfully signed up!", 'success')
+            if create_domain(u, form) is None:
+                flash("There was an error creating this domain. Please try again.", 'error')
                 return redirect(url_for('user.dashboard', subdomain='demo'))
             else:
-                flash("There was an error creating this domain. Please try again.", 'error')
+                flash("You've successfully signed up!", 'success')
                 return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     return render_template('user/signup.html', form=form)
