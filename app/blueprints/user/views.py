@@ -30,6 +30,7 @@ from app.blueprints.user.forms import (
     BeginPasswordResetForm,
     PasswordResetForm,
     SignupForm,
+    SignupFormAnon,
     WelcomeForm,
     UpdateCredentials)
 
@@ -197,7 +198,7 @@ def signup(subdomain):
 @anonymous_required()
 @csrf.exempt
 def signup_anon():
-    form = SignupForm()
+    form = SignupFormAnon()
 
     if form.validate_on_submit():
         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
