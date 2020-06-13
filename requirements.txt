@@ -49,6 +49,8 @@ repos==0.0.1
 pprint==0.1
 names==0.3.0
 Flask-SSLify==0.1.5
+flask-talisman==0.7.0
+
 
 # APIs
 
