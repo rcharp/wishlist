@@ -123,10 +123,10 @@ def create_app(settings_override=None):
     COMPRESS_MIN_SIZE = 500
     Compress(app)
 
-    @app.before_request
-    def force_https():
-        if request.url.startswith('http://'):
-            return redirect(request.url.replace('http://', 'https://'))
+    # @app.before_request
+    # def force_https():
+    #     if request.url.startswith('http://'):
+    #         return redirect(request.url.replace('http://', 'https://'))
 
     @app.errorhandler(500)
     def error_502(e):
