@@ -392,7 +392,7 @@
             }
 
             function Vote(feedback_id) {
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                var url = ReplaceSubdomain("{{ url_for('user.update_vote', _scheme='https', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -481,7 +481,6 @@
 
             function ReplaceSubdomain(url){
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
-                alert(new_url);
                 return new_url;
             }
 
