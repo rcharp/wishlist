@@ -125,7 +125,7 @@ def create_app(settings_override=None):
 
     @app.before_request
     def force_https():
-        if request.endpoint in app.view_functions and not request.is_secure:
+        if request.url.startswith('http://'):
             return redirect(request.url.replace('http://', 'https://'))
 
     @app.errorhandler(500)
