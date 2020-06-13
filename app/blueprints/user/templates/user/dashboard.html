@@ -88,9 +88,9 @@
                   From: "translate-x-0"
                   To: "-translate-x-full"
               -->
-              <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800">
+              <div id="mobile-menu" class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800">
                 <div class="absolute top-0 right-0 -mr-14 p-1">
-                  <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
+                  <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar" onclick="CloseMenu()">
                     <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -101,16 +101,7 @@
                     {{ 'site'|site_name_filter }}
                 </div>
                 <div class="mt-5 flex-1 h-0 overflow-y-auto">
-                  <nav class="px-2">
-                    <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
-                        <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
-                        Dashboard
-                      </a>
-                      <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                          <i class="fa fa-gear" style="padding-left:5px;margin-right:15px;"></i>
-                        Settings
-                      </a>
-                  </nav>
+                  {% include '/user/includes/sidebar_nav.html' ignore missing %}
                 </div>
               </div>
               <div class="flex-shrink-0 w-14">
@@ -492,6 +483,11 @@
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
                 alert(new_url);
                 return new_url;
+            }
+
+            function CloseMenu(){
+                document.getElementById('mobile-menu').classList.remove('translate-x-0');
+                document.getElementById('mobile-menu').classList.add('-translate-x-full');
             }
         </script>
 

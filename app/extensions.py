@@ -18,5 +18,7 @@ cache = Cache(config={'CACHE_TYPE': 'redis'})
 timeout = 9999999999999999
 lock = Lock()
 cors = CORS
-sslify = SSLify
-talisman = Talisman
+
+# Force HTTPS
+# sslify = SSLify
+# talisman = Talisman

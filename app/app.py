@@ -33,8 +33,8 @@ from app.extensions import (
     login_manager,
     cache,
     cors,
-    sslify,
-    talisman
+    # sslify,
+    # talisman
 )
 
 
