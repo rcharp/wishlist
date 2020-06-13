@@ -8,7 +8,7 @@ import datetime
 import random
 from sqlalchemy import inspect
 from werkzeug.contrib.fixers import ProxyFix
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from celery import Celery
 from itsdangerous import URLSafeTimedSerializer
 from flask_compress import Compress
@@ -122,6 +122,11 @@ def create_app(settings_override=None):
     COMPRESS_LEVEL = 6
     COMPRESS_MIN_SIZE = 500
     Compress(app)
+
+    @app.before_request
+    def force_https():
+        if request.endpoint in app.view_functions and not request.is_secure:
+            return redirect(request.url.replace('http://', 'https://'))
 
     @app.errorhandler(500)
     def error_502(e):
