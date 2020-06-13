@@ -166,7 +166,7 @@ def extensions(app):
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
     cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
-    talisman(app)
+    # talisman(app)
 
     return None
 
