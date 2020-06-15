@@ -376,7 +376,7 @@ def any_filter(arg, k):
 
 def initial_filter(arg):
     name = arg.split(' ')
-    if len(name > 1):
+    if len(name) > 1:
         s = ''
         return s.join(name[0]).upper()
     else:
