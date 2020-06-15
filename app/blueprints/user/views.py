@@ -296,12 +296,12 @@ def password_reset(subdomain):
     return render_template('user/password_reset.html', subdomain=subdomain, form=form)
 
 
-@user.route('/welcome', methods=['GET', 'POST'])
+@user.route('/welcome', subdomain='<subdomain>', methods=['GET', 'POST'])
 @login_required
-def welcome():
+def welcome(subdomain):
     if current_user.username:
         flash('You already picked a username.', 'warning')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     form = WelcomeForm()
 
@@ -310,9 +310,15 @@ def welcome():
         current_user.save()
 
         flash('Your username has been set.', 'success')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, payment=current_user.payment_id)
+    return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
+
+
+@user.route('/welcome', methods=['GET', 'POST'])
+@login_required
+def welcome_anon():
+    return redirect(url_for('user.login_anon'))
 
 
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
