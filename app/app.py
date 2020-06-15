@@ -125,10 +125,12 @@ def create_app(settings_override=None):
     COMPRESS_MIN_SIZE = 500
     Compress(app)
 
-    # @app.before_request
-    # def force_https():
-    #     if request.url.startswith('http://'):
-    #         return redirect(request.url.replace('http://', 'https://'))
+    @app.before_request
+    def before_request():
+        if not request.is_secure:
+            url = request.url.replace("http://", "https://", 1)
+            code = 301
+            return redirect(url, code=code)
 
     @app.errorhandler(500)
     def error_502(e):
@@ -168,7 +170,7 @@ def extensions(app):
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
     cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
     # talisman(app)
-    sslify = SSLify(app)
+    # sslify = SSLify(app)
 
     return None
 
