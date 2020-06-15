@@ -312,7 +312,8 @@ def welcome(subdomain):
         flash('Your username has been set.', 'success')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
+    return render_template('user/welcome.html', form=form, subdomain=subdomain)
+    # return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])
