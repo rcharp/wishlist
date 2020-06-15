@@ -3,6 +3,7 @@ import pytz
 from logging.handlers import SMTPHandler
 
 import json
+from flask_sslify import SSLify
 import stripe
 import datetime
 import random
@@ -167,6 +168,7 @@ def extensions(app):
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
     cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
     # talisman(app)
+    sslify = SSLify(app)
 
     return None
 
