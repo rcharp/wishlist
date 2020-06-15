@@ -366,9 +366,7 @@ def percent_filter(arg):
 
 
 def any_filter(arg, k):
-    if next((x for x in arg if x.feedback_id == k), None) is not None:
-        return True
-    return False
+    return any(x.feedback_id == k for x in arg)
 
 
 def default_profile_image_url(arg):
