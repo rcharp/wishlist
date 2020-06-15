@@ -358,16 +358,13 @@ def dashboard(subdomain):
 
     feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
     statuses = Status.query.all()
+    votes = Vote.query.filter(Vote.user_id == current_user.id).all()
 
     for f in feedbacks:
         f.votes = int(f.votes)
-        if current_user.is_authenticated:
-            if db.session.query(exists().where(and_(Vote.user_id == current_user.id, Vote.feedback_id == f.feedback_id))).scalar():
-                f.voted = True
-                f.save()
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -514,9 +511,6 @@ def update_vote(subdomain):
             feedback_id = request.form['feedback_id']
             user_id = request.form['user_id']
             from app.blueprints.api.api_functions import add_vote, remove_vote
-
-            print(user_id)
-            print(feedback_id)
 
             if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
                 vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
