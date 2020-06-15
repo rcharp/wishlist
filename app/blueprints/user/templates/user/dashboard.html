@@ -473,9 +473,23 @@
                 for (var i = 0; i < items.length; i++){
                     var submitted = items[i].getAttribute('data-submitted');
                     var voted = items[i].getAttribute('data-voted');
-                    if ((filters.includes('submitted') && submitted === 'true') || (filters.includes('voted') && voted === 'true')){
+                    var show = false;
+
+                    if (filters.includes('submitted')){
+                        if (submitted === 'true'){
+                            show = true;
+                        }
+                    }
+                    if (filters.includes('voted')){
+                        if (voted === 'true'){
+                            show = true;
+                        }
+                    }
+
+                    if (show){
                         items[i].style.display = '';
-                    }else {
+                    }
+                    else {
                         items[i].style.display = 'none';
                     }
                 }
