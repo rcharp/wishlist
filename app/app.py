@@ -196,6 +196,7 @@ def template_processors(app):
     app.jinja_env.filters['percent_filter'] = percent_filter
     app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
     app.jinja_env.filters['any_filter'] = any_filter
+    app.jinja_env.filters['initial_filter'] = initial_filter
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env
@@ -371,6 +372,15 @@ def percent_filter(arg):
 
 def any_filter(arg, k):
     return any(x.feedback_id == k for x in arg)
+
+
+def initial_filter(arg):
+    name = arg.split(' ')
+    if len(name > 1):
+        s = ''
+        return s.join(name[0]).upper()
+    else:
+        return arg[0].upper()
 
 
 def default_profile_image_url(arg):
