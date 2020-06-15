@@ -62,64 +62,8 @@
     </head>
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
-          <!-- Off-canvas menu for mobile -->
-          <div class="md:hidden">
-            <div class="fixed inset-0 flex z-40">
-              <!--
-                Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-                Entering: "transition-opacity ease-linear duration-300"
-                  From: "opacity-0"
-                  To: "opacity-100"
-                Leaving: "transition-opacity ease-linear duration-300"
-                  From: "opacity-100"
-                  To: "opacity-0"
-              -->
-              <div class="fixed inset-0">
-                <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
-              </div>
-              <!--
-                Off-canvas menu, show/hide based on off-canvas menu state.
-
-                Entering: "transition ease-in-out duration-300 transform"
-                  From: "-translate-x-full"
-                  To: "translate-x-0"
-                Leaving: "transition ease-in-out duration-300 transform"
-                  From: "translate-x-0"
-                  To: "-translate-x-full"
-              -->
-              <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800">
-                <div class="absolute top-0 right-0 -mr-14 p-1">
-                  <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
-                    <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <div class="flex-shrink-0 flex items-center px-4">
-                  <img class="h-8 w-auto" src="../../../../static/logo/logo.png" style="border-radius:10px;" alt="{{ 'site'|site_name_filter }}" />
-                    {{ 'site'|site_name_filter }}
-                </div>
-                <div class="mt-5 flex-1 h-0 overflow-y-auto">
-                  <nav class="px-2">
-                    <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
-                        <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
-                        Dashboard
-                      </a>
-                      <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                          <i class="fa fa-gear" style="padding-left:5px;margin-right:15px;"></i>
-                        Settings
-                      </a>
-                  </nav>
-                </div>
-              </div>
-              <div class="flex-shrink-0 w-14">
-                <!-- Dummy element to force sidebar to shrink to fit close icon -->
-              </div>
-            </div>
-          </div>
-
-          {% include '/user/includes/sidebar.html' %}
+          {% include '/user/includes/mobile_sidebar.html' ignore missing %}
+          {% include '/user/includes/sidebar.html' ignore missing %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
