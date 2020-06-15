@@ -167,7 +167,9 @@
                               {% endif %}
                           </dt>
                           <dd class="sm:col-span-1">
-                              <img class="h-16 w-16 rounded-full" src="{{ 'img'|default_profile_image_url }}" alt="" />
+                              <span class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-500">
+                                  <span class="text-sm font-medium leading-none text-white">{{ current_user.name[0]|upper }}</span>
+                              </span>
                           </dd>
                       </div>
                     </dl>
