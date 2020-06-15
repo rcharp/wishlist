@@ -7,7 +7,7 @@ from flask_caching import Cache
 from threading import Lock
 from flask_cors import CORS
 from flask_sslify import SSLify
-from flask_talisman import Talisman
+# from flask_talisman import Talisman
 
 debug_toolbar = DebugToolbarExtension()
 mail = Mail()

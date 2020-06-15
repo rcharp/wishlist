@@ -356,9 +356,10 @@ def dashboard(subdomain):
     if not subdomain or subdomain == '<invalid>':
         subdomain = 'demo'
 
-    feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+    d = Domain.query.filter(Domain.name == subdomain).scalar()
+    feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
+    votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
     statuses = Status.query.all()
-    votes = Vote.query.filter(Vote.user_id == current_user.id).all()
 
     for f in feedbacks:
         f.votes = int(f.votes)

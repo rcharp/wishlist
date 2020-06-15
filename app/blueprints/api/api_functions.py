@@ -97,13 +97,15 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 def add_vote(feedback_id, user_id):
     try:
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
         v = Vote()
         v.feedback_id = feedback_id
         v.vote_id = generate_id(Vote)
         v.user_id = user_id
+        v.domain_id = f.domain_id
         v.save()
 
-        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
         f.votes += 1
         f.save()
 

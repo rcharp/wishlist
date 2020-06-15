@@ -17,7 +17,7 @@ class Feedback(ResourceMixin, db.Model):
     description = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
     status = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    voted = db.Column('voted', db.Boolean(), nullable=False, server_default='0')
+    # voted = db.Column('voted', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
