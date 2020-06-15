@@ -1,5 +1,6 @@
 import stripe
 from flask import current_app
+from app.blueprints.api.api_functions import print_traceback
 
 
 class Event(object):
@@ -18,38 +19,6 @@ class Event(object):
         """
         return stripe.Event.retrieve(event_id)
 
-
-class Customer(object):
-    @classmethod
-    def create(cls, token=None, email=None, coupon=None, plan=None):
-        """
-        Create a new customer.
-
-        API Documentation:
-          https://stripe.com/docs/api#create_customer
-
-        :param token: Token returned by JavaScript
-        :type token: str
-        :param email: E-mail address of the customer
-        :type email: str
-        :param coupon: Coupon code
-        :type coupon: str
-        :param plan: Plan identifier
-        :type plan: str
-        :return: Stripe customer
-        """
-        params = {
-            'source': token,
-            'email': email
-        }
-
-        if plan:
-            params['plan'] = plan
-
-        if coupon:
-            params['coupon'] = coupon
-
-        return stripe.Customer.create(**params)
 
 # class Coupon(object):
 #     @classmethod
@@ -118,7 +87,7 @@ class Card(object):
         :type stripe_token: str
         :return: Stripe customer
         """
-        stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
         customer = stripe.Customer.retrieve(customer_id)
         customer.source = stripe_token
 
@@ -143,7 +112,7 @@ class Invoice(object):
 
 class Subscription(object):
     @classmethod
-    def create(cls, token=None, email=None, coupon=None, plan=None):
+    def create(cls, token=None, email=None, name=None, plan=None, coupon=None):
         """
         Create a new subscription.
 
@@ -160,15 +129,13 @@ class Subscription(object):
         :type plan: str
         :return: Stripe customer
         """
-        stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
         params = {
             'source': token,
             'email': email,
-            'plan': plan
+            # 'plan': plan,
+            'name': name
         }
-
-        if coupon:
-            params['coupon'] = coupon
 
         return stripe.Customer.create(**params)
 
@@ -188,7 +155,7 @@ class Subscription(object):
         :type plan: str
         :return: Stripe subscription
         """
-        stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
         customer = stripe.Customer.retrieve(customer_id)
         subscription_id = customer.subscriptions.data[0].id
         subscription = customer.subscriptions.retrieve(subscription_id)
@@ -212,11 +179,78 @@ class Subscription(object):
         :type customer_id: int
         :return: Stripe subscription object
         """
-        stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
         customer = stripe.Customer.retrieve(customer_id)
         subscription_id = customer.subscriptions.data[0].id
 
         return customer.subscriptions.retrieve(subscription_id).delete()
+
+
+class Customer(object):
+    @classmethod
+    def create(cls, token=None, email=None, name=None):
+        """
+        Create a new subscription.
+
+        API Documentation:
+          https://stripe.com/docs/api#create_subscription
+
+        :param token: Token returned by JavaScript
+        :type token: str
+        :param email: E-mail address of the customer
+        :type email: str
+        :param name: Customer name
+        :return: Stripe customer
+        """
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
+        params = {
+            'source': token,
+            'email': email,
+            'name': name
+        }
+
+        return stripe.Customer.create(**params)
+
+    @classmethod
+    def update(cls, customer_id=None, name=None, email=None):
+        """
+        Update an existing customer.
+
+        API Documentation:
+          https://stripe.com/docs/api/python#update_subscription
+
+        :param customer_id: Customer id
+        :type customer_id: str
+        :param coupon: Coupon code
+        :type coupon: str
+        :param plan: Plan identifier
+        :type plan: str
+        :return: Stripe subscription
+        """
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
+        customer = stripe.Customer.retrieve(customer_id)
+
+        customer.name = name
+        customer.email = email
+
+        return customer.save()
+
+    @classmethod
+    def cancel(cls, customer_id=None):
+        """
+        Delete an existing customer.
+
+        API Documentation:
+          https://stripe.com/docs/api#cancel_subscription
+
+        :param customer_id: Stripe customer id
+        :type customer_id: int
+        :return: Stripe subscription object
+        """
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
+        customer = stripe.Customer.retrieve(customer_id)
+
+        return customer.delete()
 
 
 class Plan(object):
@@ -232,7 +266,7 @@ class Plan(object):
         :type plan: str
         :return: Stripe plan
         """
-        stripe.api_key = current_app.config.get('STRIPE_SECRET_KEY')
+        stripe.api_key = current_app.config.get('STRIPE_KEY')
         try:
             return stripe.Plan.retrieve(plan)
         except stripe.error.StripeError as e:

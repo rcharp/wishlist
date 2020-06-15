@@ -37,10 +37,6 @@ from app.blueprints.user.forms import (
 from app.extensions import cache, csrf, timeout, db
 from importlib import import_module
 from sqlalchemy import or_, and_, exists, inspect, func
-from app.blueprints.billing.charge import (
-    get_card
-)
-from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.vote import Vote

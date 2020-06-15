@@ -11,7 +11,6 @@ from app.extensions import db
 from app.blueprints.api.api_functions import generate_id, generate_name
 from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.vote import Vote

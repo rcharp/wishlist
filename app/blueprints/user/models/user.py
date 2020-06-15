@@ -13,7 +13,9 @@ from itsdangerous import URLSafeTimedSerializer, \
     TimedJSONWebSignatureSerializer
 
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
-from app.blueprints.billing.models.customer import Customer
+from app.blueprints.billing.models.credit_card import CreditCard
+from app.blueprints.billing.models.subscription import Subscription
+from app.blueprints.billing.models.invoice import Invoice
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.feedback import Feedback
 from app.extensions import db
@@ -30,7 +32,9 @@ class User(UserMixin, ResourceMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # Relationships.
-    customer = db.relationship(Customer, uselist=False, lazy='subquery',
+    credit_card = db.relationship(CreditCard, uselist=False, backref='users', lazy='subquery',
+                                  passive_deletes=True)
+    subscription = db.relationship(Subscription, uselist=False, lazy='subquery',
                                    backref='users', passive_deletes=True)
     domain_id = db.relationship(Domain, uselist=False, lazy='subquery',
                                backref='users', passive_deletes=True)
@@ -49,6 +53,10 @@ class User(UserMixin, ResourceMixin, db.Model):
 
     # Billing.
     name = db.Column(db.String(128), index=True)
+    payment_id = db.Column(db.String(128), index=True)
+    cancelled_subscription_on = db.Column(AwareDateTime())
+    trial = db.Column('trial', db.Boolean(), nullable=False,
+                      server_default='1')
 
     sign_in_count = db.Column(db.Integer, nullable=False, default=0)
     current_sign_in_on = db.Column(AwareDateTime())

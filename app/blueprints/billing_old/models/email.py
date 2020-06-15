@@ -13,7 +13,7 @@ from itsdangerous import URLSafeTimedSerializer, \
     TimedJSONWebSignatureSerializer
 
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
-from app.blueprints.user.models import User
+from app.blueprints.user.models.user import User
 from app.blueprints.billing.models.subscription import Subscription
 from app.blueprints.billing.models.invoice import Invoice
 from app.extensions import db

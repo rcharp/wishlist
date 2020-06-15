@@ -11,6 +11,8 @@ from flask import (
 import traceback
 
 from flask_login import login_required, current_user
+
+from app.blueprints.api.api_functions import print_traceback
 from config import settings
 from app.blueprints.billing.forms import CreditCardForm, \
     UpdateSubscriptionForm, CancelSubscriptionForm
@@ -28,7 +30,7 @@ billing = Blueprint('billing', __name__, template_folder='../templates',
 @csrf.exempt
 # @cache.cached(timeout=timeout)
 def pricing():
-    if current_user.is_authenticated and current_user.subscription:
+    if current_user.is_authenticated and current_user.customer:
         return redirect(url_for('billing.update'))
 
     form = UpdateSubscriptionForm()
@@ -37,53 +39,107 @@ def pricing():
                            plans=settings.STRIPE_PLANS)
 
 
+# @billing.route('/create', methods=['GET', 'POST'])
+# @handle_stripe_exceptions
+# @login_required
+# @csrf.exempt
+# def create():
+#     try:
+#         if current_user.customer:
+#             flash('You already have an active subscription.', 'info')
+#             return redirect(url_for('user.dashboard'))
+#
+#         plan = request.args.get('plan')
+#         subscription_plan = Subscription.get_plan_by_id(plan)
+#
+#         # Guard against an invalid or missing plan.
+#         if subscription_plan is None and request.method == 'GET':
+#             flash('Sorry, that plan did not exist.', 'error')
+#             return redirect(url_for('billing.pricing'))
+#
+#         stripe_key = current_app.config.get('STRIPE_KEY')
+#         form = CreditCardForm(stripe_key=stripe_key, plan=plan)
+#
+#         if form.validate_on_submit():
+#             subscription = Subscription()
+#             created = subscription.create(user=current_user,
+#                                         name=request.form.get('name'),
+#                                         plan=request.form.get('plan'),
+#                                         coupon=request.form.get('coupon_code'),
+#                                         token=request.form.get('stripe_token'))
+#
+#             if created:
+#                 from app.blueprints.billing.billing_functions import signup_limits
+#                 signup_limits(current_user, subscription.plan)
+#
+#                 current_user.trial = False
+#                 current_user.save()
+#
+#                 from app.blueprints.user.tasks import send_plan_signup_email
+#                 send_plan_signup_email.delay(current_user.email, subscription.plan)
+#
+#                 flash('Your account has been upgraded!', 'success')
+#             else:
+#                 flash('You must enable JavaScript for this request.', 'warning')
+#
+#             return redirect(url_for('user.dashboard'))
+#
+#         return render_template('user/checkout.html')
+#         # return render_template('billing/payment_method.html', form=form, plan=subscription_plan)
+#     except Exception as e:
+#         print_traceback(e)
+#
+#         flash('There was an error. We weren\'t able to subscribe you to a plan at this time.', 'error')
+#         return redirect(url_for('user.dashboard'))
+
+
 @billing.route('/create', methods=['GET', 'POST'])
 @handle_stripe_exceptions
 @login_required
 @csrf.exempt
 def create():
     try:
-        if current_user.subscription:
-            flash('You already have an active subscription.', 'info')
+        if current_user.customer:
+            # flash('You already have an active subscription.', 'info')
             return redirect(url_for('user.dashboard'))
 
-        plan = request.args.get('plan')
-        subscription_plan = Subscription.get_plan_by_id(plan)
+        # plan = request.args.get('plan')
+        # subscription_plan = Subscription.get_plan_by_id(plan)
+        #
+        # # Guard against an invalid or missing plan.
+        # if subscription_plan is None and request.method == 'GET':
+        #     flash('Sorry, that plan did not exist.', 'error')
+        #     return redirect(url_for('billing.pricing'))
 
-        # Guard against an invalid or missing plan.
-        if subscription_plan is None and request.method == 'GET':
-            flash('Sorry, that plan did not exist.', 'error')
-            return redirect(url_for('billing.pricing'))
+        stripe_key = current_app.config.get('STRIPE_KEY')
+        form = CreditCardForm(stripe_key=stripe_key)
 
-        stripe_key = current_app.config.get('STRIPE_PUBLISHABLE_KEY')
-        form = CreditCardForm(stripe_key=stripe_key, plan=plan)
+        # if form.validate_on_submit():
+        #     subscription = Subscription()
+        #
+        #     created = subscription.create(user=current_user,
+        #                                   name=request.form.get('name'),
+        #                                   token=request.form.get('stripe_token'))
+        #                                   # token=request.form.get('stripe_token'))
+        #                                   # plan=request.form.get('plan'),
+        #                                   #  coupon=request.form.get('coupon_code'),
+        #
+        #     if created:
+        #         current_user.trial = False
+        #         current_user.save()
+        #
+        #         # from app.blueprints.user.tasks import send_plan_signup_email
+        #         # send_plan_signup_email.delay(current_user.email, subscription.plan)
+        #
+        #         flash('Your account has been upgraded!', 'success')
+        #     else:
+        #         flash('You must enable JavaScript for this request.', 'warning')
+        #
+        #     return redirect(url_for('user.dashboard'))
 
-        if form.validate_on_submit():
-            subscription = Subscription()
-            created = subscription.create(user=current_user,
-                                        name=request.form.get('name'),
-                                        plan=request.form.get('plan'),
-                                        coupon=request.form.get('coupon_code'),
-                                        token=request.form.get('stripe_token'))
-
-            if created:
-                from app.blueprints.billing.billing_functions import signup_limits
-                signup_limits(current_user, subscription.plan)
-
-                current_user.trial = False
-                current_user.save()
-
-                from app.blueprints.user.tasks import send_plan_signup_email
-                send_plan_signup_email.delay(current_user.email, subscription.plan)
-
-                flash('Your account has been upgraded!', 'success')
-            else:
-                flash('You must enable JavaScript for this request.', 'warning')
-
-            return redirect(url_for('user.dashboard'))
-
-        return render_template('billing/payment_method.html',
-                            form=form, plan=subscription_plan)
+        return render_template('user/checkout.html')
+        # return render_template('billing/payment_method.html', form=form, plan=subscription_plan)
+        # return render_template('billing/payment_method.html', form=form)
     except Exception as e:
         print_traceback(e)
 
@@ -149,31 +205,37 @@ def cancel():
 
     if form.validate_on_submit():
 
-        # Cancel the user's subscription
-        if current_user.subscription:
-            subscription = Subscription()
-            canceled = subscription.cancel(user=current_user)
-        else:
-            # If there is no subscription, then delete the user
-            canceled = True
+        # Cancel the user's Stripe account here
+        # if current_user.customer:
+        #     # subscription = Subscription()
+        #     # canceled = subscription.cancel(user=current_user)
+        # else:
+        #     # If there is no subscription, then delete the user
+        #     canceled = True
+
+        # Change this after implementing delete Stripe customer
+        canceled = True
 
         if canceled:
-
             # Get the user's email
             email = current_user.email
 
             # Delete the user.
-            from app.blueprints.billing.tasks import delete_users, delete_auth
-            from app.blueprints.api.models.app_auths import AppAuthorization
+            from app.blueprints.user.models.user import User
+            u = User.query.filter(User.id == current_user.id).scalar()
+
+            if u is None:
+                return
+
+            # u.delete()
+            from app.blueprints.billing.tasks import delete_users, delete_domains
             ids = [current_user.id]
 
-            # Delete the app auths
-            for id in ids:
-                auths = [x.id for x in AppAuthorization.query.filter(AppAuthorization.user_id == id).all()]
-                delete_auth.delay(auths)
-
             # Delete the user
-            delete_users.delay(ids)
+            delete_domains(ids)
+            delete_users(ids)
+            # delete_users.delay(ids)
+            # delete_domains.delay(ids)
 
             # Send a cancellation email.
             from app.blueprints.user.tasks import send_cancel_email
@@ -181,7 +243,7 @@ def cancel():
 
             flash('Sorry to see you go! Your subscription has been canceled.',
                   'success')
-            return redirect(url_for('user.login'))
+            return redirect(url_for('user.logout', subdomain=subdomain))
 
     return render_template('billing/cancel.html', form=form)
 
@@ -199,7 +261,7 @@ def update_payment_method():
         current_user.subscription.plan)
 
     card = current_user.credit_card
-    stripe_key = current_app.config.get('STRIPE_PUBLISHABLE_KEY')
+    stripe_key = current_app.config.get('STRIPE_KEY')
     form = CreditCardForm(stripe_key=stripe_key,
                           plan=active_plan,
                           name=current_user.name)
@@ -231,7 +293,7 @@ def update_payment_method():
 def billing_details():
     invoices = Invoice.billing_history(current_user)
 
-    if current_user.subscription:
+    if current_user.customer:
         upcoming = Invoice.upcoming(current_user.payment_id)
         coupon = None
         # coupon = Coupon.query \
