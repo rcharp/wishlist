@@ -380,8 +380,9 @@ def initial_filter(arg):
         name = arg.split(' ')
         for n in name:
             initials.append(n[0])
-            s = ''
-            return s.join(initials).upper()
+
+        s = ''
+        return s.join(initials).upper()
     else:
         return arg[0].upper()
 
