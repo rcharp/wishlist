@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-  <!-- Profile dropdown -->
-  <div class="ml-3 relative">
-    <div>
-      <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
-{#        <img class="h-8 w-8 rounded-full" src="{{ 'img'|default_profile_image_url }}" alt="" />#}
-          <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-200">
-              <span class="text-sm font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
-          </span>
-      </button>
-    </div>
-    <!--
-      Profile dropdown panel, show/hide based on dropdown state.
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+      <!-- Profile dropdown -->
+      <div class="ml-3 relative">
+        <div>
+          <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
+    {#        <img class="h-8 w-8 rounded-full" src="{{ 'img'|default_profile_image_url }}" alt="" />#}
+              <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-200">
+                  <span class="text-sm font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
+              </span>
+          </button>
+        </div>
+        <!--
+          Profile dropdown panel, show/hide based on dropdown state.
 
-      Entering: "transition ease-out duration-100"
-        From: "transform opacity-0 scale-95"
-        To: "transform opacity-100 scale-100"
-      Leaving: "transition ease-in duration-75"
-        From: "transform opacity-100 scale-100"
-        To: "transform opacity-0 scale-95"
-    -->
-    <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
-      <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-        {% if current_user.is_authenticated %}
-            <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
-                {{ current_user.name|title }}
-            </div>
-        {% endif %}
-        <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</div>
-        <div class="border-t border-gray-100"></div>
-        <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
-        <a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
+          Entering: "transition ease-out duration-100"
+            From: "transform opacity-0 scale-95"
+            To: "transform opacity-100 scale-100"
+          Leaving: "transition ease-in duration-75"
+            From: "transform opacity-100 scale-100"
+            To: "transform opacity-0 scale-95"
+        -->
+        <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
+          <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+            {% if current_user.is_authenticated %}
+                <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
+                    {{ current_user.name|title }}
+                </div>
+            {% endif %}
+            <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</div>
+            <div class="border-t border-gray-100"></div>
+            <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
+            <a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</body>
+
+        <script>
+            var body = document.getElementById('body');
+            var except = document.getElementById('user-dropdown-menu');
+
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
+
+                except.style.display = 'none';
+            }, false);
+            except.addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+        </script>
+    </body>
 </html>
