@@ -200,13 +200,41 @@
                               </div>
                           </div>
                         </div>
+
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                      Filter by
+                                  </div>
+
+                                  <div class="sm:col-span-6 mb-3 ml-1">
+                                      <div class="flex items-center">
+                                        <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                        <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                          Feedback I've submitted
+                                        </label>
+                                      </div>
+                                  </div>
+
+                                  <div class="sm:col-span-6 mb-6 ml-1">
+                                      <div class="flex items-center">
+                                        <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                        <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                          Feedback I've voted on
+                                        </label>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
                     </div>
                     <!-- end submit box -->
 
                     <div class="sm:col-span-3">
                     {% if feedbacks|length >0 %}
                         {% for feedback in feedbacks %}
-                            <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}">
+                            <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                 <div style="padding:10px 25px 0 0;">
                                     <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
                                           <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not votes|any_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
@@ -381,9 +409,17 @@
             }
 
             function FilterByStatus(){
-                var checked = document.querySelectorAll('input:checked');
+                // Uncheck all other checkboxes
+                var otherCheckboxes = document.querySelectorAll('input.filter-checkbox');
+                for (var i = 0; i < otherCheckboxes.length; i++){
+                    otherCheckboxes[i].checked = false;
+                }
+
+                // Get the checked status boxes
+                var checked = document.querySelectorAll('input.status-checkbox, input:checked');
                 var items = document.getElementsByClassName('feedback-item');
 
+                // If no boxes are checked, show all feedback
                 if (checked.length === 0){
                     for (var i = 0; i < items.length; i++){
                         items[i].style.display = '';
@@ -392,8 +428,8 @@
                     return;
                 }
 
+                // Otherwise, only show feedback that correspond to checked statuses
                 var statuses = [];
-
                 for (var i = 0; i< checked.length; i++){
                     statuses.push(checked[i].name);
                 }
@@ -404,6 +440,43 @@
                         items[i].style.display = 'none';
                     }else {
                         items[i].style.display = '';
+                    }
+                }
+            }
+
+            function FilterByOther(){
+                // Uncheck all status checkboxes
+                var statusCheckboxes = document.querySelectorAll('input.status-checkbox');
+                for (var i = 0; i < statusCheckboxes.length; i++){
+                    statusCheckboxes[i].checked = false;
+                }
+
+                // Get the checked boxes for the 'other' category
+                var checked = document.querySelectorAll('input.filter-checkbox, input:checked');
+                var items = document.getElementsByClassName('feedback-item');
+
+                // If no boxes are checked, show all feedback
+                if (checked.length === 0){
+                    for (var i = 0; i < items.length; i++){
+                        items[i].style.display = '';
+                    }
+
+                    return;
+                }
+
+                // Otherwise, only show feedback that correspond to checked filters
+                var filters = [];
+                for (var i = 0; i< checked.length; i++){
+                    filters.push(checked[i].name);
+                }
+
+                for (var i = 0; i < items.length; i++){
+                    var submitted = items[i].getAttribute('data-submitted');
+                    var voted = items[i].getAttribute('data-voted');
+                    if ((filters.includes('submitted') && submitted === 'true') || (filters.includes('voted') && voted === 'true')){
+                        items[i].style.display = '';
+                    }else {
+                        items[i].style.display = 'none';
                     }
                 }
             }
