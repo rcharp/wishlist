@@ -244,7 +244,7 @@
                                         {{ feedback.fullname }}
                                     {% endif %}
                                 {% if feedback.status %}
-                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
                                         {{ feedback.status }}
                                     </span>
                                 {% endif %}
@@ -439,6 +439,21 @@
                 return new_url;
             }
         </script>
+        <script>
+            var body = document.getElementsByTagName("body")[0];
+            var except = document.getElementById('user-dropdown-menu');
 
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
+
+                except.style.display = 'none';
+            }, false);
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+        </script>
     </body>
 </html>

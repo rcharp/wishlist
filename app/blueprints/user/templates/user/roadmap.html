@@ -198,6 +198,21 @@
                 }
             }
         </script>
+        <script>
+            var body = document.getElementsByTagName("body")[0];
+            var except = document.getElementById('user-dropdown-menu');
 
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
+
+                except.style.display = 'none';
+            }, false);
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+        </script>
     </body>
 </html>
