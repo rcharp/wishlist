@@ -52,7 +52,7 @@
 
                 except.style.display = 'none';
             }, false);
-            except.addEventListener("click", function (ev) {
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
         </script>
