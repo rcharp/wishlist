@@ -66,11 +66,12 @@ def create_feedback(user, domain, email, title, description):
         f.title = title
         f.feedback_id = id
         f.description = description
-        f.votes = 1
         f.domain_id = d.domain_id
         f.domain = d.name
         f.status = 'In backlog'
         f.save()
+
+        add_vote(id, user.id)
 
         return f
     except Exception as e:
