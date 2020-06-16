@@ -249,9 +249,6 @@
                                         {{ feedback.title }}
                                     </a>
                                 </div>
-                                <span class="text-sm leading-5 font-medium text-gray-500">
-                                    <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
-                                </span>
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
@@ -266,16 +263,15 @@
                                     </div>
                                 </a>
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
-                                By: {% if feedback.username and false %}
-                                        {{ feedback.username }}
-                                    {% else %}
-                                        {{ feedback.fullname }}
-                                    {% endif %}
                                 {% if feedback.status %}
-                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 mr-5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
                                         {{ feedback.status }}
                                     </span>
                                 {% endif %}
+                                <span class="text-sm leading-5 font-medium text-gray-500">
+                                    Posted {{ feedback.created_on|datetime_filter }}
+                                    {% if feedback.username and false %} by {{ feedback.username }}{% else %} by {{ feedback.fullname }}{% endif %}
+                                </span>
                                 <div class="pull-right text-gray-400">
                                     <i class="fa fa-comments"></i> 120 comments
                                 </div>
