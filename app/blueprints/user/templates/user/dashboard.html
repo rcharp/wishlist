@@ -273,6 +273,10 @@
                               </div>
                             </div>
                         {% endfor %}
+                    {% else %}
+                        <span class="text-sm leading-5 font-medium text-gray-500">
+                            There is no feedback for {{ subdomain|title }} yet.
+                        </span>
                     {% endif %}
                     </div>
                 </div>
