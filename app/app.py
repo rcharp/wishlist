@@ -3,12 +3,13 @@ import pytz
 from logging.handlers import SMTPHandler
 
 import json
+from flask_sslify import SSLify
 import stripe
 import datetime
 import random
 from sqlalchemy import inspect
 from werkzeug.contrib.fixers import ProxyFix
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from celery import Celery
 from itsdangerous import URLSafeTimedSerializer
 from flask_compress import Compress
@@ -32,7 +33,9 @@ from app.extensions import (
     db,
     login_manager,
     cache,
-    cors
+    cors,
+    # sslify,
+    # talisman
 )
 
 
@@ -83,6 +86,7 @@ def create_app(settings_override=None):
 
     # Set the app server name
     app.config['SERVER_NAME'] = 'getwishlist.io'
+    app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
@@ -121,6 +125,13 @@ def create_app(settings_override=None):
     COMPRESS_MIN_SIZE = 500
     Compress(app)
 
+    @app.before_request
+    def before_request():
+        if not request.is_secure and app.config.get('PRODUCTION'):
+            url = request.url.replace("http://", "https://", 1)
+            code = 301
+            return redirect(url, code=code)
+
     @app.errorhandler(500)
     def error_502(e):
         return render_template('errors/500.html')
@@ -158,6 +169,8 @@ def extensions(app):
     login_manager.init_app(app)
     cache.init_app(app, config={'CACHE_TYPE': 'redis'})
     cors(app, support_credentials=True, resources={r"/*": {"origins": "*"}})
+    # talisman(app)
+    # sslify = SSLify(app)
 
     return None
 
@@ -181,6 +194,9 @@ def template_processors(app):
     app.jinja_env.filters['site_color_filter'] = site_color_filter
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
+    app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
+    app.jinja_env.filters['any_filter'] = any_filter
+    app.jinja_env.filters['initial_filter'] = initial_filter
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env
@@ -352,3 +368,27 @@ def shuffle_filter(arg):
 
 def percent_filter(arg):
     return float(100 / len(arg))
+
+
+def any_filter(arg, k):
+    return any(x.feedback_id == k for x in arg)
+
+
+def initial_filter(arg):
+    if ' ' in arg:
+        initials = list()
+        name = arg.split(' ')
+        for n in name:
+            initials.append(n[0])
+
+        s = ''
+        return s.join(initials).upper()
+    else:
+        return arg[0].upper()
+
+
+def default_profile_image_url(arg):
+    markup = 'https://storage.googleapis.com/indie-hackers.appspot.com/avatars/soVlU13BlpgOX7DVWwfJAy67QA43'
+    offerd = 'https://scontent.ftpa1-2.fna.fbcdn.net/v/t1.0-9/23471937_10155779109118398_6528989144266130489_n.jpg?_nc_cat=104&_nc_sid=09cbfe&_nc_ohc=fMD4100xS9wAX8vx9MW&_nc_ht=scontent.ftpa1-2.fna&oh=dc95db0c4dbf170940ac87c45678ccb9&oe=5F09350D'
+
+    return None

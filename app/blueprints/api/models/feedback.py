@@ -13,9 +13,11 @@ class Feedback(ResourceMixin, db.Model):
     feedback_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
     title = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    fullname = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     description = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
     status = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    # voted = db.Column('voted', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),

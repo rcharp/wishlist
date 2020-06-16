@@ -130,17 +130,17 @@
                                 </ul>
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item d-none d-lg-block m-1">
-                                        <a href="{{ url_for('user.signup') }}" class="btn btn-md btn-success font-family-secondary sm-font-size px-3 font-weight__500">
+                                        <a href="{{ url_for('user.signup', subdomain=subdomain) }}" class="btn btn-md btn-success font-family-secondary sm-font-size px-3 font-weight__500">
                                             Sign up
                                         </a>
                                     </li>
                                     <li class="nav-item d-block d-lg-none">
-                                        <a href="{{ url_for('user.signup') }}" class="nav-link text-white font-family-secondary font-weight__700">
+                                        <a href="{{ url_for('user.signup', subdomain=subdomain) }}" class="nav-link text-white font-family-secondary font-weight__700">
                                             Sign up
                                         </a>
                                     </li>
                                     <li class="nav-item ml-lg-3">
-                                        <a href="{{ url_for('user.login') }}" class="nav-link text-white font-family-secondary font-weight__700">
+                                        <a href="{{ url_for('user.login', subdomain=subdomain) }}" class="nav-link text-white font-family-secondary font-weight__700">
                                             Login
                                         </a>
                                     </li>
@@ -328,7 +328,7 @@
                                     </div>
                                     <!-- Empty Space -->
                                     <div class="md-space"></div>
-                                    <a href="{{ url_for('user.signup') }}" class="btn btn-primary py-2 px-4 sm-font-size font-weight__700">Get started</a>
+                                    <a href="{{ url_for('user.signup', subdomain=subdomain) }}" class="btn btn-primary py-2 px-4 sm-font-size font-weight__700">Get started</a>
                                     <!--/ End Empty Space -->
                                 </div>
                                 <!-- End Single Price Table -->

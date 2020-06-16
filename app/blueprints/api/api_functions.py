@@ -1,14 +1,15 @@
 import string
 import random
 import pytz
+import names
 import traceback
 from datetime import datetime as dt
 from app.extensions import db
-from sqlalchemy import exists
-from app.blueprints.api.godaddy import create_subdomain
+from sqlalchemy import exists, and_
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.api.models.workspace import Workspace
 from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.vote import Vote
 
 
@@ -53,22 +54,43 @@ def create_workspace(user_id, title, domain, description):
         return None
 
 
-def create_feedback(user, domain, email, title, description):
+def create_feedback(user, domain, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
+        s = Status.query.filter(Status.name == 'In backlog').scalar()
 
-        id = generate_id(Feedback, size=8)
+        feedback_id = generate_id(Feedback, size=8)
         f = Feedback()
         f.user_id = user.id
         f.username = user.username
-        f.email = email
+        f.fullname = user.name
+        f.email = user.email
         f.title = title
-        f.feedback_id = id
+        f.feedback_id = feedback_id
         f.description = description
-        f.votes = 1
         f.domain_id = d.domain_id
         f.domain = d.name
-        f.status = 'In backlog'
+        f.status = s.name
+        f.status_id = s.status_id
+        f.save()
+
+        add_vote(feedback_id, user.id)
+
+        return f
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
+def update_feedback(feedback_id, domain, title, description, status_id):
+    try:
+        s = Status.query.filter(Status.status_id == status_id).scalar()
+
+        f = Feedback.query.filter(and_(Feedback.domain == domain, Feedback.feedback_id == feedback_id)).scalar()
+        f.title = title
+        f.description = description
+        f.status = s.name
+        f.status_id = s.status_id
         f.save()
 
         return f
@@ -79,18 +101,31 @@ def create_feedback(user, domain, email, title, description):
 
 def add_vote(feedback_id, user_id):
     try:
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
         v = Vote()
         v.feedback_id = feedback_id
         v.vote_id = generate_id(Vote)
         v.user_id = user_id
-        v.voted = True
+        v.domain_id = f.domain_id
         v.save()
 
-        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
         f.votes += 1
         f.save()
 
         return v
+    except Exception as e:
+        print_traceback(e)
+        return None
+
+
+def remove_vote(feedback_id, vote):
+    try:
+        vote.delete()
+
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        f.votes -= 1
+        f.save()
     except Exception as e:
         print_traceback(e)
         return None
@@ -112,16 +147,19 @@ def create_domain(user, form):
         d.save()
 
         if create_subdomain(form.domain.data):
-            return d
+            return True
         else:
             d.delete()
+            return False
     except Exception as e:
         print_traceback(e)
-        return None
+        return False
 
 
-def validate_signup(request):
-    return True
+def create_subdomain(subdomain):
+    # Create the subdomain in Heroku
+    from app.blueprints.api.dns.heroku import create_subdomain
+    return create_subdomain(subdomain)
 
 
 def populate_signup(request, user):
@@ -131,3 +169,7 @@ def populate_signup(request, user):
     user.is_active = True
     user.name = request.form['name']
     user.email = request.form['email']
+
+
+def generate_name():
+    return names.get_first_name()

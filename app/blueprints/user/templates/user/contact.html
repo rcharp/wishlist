@@ -11,6 +11,7 @@
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
@@ -124,7 +125,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a tabindex="-1" href="{{ url_for('user.logout') }}">
+                                    <a tabindex="-1" href="{{ url_for('user.logout', subdomain=subdomain) }}">
                                         <i class="si si-logout pull-right"></i>Log out
                                     </a>
                                 </li>
