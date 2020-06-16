@@ -249,9 +249,6 @@
                                         {{ feedback.title }}
                                     </a>
                                 </div>
-                                <span class="text-sm leading-5 font-medium text-gray-500">
-                                    <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
-                                </span>
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
@@ -266,13 +263,12 @@
                                     </div>
                                 </a>
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
-                                By: {% if feedback.username and false %}
-                                        {{ feedback.username }}
-                                    {% else %}
-                                        {{ feedback.fullname }}
-                                    {% endif %}
+                                <span class="text-sm leading-5 font-medium text-gray-500">
+                                    <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }}
+                                    {% if feedback.username and false %} by {{ feedback.username }}{% else %} by {{ feedback.fullname }}{% endif %}
+                                </span>
                                 {% if feedback.status %}
-                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 ml-5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
                                         {{ feedback.status }}
                                     </span>
                                 {% endif %}
@@ -291,6 +287,58 @@
           </div>
         </div>
         <!-- END Page Container -->
+
+
+        {#<!-- Invite new user modal -->
+        <div class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
+          <!--
+            Background overlay, show/hide based on modal state.
+
+            Entering: "ease-out duration-300"
+              From: "opacity-0"
+              To: "opacity-100"
+            Leaving: "ease-in duration-200"
+              From: "opacity-100"
+              To: "opacity-0"
+          -->
+          <div id="invite-modal-overlay" class="fixed inset-0 transition-opacity opacity-0">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+
+          <!--
+            Modal panel, show/hide based on modal state.
+
+            Entering: "ease-out duration-300"
+              From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              To: "opacity-100 translate-y-0 sm:scale-100"
+            Leaving: "ease-in duration-200"
+              From: "opacity-100 translate-y-0 sm:scale-100"
+              To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          -->
+          <div id="invite-modal-panel" class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full sm:p-6 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+              <form action="{{ url_for('user.send_invite', subdomain=subdomain) }}" method="post">
+                  <div>
+                  <div class="mt-3 text-center sm:mt-5">
+                    <h3 class="text-lg leading-6 font-medium text-gray-400 mb-4" id="modal-headline">
+                      Invite an admin by email
+                    </h3>
+                    <div class="mt-2">
+                      <div class="rounded-md">
+                        <input id="email" name="email" type="email" class="form-input block w-full sm:text-lg sm:leading-5" value="" placeholder="Enter an email" required />
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                  <span class="flex w-full rounded-md shadow-sm">
+                    <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                      Send invite
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+        </div>#}
 
 
         <!-- jQuery -->
@@ -529,19 +577,36 @@
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
-            var except = document.getElementById('user-dropdown-menu');
+            var user_dropdown = document.getElementById('user-dropdown-menu');
 
             body.addEventListener("click", function () {
-                except.classList.remove('opacity-100');
-                except.classList.remove('scale-100');
-                except.classList.add('opacity-0');
-                except.classList.add('scale-95');
 
-                except.style.display = 'none';
+                // Hide the user dropdown when you click outside of it
+                user_dropdown.classList.remove('opacity-100');
+                user_dropdown.classList.remove('scale-100');
+                user_dropdown.classList.add('opacity-0');
+                user_dropdown.classList.add('scale-95');
+                user_dropdown.style.display = 'none';
             }, false);
             document.getElementById('user-menu').addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
+
+
+            {#var overlay = document.getElementById('invite-modal-overlay');
+            var panel = document.getElementById('invite-modal-panel');
+
+            body.addEventListener("click", function () {
+                // Hide the invite user overlay when you click outside of it
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                panel.classList.remove("opacity-100 translate-y-0 sm:scale-100");
+                panel.classList.add("opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95");
+
+            }, false);
+            panel.addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);#}
         </script>
     </body>
 </html>
