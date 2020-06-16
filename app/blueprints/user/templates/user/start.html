@@ -395,7 +395,7 @@
                     success: function (response) {
                         if ('success' in response){
                             UpdateDashboardButton();
-                            clearInterval(r);
+                            setTimeout(() => { clearInterval(r); }, 3000);
                             window.location.href = redirect;
                         }
                     },
