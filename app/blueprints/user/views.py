@@ -320,12 +320,6 @@ def start(subdomain):
     return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
 
-@user.route('/welcome', methods=['GET', 'POST'])
-@login_required
-def welcome_anon():
-    return redirect(url_for('user.login_anon'))
-
-
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @login_required
 def update_credentials():
