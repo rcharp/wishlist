@@ -373,12 +373,7 @@
                 return confirm("Are you sure you want to delete your account? This can't be undone.");
             }
 
-            function LoadingMessage(r){
-
-                // Stop the loop if the domain is done propogating
-                if (DomainIsReady() === true){
-                    clearTimeout(r);
-                }
+            function LoadingMessage(){
 
                 var message = document.getElementById('dashboard-button-text');
 
@@ -393,19 +388,23 @@
                     message.innerText = 'Setting up your domain.';
                 }
 
-                var run = setTimeout(() => { LoadingMessage(run); }, 1500);
+                return setTimeout(() => { LoadingMessage(); }, 1500);
             }
 
             function DomainIsReady(){
+                var r = LoadingMessage();
+                var d = setTimeout(() => { DomainIsReady(); }, 5000);
                 var url = "{{ url_for('user.check_domain_status') }}";
                 $.ajax({
                     url: url,
                     type: 'Post',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
+                        alert(response);
                         if ('success' in response){
                             UpdateDashboardButton();
-                            return true;
+                            clearTimeout(r);
+                            clearTimeout(d);
                         }
                     },
                     error: function (xhr) {
@@ -444,7 +443,7 @@
         </script>
         <script>
             $( document ).ready(function() {
-                LoadingMessage();
+                DomainIsReady();
             });
         </script>
     </body>
