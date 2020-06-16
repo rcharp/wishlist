@@ -54,24 +54,27 @@ def create_workspace(user_id, title, domain, description):
         return None
 
 
-def create_feedback(user, domain, email, title, description):
+def create_feedback(user, domain, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
+        s = Status.query.filter(Status.name == 'In backlog').scalar()
 
-        id = generate_id(Feedback, size=8)
+        feedback_id = generate_id(Feedback, size=8)
         f = Feedback()
         f.user_id = user.id
         f.username = user.username
-        f.email = email
+        f.fullname = user.name
+        f.email = user.email
         f.title = title
-        f.feedback_id = id
+        f.feedback_id = feedback_id
         f.description = description
         f.domain_id = d.domain_id
         f.domain = d.name
-        f.status = 'In backlog'
+        f.status = s.name
+        f.status_id = s.status_id
         f.save()
 
-        add_vote(id, user.id)
+        add_vote(feedback_id, user.id)
 
         return f
     except Exception as e:

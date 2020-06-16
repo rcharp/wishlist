@@ -417,7 +417,7 @@ def add_feedback(subdomain):
             description = request.form['description']
 
             from app.blueprints.api.api_functions import create_feedback
-            f = create_feedback(current_user, subdomain, None, title, description)
+            create_feedback(current_user, subdomain, title, description)
 
             return redirect(url_for('user.dashboard', subdomain=subdomain))
         except Exception:
