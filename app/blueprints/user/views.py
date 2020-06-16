@@ -323,7 +323,7 @@ def welcome(subdomain):
 @user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
 def start(subdomain):
-    if not current_user.is_authenticated:
+    if not (current_user.is_authenticated and current_user.domain == subdomain):
         return redirect(url_for('user.login_anon'))
 
     return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
