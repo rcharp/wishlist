@@ -71,6 +71,10 @@ def login(subdomain):
             # 3) Add a checkbox to the login form with the id/name 'remember'
 
             if login_user(u, remember=True) and u.is_active():
+
+                if current_user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+
                 u.update_activity_tracking(request.remote_addr)
 
                 next_url = request.form.get('next')
@@ -81,8 +85,6 @@ def login(subdomain):
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)
 
-                if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
             else:
                 flash('This account has been disabled.', 'error')
         else:
@@ -125,6 +127,9 @@ def login_anon():
                 return render_template('user/login.html', form=form)
 
             if login_user(u, remember=True) and u.is_active():
+                if current_user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+
                 u.update_activity_tracking(request.remote_addr)
 
                 next_url = request.form.get('next')
@@ -337,7 +342,6 @@ def update_credentials():
             current_user.password = User.encrypt_password(new_password)
 
         current_user.username = username
-
         current_user.save()
 
         flash('Your credentials have been updated.', 'success')
