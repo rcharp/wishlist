@@ -396,8 +396,7 @@
                         if ('success' in response){
                             UpdateDashboardButton();
                             clearInterval(r);
-                            setTimeout(function(){}, 3000);
-                            window.location.href = redirect;
+                            setTimeout(function(){window.location.href = redirect;}, 3000);
                         }
                     },
                     error: function (xhr) {
