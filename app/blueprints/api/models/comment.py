@@ -4,37 +4,29 @@ from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
 
 
-class Feedback(ResourceMixin, db.Model):
+class Comment(ResourceMixin, db.Model):
 
-    __tablename__ = 'feedback'
+    __tablename__ = 'comments'
 
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
-    feedback_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
-    title = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    comment_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
+    comment = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     fullname = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    description = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
-    votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
-    comments = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
-    status = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    # voted = db.Column('voted', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
                            index=True, nullable=True, primary_key=False, unique=False)
-    username = db.Column(db.String(255), db.ForeignKey('users.username', onupdate='CASCADE', ondelete='CASCADE'),
-                        index=True, nullable=True, primary_key=False, unique=False)
-    status_id = db.Column(db.Integer, db.ForeignKey('statuses.status_id', onupdate='CASCADE', ondelete='CASCADE'),
+    feedback_id = db.Column(db.Integer, db.ForeignKey('feedback.feedback_id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
     domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
-                          index=True, nullable=True, primary_key=False, unique=False)
-    domain = db.Column(db.String(255), db.ForeignKey('domains.name', onupdate='CASCADE', ondelete='CASCADE'),
+                            index=True, nullable=True, primary_key=False, unique=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.comment_id', onupdate='CASCADE', ondelete='CASCADE'),
                           index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.
-        super(Feedback, self).__init__(**kwargs)
+        super(Comment, self).__init__(**kwargs)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -48,8 +40,8 @@ class Feedback(ResourceMixin, db.Model):
         :type identity: str
         :return: User instance
         """
-        return Feedback.query.filter(
-          (Feedback.id == identity).first())
+        return Comment.query.filter(
+          (Comment.id == identity).first())
 
     @classmethod
     def search(cls, query):
@@ -64,7 +56,7 @@ class Feedback(ResourceMixin, db.Model):
             return ''
 
         search_query = '%{0}%'.format(query)
-        search_chain = (Feedback.id.ilike(search_query))
+        search_chain = (Comment.id.ilike(search_query))
 
         return or_(*search_chain)
 
@@ -74,19 +66,19 @@ class Feedback(ResourceMixin, db.Model):
         Override the general bulk_delete method because we need to delete them
         one at a time while also deleting them on Stripe.
 
-        :param ids: Feedback of ids to be deleted
-        :type ids: feedback
+        :param ids: Comment of ids to be deleted
+        :type ids: comment
         :return: int
         """
         delete_count = 0
 
         for id in ids:
-            feedback = Feedback.query.get(id)
+            comment = Comment.query.get(id)
 
-            if feedback is None:
+            if comment is None:
                 continue
 
-            feedback.delete()
+            comment.delete()
 
             delete_count += 1
 
