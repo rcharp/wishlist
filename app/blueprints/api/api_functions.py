@@ -162,10 +162,6 @@ def create_subdomain(subdomain):
     return create_subdomain(subdomain)
 
 
-def validate_signup(request):
-    return True
-
-
 def populate_signup(request, user):
     user.created_on = dt.now().replace(tzinfo=pytz.utc)
     user.updated_on = dt.now().replace(tzinfo=pytz.utc)
@@ -176,4 +172,4 @@ def populate_signup(request, user):
 
 
 def generate_name():
-    return names.get_first_name()
+    return names.get_full_name()
