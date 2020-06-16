@@ -8,10 +8,9 @@ from cli.commands.data import (
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
-from app.blueprints.api.api_functions import generate_id
+from app.blueprints.api.api_functions import generate_id, generate_name
 from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.billing.models.customer import Customer
 from app.blueprints.api.models.status import Status
 from app.blueprints.api.models.feedback import Feedback
 from app.blueprints.api.models.vote import Vote
@@ -125,14 +124,27 @@ def seed_domains():
         'user_id': 2
     }
 
+    wishlist = {
+        'domain_id': generate_id(Domain),
+        'name': 'wishlist',
+        'company': 'Wishlist',
+        'admin_email': app.config['SEED_MEMBER_EMAIL'],
+        'user_id': 1
+    }
+
     Domain(**demo).save()
+    Domain(**wishlist).save()
 
 
 @click.command()
-def seed_data():
+def seed_feedback():
 
     s = list(Status.query.all())
     d = Domain.query.filter(Domain.name == 'demo').scalar()
+    w = Domain.query.filter(Domain.name == 'wishlist').scalar()
+
+    d_u = User.query.filter(User.username == 'demo').scalar()
+    w_u = User.query.filter(User.username == 'ricky').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
@@ -140,14 +152,34 @@ def seed_data():
             'user_id': 2,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': 'demo@getwishlist.io',
-            'username': "demo",
+            'email': d_u.email,
+            'username': d_u.username,
+            'fullname': generate_name(),
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
             'status_id': status.status_id,
             'status': status.name,
-            'domain': 'demo',
+            'domain': d.name,
             'domain_id': d.domain_id
+        }
+
+        Feedback(**params).save()
+
+    for x in range(1, 11):
+        status = random.choice(s)
+        params = {
+            'user_id': 1,
+            'feedback_id': generate_id(Feedback),
+            'title': random.choice(titles()),
+            'email': w_u.email,
+            'username': w_u.username,
+            'fullname': generate_name(),
+            'description': random.choice(descriptions()),
+            'votes': random.randint(10, 1000),
+            'status_id': status.status_id,
+            'status': status.name,
+            'domain': w.name,
+            'domain_id': w.domain_id
         }
 
         Feedback(**params).save()
@@ -170,7 +202,7 @@ def reset(ctx, with_testdb):
     ctx.invoke(seed_users)
     ctx.invoke(seed_domains)
     ctx.invoke(seed_status)
-    ctx.invoke(seed_data)
+    ctx.invoke(seed_feedback)
 
     return None
 

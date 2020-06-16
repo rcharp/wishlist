@@ -11,6 +11,7 @@
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
@@ -62,63 +63,7 @@
     </head>
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
-          <!-- Off-canvas menu for mobile -->
-          <div class="md:hidden">
-            <div class="fixed inset-0 flex z-40">
-              <!--
-                Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-                Entering: "transition-opacity ease-linear duration-300"
-                  From: "opacity-0"
-                  To: "opacity-100"
-                Leaving: "transition-opacity ease-linear duration-300"
-                  From: "opacity-100"
-                  To: "opacity-0"
-              -->
-              <div class="fixed inset-0">
-                <div class="absolute inset-0 bg-gray-600 opacity-75"></div>
-              </div>
-              <!--
-                Off-canvas menu, show/hide based on off-canvas menu state.
-
-                Entering: "transition ease-in-out duration-300 transform"
-                  From: "-translate-x-full"
-                  To: "translate-x-0"
-                Leaving: "transition ease-in-out duration-300 transform"
-                  From: "translate-x-0"
-                  To: "-translate-x-full"
-              -->
-              <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-indigo-800">
-                <div class="absolute top-0 right-0 -mr-14 p-1">
-                  <button class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600" aria-label="Close sidebar">
-                    <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                <div class="flex-shrink-0 flex items-center px-4">
-                  <img class="h-8 w-auto" src="../../../../static/logo/logo.png" style="border-radius:10px;" alt="{{ 'site'|site_name_filter }}" />
-                    {{ 'site'|site_name_filter }}
-                </div>
-                <div class="mt-5 flex-1 h-0 overflow-y-auto">
-                  <nav class="px-2">
-                    <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="group flex items-center px-2 py-2 text-base leading-5 font-medium text-white rounded-md bg-indigo-900 focus:outline-none focus:bg-indigo-700 transition ease-in-out duration-150">
-                        <i class="fa fa-user" style="padding-left:5px;margin-right:15px;"></i>
-                        Dashboard
-                      </a>
-                      <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-indigo-300 hover:text-white hover:bg-indigo-700 focus:outline-none focus:text-white focus:bg-indigo-700 transition ease-in-out duration-150">
-                          <i class="fa fa-gear" style="padding-left:5px;margin-right:15px;"></i>
-                        Settings
-                      </a>
-                  </nav>
-                </div>
-              </div>
-              <div class="flex-shrink-0 w-14">
-                <!-- Dummy element to force sidebar to shrink to fit close icon -->
-              </div>
-            </div>
-          </div>
-
+          {% include '/user/includes/mobile_sidebar.html' ignore missing %}
           {% include '/user/includes/sidebar.html' ignore missing %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -137,18 +82,15 @@
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                         </svg>
                       </div>
-                      <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" type="search" />
+                      <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search feedback" type="search" onkeyup="SearchFeedback(this)" />
                     </div>
                   </div>
                 </div>
                 <div class="ml-4 flex items-center md:ml-6">
-                  <button class="p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:shadow-outline focus:text-gray-500" aria-label="Notifications">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                  </button>
                     {% if current_user.is_authenticated %}
                         {% include '/user/includes/user_dropdown.html' ignore missing %}
+                    {% else %}
+                        {% include '/user/includes/header_buttons.html' ignore missing %}
                     {% endif %}
                 </div>
               </div>
@@ -158,7 +100,9 @@
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Replace with your content -->
                 <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right">
-                    <div class="sm:col-span-3"></div>
+                    <div class="sm:col-span-3 text-lg leading-5 font-medium">
+                        <div id="search-results" class="text-gray-500 text-left" style="display:none">Showing results for: '<span id="search-term" class="text-gray-700"></span>'</div>
+                    </div>
                     <div class="pull-right sm:col-span-1">
                         <div class="relative inline-block text-left">
                           <div>
@@ -205,12 +149,6 @@
                                   <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
                                       Submit feedback
                                     </div>
-    {#                                       <div class="sm:col-span-6">#}
-    {#                                          <div class="mt-1 mb-2 rounded-md shadow-sm">#}
-    {#                                            <input id="email" name="email" placeholder="Email address" type="email" required class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />#}
-    {#                                          </div>#}
-    {#                                        </div>#}
-
                                 <div class="sm:col-span-6">
                                   <div class="mt-1 mb-3 rounded-md shadow-sm">
                                     <input id="title" name="title" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
@@ -238,11 +176,11 @@
 
                         <div class="mt-4 mb-4 text-center">
                             <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}">
-                                Powered by <u>Wishlist</u>
+                                Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
                             </a>
                         </div>
 
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="bg-white overflow-hidden shadow rounded-lg mb-4">
                           <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                               <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
                                   <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
@@ -262,16 +200,44 @@
                               </div>
                           </div>
                         </div>
+
+                        <div class="bg-white overflow-hidden shadow rounded-lg">
+                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                      Filter by other
+                                  </div>
+
+                                  <div class="sm:col-span-6 mb-3 ml-1">
+                                      <div class="flex items-center">
+                                        <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                        <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                          Feedback I've submitted
+                                        </label>
+                                      </div>
+                                  </div>
+
+                                  <div class="sm:col-span-6 mb-6 ml-1">
+                                      <div class="flex items-center">
+                                        <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                        <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                          Feedback I've voted on
+                                        </label>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
                     </div>
                     <!-- end submit box -->
 
                     <div class="sm:col-span-3">
                     {% if feedbacks|length >0 %}
                         {% for feedback in feedbacks %}
-                            <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}">
+                            <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                 <div style="padding:10px 25px 0 0;">
                                     <div class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
-                                          <span class="h-10 w-10 text-indigo-600" style="font-size:24px;margin-bottom:0;">
+                                          <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not votes|any_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
                                               <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                           </span>
                                           <span style="font-size:14px;">{% if feedback.votes != 1 %}votes{% else %}vote{% endif %}</span>
@@ -283,6 +249,9 @@
                                         {{ feedback.title }}
                                     </a>
                                 </div>
+                                <span class="text-sm leading-5 font-medium text-gray-500">
+                                    <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
+                                </span>
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
                                  <div class="pull-right" style="padding:1.5em 25px 0 0;vertical-align:middle">
@@ -297,12 +266,19 @@
                                     </div>
                                 </a>
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
-                                  <i class="si si-clock" style="margin-right:5px;"></i>{{ feedback.created_on|datetime_filter }}
-                                  {% if feedback.status %}
-                                      <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
-                                          {{ feedback.status }}
-                                      </span>
-                                  {% endif %}
+                                By: {% if feedback.username and false %}
+                                        {{ feedback.username }}
+                                    {% else %}
+                                        {{ feedback.fullname }}
+                                    {% endif %}
+                                {% if feedback.status %}
+                                    <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                        {{ feedback.status }}
+                                    </span>
+                                {% endif %}
+                                <div class="pull-right text-gray-400">
+                                    <i class="fa fa-comments"></i> 120 comments
+                                </div>
                               </div>
                             </div>
                         {% endfor %}
@@ -401,13 +377,17 @@
             }
 
             function Vote(feedback_id) {
-                var url = ReplaceSubdomain('{{ url_for('user.add_vote', subdomain='DUMMY_VALUE') }}');
+                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                // alert(url);
                 $.ajax({
                     url: url,
                     type: 'POST',
                     beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id},
+                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
+                        if ('success' in response){
+                            //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+                        }
                     },
                     error: function (xhr) {
                     }
@@ -417,23 +397,41 @@
             function UpdateVote(feedback_id) {
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);
-                document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+
+                if (document.getElementById('votes-' + feedback_id).classList.contains('text-indigo-600')){
+                    document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-indigo-600');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-green-400');
+                }
+                else{
+                    document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-green-400');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
+                }
+
             }
 
             function FilterByStatus(){
-                var checked = document.querySelectorAll('input:checked');
+                // Uncheck all other checkboxes
+                var otherCheckboxes = document.querySelectorAll('.filter-checkbox');
+                for (var i = 0; i < otherCheckboxes.length; i++){
+                    otherCheckboxes[i].checked = false;
+                }
+
+                // Get the checked status boxes
+                var checked = document.querySelectorAll('.status-checkbox:checked');
                 var items = document.getElementsByClassName('feedback-item');
 
+                // If no boxes are checked, show all feedback
                 if (checked.length === 0){
                     for (var i = 0; i < items.length; i++){
                         items[i].style.display = '';
                     }
-
                     return;
                 }
 
+                // Otherwise, only show feedback that correspond to checked statuses
                 var statuses = [];
-
                 for (var i = 0; i< checked.length; i++){
                     statuses.push(checked[i].name);
                 }
@@ -448,10 +446,102 @@
                 }
             }
 
+            function FilterByOther(){
+                // Uncheck all status checkboxes
+                var statusCheckboxes = document.querySelectorAll('.status-checkbox');
+                for (var i = 0; i < statusCheckboxes.length; i++){
+                    statusCheckboxes[i].checked = false;
+                }
+
+                // Get the checked boxes for the 'other' category
+                var checked = document.querySelectorAll('.filter-checkbox:checked');
+                var items = document.getElementsByClassName('feedback-item');
+
+                // If no boxes are checked, show all feedback
+                if (checked.length === 0){
+                    for (var i = 0; i < items.length; i++){
+                        items[i].style.display = '';
+                    }
+                    return;
+                }
+
+                // Otherwise, only show feedback that correspond to checked filters
+                var filters = [];
+                for (var i = 0; i< checked.length; i++){
+                    filters.push(checked[i].name);
+                }
+
+                for (var i = 0; i < items.length; i++){
+                    var submitted = items[i].getAttribute('data-submitted');
+                    var voted = items[i].getAttribute('data-voted');
+                    var show = false;
+
+                    if (filters.includes('submitted')){
+                        if (submitted === 'true'){
+                            show = true;
+                        }
+                    }
+                    if (filters.includes('voted')){
+                        if (voted === 'true'){
+                            show = true;
+                        }
+                    }
+
+                    if (show){
+                        items[i].style.display = '';
+                    }
+                    else {
+                        items[i].style.display = 'none';
+                    }
+                }
+            }
+
+            function SearchFeedback(e){
+                var input = '';
+
+                input += e.value;
+
+                var items = document.getElementsByClassName('feedback-item');
+                document.getElementById('search-term').innerText = input;
+
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    if(item.textContent.toLowerCase().includes(input.toLowerCase()) === false){
+                        item.style.display = 'none';
+                    }
+                    else {
+                        item.style.display = '';
+                    }
+                }
+
+                if (input){
+                    document.getElementById('search-results').style.display = '';
+                }
+                else {
+                    document.getElementById('search-results').style.display = 'none';
+                }
+            }
+
             function ReplaceSubdomain(url){
-                return url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
+                var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
+                return new_url;
             }
         </script>
+        <script>
+            var body = document.getElementsByTagName("body")[0];
+            var except = document.getElementById('user-dropdown-menu');
 
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
+
+                except.style.display = 'none';
+            }, false);
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+        </script>
     </body>
 </html>

@@ -116,7 +116,7 @@ class Invoice(ResourceMixin, db.Model):
         :return: User instance
         """
         # Avoid circular imports.
-        from app.blueprints.user.models.user import User
+        from app.blueprints.user.models import User
 
         # Only save the invoice if the user is valid at this point.
         id = parsed_event.get('payment_id')

@@ -18,6 +18,17 @@ class LoginForm(Form):
     # remember = BooleanField('Stay signed in')
 
 
+class LoginFormAnon(Form):
+    next = HiddenField()
+    identity = StringField('Username or email',
+                           [DataRequired(), Length(3, 254)])
+    domain = StringField('Domain to login to', validators=[
+        DataRequired()
+    ])
+    password = PasswordField('Password', [DataRequired(), Length(8, 128)])
+    # remember = BooleanField('Stay signed in')
+
+
 class BeginPasswordResetForm(Form):
     identity = StringField('Username or email',
                            [DataRequired(),
@@ -38,11 +49,22 @@ class SignupForm(ModelForm):
     email = EmailField(validators=[
         DataRequired(),
         Email(),
-        # Unique(
-        #     User.email,
-        #     get_session=lambda: db.session,
-        #     message='This email is already in use. Login instead?'
-        # )
+        Unique(User.email, get_session=lambda: db.session, message='This email is already in use. Login instead?')
+    ])
+
+    password = PasswordField('Password', [DataRequired(), Length(8, 128)])
+    # confirm = PasswordField("Repeat Password", [DataRequired(), EqualTo("password", message="Passwords don't match!"), Length(8, 128)])
+
+
+class SignupFormAnon(ModelForm):
+    name = StringField(validators=[
+        DataRequired()
+    ])
+
+    email = EmailField(validators=[
+        DataRequired(),
+        Email(),
+        Unique(User.email, get_session=lambda: db.session, message='This email is already in use. Login instead?')
     ])
 
     company = StringField(validators=[
@@ -50,7 +72,8 @@ class SignupForm(ModelForm):
     ])
 
     domain = StringField(validators=[
-        DataRequired()
+        DataRequired(),
+        Regexp('^[A-Za-z]+$', message='Only letters are allowed for domain names.'),
     ])
 
     password = PasswordField('Password', [DataRequired(), Length(8, 128)])

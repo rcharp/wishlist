@@ -11,13 +11,14 @@ class Vote(ResourceMixin, db.Model):
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
     vote_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
-    voted = db.Column('voted', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
                            index=True, nullable=True, primary_key=False, unique=False)
     feedback_id = db.Column(db.Integer, db.ForeignKey('feedback.feedback_id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
+    domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
+                            index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.

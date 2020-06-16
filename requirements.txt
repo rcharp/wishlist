@@ -24,6 +24,8 @@ amqp==2.4.1
 celery==4.2.1
 rabbitmq==0.2.0
 flask-cors==3.0.8
+heroku3==4.2.1
+cloudflare==2.7.1
 
 # Forms.
 Flask-WTF==0.9.5
@@ -45,6 +47,10 @@ pur==5.2.1
 Werkzeug==0.14.1
 repos==0.0.1
 pprint==0.1
+names==0.3.0
+Flask-SSLify==0.1.5
+flask-talisman==0.7.0
+
 
 # APIs
 
