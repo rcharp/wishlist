@@ -167,12 +167,14 @@
                                         {% endif %}
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-1">
-                                        <dl class="pull-right text-right">
+                                        <dl class="pull-right text-right" onclick="Vote('{{ feedback.feedback_id }}')">
                                             <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
-                                                <span class="{% if not voted %}text-indigo-600{% else %}text-green-400{% endif %}"><i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i>{{ feedback.votes }}</span>
+                                                <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not voted %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
+                                                    <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
+                                                </span>
                                             </dd>
                                             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
-                                                Votes
+                                                <span style="font-size:14px;">{% if feedback.votes != 1 %}votes{% else %}vote{% endif %}</span>
                                             </dt>
                                         </dl>
                                     </dd>
@@ -329,6 +331,41 @@
             function UpdateStatus(sel){
                 document.getElementById('status').value = sel.id;
                 document.getElementById('selected-status').innerText = sel.getAttribute('data-status-name');
+            }
+
+            function Vote(feedback_id) {
+                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                // alert(url);
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    beforeSend: UpdateVote(feedback_id),
+                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    success: function (response) {
+                        if ('success' in response){
+                            //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
+
+            function UpdateVote(feedback_id) {
+                var votes = document.getElementById(feedback_id + '-votes').innerText;
+                var count = parseInt(votes);
+
+                if (document.getElementById('votes-' + feedback_id).classList.contains('text-indigo-600')){
+                    document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-indigo-600');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-green-400');
+                }
+                else{
+                    document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
+                    document.getElementById('votes-' + feedback_id).classList.remove('text-green-400');
+                    document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
+                }
+
             }
         </script>
         <script>
