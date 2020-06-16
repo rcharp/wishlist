@@ -553,6 +553,13 @@ def settings_anon():
 
 
 # Actions -------------------------------------------------------------------
+@user.route('/send_invite', subdomain='<subdomain>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def send_invite(subdomain):
+    return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+
 @user.route('/add_workspace', methods=['GET','POST'])
 @login_required
 @csrf.exempt
