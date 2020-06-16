@@ -115,10 +115,13 @@
                                   <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
                               </span>
                           </dd>
-                          <dd class="sm:col-span-5"></dd>
+                          <dd class="sm:col-span-3"></dd>
                           <dd class="sm:col-span-2">
-                              <a id="dashboard-button" disabled="disabled" href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                  <span id="dashboard-button-text">Setting up your domain...</span>
+                              <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-gray-900">Setting up your domain...</span>
+                          </dd>
+                          <dd class="sm:col-span-2">
+                              <a id="dashboard-button" disabled="disabled" href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-300 hover:text-gray-300 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                  <span>Take me to my dashboard!</span>
                               </a>
                           </dd>
                       </div>
@@ -370,22 +373,12 @@
                 return confirm("Are you sure you want to delete your account? This can't be undone.");
             }
 
-            function LoadingMessage(){
-                var url = ReplaceSubdomain("{{ url_for('user.check_domain_status', subdomain='DUMMY_VALUE') }}");
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    // data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
-                    success: function (response) {
-                        if ('success' in response){
-                            UpdateDashboardButton();
-                            return false;
-                        }
-                    },
-                    error: function (xhr) {
-                    }
-                });
+            function LoadingMessage(r){
 
+                // Stop the loop if the domain is done propogating
+                if (DomainIsReady()){
+                    clearTimeout(r);
+                }
 
                 var message = document.getElementById('dashboard-button-text');
 
@@ -400,7 +393,24 @@
                     message.innerText = 'Setting up your domain.';
                 }
 
-                setTimeout(() => {  LoadingMessage(); }, 500);
+                var run = setTimeout(() => { LoadingMessage(run); }, 500);
+            }
+
+            function DomainIsReady(){
+                var url = ReplaceSubdomain("{{ url_for('user.check_domain_status', subdomain='DUMMY_VALUE') }}");
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    // data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    success: function (response) {
+                        if ('success' in response){
+                            UpdateDashboardButton();
+                            return true;
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
             }
 
             function UpdateDashboardButton(){

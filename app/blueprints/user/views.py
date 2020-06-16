@@ -576,6 +576,7 @@ def send_invite(subdomain):
 @user.route('/check_domain_status', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
+@cross_origin()
 def check_domain_status(subdomain):
     try:
         r = requests.get('https://' + subdomain + '.getwishlist.io')
