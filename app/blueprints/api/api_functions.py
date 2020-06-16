@@ -172,4 +172,4 @@ def populate_signup(request, user):
 
 
 def generate_name():
-    return names.get_full_name()
+    return names.get_first_name()
