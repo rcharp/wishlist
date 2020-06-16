@@ -391,7 +391,6 @@
 
             function DomainIsReady(){
                 var r = LoadingMessage();
-                var d = setTimeout(() => { DomainIsReady(); }, 5000);
                 var url = "{{ url_for('user.check_domain_status') }}";
                 alert("Checking domain");
                 $.ajax({
@@ -409,6 +408,8 @@
                     error: function (xhr) {
                     }
                 });
+
+                setTimeout(() => { DomainIsReady(); }, 5000);
             }
 
             function UpdateDashboardButton(){
