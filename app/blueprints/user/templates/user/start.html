@@ -120,7 +120,7 @@
                               <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-gray-900">Setting up your domain...</span>
                           </dd>
                           <dd class="sm:col-span-2">
-                              <a href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" style="display:none" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                              <a href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" id="dashboard-button" style="display:none" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
                                     Go to my dashboard
                               </a>
                           </dd>
