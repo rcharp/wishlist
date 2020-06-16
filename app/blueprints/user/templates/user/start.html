@@ -381,7 +381,7 @@
                     message.innerText = 'Setting up your domain, please wait.';
                 }
 
-                return setTimeout(() => { LoadingMessage(); }, 1500);
+                return setTimeout(() => { LoadingMessage(); }, 500);
             }
 
             function DomainIsReady(){
@@ -395,7 +395,7 @@
                     success: function (response) {
                         if ('success' in response){
                             UpdateDashboardButton();
-                            setTimeout(() => { clearInterval(r); }, 3000);
+                            clearInterval(r);
                             window.location.href = redirect;
                         }
                     },
