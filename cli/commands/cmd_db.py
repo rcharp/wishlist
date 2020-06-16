@@ -82,22 +82,10 @@ def seed_users():
         'name': 'Demo User'
     }
 
-    User(**member).save()
+    # User(**member).save()
     User(**demo).save()
 
     return User(**params).save()
-
-
-@click.command()
-def seed_customers():
-    params = {
-        'user_id': 1,
-        'customer_id': app.config['SEED_CUSTOMER_ID'],
-        'email': app.config['SEED_MEMBER_EMAIL'],
-        'save_card': True
-    }
-
-    return Customer(**params).save()
 
 
 @click.command()
@@ -133,30 +121,32 @@ def seed_domains():
     }
 
     Domain(**demo).save()
-    Domain(**wishlist).save()
+    # Domain(**wishlist).save()
 
 
 @click.command()
 def seed_feedback():
 
     s = list(Status.query.all())
-    d = Domain.query.filter(Domain.name == 'demo').scalar()
-    w = Domain.query.filter(Domain.name == 'wishlist').scalar()
 
-    d_u = User.query.filter(User.username == 'demo').scalar()
-    w_u = User.query.filter(User.username == 'ricky').scalar()
+    d = Domain.query.filter(Domain.name == 'demo').scalar()
+    demo_user = User.query.filter(User.username == 'demo').scalar()
+
+    # w = Domain.query.filter(Domain.name == 'wishlist').scalar()
+    # wishlist_user = User.query.filter(User.username == 'ricky').scalar()
 
     for x in range(1, 31):
         status = random.choice(s)
         params = {
-            'user_id': 2,
+            'user_id': demo_user.id,
             'feedback_id': generate_id(Feedback),
             'title': random.choice(titles()),
-            'email': d_u.email,
-            'username': d_u.username,
+            'email': demo_user.email,
+            'username': demo_user.username,
             'fullname': generate_name(),
             'description': random.choice(descriptions()),
             'votes': random.randint(10, 1000),
+            'comments': random.randint(1, 500),
             'status_id': status.status_id,
             'status': status.name,
             'domain': d.name,
@@ -165,24 +155,25 @@ def seed_feedback():
 
         Feedback(**params).save()
 
-    for x in range(1, 11):
-        status = random.choice(s)
-        params = {
-            'user_id': 1,
-            'feedback_id': generate_id(Feedback),
-            'title': random.choice(titles()),
-            'email': w_u.email,
-            'username': w_u.username,
-            'fullname': generate_name(),
-            'description': random.choice(descriptions()),
-            'votes': random.randint(10, 1000),
-            'status_id': status.status_id,
-            'status': status.name,
-            'domain': w.name,
-            'domain_id': w.domain_id
-        }
-
-        Feedback(**params).save()
+    # for x in range(1, 11):
+    #     status = random.choice(s)
+    #     params = {
+    #         'user_id': 1,
+    #         'feedback_id': generate_id(Feedback),
+    #         'title': random.choice(titles()),
+    #         'email': wishlist_user.email,
+    #         'username': wishlist_user.username,
+    #         'fullname': generate_name(),
+    #         'description': random.choice(descriptions()),
+    #         'votes': random.randint(10, 1000),
+    #         'comments': random.randint(1, 500),
+    #         'status_id': status.status_id,
+    #         'status': status.name,
+    #         'domain': w.name,
+    #         'domain_id': w.domain_id
+    #     }
+    #
+    #     Feedback(**params).save()
 
     return
 

@@ -232,7 +232,7 @@ def signup_anon():
                 return redirect(url_for('user.dashboard', subdomain=subdomain))
             else:
                 flash("There was an error creating this domain. Please try again.", 'error')
-                return redirect(url_for('user.dashboard', subdomain='demo'))
+                return redirect(url_for('user.signup_anon'))
 
     return render_template('user/signup.html', form=form)
 
@@ -549,7 +549,7 @@ def settings(subdomain):
 @login_required
 @csrf.exempt
 def settings_anon():
-    return redirect(url_for('user.login_anon'))
+    return render_template('user/settings.html', current_user=current_user)
 
 
 # Actions -------------------------------------------------------------------

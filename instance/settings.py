@@ -77,7 +77,7 @@ SQLALCHEMY_POOL_RECYCLE = 499
 SQLALCHEMY_POOL_TIMEOUT = 120
 
 # User
-SEED_ADMIN_EMAIL = 'ricky@getwishlist.io'
+SEED_ADMIN_EMAIL = 'admin@getwishlist.io'
 SEED_ADMIN_USERNAME = 'admin'
 SEED_MEMBER_EMAIL = 'rickycharpentier@gmail.com'
 SEED_MEMBER_USERNAME = 'ricky'
