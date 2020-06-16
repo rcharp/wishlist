@@ -38,8 +38,8 @@
             {% if current_user.role == 'creator' and current_user.domain == subdomain and false %}
                 <i class="fa fa-plus mr-2"></i><a href="{{ url_for('user.send_invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem" onclick="ShowInviteModal()">Invite an admin</a>
             {% endif %}
-            <i class="fa fa-gear mr-2"></i><a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
-            <i class="si si-logout mr-2"></i><a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
+            <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-settings mr-2"></i>Settings</a>
+            <a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-logout mr-2"></i>Sign out</a>
           </div>
         </div>
       </div>
