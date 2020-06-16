@@ -396,7 +396,7 @@
                 alert("Checking domain");
                 $.ajax({
                     url: url,
-                    type: 'Post',
+                    type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         alert(response);
