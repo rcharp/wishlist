@@ -419,8 +419,7 @@
                 //}
 
                 // Get the checked status boxes
-                var statusCheckboxes = document.getElementsByClassName('status-checkbox');
-                var checked = statusCheckboxes.querySelectorAll('input:checked');
+                var checked = document.querySelectorAll('input[class="status-checkbox"]:checked');
                 var items = document.getElementsByClassName('feedback-item');
 
                 // If no boxes are checked, show all feedback
