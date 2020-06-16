@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Start - {{ 'site_name'|site_name_filter }}</title>
+        <title>Get started - {{ 'site_name'|site_name_filter }}</title>
 
         <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -376,7 +376,7 @@
             function LoadingMessage(r){
 
                 // Stop the loop if the domain is done propogating
-                if (DomainIsReady()){
+                if (DomainIsReady() === true){
                     clearTimeout(r);
                 }
 
@@ -393,7 +393,7 @@
                     message.innerText = 'Setting up your domain.';
                 }
 
-                var run = setTimeout(() => { LoadingMessage(run); }, 500);
+                var run = setTimeout(() => { LoadingMessage(run); }, 1500);
             }
 
             function DomainIsReady(){
