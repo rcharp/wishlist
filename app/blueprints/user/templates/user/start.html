@@ -117,8 +117,8 @@
                           </dd>
                           <dd class="sm:col-span-5"></dd>
                           <dd class="sm:col-span-2">
-                              <a href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Take me to my dashboard!
+                              <a id="dashboard-button" disabled="disabled" href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                  <span id="dashboard-button-text">Setting up your domain...</span>
                               </a>
                           </dd>
                       </div>
@@ -369,6 +369,52 @@
             function ConfirmDeleteAccount(){
                 return confirm("Are you sure you want to delete your account? This can't be undone.");
             }
+
+            function LoadingMessage(){
+                var url = ReplaceSubdomain("{{ url_for('user.check_domain_status', subdomain='DUMMY_VALUE') }}");
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    // data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    success: function (response) {
+                        if ('success' in response){
+                            UpdateDashboardButton();
+                            return false;
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+
+
+                var message = document.getElementById('dashboard-button-text');
+
+                if (!message.innerText.includes('.')){
+                    message.innerText = 'Setting up your domain.';
+                }
+
+                if (!message.innerText.endsWith('....')){
+                    message.innerText += '.';
+                }
+                else {
+                    message.innerText = 'Setting up your domain.';
+                }
+
+                setTimeout(() => {  LoadingMessage(); }, 500);
+            }
+
+            function UpdateDashboardButton(){
+                var button = document.getElementById('dashboard-button');
+                var message = document.getElementById('dashboard-button-text');
+
+                button.disabled = false;
+                message.innerText = 'Take me to my dashboard!';
+            }
+
+            function ReplaceSubdomain(url){
+                var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
+                return new_url;
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
@@ -385,6 +431,11 @@
             document.getElementById('user-menu').addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
+        </script>
+        <script>
+            $( document ).ready(function() {
+                LoadingMessage();
+            });
         </script>
     </body>
 </html>

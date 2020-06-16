@@ -18,6 +18,7 @@ from flask_login import (
 
 import time
 import random
+import requests
 from operator import attrgetter
 from flask_cors import cross_origin
 
@@ -570,6 +571,20 @@ def settings_anon():
 @csrf.exempt
 def send_invite(subdomain):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+
+@user.route('/check_domain_status', subdomain='<subdomain>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def check_domain_status(subdomain):
+    try:
+        r = requests.get('https://' + subdomain + '.getwishlist.io')
+        if r.status_code == 200:
+            return jsonify({'success': 'Success'})
+        else:
+            return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'ERror'})
 
 
 @user.route('/add_workspace', methods=['GET','POST'])
