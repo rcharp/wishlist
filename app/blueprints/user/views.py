@@ -314,19 +314,10 @@ def welcome(subdomain):
 
 
 
-@user.route('/start', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
 def start(subdomain):
-    form = WelcomeForm()
-
-    if form.validate_on_submit():
-        current_user.username = request.form.get('username')
-        current_user.save()
-
-        flash('Your username has been set.', 'success')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
-
-    return render_template('user/start.html', form=form, subdomain=subdomain)
+    return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])
