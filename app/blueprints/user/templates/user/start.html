@@ -115,14 +115,9 @@
                                   <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
                               </span>
                           </dd>
-                          <dd class="sm:col-span-5"></dd>
+                          <dd class="sm:col-span-7"></dd>
                           <dd class="sm:col-span-2">
-                              <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-gray-900">Setting up your domain...</span>
-                          </dd>
-                          <dd class="sm:col-span-2">
-                              <a href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" id="dashboard-button" style="display:none" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Go to my dashboard
-                              </a>
+                              <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-gray-900">Setting up your domain, please wait...</span>
                           </dd>
                       </div>
                     </dl>
@@ -376,48 +371,45 @@
                 var message = document.getElementById('dashboard-button-text');
 
                 if (!message.innerText.includes('.')){
-                    message.innerText = 'Setting up your domain.';
+                    message.innerText = 'Setting up your domain, please wait.';
                 }
 
                 if (!message.innerText.endsWith('....')){
                     message.innerText += '.';
                 }
                 else {
-                    message.innerText = 'Setting up your domain.';
+                    message.innerText = 'Setting up your domain, please wait.';
                 }
 
                 return setTimeout(() => { LoadingMessage(); }, 1500);
             }
 
-            function DomainIsReady(d){
+            function DomainIsReady(){
                 var r = LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
-                alert("Checking domain");
+                var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
-                        alert(response);
                         if ('success' in response){
                             UpdateDashboardButton();
-                            clearTimeout(r);
-                            clearTimeout(d);
+                            clearInterval(r);
+                            window.location.href = redirect;
                         }
                     },
                     error: function (xhr) {
                     }
                 });
 
-                var x = setTimeout(() => { DomainIsReady(x); }, 5000);
+                setTimeout(() => { DomainIsReady(); }, 5000);
             }
 
             function UpdateDashboardButton(){
-                var button = document.getElementById('dashboard-button');
                 var message = document.getElementById('dashboard-button-text');
-
-                button.style.display = '';
-                message.innerText = '';
+                message.classList.add('text-green-500');
+                message.innerText = 'Success! Redirecting you to your dashboard...';
             }
 
             function ReplaceSubdomain(url){
