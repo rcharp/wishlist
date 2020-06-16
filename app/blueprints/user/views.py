@@ -329,6 +329,12 @@ def start(subdomain):
     return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
 
+@user.route('/start', methods=['GET', 'POST'])
+@login_required
+def start_anon():
+    return redirect(url_for('user.settings_anon'))
+
+
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @login_required
 def update_credentials():
