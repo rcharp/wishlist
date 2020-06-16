@@ -34,7 +34,10 @@
             {% endif %}
             <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</div>
             <div class="border-t border-gray-100"></div>
-            <i class="fa fa-plus mr-2"></i><a href="{{ url_for('user.invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Invite an admin</a>
+
+            {% if current_user.role == 'creator' and current_user.domain == subdomain %}
+                <i class="fa fa-plus mr-2"></i><a href="{{ url_for('user.invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Invite an admin</a>
+            {% endif %}
             <i class="fa fa-gear mr-2"></i><a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Settings</a>
             <i class="si si-logout mr-2"></i><a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">Sign out</a>
           </div>
