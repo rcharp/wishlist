@@ -173,9 +173,7 @@
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                             {% if not current_user.username %}
-                              <span class="mr-5">
-                                You don't have a username yet.
-                              </span>
+                              <span class="mb-4">You don't have a username yet.</span><br /><br />
                               <span class="inline-flex rounded-md shadow-sm">
                                   <a href="{{ url_for('user.update_credentials') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
                                     Create username
@@ -395,6 +393,7 @@
                 var r = LoadingMessage();
                 var d = setTimeout(() => { DomainIsReady(); }, 5000);
                 var url = "{{ url_for('user.check_domain_status') }}";
+                alert("Checking domain");
                 $.ajax({
                     url: url,
                     type: 'Post',

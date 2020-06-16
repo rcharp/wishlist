@@ -597,7 +597,7 @@ def check_domain_status():
                         return jsonify({'success': 'Success'})
         return jsonify({'error': 'Error'})
     except Exception as e:
-        return jsonify({'error': 'ERror'})
+        return jsonify({'error': 'Error'})
 
 
 @user.route('/add_workspace', methods=['GET','POST'])
