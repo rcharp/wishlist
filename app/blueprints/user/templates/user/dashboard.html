@@ -196,34 +196,30 @@
                                           </div>
                                       </div>
                                   {% endfor %}
-                              </div>
-                          </div>
-                        </div>
 
-                        <div class="bg-white overflow-hidden shadow rounded-lg">
-                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
-                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
-                                      Filter by other
-                                  </div>
-
-                                  <div class="sm:col-span-6 mb-3 ml-1">
-                                      <div class="flex items-center">
-                                        <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
-                                        <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
-                                          Feedback I've submitted
-                                        </label>
+                                  {% if current_user.is_authenticated %}
+                                      <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                          Other
                                       </div>
-                                  </div>
 
-                                  <div class="sm:col-span-6 mb-6 ml-1">
-                                      <div class="flex items-center">
-                                        <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
-                                        <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
-                                          Feedback I've voted on
-                                        </label>
+                                      <div class="sm:col-span-6 mb-3 ml-1">
+                                          <div class="flex items-center">
+                                            <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                            <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                              Feedback I've submitted
+                                            </label>
+                                          </div>
                                       </div>
-                                  </div>
+
+                                      <div class="sm:col-span-6 mb-6 ml-1">
+                                          <div class="flex items-center">
+                                            <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                            <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                              Feedback I've voted on
+                                            </label>
+                                          </div>
+                                      </div>
+                                  {% endif %}
                               </div>
                           </div>
                         </div>
