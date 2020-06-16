@@ -293,8 +293,7 @@
         <!-- END Page Container -->
 
 
-        <!-- Invite new user modal -->
-        <!-- Invite modal -->
+        {#<!-- Invite new user modal -->
         <div class="fixed bottom-0 inset-x-0 px-4 pb-6 sm:inset-0 sm:p-0 sm:flex sm:items-center sm:justify-center">
           <!--
             Background overlay, show/hide based on modal state.
@@ -343,7 +342,7 @@
                 </div>
               </div>
             </form>
-        </div>
+        </div>#}
 
 
         <!-- jQuery -->
@@ -598,7 +597,7 @@
             }, false);
 
 
-            var overlay = document.getElementById('invite-modal-overlay');
+            {#var overlay = document.getElementById('invite-modal-overlay');
             var panel = document.getElementById('invite-modal-panel');
 
             body.addEventListener("click", function () {
@@ -611,7 +610,7 @@
             }, false);
             panel.addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-            }, false);
+            }, false);#}
         </script>
     </body>
 </html>
