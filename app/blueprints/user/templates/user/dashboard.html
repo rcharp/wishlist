@@ -529,17 +529,34 @@
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
-            var except = document.getElementById('user-dropdown-menu');
+            var user_dropdown = document.getElementById('user-dropdown-menu');
 
             body.addEventListener("click", function () {
-                except.classList.remove('opacity-100');
-                except.classList.remove('scale-100');
-                except.classList.add('opacity-0');
-                except.classList.add('scale-95');
 
-                except.style.display = 'none';
+                // Hide the user dropdown when you click outside of it
+                user_dropdown.classList.remove('opacity-100');
+                user_dropdown.classList.remove('scale-100');
+                user_dropdown.classList.add('opacity-0');
+                user_dropdown.classList.add('scale-95');
+                user_dropdown.style.display = 'none';
             }, false);
             document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+
+
+            var overlay = document.getElementById('invite-modal-overlay');
+            var panel = document.getElementById('invite-modal-panel');
+
+            body.addEventListener("click", function () {
+                // Hide the invite user overlay when you click outside of it
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                panel.classList.remove("opacity-100 translate-y-0 sm:scale-100");
+                panel.classList.add("opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95");
+
+            }, false);
+            panel.addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
         </script>
