@@ -25,7 +25,7 @@
             From: "transform opacity-100 scale-100"
             To: "transform opacity-0 scale-95"
         -->
-        <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" onmouseleave="ShowDropdown(this.id)">
+        <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" {#onmouseleave="ShowDropdown(this.id)"#}>
           <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
             {% if current_user.is_authenticated %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
