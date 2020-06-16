@@ -78,6 +78,7 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
+        'domain': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD'],
         'name': 'Demo User'
     }
