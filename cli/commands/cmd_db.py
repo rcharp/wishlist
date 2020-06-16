@@ -2,8 +2,7 @@ import click
 import random
 from cli.commands.data import (
     statuses,
-    titles,
-    descriptions
+    generate_feedback
 )
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
@@ -129,6 +128,7 @@ def seed_domains():
 def seed_feedback():
 
     s = list(Status.query.all())
+    feedback = generate_feedback()
 
     d = Domain.query.filter(Domain.name == 'demo').scalar()
     demo_user = User.query.filter(User.username == 'demo').scalar()
@@ -138,14 +138,15 @@ def seed_feedback():
 
     for x in range(1, 31):
         status = random.choice(s)
+        f = random.choice(feedback)
         params = {
             'user_id': demo_user.id,
             'feedback_id': generate_id(Feedback),
-            'title': random.choice(titles()),
+            'title': f['title'],
             'email': demo_user.email,
             'username': demo_user.username,
             'fullname': generate_name(),
-            'description': random.choice(descriptions()),
+            'description': f['description'],
             'votes': random.randint(10, 1000),
             'comments': random.randint(1, 500),
             'status_id': status.status_id,
