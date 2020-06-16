@@ -107,5 +107,13 @@ class UpdateCredentials(ModelForm):
             get_session=lambda: db.session
         )
     ])
+
+    username = StringField(validators=[
+        Unique(
+            User.username,
+            get_session=lambda: db.session
+        )
+    ])
+
     password = PasswordField('New Password', [Optional(), Length(8, 128)])
     confirm = PasswordField("Repeat New Password", [EqualTo("password", message="Passwords don't match")])

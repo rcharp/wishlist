@@ -149,6 +149,9 @@ def login_anon():
     return render_template('user/login.html', form=form)
 
 
+'''
+Signup to post feedback in an existing domain
+'''
 @user.route('/signup', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
@@ -161,10 +164,6 @@ def signup(subdomain):
             return redirect(url_for('user.login', subdomain=subdomain))
 
         subdomain = request.form.get('domain').replace(' ', '')
-
-        # if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-        #     flash('That domain is already in use. Please try another.', 'error')
-        #     return render_template('user/signup.html', subdomain=subdomain, form=form)
 
         u = User()
 
@@ -190,6 +189,9 @@ def signup(subdomain):
     return render_template('user/signup.html', subdomain=subdomain, form=form)
 
 
+'''
+Signup to create a new company and domain to receive feedback
+'''
 @user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
@@ -229,7 +231,7 @@ def signup_anon():
             from app.blueprints.api.api_functions import create_domain
             if create_domain(u, form):
                 flash("You've successfully signed up!", 'success')
-                return redirect(url_for('user.settings_anon'))
+                return redirect(url_for('user.start', subdomain=subdomain))
             else:
                 flash("There was an error creating this domain. Please try again.", 'error')
                 return redirect(url_for('user.signup_anon'))
@@ -308,8 +310,23 @@ def welcome(subdomain):
         flash('Your username has been set.', 'success')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, subdomain=subdomain)
-    # return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
+    return render_template('user/welcome.html', form=form, subdomain=subdomain)\
+
+
+
+@user.route('/start', subdomain='<subdomain>', methods=['GET', 'POST'])
+@login_required
+def start(subdomain):
+    form = WelcomeForm()
+
+    if form.validate_on_submit():
+        current_user.username = request.form.get('username')
+        current_user.save()
+
+        flash('Your username has been set.', 'success')
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+    return render_template('user/start.html', form=form, subdomain=subdomain)
 
 
 @user.route('/welcome', methods=['GET', 'POST'])
@@ -324,15 +341,18 @@ def update_credentials():
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
+        username = request.form.get('username', '')
         new_password = request.form.get('password', '')
         current_user.email = request.form.get('email')
 
         if new_password:
             current_user.password = User.encrypt_password(new_password)
 
+        current_user.username = username
+
         current_user.save()
 
-        flash('Your sign in settings have been updated.', 'success')
+        flash('Your credentials have been updated.', 'success')
         return redirect(url_for('user.dashboard'))
 
     return render_template('user/update_credentials.html', form=form)
