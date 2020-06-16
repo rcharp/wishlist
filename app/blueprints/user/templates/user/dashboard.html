@@ -266,7 +266,7 @@
                                     </div>
                                 </a>
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
-                                By: {% if feedback.username %}
+                                By: {% if feedback.username and false %}
                                         {{ feedback.username }}
                                     {% else %}
                                         {{ feedback.fullname }}
