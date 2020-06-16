@@ -30,6 +30,7 @@
             {% if current_user.is_authenticated %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
                     {{ current_user.name|title }}
+                    {% if current_user.role == 'creator' %} (Admin){% endif %}
                 </div>
             {% endif %}
             <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">{{ current_user.email }}</div>
