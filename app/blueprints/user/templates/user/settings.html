@@ -328,19 +328,23 @@
 {#        </script>#}
 
         <script>
-            function ShowDropdown() {
-                var dropdown = document.getElementById("user-dropdown-menu");
+            function ShowDropdown(id) {
+                var dropdown = document.getElementById(id);
                 if (dropdown.classList.contains('opacity-0')){
                     dropdown.classList.remove('opacity-0');
                     dropdown.classList.remove('scale-95');
                     dropdown.classList.add('opacity-100');
                     dropdown.classList.add('scale-100');
+
+                    dropdown.style.display = '';
                 }
                 else {
                     dropdown.classList.remove('opacity-100');
                     dropdown.classList.remove('scale-100');
                     dropdown.classList.add('opacity-0');
                     dropdown.classList.add('scale-95');
+
+                    dropdown.style.display = 'none';
                 }
             }
 
