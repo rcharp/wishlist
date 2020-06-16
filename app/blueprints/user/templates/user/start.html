@@ -397,11 +397,11 @@
             }
 
             function DomainIsReady(){
-                var url = ReplaceSubdomain("{{ url_for('user.check_domain_status', subdomain='DUMMY_VALUE') }}");
+                var url = "{{ url_for('user.check_domain_status') }}";
                 $.ajax({
                     url: url,
-                    type: 'GET',
-                    // data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    type: 'Post',
+                    data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         if ('success' in response){
                             UpdateDashboardButton();

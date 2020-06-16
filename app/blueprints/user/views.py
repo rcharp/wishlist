@@ -573,17 +573,24 @@ def send_invite(subdomain):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
-@user.route('/check_domain_status', subdomain='<subdomain>', methods=['GET','POST'])
+@user.route('/check_domain_status', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 @cross_origin()
-def check_domain_status(subdomain):
+def check_domain_status():
     try:
-        r = requests.get('https://' + subdomain + '.getwishlist.io')
-        if r.status_code == 200:
-            return jsonify({'success': 'Success'})
-        else:
-            return jsonify({'error': 'Error'})
+        if request.method == 'POST':
+            if 'subdomain' in request.form and 'user_id' in request.form:
+                subdomain = request.form['subdomain']
+                user_id = request.form['user_id']
+
+                u = User.query.filter(User.id == user_id).scalar()
+
+                if subdomain == u.domain:
+                    r = requests.get('https://' + subdomain + '.getwishlist.io')
+                    if r.status_code == 200:
+                        return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
     except Exception as e:
         return jsonify({'error': 'ERror'})
 
