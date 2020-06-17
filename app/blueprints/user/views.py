@@ -582,6 +582,13 @@ def roadmap(subdomain):
     return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
+@user.route('/roadmap', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def roadmap_anon():
+    return render_template('user/roadmap.html', current_user=current_user)
+
+
 # Settings -------------------------------------------------------------------
 @user.route('/settings', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
