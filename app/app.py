@@ -84,9 +84,14 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    # Set the app server name
-    app.config['SERVER_NAME'] = 'getwishlist.io'
-    app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+    if app.config.get('PRODUCITON'):
+        # Set the app server name
+        app.config['SERVER_NAME'] = 'getwishlist.io'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+    else:
+        # Set the app server name
+        app.config['SERVER_NAME'] = 'getwishlist.io'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
