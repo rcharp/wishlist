@@ -90,8 +90,8 @@ def create_app(settings_override=None):
         app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
     else:
         # Set the app server name
-        app.config['SERVER_NAME'] = 'getwishlist.io'
-        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+        app.config['SERVER_NAME'] = 'localhost:5000'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
