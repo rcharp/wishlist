@@ -335,9 +335,9 @@ def start_anon():
     return redirect(url_for('user.settings_anon'))
 
 
-@user.route('/settings/update_credentials', methods=['GET', 'POST'])
+@user.route('/settings/update_credentials', subdomain='<subdomain>', methods=['GET', 'POST'])
 @login_required
-def update_credentials():
+def update_credentials(subdomain):
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
@@ -352,7 +352,29 @@ def update_credentials():
         current_user.save()
 
         flash('Your credentials have been updated.', 'success')
-        return redirect(url_for('user.dashboard'))
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+    return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
+
+
+@user.route('/settings/update_credentials', methods=['GET', 'POST'])
+@login_required
+def update_credentials_anon():
+    form = UpdateCredentials(current_user, uid=current_user.id)
+
+    if form.validate_on_submit():
+        username = request.form.get('username', '')
+        new_password = request.form.get('password', '')
+        current_user.email = request.form.get('email')
+
+        if new_password:
+            current_user.password = User.encrypt_password(new_password)
+
+        current_user.username = username
+        current_user.save()
+
+        flash('Your credentials have been updated.', 'success')
+        return redirect(url_for('user.dashboard_anon'))
 
     return render_template('user/update_credentials.html', form=form)
 
