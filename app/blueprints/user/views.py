@@ -38,9 +38,9 @@ from app.blueprints.user.forms import (
 from app.extensions import cache, csrf, timeout, db
 from importlib import import_module
 from sqlalchemy import or_, and_, exists, inspect, func
-from app.blueprints.api.models.feedback import Feedback
-from app.blueprints.api.models.status import Status
-from app.blueprints.api.models.vote import Vote
+from app.blueprints.base.models.feedback import Feedback
+from app.blueprints.base.models.status import Status
+from app.blueprints.base.models.vote import Vote
 
 user = Blueprint('user', __name__, template_folder='templates')
 
@@ -186,7 +186,7 @@ def signup(subdomain):
             # create_subscriber(current_user.email)
 
             # Create the domain from the form
-            # from app.blueprints.api.api_functions import create_domain
+            # from app.blueprints.base.api_functions import create_domain
             # create_domain(u, form)
 
             flash("You've successfully signed up!", 'success')
@@ -234,7 +234,7 @@ def signup_anon():
             # create_subscriber(current_user.email)
 
             # Create the domain from the form
-            from app.blueprints.api.api_functions import create_domain
+            from app.blueprints.base.functions import create_domain
             if create_domain(u, form):
                 flash("You've successfully signed up!", 'success')
                 return redirect(url_for('user.start', subdomain=subdomain))
@@ -462,7 +462,7 @@ def add_feedback(subdomain):
             title = request.form['title']
             description = request.form['description']
 
-            from app.blueprints.api.api_functions import create_feedback
+            from app.blueprints.base.functions import create_feedback
             create_feedback(current_user, subdomain, title, description)
 
             return redirect(url_for('user.dashboard', subdomain=subdomain))
@@ -497,7 +497,7 @@ def update_feedback(subdomain):
             description = request.form['description']
             status_id = request.form['status']
 
-            from app.blueprints.api.api_functions import update_feedback
+            from app.blueprints.base.functions import update_feedback
             if update_feedback(feedback_id, subdomain, title, description, status_id) is not None:
                 return redirect(url_for('user.feedback', feedback_id=feedback_id, subdomain=subdomain))
 
@@ -561,7 +561,7 @@ def update_vote(subdomain):
         if 'feedback_id' in request.form and 'user_id' in request.form:
             feedback_id = request.form['feedback_id']
             user_id = request.form['user_id']
-            from app.blueprints.api.api_functions import add_vote, remove_vote
+            from app.blueprints.base.functions import add_vote, remove_vote
 
             if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
                 vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
@@ -638,7 +638,7 @@ def add_workspace():
             domain = request.form['domain']
             description = request.form['description']
 
-            from app.blueprints.api.api_functions import create_workspace
+            from app.blueprints.base.functions import create_workspace
             w = create_workspace(current_user.id, title, domain, description)
 
             if w is not None:

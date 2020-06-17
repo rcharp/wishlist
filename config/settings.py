@@ -60,7 +60,7 @@ CELERY_REDIS_MAX_CONNECTIONS = 20
 CELERY_TASK_FREQUENCY = 2  # How often (in minutes) to run this task
 CELERYBEAT_SCHEDULE = {
     'test': {
-        'task': 'app.blueprints.api.tasks.test',
+        'task': 'app.blueprints.base.tasks.test',
         'schedule': timedelta(hours=12)
         # 'schedule': crontab(minute=0, hour="*/12") # every 12 hours
         # 'schedule': crontab(minute="*/1") # every minute

@@ -149,7 +149,7 @@
             <!-- Hero -->
             <div class="jumbotron jumbotron-fluid bg-white font-weight__500 hero mb-0">
                 {% if test %}
-                    <form class="form-horizontal push-5-t" action="{{ url_for('api.test' ) }}" method="post">
+                    <form class="form-horizontal push-5-t" action="{{ url_for('base.test' ) }}" method="post">
                         <input class="form-control" id="domain" name="domain" type="hidden" value="{{ 'site_name'|site_name_filter }}" /><br />
                         <button class="btn btn-sm btn-success" id="submit-button" type="submit">
                             <i class="si si-ghost pull-right"></i>Run Tests</button>

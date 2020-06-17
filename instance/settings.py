@@ -62,7 +62,7 @@ BROKER_HEARTBEAT_CHECKRATE = 2
 # Celery schedule
 CELERYBEAT_SCHEDULE = {
     # 'dropping_domains': {
-    #     'task': 'app.blueprints.api.tasks.generate_drops',
+    #     'task': 'app.blueprints.base.tasks.generate_drops',
     #     'schedule': crontab(hour=0, minute=0)
     #     # 'schedule': crontab(minute="*/1")
     # }

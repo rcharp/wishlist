@@ -10,7 +10,7 @@ class Event(object):
         protect us from potentially malicious events not sent from Stripe.
 
         API Documentation:
-          https://stripe.com/docs/api#retrieve_event
+          https://stripe.com/docs/base#retrieve_event
 
         :param event_id: Stripe event id
         :type event_id: int
@@ -26,7 +26,7 @@ class Customer(object):
         Create a new customer.
 
         API Documentation:
-          https://stripe.com/docs/api#create_customer
+          https://stripe.com/docs/base#create_customer
 
         :param token: Token returned by JavaScript
         :type token: str
@@ -110,7 +110,7 @@ class Card(object):
         Update an existing card through a customer.
 
         API Documentation:
-          https://stripe.com/docs/api/python#update_card
+          https://stripe.com/docs/base/python#update_card
 
         :param customer_id: Stripe customer id
         :type customer_id: int
@@ -132,7 +132,7 @@ class Invoice(object):
         Retrieve an upcoming invoice item for a user.
 
         API Documentation:
-          https://stripe.com/docs/api#retrieve_customer_invoice
+          https://stripe.com/docs/base#retrieve_customer_invoice
 
         :param customer_id: Stripe customer id
         :type customer_id: int
@@ -148,7 +148,7 @@ class Subscription(object):
         Create a new subscription.
 
         API Documentation:
-          https://stripe.com/docs/api#create_subscription
+          https://stripe.com/docs/base#create_subscription
 
         :param token: Token returned by JavaScript
         :type token: str
@@ -178,7 +178,7 @@ class Subscription(object):
         Update an existing subscription.
 
         API Documentation:
-          https://stripe.com/docs/api/python#update_subscription
+          https://stripe.com/docs/base/python#update_subscription
 
         :param customer_id: Customer id
         :type customer_id: str
@@ -206,7 +206,7 @@ class Subscription(object):
         Cancel an existing subscription.
 
         API Documentation:
-          https://stripe.com/docs/api#cancel_subscription
+          https://stripe.com/docs/base#cancel_subscription
 
         :param customer_id: Stripe customer id
         :type customer_id: int
@@ -226,7 +226,7 @@ class Plan(object):
         Retrieve an existing plan.
 
         API Documentation:
-          https://stripe.com/docs/api#retrieve_plan
+          https://stripe.com/docs/base#retrieve_plan
 
         :param plan: Plan identifier
         :type plan: str
@@ -244,7 +244,7 @@ class Plan(object):
         List all plans.
 
         API Documentation:
-          https://stripe.com/docs/api#list_plans
+          https://stripe.com/docs/base#list_plans
 
         :return: Stripe plans
         """
@@ -261,7 +261,7 @@ class Plan(object):
         Create a new plan.
 
         API Documentation:
-          https://stripe.com/docs/api#create_plan
+          https://stripe.com/docs/base#create_plan
 
         :param id: Plan identifier
         :type id: str
@@ -304,7 +304,7 @@ class Plan(object):
         Update an existing plan.
 
         API Documentation:
-          https://stripe.com/docs/api#update_plan
+          https://stripe.com/docs/base#update_plan
 
         :param id: Plan identifier
         :type id: str
@@ -332,7 +332,7 @@ class Plan(object):
         Delete an existing plan.
 
         API Documentation:
-          https://stripe.com/docs/api#delete_plan
+          https://stripe.com/docs/base#delete_plan
 
         :param plan: Plan identifier
         :type plan: str

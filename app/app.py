@@ -17,6 +17,7 @@ from app.blueprints.admin import admin
 from app.blueprints.page import page
 from app.blueprints.contact import contact
 from app.blueprints.user import user
+from app.blueprints.base import base
 from app.blueprints.api import api
 from app.blueprints.billing import billing
 from app.blueprints.user.models.user import User
@@ -40,7 +41,7 @@ from app.extensions import (
 
 
 CELERY_TASK_LIST = [
-    'app.blueprints.api.tasks',
+    'app.blueprints.base.tasks',
     'app.blueprints.contact.tasks',
     'app.blueprints.user.tasks',
     'app.blueprints.billing.tasks'
@@ -115,6 +116,7 @@ def create_app(settings_override=None):
     app.register_blueprint(page)
     app.register_blueprint(contact)
     app.register_blueprint(user)
+    app.register_blueprint(base)
     app.register_blueprint(api)
     app.register_blueprint(billing)
     app.register_blueprint(errors)

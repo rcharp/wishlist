@@ -7,13 +7,13 @@ from cli.commands.data import (
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
-from app.blueprints.api.api_functions import generate_id, generate_name
+from app.blueprints.base.functions import generate_id, generate_name
 from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.api.models.status import Status
-from app.blueprints.api.models.feedback import Feedback
-from app.blueprints.api.models.vote import Vote
-from app.blueprints.api.models.workspace import Workspace
+from app.blueprints.base.models.status import Status
+from app.blueprints.base.models.feedback import Feedback
+from app.blueprints.base.models.vote import Vote
+from app.blueprints.base.models.workspace import Workspace
 
 # Create an app context for the database connection.
 app = create_app()
