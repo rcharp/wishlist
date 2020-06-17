@@ -84,7 +84,7 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    if app.config.get('PRODUCITON'):
+    if app.config.get('PRODUCTION'):
         # Set the app server name
         app.config['SERVER_NAME'] = 'getwishlist.io'
         app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
