@@ -352,7 +352,7 @@ def update_credentials(subdomain):
         current_user.save()
 
         flash('Your credentials have been updated.', 'success')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return redirect(url_for('user.settings', subdomain=subdomain))
 
     return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
 
@@ -374,7 +374,7 @@ def update_credentials_anon():
         current_user.save()
 
         flash('Your credentials have been updated.', 'success')
-        return redirect(url_for('user.dashboard_anon'))
+        return redirect(url_for('user.settings_anon'))
 
     return render_template('user/update_credentials.html', form=form)
 
