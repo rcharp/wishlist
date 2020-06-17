@@ -30,7 +30,7 @@
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
                     <i class="si si-user mr-2"></i>
                     {{ current_user.name|title }}
-                    {% if current_user.role == 'creator' %} (Admin){% endif %}
+                    {% if current_user.role == 'creator' and current_user.domain == subdomain %} (Admin){% endif %}
                 </div>
             {% endif %}
               <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-envelope mr-2"></i>{{ current_user.email }}</div>
