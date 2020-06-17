@@ -22,7 +22,7 @@
         {% endif %}
           <div class="mt-5 h-0 flex-1 flex flex-col overflow-y-auto">
             <!-- Sidebar component, swap this element with another sidebar if you like -->
-            {% include '/user/includes/sidebar_nav.html' ignore missing %}
+            {% with page=page %}{% include '/user/includes/sidebar_nav.html' ignore missing %}{% endwith %}
           </div>
         </div>
       </div>
