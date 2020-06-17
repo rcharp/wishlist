@@ -111,7 +111,8 @@ class UpdateCredentials(ModelForm):
     username = StringField(validators=[
         Unique(
             User.username,
-            get_session=lambda: db.session
+            get_session=lambda: db.session,
+            message='That username is already in use.'
         )
     ])
 
