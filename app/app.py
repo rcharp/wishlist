@@ -1,7 +1,7 @@
 import logging
 import pytz
 from logging.handlers import SMTPHandler
-
+import os
 import json
 from flask_sslify import SSLify
 import stripe
@@ -84,7 +84,7 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    if app.config.get('PRODUCTION'):
+    if os.environ.get('PRODUCTION') == 'true':
         # Set the app server name
         app.config['SERVER_NAME'] = 'getwishlist.io'
         app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
