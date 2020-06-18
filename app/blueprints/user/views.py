@@ -461,7 +461,7 @@ def add_feedback(subdomain):
         try:
             title = request.form['title']
             description = request.form['description']
-            email = request.form['email'] if 'email' in request.form else None
+            email = request.form['email'] if 'email' in request.form else ''
 
             from app.blueprints.base.functions import create_feedback
 

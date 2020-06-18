@@ -60,6 +60,7 @@ def create_feedback(user, domain, email, title, description):
         s = Status.query.filter(Status.name == 'In backlog').scalar()
 
         feedback_id = generate_id(Feedback, size=8)
+
         f = Feedback()
         f.title = title
         f.feedback_id = feedback_id
@@ -74,14 +75,14 @@ def create_feedback(user, domain, email, title, description):
             f.username = user.username
             f.fullname = user.name
             f.email = user.email
-        elif email is not None:
+        else:
             f.email = email
             f.fullname = 'Anonymous User'
             f.username = 'Anonymous User'
 
         f.save()
 
-        add_vote(feedback_id, user.id)
+        add_vote(feedback_id, user)
 
         return f
     except Exception as e:
@@ -106,15 +107,18 @@ def update_feedback(feedback_id, domain, title, description, status_id):
         return None
 
 
-def add_vote(feedback_id, user_id):
+def add_vote(feedback_id, user):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
         v = Vote()
         v.feedback_id = feedback_id
         v.vote_id = generate_id(Vote)
-        v.user_id = user_id
         v.domain_id = f.domain_id
+
+        if user is not None:
+            v.user_id = user.id
+
         v.save()
 
         f.votes += 1
