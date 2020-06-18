@@ -482,10 +482,34 @@ def add_feedback(subdomain):
 Adding feedback to the demo
 '''
 @user.route('/add_feedback', methods=['POST'])
-@login_required
+# @login_required
 @csrf.exempt
 def add_feedback_anon():
-    return redirect(url_for('user.signup_anon'))
+    # return redirect(url_for('user.signup_anon'))
+
+    # If there is no user, redirect them to the login for this domain
+    # if not current_user.is_authenticated:
+    # return redirect(url_for('user.login', subdomain=subdomain))
+
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+            email = request.form['email'] if 'email' in request.form else None
+
+            from app.blueprints.base.functions import create_feedback
+
+            if current_user.is_authenticated:
+                create_feedback(current_user, 'demo', None, title, description)
+            else:
+                create_feedback(None, 'demo', email, title, description)
+
+            return redirect(url_for('user.dashboard_anon'))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.dashboard_anon'))
+
+    return render_template('user/add_feedback.html', current_user=current_user)
 
 
 '''
