@@ -77,8 +77,6 @@ def create_feedback(user, domain, email, title, description):
             f.email = user.email
         else:
             f.email = email
-            f.fullname = 'Anonymous User'
-            f.username = 'Anonymous User'
 
         f.save()
 

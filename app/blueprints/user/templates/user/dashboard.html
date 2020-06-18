@@ -268,7 +268,7 @@
                               <div class="bg-gray-50 text-gray-400 px-4 py-4 sm:px-6">
                                 <span class="text-sm leading-5 font-medium text-gray-500">
                                     <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }}
-                                    {% if feedback.username and false %} by {{ feedback.username }}{% else %} by {{ feedback.fullname }}{% endif %}
+                                    by {% if feedback.username %}{{ feedback.username }}{% else if feedback.fullname %}{{ feedback.fullname }}{% else %}Anonymous user{% endif %}
                                 </span>
                                 {% if feedback.status %}
                                     <span style="margin-left:20px;" class="inline-flex items-center px-2 py-0.5 ml-5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
@@ -590,7 +590,8 @@
             var body = document.getElementsByTagName("body")[0];
             var user_dropdown = document.getElementById('user-dropdown-menu');
 
-            body.addEventListener("click", function () {
+            if (user_dropdown !== null){
+                body.addEventListener("click", function () {
 
                 // Hide the user dropdown when you click outside of it
                 user_dropdown.classList.remove('opacity-100');
@@ -602,8 +603,7 @@
             document.getElementById('user-menu').addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
-
-
+            }
             {#var overlay = document.getElementById('invite-modal-overlay');
             var panel = document.getElementById('invite-modal-panel');
 
