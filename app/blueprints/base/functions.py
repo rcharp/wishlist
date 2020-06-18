@@ -54,17 +54,13 @@ def create_workspace(user_id, title, domain, description):
         return None
 
 
-def create_feedback(user, domain, title, description):
+def create_feedback(user, domain, email, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
         s = Status.query.filter(Status.name == 'In backlog').scalar()
 
         feedback_id = generate_id(Feedback, size=8)
         f = Feedback()
-        f.user_id = user.id
-        f.username = user.username
-        f.fullname = user.name
-        f.email = user.email
         f.title = title
         f.feedback_id = feedback_id
         f.description = description
@@ -72,6 +68,17 @@ def create_feedback(user, domain, title, description):
         f.domain = d.name
         f.status = s.name
         f.status_id = s.status_id
+
+        if user is not None:
+            f.user_id = user.id
+            f.username = user.username
+            f.fullname = user.name
+            f.email = user.email
+        elif email is not None:
+            f.email = email
+            f.fullname = 'Anonymous User'
+            f.username = 'Anonymous User'
+
         f.save()
 
         add_vote(feedback_id, user.id)

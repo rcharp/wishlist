@@ -148,7 +148,15 @@
                               <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
                                   <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
                                       Submit feedback
-                                    </div>
+                                  </div>
+
+                              {% if not current_user.is_authenticated %}
+                                  <div class="sm:col-span-6">
+                                      <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                        <input id="email" name="email" autofocus="autofocus" placeholder="Your email" required type="email" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                      </div>
+                                  </div>
+                              {% endif %}
                                 <div class="sm:col-span-6">
                                   <div class="mt-1 mb-3 rounded-md shadow-sm">
                                     <input id="title" name="title" autofocus="autofocus" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />

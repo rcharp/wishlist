@@ -7,3 +7,4 @@ wiki/config.js
 wiki/knexfile.js
 ngrok.py
 wiki.py
+/app/blueprints/api/sdk.html

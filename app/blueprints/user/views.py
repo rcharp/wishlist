@@ -454,16 +454,21 @@ Add feedback to the list
 def add_feedback(subdomain):
 
     # If there is no user, redirect them to the login for this domain
-    if not current_user.is_authenticated:
-        return redirect(url_for('user.login', subdomain=subdomain))
+    # if not current_user.is_authenticated:
+        # return redirect(url_for('user.login', subdomain=subdomain))
 
     if request.method == 'POST':
         try:
             title = request.form['title']
             description = request.form['description']
+            email = request.form['email'] if 'email' in request.form else None
 
             from app.blueprints.base.functions import create_feedback
-            create_feedback(current_user, subdomain, title, description)
+
+            if current_user.is_authenticated:
+                create_feedback(current_user, subdomain, None, title, description)
+            else:
+                create_feedback(None, subdomain, email, title, description)
 
             return redirect(url_for('user.dashboard', subdomain=subdomain))
         except Exception:
