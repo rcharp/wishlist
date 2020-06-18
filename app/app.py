@@ -202,7 +202,7 @@ def template_processors(app):
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
     app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
-    app.jinja_env.filters['any_filter'] = any_filter
+    app.jinja_env.filters['any_votes_filter'] = any_votes_filter
     app.jinja_env.filters['initial_filter'] = initial_filter
     app.jinja_env.globals.update(current_year=current_year)
 
@@ -377,7 +377,10 @@ def percent_filter(arg):
     return float(100 / len(arg))
 
 
-def any_filter(arg, k):
+def any_votes_filter(arg, k):
+    if arg is None:
+        return False
+
     return any(x.feedback_id == k for x in arg)
 
 
