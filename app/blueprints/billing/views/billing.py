@@ -85,7 +85,6 @@ def create():
         return render_template('billing/payment_method.html',
                             form=form, plan=subscription_plan)
     except Exception as e:
-        print_traceback(e)
 
         flash('There was an error. We weren\'t able to subscribe you to a plan at this time.', 'error')
         return redirect(url_for('user.dashboard'))
@@ -133,7 +132,6 @@ def update():
                             plans=settings.STRIPE_PLANS,
                             active_plan=active_plan)
     except Exception as e:
-        print_traceback(e)
 
         flash('There was an error. We weren\'t able to change your plan at this time.', 'error')
         return redirect(url_for('user.dashboard'))
@@ -163,14 +161,8 @@ def cancel():
             email = current_user.email
 
             # Delete the user.
-            from app.blueprints.billing.tasks import delete_users, delete_auth
-            from app.blueprints.base.models.app_auths import AppAuthorization
+            from app.blueprints.billing.tasks import delete_users
             ids = [current_user.id]
-
-            # Delete the app auths
-            for id in ids:
-                auths = [x.id for x in AppAuthorization.query.filter(AppAuthorization.user_id == id).all()]
-                delete_auth.delay(auths)
 
             # Delete the user
             delete_users.delay(ids)
