@@ -251,7 +251,7 @@ def logout(subdomain):
     logout_user()
 
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login', subdomain=subdomain))
+    return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
 @user.route('/logout')

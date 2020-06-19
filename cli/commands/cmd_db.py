@@ -105,7 +105,7 @@ def seed_status():
 @click.command()
 def seed_domains():
     demo = {
-        'domain_id': generate_id(Domain),
+        'domain_id': generate_id(Domain, 24),
         'name': 'demo',
         'company': 'Demo',
         'admin_email': 'demo@getwishlist.io',
@@ -113,7 +113,7 @@ def seed_domains():
     }
 
     wishlist = {
-        'domain_id': generate_id(Domain),
+        'domain_id': generate_id(Domain, 24),
         'name': 'wishlist',
         'company': 'Wishlist',
         'admin_email': app.config['SEED_MEMBER_EMAIL'],

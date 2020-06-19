@@ -14,7 +14,7 @@ from app.blueprints.base.models.vote import Vote
 
 # Generations ###################################################
 def generate_id(table, size=8):
-    # Generate a random 7-character record id
+    # Generate a random 8-digit id
     chars = string.digits
     id = int(''.join(random.choice(chars) for _ in range(size)))
 
@@ -136,7 +136,7 @@ def remove_vote(feedback_id, vote):
 def create_domain(user, form):
     try:
         d = Domain()
-        d.domain_id = generate_id(Domain)
+        d.domain_id = generate_id(Domain, 24)
         d.name = form.domain.data
         d.company = form.company.data
         d.user_id = user.id

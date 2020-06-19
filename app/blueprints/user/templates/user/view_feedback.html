@@ -168,7 +168,7 @@
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-1">
                                         <dl class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
-                                            <dd class="mt-1 text-3xl leading-9 font-semibold text-gray-900">
+                                            <dd class="mt-1 text-3xl leading-9 text-gray-900">
                                                 <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not voted %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
                                                     <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                                 </span>
@@ -210,13 +210,17 @@
                             <dt class="text-sm leading-5 font-medium text-gray-500">
                               Posted by
                             </dt>
-                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                            <dd class="mt-1 text-sm leading-5 font-semibold text-gray-900 sm:mt-0 sm:col-span-2">
                             {% if feedback.username %}
                                 {{ feedback.username }}
                             {% elif feedback.fullname %}
                                 {{ feedback.fullname }}
                             {% else %}
-                                Anonymous user
+                                {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
+                                    {{ feedback.email }}
+                                {% else %}
+                                    An anonymous user
+                                {% endif %}
                             {% endif %}
                             </dd>
                           </div>
