@@ -190,7 +190,7 @@ def signup(subdomain):
             # create_domain(u, form)
 
             flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            return redirect(url_for('user.start', subdomain=subdomain))
 
     return render_template('user/signup.html', subdomain=subdomain, form=form)
 

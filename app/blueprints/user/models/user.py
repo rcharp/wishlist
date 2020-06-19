@@ -36,8 +36,6 @@ class User(UserMixin, ResourceMixin, db.Model):
                                   passive_deletes=True)
     subscription = db.relationship(Subscription, uselist=False, lazy='subquery',
                                    backref='users', passive_deletes=True)
-    domain_id = db.relationship(Domain, uselist=False, lazy='subquery',
-                               backref='users', passive_deletes=True)
 
     # Authentication.
     role = db.Column(db.Enum(*ROLE, name='role_types', native_enum=False),
@@ -49,6 +47,7 @@ class User(UserMixin, ResourceMixin, db.Model):
                       server_default='')
     domain = db.Column(db.String(255), unique=False, index=True, nullable=False,
                       server_default='')
+    domain_id = db.Column(db.BigInteger, unique=False, index=True, nullable=True)
     password = db.Column(db.String(128), nullable=False, server_default='')
 
     # Billing.

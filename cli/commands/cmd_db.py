@@ -103,12 +103,14 @@ def seed_status():
 
 @click.command()
 def seed_domains():
+    u = User.query.filter(User.domain == 'demo').scalar()
+    domain_id = generate_id(Domain, 16)
     demo = {
-        'domain_id': generate_id(Domain, 16),
+        'domain_id': domain_id,
         'name': 'demo',
         'company': 'Demo',
-        'admin_email': 'demo@getwishlist.io',
-        'user_id': 2
+        'admin_email': u.email,
+        'user_id': u.id
     }
 
     wishlist = {
@@ -120,6 +122,8 @@ def seed_domains():
     }
 
     Domain(**demo).save()
+    u.domain_id = domain_id
+    u.save()
     # Domain(**wishlist).save()
 
 
