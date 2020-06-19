@@ -136,7 +136,7 @@ def remove_vote(feedback_id, vote):
 def create_domain(user, form):
     try:
         d = Domain()
-        d.domain_id = generate_id(Domain, 24)
+        d.domain_id = generate_id(Domain, 16)
         d.name = form.domain.data
         d.company = form.company.data
         d.user_id = user.id
