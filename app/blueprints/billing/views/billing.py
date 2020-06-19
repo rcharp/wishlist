@@ -147,18 +147,18 @@ def cancel():
 
     if form.validate_on_submit():
 
+        # If there is no subscription, then delete the user
+        canceled = True
+
         # Cancel the user's subscription
         if current_user.subscription:
             subscription = Subscription()
             canceled = subscription.cancel(user=current_user)
-        else:
-            # If there is no subscription, then delete the user
-            canceled = True
 
         if canceled:
 
             # Get the user's email
-            email = current_user.email
+            # email = current_user.email
 
             # Delete the user.
             from app.blueprints.billing.tasks import delete_users
