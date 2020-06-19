@@ -53,216 +53,293 @@ use_username = False
 @csrf.exempt
 def login(subdomain=None):
 
-    form = LoginForm(next=request.args.get('next'))
+    if subdomain:
+        form = LoginForm(next=request.args.get('next'))
 
-    # This redirects to dashboard always.
-    # form = LoginForm(next=url_for('user.dashboard'))
+        if form.validate_on_submit():
 
-    if form.validate_on_submit():
+            u = User.find_by_identity(request.form.get('identity'))
 
-        u = User.find_by_identity(request.form.get('identity'))
+            if u and u.is_active() and u.authenticated(password=request.form.get('password')):
+                if login_user(u, remember=True) and u.is_active():
 
-        if u and u.is_active() and u.authenticated(password=request.form.get('password')):
-            # As you can see remember me is always enabled, this was a design
-            # decision I made because more often than not users want this
-            # enabled. This allows for a less complicated login form.
-            #
-            # If however you want them to be able to select whether or not they
-            # should remain logged in then perform the following 3 steps:
-            # 1) Replace 'True' below with: request.form.get('remember', False)
-            # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
-            # 3) Add a checkbox to the login form with the id/name 'remember'
+                    if current_user.role == 'admin':
+                        return redirect(url_for('admin.dashboard'))
 
-            if login_user(u, remember=True) and u.is_active():
+                    u.update_activity_tracking(request.remote_addr)
 
-                if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
+                    next_url = request.form.get('next')
 
-                u.update_activity_tracking(request.remote_addr)
+                    if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
+                        next_url = url_for('user.dashboard', subdomain=subdomain)
 
-                next_url = request.form.get('next')
+                    if next_url:
+                        return redirect(safe_next_url(next_url), code=307)
 
-                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard', subdomain=subdomain)
-
-                if next_url:
-                    return redirect(safe_next_url(next_url), code=307)
-
+                else:
+                    flash('This account has been disabled.', 'error')
             else:
-                flash('This account has been disabled.', 'error')
+                flash('Your username/email or password is incorrect.', 'error')
+
         else:
-            flash('Your username/email or password is incorrect.', 'error')
+            if len(form.errors) > 0:
+                print(form.errors)
 
+        return render_template('user/login.html', subdomain=subdomain, form=form)
     else:
-        if len(form.errors) > 0:
-            print(form.errors)
+        form = LoginFormAnon(next=request.args.get('next'))
 
-    return render_template('user/login.html', subdomain=subdomain, form=form)
+        if form.validate_on_submit():
+            u = User.find_by_identity(request.form.get('identity'))
 
+            if u and u.is_active() and u.authenticated(password=request.form.get('password')):
+                # If the user doesn't have a company, make them sign up for one
+                subdomain = request.form.get('domain')
 
-@user.route('/login', methods=['GET', 'POST'])
-@anonymous_required()
-@csrf.exempt
-def login_anon():
+                if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                    flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
+                          category='error')
+                    return render_template('user/login.html', form=form)
 
-    form = LoginFormAnon(next=request.args.get('next'))
+                if login_user(u, remember=True) and u.is_active():
+                    if current_user.role == 'admin':
+                        return redirect(url_for('admin.dashboard'))
 
-    if form.validate_on_submit():
-        u = User.find_by_identity(request.form.get('identity'))
+                    u.update_activity_tracking(request.remote_addr)
 
-        if u and u.is_active() and u.authenticated(password=request.form.get('password')):
-            # As you can see remember me is always enabled, this was a design
-            # decision I made because more often than not users want this
-            # enabled. This allows for a less complicated login form.
-            #
-            # If however you want them to be able to select whether or not they
-            # should remain logged in then perform the following 3 steps:
-            # 1) Replace 'True' below with: request.form.get('remember', False)
-            # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
-            # 3) Add a checkbox to the login form with the id/name 'remember'
+                    next_url = request.form.get('next')
 
-            # If the user doesn't have a company, make them sign up for one
-            subdomain = request.form.get('domain')
+                    if next_url == url_for('user.login') or next_url == '' or next_url is None:
+                        next_url = url_for('user.dashboard')
 
-            if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup_anon') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
-                      category='error')
-                return render_template('user/login.html', form=form)
+                    if next_url:
+                        return redirect(safe_next_url(next_url), code=307)
 
-            if login_user(u, remember=True) and u.is_active():
-                if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
-
-                u.update_activity_tracking(request.remote_addr)
-
-                next_url = request.form.get('next')
-
-                if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
-                    next_url = url_for('user.dashboard', subdomain=u.domain)
-
-                if next_url:
-                    return redirect(safe_next_url(next_url), code=307)
-
-                if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
+                    if current_user.role == 'admin':
+                        return redirect(url_for('admin.dashboard'))
+                else:
+                    flash('This account has been disabled.', 'error')
             else:
-                flash('This account has been disabled.', 'error')
+                flash('Your username/email or password is incorrect.', 'error')
+
         else:
-            flash('Your username/email or password is incorrect.', 'error')
+            if len(form.errors) > 0:
+                print(form.errors)
 
-    else:
-        if len(form.errors) > 0:
-            print(form.errors)
+        return render_template('user/login.html', form=form)
 
-    return render_template('user/login.html', form=form)
+
+# @user.route('/login', methods=['GET', 'POST'])
+# @anonymous_required()
+# @csrf.exempt
+# def login_anon():
+#
+#     form = LoginFormAnon(next=request.args.get('next'))
+#
+#     if form.validate_on_submit():
+#         u = User.find_by_identity(request.form.get('identity'))
+#
+#         if u and u.is_active() and u.authenticated(password=request.form.get('password')):
+#             # As you can see remember me is always enabled, this was a design
+#             # decision I made because more often than not users want this
+#             # enabled. This allows for a less complicated login form.
+#             #
+#             # If however you want them to be able to select whether or not they
+#             # should remain logged in then perform the following 3 steps:
+#             # 1) Replace 'True' below with: request.form.get('remember', False)
+#             # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
+#             # 3) Add a checkbox to the login form with the id/name 'remember'
+#
+#             # If the user doesn't have a company, make them sign up for one
+#             subdomain = request.form.get('domain')
+#
+#             if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+#                 flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
+#                       category='error')
+#                 return render_template('user/login.html', form=form)
+#
+#             if login_user(u, remember=True) and u.is_active():
+#                 if current_user.role == 'admin':
+#                     return redirect(url_for('admin.dashboard'))
+#
+#                 u.update_activity_tracking(request.remote_addr)
+#
+#                 next_url = request.form.get('next')
+#
+#                 if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
+#                     next_url = url_for('user.dashboard', subdomain=u.domain)
+#
+#                 if next_url:
+#                     return redirect(safe_next_url(next_url), code=307)
+#
+#                 if current_user.role == 'admin':
+#                     return redirect(url_for('admin.dashboard'))
+#             else:
+#                 flash('This account has been disabled.', 'error')
+#         else:
+#             flash('Your username/email or password is incorrect.', 'error')
+#
+#     else:
+#         if len(form.errors) > 0:
+#             print(form.errors)
+#
+#     return render_template('user/login.html', form=form)
 
 
 '''
 Signup to post feedback in an existing domain
 '''
+@user.route('/signup', methods=['GET', 'POST'])
 @user.route('/signup', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
 def signup(subdomain=None):
-    form = SignupForm()
+    if subdomain:
+        form = SignupForm()
 
-    if form.validate_on_submit():
-        if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
-            flash('There is already an account with this email. Please login.', 'error')
-            return redirect(url_for('user.login', subdomain=subdomain))
+        if form.validate_on_submit():
+            if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+                flash('There is already an account with this email. Please login.', 'error')
+                return redirect(url_for('user.login', subdomain=subdomain))
 
-        subdomain = request.form.get('domain').replace(' ', '')
+            subdomain = request.form.get('domain').replace(' ', '')
 
-        u = User()
+            u = User()
 
-        form.populate_obj(u)
-        u.password = User.encrypt_password(request.form.get('password'))
-        u.role = 'creator'
-        u.save()
+            form.populate_obj(u)
+            u.password = User.encrypt_password(request.form.get('password'))
+            u.role = 'creator'
+            u.save()
 
-        if login_user(u):
-            # from app.blueprints.user.tasks import send_welcome_email
-            # from app.blueprints.contact.mailerlite import create_subscriber
+            if login_user(u):
+                # from app.blueprints.user.tasks import send_welcome_email
+                # from app.blueprints.contact.mailerlite import create_subscriber
 
-            # send_welcome_email.delay(current_user.email)
-            # create_subscriber(current_user.email)
+                # send_welcome_email.delay(current_user.email)
+                # create_subscriber(current_user.email)
 
-            # Create the domain from the form
-            # from app.blueprints.base.api_functions import create_domain
-            # create_domain(u, form)
+                # Create the domain from the form
+                # from app.blueprints.base.api_functions import create_domain
+                # create_domain(u, form)
 
-            flash("You've successfully signed up!", 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
-
-    return render_template('user/signup.html', subdomain=subdomain, form=form)
-
-
-'''
-Signup to create a new company and domain to receive feedback
-'''
-@user.route('/signup', methods=['GET', 'POST'])
-@anonymous_required()
-@csrf.exempt
-def signup_anon():
-    form = SignupFormAnon()
-
-    if form.validate_on_submit():
-        if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
-            flash('There is already an account with this email. Please login.', 'error')
-
-            u = User.query.filter(User.email == request.form.get('email')).scalar()
-            if u.domain is not None:
-                return redirect(url_for('user.login', subdomain=u.domain))
-            return redirect(url_for('user.login'))
-
-        subdomain = request.form.get('domain').replace(' ', '')
-
-        if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-            flash('That domain is already in use. Please try another.', 'error')
-            return render_template('user/signup.html', subdomain=subdomain, form=form)
-
-        u = User()
-
-        form.populate_obj(u)
-        u.password = User.encrypt_password(request.form.get('password'))
-        u.role = 'creator'
-        u.save()
-
-        if login_user(u):
-            # from app.blueprints.user.tasks import send_welcome_email
-            # from app.blueprints.contact.mailerlite import create_subscriber
-
-            # send_welcome_email.delay(current_user.email)
-            # create_subscriber(current_user.email)
-
-            # Create the domain from the form
-            from app.blueprints.base.functions import create_domain
-            if create_domain(u, form):
                 flash("You've successfully signed up!", 'success')
-                return redirect(url_for('user.start', subdomain=subdomain))
-            else:
-                flash("There was an error creating this domain. Please try again.", 'error')
-                return redirect(url_for('user.signup_anon', form=form))
+                return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/signup.html', form=form)
+        return render_template('user/signup.html', subdomain=subdomain, form=form)
+    else:
+        form = SignupFormAnon()
+
+        if form.validate_on_submit():
+            if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+                flash('There is already an account with this email. Please login.', 'error')
+
+                u = User.query.filter(User.email == request.form.get('email')).scalar()
+                if u.domain is not None:
+                    return redirect(url_for('user.login', subdomain=u.domain))
+                return redirect(url_for('user.login'))
+
+            subdomain = request.form.get('domain').replace(' ', '')
+
+            if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                flash('That domain is already in use. Please try another.', 'error')
+                return render_template('user/signup.html', subdomain=subdomain, form=form)
+
+            u = User()
+
+            form.populate_obj(u)
+            u.password = User.encrypt_password(request.form.get('password'))
+            u.role = 'creator'
+            u.save()
+
+            if login_user(u):
+                # from app.blueprints.user.tasks import send_welcome_email
+                # from app.blueprints.contact.mailerlite import create_subscriber
+
+                # send_welcome_email.delay(current_user.email)
+                # create_subscriber(current_user.email)
+
+                # Create the domain from the form
+                from app.blueprints.base.functions import create_domain
+                if create_domain(u, form):
+                    flash("You've successfully signed up!", 'success')
+                    return redirect(url_for('user.start', subdomain=subdomain))
+                else:
+                    flash("There was an error creating this domain. Please try again.", 'error')
+                    return redirect(url_for('user.signup', form=form))
+
+        return render_template('user/signup.html', form=form)
 
 
-@user.route('/logout', subdomain='<subdomain>')
-@login_required
-def logout(subdomain=None):
-
-    logout_user()
-
-    flash('You have been logged out.', 'success')
-    return redirect(url_for('user.dashboard', subdomain=subdomain))
+# '''
+# Signup to create a new company and domain to receive feedback
+# '''
+# @user.route('/signup', methods=['GET', 'POST'])
+# @anonymous_required()
+# @csrf.exempt
+# def signup_anon():
+#     form = SignupFormAnon()
+#
+#     if form.validate_on_submit():
+#         if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+#             flash('There is already an account with this email. Please login.', 'error')
+#
+#             u = User.query.filter(User.email == request.form.get('email')).scalar()
+#             if u.domain is not None:
+#                 return redirect(url_for('user.login', subdomain=u.domain))
+#             return redirect(url_for('user.login'))
+#
+#         subdomain = request.form.get('domain').replace(' ', '')
+#
+#         if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+#             flash('That domain is already in use. Please try another.', 'error')
+#             return render_template('user/signup.html', subdomain=subdomain, form=form)
+#
+#         u = User()
+#
+#         form.populate_obj(u)
+#         u.password = User.encrypt_password(request.form.get('password'))
+#         u.role = 'creator'
+#         u.save()
+#
+#         if login_user(u):
+#             # from app.blueprints.user.tasks import send_welcome_email
+#             # from app.blueprints.contact.mailerlite import create_subscriber
+#
+#             # send_welcome_email.delay(current_user.email)
+#             # create_subscriber(current_user.email)
+#
+#             # Create the domain from the form
+#             from app.blueprints.base.functions import create_domain
+#             if create_domain(u, form):
+#                 flash("You've successfully signed up!", 'success')
+#                 return redirect(url_for('user.start', subdomain=subdomain))
+#             else:
+#                 flash("There was an error creating this domain. Please try again.", 'error')
+#                 return redirect(url_for('user.signup', form=form))
+#
+#     return render_template('user/signup.html', form=form)
 
 
 @user.route('/logout')
+@user.route('/logout', subdomain='<subdomain>')
 @login_required
-def logout_anon():
-    logout_user()
-    flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login'))
+def logout(subdomain=None):
+    if subdomain:
+        logout_user()
+        flash('You have been logged out.', 'success')
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+    else:
+        logout_user()
+        flash('You have been logged out.', 'success')
+        return redirect(url_for('user.login'))
+
+
+# @user.route('/logout')
+# @login_required
+# def logout_anon():
+#     logout_user()
+#     flash('You have been logged out.', 'success')
+#     return redirect(url_for('user.login'))
 
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
@@ -298,7 +375,7 @@ def password_reset():
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.settings_anon'))
+            return redirect(url_for('user.settings'))
 
     return render_template('user/password_reset.html', form=form)
 
@@ -322,7 +399,7 @@ def welcome(subdomain=None):
     return render_template('user/welcome.html', form=form, subdomain=subdomain)
 
 
-
+@user.route('/start', methods=['GET', 'POST'])
 @user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
 def start(subdomain=None):
@@ -332,12 +409,13 @@ def start(subdomain=None):
     return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
 
-@user.route('/start', methods=['GET', 'POST'])
-@login_required
-def start_anon():
-    return redirect(url_for('user.settings_anon'))
+# @user.route('/start', methods=['GET', 'POST'])
+# @login_required
+# def start_anon():
+#     return redirect(url_for('user.settings_anon'))
 
 
+@user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @user.route('/settings/update_credentials', subdomain='<subdomain>', methods=['GET', 'POST'])
 @login_required
 def update_credentials(subdomain=None):
@@ -360,26 +438,26 @@ def update_credentials(subdomain=None):
     return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
 
 
-@user.route('/settings/update_credentials', methods=['GET', 'POST'])
-@login_required
-def update_credentials_anon():
-    form = UpdateCredentials(current_user, uid=current_user.id)
-
-    if form.validate_on_submit():
-        username = request.form.get('username', '')
-        new_password = request.form.get('password', '')
-        current_user.email = request.form.get('email')
-
-        if new_password:
-            current_user.password = User.encrypt_password(new_password)
-
-        current_user.username = username
-        current_user.save()
-
-        flash('Your credentials have been updated.', 'success')
-        return redirect(url_for('user.settings_anon'))
-
-    return render_template('user/update_credentials.html', form=form)
+# @user.route('/settings/update_credentials', methods=['GET', 'POST'])
+# @login_required
+# def update_credentials_anon():
+#     form = UpdateCredentials(current_user, uid=current_user.id)
+#
+#     if form.validate_on_submit():
+#         username = request.form.get('username', '')
+#         new_password = request.form.get('password', '')
+#         current_user.email = request.form.get('email')
+#
+#         if new_password:
+#             current_user.password = User.encrypt_password(new_password)
+#
+#         current_user.username = username
+#         current_user.save()
+#
+#         flash('Your credentials have been updated.', 'success')
+#         return redirect(url_for('user.settings_anon'))
+#
+#     return render_template('user/update_credentials.html', form=form)
 
 
 # Dashboard -------------------------------------------------------------------
@@ -442,6 +520,7 @@ def demo():
 '''
 View feedback details
 '''
+@user.route('/feedback/<feedback_id>', methods=['GET','POST'])
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def feedback(feedback_id, subdomain):
@@ -451,71 +530,92 @@ def feedback(feedback_id, subdomain):
     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted, use_username=use_username)
 
 
-@user.route('/feedback/<feedback_id>', methods=['GET','POST'])
-@csrf.exempt
-def feedback_anon(feedback_id):
-    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-    statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, voted=False, use_username=use_username)
+# @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
+# @csrf.exempt
+# def feedback_anon(feedback_id):
+#     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+#     statuses = Status.query.all()
+#     return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, voted=False, use_username=use_username)
 
 
 '''
 Add feedback to the list
 '''
+@user.route('/add_feedback', methods=['POST'])
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
 def add_feedback(subdomain=None):
+    if subdomain:
+        # If there is no user, redirect them to the login for this domain
+        # if not current_user.is_authenticated:
+            # return redirect(url_for('user.login', subdomain=subdomain))
 
-    # If there is no user, redirect them to the login for this domain
-    # if not current_user.is_authenticated:
-        # return redirect(url_for('user.login', subdomain=subdomain))
+        if request.method == 'POST':
+            try:
+                title = request.form['title']
+                description = request.form['description']
+                email = request.form['email'] if 'email' in request.form else ''
 
-    if request.method == 'POST':
-        try:
-            title = request.form['title']
-            description = request.form['description']
-            email = request.form['email'] if 'email' in request.form else ''
+                from app.blueprints.base.functions import create_feedback
 
-            from app.blueprints.base.functions import create_feedback
+                if current_user.is_authenticated:
+                    create_feedback(current_user, subdomain, None, title, description)
+                else:
+                    create_feedback(None, subdomain, email, title, description)
 
-            if current_user.is_authenticated:
-                create_feedback(current_user, subdomain, None, title, description)
-            else:
-                create_feedback(None, subdomain, email, title, description)
+                return redirect(url_for('user.dashboard', subdomain=subdomain))
+            except Exception:
+                flash("Uh oh, something went wrong!", "error")
+                return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
-        except Exception:
-            flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
+    else:
+        if request.method == 'POST':
+            try:
+                title = request.form['title']
+                description = request.form['description']
+                email = request.form['email'] if 'email' in request.form else None
 
-    return render_template('user/add_feedback.html', current_user=current_user, subdomain=subdomain)
+                from app.blueprints.base.functions import create_feedback
+
+                if current_user.is_authenticated:
+                    create_feedback(current_user, 'demo', None, title, description)
+                else:
+                    create_feedback(None, 'demo', email, title, description)
+
+                return redirect(url_for('user.dashboard'))
+            except Exception:
+                flash("Uh oh, something went wrong!", "error")
+                return redirect(url_for('user.dashboard'))
+
+        return render_template('user/add_feedback.html', current_user=current_user)
 
 
-'''
-Adding feedback to the demo
-'''
-@user.route('/add_feedback', methods=['POST'])
-@csrf.exempt
-def add_feedback_anon():
-    if request.method == 'POST':
-        try:
-            title = request.form['title']
-            description = request.form['description']
-            email = request.form['email'] if 'email' in request.form else None
-
-            from app.blueprints.base.functions import create_feedback
-
-            if current_user.is_authenticated:
-                create_feedback(current_user, 'demo', None, title, description)
-            else:
-                create_feedback(None, 'demo', email, title, description)
-
-            return redirect(url_for('user.dashboard'))
-        except Exception:
-            flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.dashboard'))
-
-    return render_template('user/add_feedback.html', current_user=current_user)
+# '''
+# Adding feedback to the demo
+# '''
+# @user.route('/add_feedback', methods=['POST'])
+# @csrf.exempt
+# def add_feedback_anon():
+#     if request.method == 'POST':
+#         try:
+#             title = request.form['title']
+#             description = request.form['description']
+#             email = request.form['email'] if 'email' in request.form else None
+#
+#             from app.blueprints.base.functions import create_feedback
+#
+#             if current_user.is_authenticated:
+#                 create_feedback(current_user, 'demo', None, title, description)
+#             else:
+#                 create_feedback(None, 'demo', email, title, description)
+#
+#             return redirect(url_for('user.dashboard'))
+#         except Exception:
+#             flash("Uh oh, something went wrong!", "error")
+#             return redirect(url_for('user.dashboard'))
+#
+#     return render_template('user/add_feedback.html', current_user=current_user)
 
 
 '''
@@ -608,32 +708,37 @@ def update_vote(subdomain=None):
 
 
 # Roadmap -------------------------------------------------------------------
+@user.route('/roadmap', methods=['GET','POST'])
 @user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def roadmap(subdomain=None):
     return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
-@user.route('/roadmap', methods=['GET','POST'])
-@csrf.exempt
-def roadmap_anon():
-    return render_template('user/roadmap.html', current_user=current_user)
+# @user.route('/roadmap', methods=['GET','POST'])
+# @csrf.exempt
+# def roadmap_anon():
+#     return render_template('user/roadmap.html', current_user=current_user)
 
 
 # Settings -------------------------------------------------------------------
+@user.route('/settings', methods=['GET','POST'])
 @user.route('/settings', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 def settings(subdomain=None):
-    domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
-    return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
+    if subdomain:
+        domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
+        return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
+    else:
+        return render_template('user/settings.html', current_user=current_user)
 
 
-@user.route('/settings', methods=['GET','POST'])
-@login_required
-@csrf.exempt
-def settings_anon():
-    return render_template('user/settings.html', current_user=current_user)
+# @user.route('/settings', methods=['GET','POST'])
+# @login_required
+# @csrf.exempt
+# def settings_anon():
+#     return render_template('user/settings.html', current_user=current_user)
 
 
 # Actions -------------------------------------------------------------------
