@@ -240,7 +240,7 @@ def signup_anon():
                 return redirect(url_for('user.start', subdomain=subdomain))
             else:
                 flash("There was an error creating this domain. Please try again.", 'error')
-                return redirect(url_for('user.signup_anon'))
+                return redirect(url_for('user.signup_anon', form=form))
 
     return render_template('user/signup.html', form=form)
 
@@ -381,41 +381,52 @@ def update_credentials_anon():
 
 
 # Dashboard -------------------------------------------------------------------
+# @user.route('/dashboard', methods=['GET','POST'])
+# @csrf.exempt
+# def dashboard_anon():
+#     feedbacks = Feedback.query.all()
+#     statuses = Status.query.all()
+#
+#     for f in feedbacks:
+#         f.votes = int(f.votes)
+#
+#     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+#     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, use_username=use_username)
+
+
 @user.route('/dashboard', methods=['GET','POST'])
-@csrf.exempt
-def dashboard_anon():
-    feedbacks = Feedback.query.all()
-    statuses = Status.query.all()
-
-    for f in feedbacks:
-        f.votes = int(f.votes)
-
-    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, use_username=use_username)
-
-
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
-def dashboard(subdomain):
-    if not subdomain or subdomain == '<invalid>':
-        subdomain = 'demo'
+def dashboard(subdomain=None):
+    # if not subdomain or subdomain == '<invalid>':
+    #     subdomain = 'demo'
 
-    d = Domain.query.filter(Domain.name == subdomain).scalar()
-    feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
+    if subdomain:
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
+        feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
 
-    if current_user.is_authenticated:
-        votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+        if current_user.is_authenticated:
+            votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+        else:
+            votes = None
+
+        statuses = Status.query.all()
+
+        for f in feedbacks:
+            f.votes = int(f.votes)
+
+        feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes, use_username=use_username)
     else:
-        votes = None
+        feedbacks = Feedback.query.all()
+        statuses = Status.query.all()
 
-    statuses = Status.query.all()
+        for f in feedbacks:
+            f.votes = int(f.votes)
 
-    for f in feedbacks:
-        f.votes = int(f.votes)
-
-    feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes, use_username=use_username)
+        feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, use_username=use_username)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -497,10 +508,10 @@ def add_feedback_anon():
             else:
                 create_feedback(None, 'demo', email, title, description)
 
-            return redirect(url_for('user.dashboard_anon'))
+            return redirect(url_for('user.dashboard'))
         except Exception:
             flash("Uh oh, something went wrong!", "error")
-            return redirect(url_for('user.dashboard_anon'))
+            return redirect(url_for('user.dashboard'))
 
     return render_template('user/add_feedback.html', current_user=current_user)
 
