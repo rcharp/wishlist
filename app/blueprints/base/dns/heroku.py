@@ -9,6 +9,9 @@ def create_subdomain(subdomain):
     heroku_conn = heroku3.from_key(current_app.config.get('HEROKU_TOKEN'))
     app = heroku_conn.apps()['getwishlist']
     try:
+        if app.get_domain(subdomain + '.getwishlist.io') is not None:
+            return True
+
         d = app.add_domain(subdomain + '.getwishlist.io')
 
         if d is not None:
@@ -20,8 +23,7 @@ def create_subdomain(subdomain):
 
         return False
     except HTTPError as h:
-        print(h)
-        if 'Domain already added' in h:
+        if h.response.status_code == 422:
             d = app.get_domain(subdomain + '.getwishlist.io')
 
             if d is not None:
