@@ -1,6 +1,6 @@
 /instance
 .env
-"Useful Commands.txt"
+"commands.txt"
 celerybeat-schedule
 node_modules
 ngrok.py
