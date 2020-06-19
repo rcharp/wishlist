@@ -161,15 +161,15 @@ def create_subdomain(subdomain):
 
 # Users ###################################################
 def create_anon_user(email):
-    password = generate_temp_password()
     from app.blueprints.user.models.user import User
-
-    u = User()
-    u.email = email
-    u.user_id = generate_id(User)
-    u.role = 'member'
-    u.password = User.encrypt_password(password)
-    u.save()
+    if not db.session.query(exists().where(User.email == email)).scalar():
+        password = generate_temp_password()
+        u = User()
+        u.email = email
+        u.user_id = generate_id(User)
+        u.role = 'member'
+        u.password = User.encrypt_password(password)
+        u.save()
 
 
 def populate_signup(request, user):

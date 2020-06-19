@@ -132,12 +132,12 @@ def create_app(settings_override=None):
     COMPRESS_MIN_SIZE = 500
     Compress(app)
 
-    @app.before_request
-    def before_request():
-        if not request.is_secure and app.config.get('PRODUCTION'):
-            url = request.url.replace("http://", "https://", 1)
-            code = 301
-            return redirect(url, code=code)
+    # @app.before_request
+    # def before_request():
+    #     if not request.is_secure and os.environ.get('PRODUCTION') == 'true':
+    #         url = request.url.replace("http://", "https://", 1)
+    #         code = 301
+    #         return redirect(url, code=code)
 
     @app.errorhandler(500)
     def error_502(e):

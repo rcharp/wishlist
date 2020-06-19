@@ -316,7 +316,7 @@ def welcome(subdomain):
         flash('Your username has been set.', 'success')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, subdomain=subdomain)\
+    return render_template('user/welcome.html', form=form, subdomain=subdomain)
 
 
 
@@ -449,7 +449,6 @@ def feedback_anon(feedback_id):
 Add feedback to the list
 '''
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
-# @login_required
 @csrf.exempt
 def add_feedback(subdomain):
 
@@ -482,7 +481,6 @@ def add_feedback(subdomain):
 Adding feedback to the demo
 '''
 @user.route('/add_feedback', methods=['POST'])
-# @login_required
 @csrf.exempt
 def add_feedback_anon():
     if request.method == 'POST':
@@ -510,7 +508,6 @@ def add_feedback_anon():
 Update the feedback
 '''
 @user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
-@login_required
 @csrf.exempt
 def update_feedback(subdomain):
     if request.method == 'POST':
@@ -577,7 +574,6 @@ def filter(status, subdomain):
 Add or remove a vote
 '''
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
-@login_required
 @csrf.exempt
 def update_vote(subdomain):
     if request.method == 'POST':
@@ -599,14 +595,12 @@ def update_vote(subdomain):
 
 # Roadmap -------------------------------------------------------------------
 @user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
-@login_required
 @csrf.exempt
 def roadmap(subdomain):
     return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
 @user.route('/roadmap', methods=['GET','POST'])
-@login_required
 @csrf.exempt
 def roadmap_anon():
     return render_template('user/roadmap.html', current_user=current_user)
@@ -656,32 +650,6 @@ def check_domain_status():
         return jsonify({'error': 'Error'})
     except Exception as e:
         return jsonify({'error': 'Error'})
-
-
-@user.route('/add_workspace', methods=['GET','POST'])
-@login_required
-@csrf.exempt
-def add_workspace():
-    if request.method == 'POST':
-        try:
-            title = request.form['title']
-            domain = request.form['domain']
-            description = request.form['description']
-
-            from app.blueprints.base.functions import create_workspace
-            w = create_workspace(current_user.id, title, domain, description)
-
-            if w is not None:
-                flash("Successfully created your workspace.", "success")
-            else:
-                flash("There was an error creating your workspace.", "error")
-
-            return redirect(url_for('user.dashboard'))
-        except Exception:
-            flash("There was an error creating your workspace.", "error")
-            return redirect(url_for('user.dashboard'))
-
-    return render_template('user/add_workspace.html', current_user=current_user)
 
 
 # Contact us -------------------------------------------------------------------
