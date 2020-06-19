@@ -248,6 +248,9 @@ def signup_anon():
 @user.route('/logout', subdomain='<subdomain>')
 @login_required
 def logout(subdomain):
+    if not subdomain or subdomain == '<invalid>':
+        return redirect(url_for('user.logout_anon'))
+
     logout_user()
 
     flash('You have been logged out.', 'success')
