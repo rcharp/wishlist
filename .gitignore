@@ -4,4 +4,4 @@
 celerybeat-schedule
 node_modules
 ngrok.py
-/app/blueprints/api/sdk.html
+app/blueprints/api/sdk.html
