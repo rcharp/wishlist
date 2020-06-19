@@ -153,7 +153,7 @@ def signup(subdomain=None):
 
             form.populate_obj(u)
             u.password = User.encrypt_password(request.form.get('password'))
-            u.role = 'creator'
+            u.role = 'member'
             u.save()
 
             if login_user(u):
@@ -194,23 +194,27 @@ def signup(subdomain=None):
             form.populate_obj(u)
             u.password = User.encrypt_password(request.form.get('password'))
             u.role = 'creator'
-            u.save()
 
-            if login_user(u):
-                # from app.blueprints.user.tasks import send_welcome_email
-                # from app.blueprints.contact.mailerlite import create_subscriber
+            # Create the domain from the form
+            from app.blueprints.base.functions import create_domain
+            if create_domain(u, form):
 
-                # send_welcome_email.delay(current_user.email)
-                # create_subscriber(current_user.email)
+                # Save the user to the database
+                u.save()
 
-                # Create the domain from the form
-                from app.blueprints.base.functions import create_domain
-                if create_domain(u, form):
+                if login_user(u):
+                    # from app.blueprints.user.tasks import send_welcome_email
+                    # from app.blueprints.contact.mailerlite import create_subscriber
+
+                    # send_welcome_email.delay(current_user.email)
+                    # create_subscriber(current_user.email)
+
                     flash("You've successfully signed up!", 'success')
                     return redirect(url_for('user.start', subdomain=subdomain))
-                else:
-                    flash("There was an error creating this domain. Please try again.", 'error')
-                    return redirect(url_for('user.signup', form=form))
+
+            else:
+                flash("There was an error creating this domain. Please try again.", 'error')
+                return redirect(url_for('user.signup', form=form))
 
         return render_template('user/signup.html', form=form)
 
@@ -499,25 +503,6 @@ def sort_feedback(s, subdomain=None):
             feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
         return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, subdomain=demo)
-
-
-# '''
-# Filter feedback by status
-# '''
-#
-#
-# @user.route('/feedback/<status>', subdomain='<subdomain>', methods=['GET','POST'])
-# @csrf.exempt
-# def filter(status, subdomain):
-#     feedbacks = Feedback.query.filter(and_(Feedback.domain == subdomain, Feedback.status == status)).all()
-#     statuses = Status.query.all()
-#
-#     for f in feedbacks:
-#         f.votes = int(f.votes)
-#
-#     feedbacks.sort(key=lambda x: x.votes, reverse=True)
-#
-#     return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, filter=filter, subdomain=subdomain)
 
 
 # Votes -------------------------------------------------------------------
