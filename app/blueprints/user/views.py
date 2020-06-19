@@ -43,7 +43,7 @@ from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
 
 user = Blueprint('user', __name__, template_folder='templates')
-
+use_username = False
 
 # Login and Credentials -------------------------------------------------------------------
 @user.route('/login', subdomain='<subdomain>', methods=['GET', 'POST'])
@@ -390,7 +390,7 @@ def dashboard_anon():
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, use_username=use_username)
 
 
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
@@ -414,7 +414,7 @@ def dashboard(subdomain):
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes, use_username=use_username)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -434,7 +434,7 @@ def feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted)
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted, use_username=use_username)
 
 
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
@@ -442,7 +442,7 @@ def feedback(feedback_id, subdomain):
 def feedback_anon(feedback_id):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, voted=False)
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, voted=False, use_username=use_username)
 
 
 '''
