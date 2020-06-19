@@ -20,8 +20,8 @@ def create_subdomain(subdomain):
 
         return False
     except HTTPError as h:
-        print(h.response)
-        if 'Domain already added' in h.response:
+        print(h.response.message)
+        if 'Domain already added' in h.response.message:
             d = app.get_domain(subdomain + '.getwishlist.io')
 
             if d is not None:
