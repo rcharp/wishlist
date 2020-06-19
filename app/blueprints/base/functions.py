@@ -69,7 +69,7 @@ def create_feedback(user, domain, email, title, description):
             f.email = user.email
         else:
             f.email = email
-            create_user(email)
+            create_anon_user(email)
 
         f.save()
 
@@ -162,7 +162,7 @@ def create_subdomain(subdomain):
 
 
 # Users ###################################################
-def create_user(email):
+def create_anon_user(email):
     password = generate_temp_password()
 
     u = User()
