@@ -42,7 +42,7 @@ class URITemplate(object):
 
 
         t = URITemplate(
-            'https://api.github.com/users/sigmavirus24/gists{/gist_id}'
+            'https://base.github.com/users/sigmavirus24/gists{/gist_id}'
         )
         uri = t.expand(gist_id=123456)
         resp = requests.get(uri)
@@ -52,7 +52,7 @@ class URITemplate(object):
     Please note::
 
         str(t)
-        # 'https://api.github.com/users/sigmavirus24/gists{/gistid}'
+        # 'https://base.github.com/users/sigmavirus24/gists{/gistid}'
         repr(t)  # is equivalent to
         # URITemplate(str(t))
         # Where str(t) is interpreted as the URI string.
@@ -117,7 +117,7 @@ class URITemplate(object):
 
         Example::
 
-            t = URITemplate('https://api.github.com{/end}')
+            t = URITemplate('https://base.github.com{/end}')
             t.expand({'end': 'users'})
             t.expand(end='gists')
 
@@ -143,8 +143,8 @@ class URITemplate(object):
 
         Example::
 
-            t = URITemplate('https://api.github.com{/end}')
-            t.partial()  # => URITemplate('https://api.github.com{/end}')
+            t = URITemplate('https://base.github.com{/end}')
+            t.partial()  # => URITemplate('https://base.github.com{/end}')
 
         """
         return URITemplate(self._expand(_merge(var_dict, kwargs), True))

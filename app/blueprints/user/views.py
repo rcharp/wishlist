@@ -18,6 +18,7 @@ from flask_login import (
 
 import time
 import random
+import requests
 from operator import attrgetter
 from flask_cors import cross_origin
 
@@ -37,9 +38,9 @@ from app.blueprints.user.forms import (
 from app.extensions import cache, csrf, timeout, db
 from importlib import import_module
 from sqlalchemy import or_, and_, exists, inspect, func
-from app.blueprints.api.models.feedback import Feedback
-from app.blueprints.api.models.status import Status
-from app.blueprints.api.models.vote import Vote
+from app.blueprints.base.models.feedback import Feedback
+from app.blueprints.base.models.status import Status
+from app.blueprints.base.models.vote import Vote
 
 user = Blueprint('user', __name__, template_folder='templates')
 
@@ -71,6 +72,10 @@ def login(subdomain):
             # 3) Add a checkbox to the login form with the id/name 'remember'
 
             if login_user(u, remember=True) and u.is_active():
+
+                if current_user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+
                 u.update_activity_tracking(request.remote_addr)
 
                 next_url = request.form.get('next')
@@ -81,8 +86,6 @@ def login(subdomain):
                 if next_url:
                     return redirect(safe_next_url(next_url), code=307)
 
-                if current_user.role == 'admin':
-                    return redirect(url_for('admin.dashboard'))
             else:
                 flash('This account has been disabled.', 'error')
         else:
@@ -125,6 +128,9 @@ def login_anon():
                 return render_template('user/login.html', form=form)
 
             if login_user(u, remember=True) and u.is_active():
+                if current_user.role == 'admin':
+                    return redirect(url_for('admin.dashboard'))
+
                 u.update_activity_tracking(request.remote_addr)
 
                 next_url = request.form.get('next')
@@ -149,6 +155,9 @@ def login_anon():
     return render_template('user/login.html', form=form)
 
 
+'''
+Signup to post feedback in an existing domain
+'''
 @user.route('/signup', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
@@ -161,10 +170,6 @@ def signup(subdomain):
             return redirect(url_for('user.login', subdomain=subdomain))
 
         subdomain = request.form.get('domain').replace(' ', '')
-
-        # if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-        #     flash('That domain is already in use. Please try another.', 'error')
-        #     return render_template('user/signup.html', subdomain=subdomain, form=form)
 
         u = User()
 
@@ -181,7 +186,7 @@ def signup(subdomain):
             # create_subscriber(current_user.email)
 
             # Create the domain from the form
-            # from app.blueprints.api.api_functions import create_domain
+            # from app.blueprints.base.api_functions import create_domain
             # create_domain(u, form)
 
             flash("You've successfully signed up!", 'success')
@@ -190,6 +195,9 @@ def signup(subdomain):
     return render_template('user/signup.html', subdomain=subdomain, form=form)
 
 
+'''
+Signup to create a new company and domain to receive feedback
+'''
 @user.route('/signup', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
@@ -226,13 +234,13 @@ def signup_anon():
             # create_subscriber(current_user.email)
 
             # Create the domain from the form
-            from app.blueprints.api.api_functions import create_domain
+            from app.blueprints.base.functions import create_domain
             if create_domain(u, form):
                 flash("You've successfully signed up!", 'success')
-                return redirect(url_for('user.dashboard', subdomain=subdomain))
+                return redirect(url_for('user.start', subdomain=subdomain))
             else:
                 flash("There was an error creating this domain. Please try again.", 'error')
-                return redirect(url_for('user.dashboard', subdomain='demo'))
+                return redirect(url_for('user.signup_anon'))
 
     return render_template('user/signup.html', form=form)
 
@@ -254,23 +262,23 @@ def logout_anon():
     return redirect(url_for('user.login_anon'))
 
 
-@user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/account/begin_password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def begin_password_reset(subdomain):
+def begin_password_reset():
     form = BeginPasswordResetForm()
 
     if form.validate_on_submit():
         u = User.initialize_password_reset(request.form.get('identity'))
 
         flash('An email has been sent to {0}.'.format(u.email), 'success')
-        return redirect(url_for('user.login', subdomain=subdomain))
+        return redirect(url_for('user.login_anon'))
 
     return render_template('user/begin_password_reset.html', form=form)
 
 
-@user.route('/account/password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/account/password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def password_reset(subdomain):
+def password_reset():
     form = PasswordResetForm(reset_token=request.args.get('reset_token'))
 
     if form.validate_on_submit():
@@ -279,7 +287,7 @@ def password_reset(subdomain):
         if u is None:
             flash('Your reset token has expired or was tampered with.',
                   'error')
-            return redirect(url_for('user.begin_password_reset', subdomain=subdomain))
+            return redirect(url_for('user.begin_password_reset'))
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
@@ -287,9 +295,9 @@ def password_reset(subdomain):
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            return redirect(url_for('user.settings_anon'))
 
-    return render_template('user/password_reset.html', subdomain=subdomain, form=form)
+    return render_template('user/password_reset.html', form=form)
 
 
 @user.route('/welcome', subdomain='<subdomain>', methods=['GET', 'POST'])
@@ -308,32 +316,65 @@ def welcome(subdomain):
         flash('Your username has been set.', 'success')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    return render_template('user/welcome.html', form=form, subdomain=subdomain)
-    # return render_template('user/welcome.html', form=form, payment=current_user.payment_id, subdomain=subdomain)
+    return render_template('user/welcome.html', form=form, subdomain=subdomain)\
 
 
-@user.route('/welcome', methods=['GET', 'POST'])
+
+@user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
-def welcome_anon():
-    return redirect(url_for('user.login_anon'))
+def start(subdomain):
+    if not (current_user.is_authenticated and current_user.domain == subdomain):
+        return redirect(url_for('user.login_anon'))
+
+    return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
 
-@user.route('/settings/update_credentials', methods=['GET', 'POST'])
+@user.route('/start', methods=['GET', 'POST'])
 @login_required
-def update_credentials():
+def start_anon():
+    return redirect(url_for('user.settings_anon'))
+
+
+@user.route('/settings/update_credentials', subdomain='<subdomain>', methods=['GET', 'POST'])
+@login_required
+def update_credentials(subdomain):
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
+        username = request.form.get('username', '')
         new_password = request.form.get('password', '')
         current_user.email = request.form.get('email')
 
         if new_password:
             current_user.password = User.encrypt_password(new_password)
 
+        current_user.username = username
         current_user.save()
 
-        flash('Your sign in settings have been updated.', 'success')
-        return redirect(url_for('user.dashboard'))
+        flash('Your credentials have been updated.', 'success')
+        return redirect(url_for('user.settings', subdomain=subdomain))
+
+    return render_template('user/update_credentials.html', form=form, subdomain=subdomain)
+
+
+@user.route('/settings/update_credentials', methods=['GET', 'POST'])
+@login_required
+def update_credentials_anon():
+    form = UpdateCredentials(current_user, uid=current_user.id)
+
+    if form.validate_on_submit():
+        username = request.form.get('username', '')
+        new_password = request.form.get('password', '')
+        current_user.email = request.form.get('email')
+
+        if new_password:
+            current_user.password = User.encrypt_password(new_password)
+
+        current_user.username = username
+        current_user.save()
+
+        flash('Your credentials have been updated.', 'success')
+        return redirect(url_for('user.settings_anon'))
 
     return render_template('user/update_credentials.html', form=form)
 
@@ -361,7 +402,12 @@ def dashboard(subdomain):
 
     d = Domain.query.filter(Domain.name == subdomain).scalar()
     feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
-    votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+
+    if current_user.is_authenticated:
+        votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+    else:
+        votes = None
+
     statuses = Status.query.all()
 
     for f in feedbacks:
@@ -408,16 +454,21 @@ Add feedback to the list
 def add_feedback(subdomain):
 
     # If there is no user, redirect them to the login for this domain
-    if not current_user.is_authenticated:
-        return redirect(url_for('user.login', subdomain=subdomain))
+    # if not current_user.is_authenticated:
+        # return redirect(url_for('user.login', subdomain=subdomain))
 
     if request.method == 'POST':
         try:
             title = request.form['title']
             description = request.form['description']
+            email = request.form['email'] if 'email' in request.form else ''
 
-            from app.blueprints.api.api_functions import create_feedback
-            create_feedback(current_user, subdomain, title, description)
+            from app.blueprints.base.functions import create_feedback
+
+            if current_user.is_authenticated:
+                create_feedback(current_user, subdomain, None, title, description)
+            else:
+                create_feedback(None, subdomain, email, title, description)
 
             return redirect(url_for('user.dashboard', subdomain=subdomain))
         except Exception:
@@ -431,10 +482,28 @@ def add_feedback(subdomain):
 Adding feedback to the demo
 '''
 @user.route('/add_feedback', methods=['POST'])
-@login_required
+# @login_required
 @csrf.exempt
 def add_feedback_anon():
-    return redirect(url_for('user.signup_anon'))
+    if request.method == 'POST':
+        try:
+            title = request.form['title']
+            description = request.form['description']
+            email = request.form['email'] if 'email' in request.form else None
+
+            from app.blueprints.base.functions import create_feedback
+
+            if current_user.is_authenticated:
+                create_feedback(current_user, 'demo', None, title, description)
+            else:
+                create_feedback(None, 'demo', email, title, description)
+
+            return redirect(url_for('user.dashboard_anon'))
+        except Exception:
+            flash("Uh oh, something went wrong!", "error")
+            return redirect(url_for('user.dashboard_anon'))
+
+    return render_template('user/add_feedback.html', current_user=current_user)
 
 
 '''
@@ -451,7 +520,7 @@ def update_feedback(subdomain):
             description = request.form['description']
             status_id = request.form['status']
 
-            from app.blueprints.api.api_functions import update_feedback
+            from app.blueprints.base.functions import update_feedback
             if update_feedback(feedback_id, subdomain, title, description, status_id) is not None:
                 return redirect(url_for('user.feedback', feedback_id=feedback_id, subdomain=subdomain))
 
@@ -515,7 +584,7 @@ def update_vote(subdomain):
         if 'feedback_id' in request.form and 'user_id' in request.form:
             feedback_id = request.form['feedback_id']
             user_id = request.form['user_id']
-            from app.blueprints.api.api_functions import add_vote, remove_vote
+            from app.blueprints.base.functions import add_vote, remove_vote
 
             if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
                 vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
@@ -536,6 +605,13 @@ def roadmap(subdomain):
     return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
+@user.route('/roadmap', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def roadmap_anon():
+    return render_template('user/roadmap.html', current_user=current_user)
+
+
 # Settings -------------------------------------------------------------------
 @user.route('/settings', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
@@ -549,7 +625,7 @@ def settings(subdomain):
 @login_required
 @csrf.exempt
 def settings_anon():
-    return redirect(url_for('user.login_anon'))
+    return render_template('user/settings.html', current_user=current_user)
 
 
 # Actions -------------------------------------------------------------------
@@ -558,6 +634,28 @@ def settings_anon():
 @csrf.exempt
 def send_invite(subdomain):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+
+@user.route('/check_domain_status', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+@cross_origin()
+def check_domain_status():
+    try:
+        if request.method == 'POST':
+            if 'subdomain' in request.form and 'user_id' in request.form:
+                subdomain = request.form['subdomain']
+                user_id = request.form['user_id']
+
+                u = User.query.filter(User.id == user_id).scalar()
+
+                if subdomain == u.domain:
+                    r = requests.get('https://' + subdomain + '.getwishlist.io')
+                    if r.status_code == 200:
+                        return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
 
 
 @user.route('/add_workspace', methods=['GET','POST'])
@@ -570,7 +668,7 @@ def add_workspace():
             domain = request.form['domain']
             description = request.form['description']
 
-            from app.blueprints.api.api_functions import create_workspace
+            from app.blueprints.base.functions import create_workspace
             w = create_workspace(current_user.id, title, domain, description)
 
             if w is not None:

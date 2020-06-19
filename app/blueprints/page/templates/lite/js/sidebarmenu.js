@@ -128,7 +128,7 @@ File: js
     var NAME = 'metisMenu';
     var DATA_KEY = 'metisMenu';
     var EVENT_KEY = '.' + DATA_KEY;
-    var DATA_API_KEY = '.data-api';
+    var DATA_API_KEY = '.data-base';
     var JQUERY_NO_CONFLICT = $.fn[NAME];
     var TRANSITION_DURATION = 350;
 

@@ -111,7 +111,7 @@
     //stumbleupon: "http://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}&format=jsonp&callback=?",
     stumbleupon: "",
     linkedin: "http://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",
-    pinterest: "http://api.pinterest.com/v1/urls/count.json?url={url}&callback=?"
+    pinterest: "http://base.pinterest.com/v1/urls/count.json?url={url}&callback=?"
   },
   /* Load share buttons asynchronously
   ================================================== */
