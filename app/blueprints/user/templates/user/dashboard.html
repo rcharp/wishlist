@@ -273,7 +273,11 @@
                                     {% elif feedback.fullname %}
                                         {{ feedback.fullname }}
                                     {% else %}
-                                        Anonymous user
+                                        {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
+                                            {{ feedback.email }}
+                                        {% else %}
+                                            An anonymous user
+                                        {% endif %}
                                     {% endif %}
                                 </span>
                                 {% if feedback.status %}
