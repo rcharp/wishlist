@@ -10,7 +10,7 @@ class Domain(ResourceMixin, db.Model):
 
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
-    domain_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
+    domain_id = db.Column(db.BigInteger, unique=True, index=True, nullable=False)
     name = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
     company = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     admin_email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')

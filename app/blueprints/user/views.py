@@ -414,7 +414,7 @@ def dashboard(subdomain):
         f.votes = int(f.votes)
 
     feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes)
+    return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, domain=d, votes=votes)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -432,9 +432,10 @@ View feedback details
 @csrf.exempt
 def feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    d = Domain.query.filter(Domain.name == subdomain).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted)
+    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, domain=d, voted=voted)
 
 
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
@@ -597,7 +598,8 @@ def update_vote(subdomain):
 @user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def roadmap(subdomain):
-    return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
+    d = Domain.query.filter(Domain.name == subdomain).scalar()
+    return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain, domain=d)
 
 
 @user.route('/roadmap', methods=['GET','POST'])

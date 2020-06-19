@@ -17,7 +17,7 @@ class Vote(ResourceMixin, db.Model):
                            index=True, nullable=True, primary_key=False, unique=False)
     feedback_id = db.Column(db.Integer, db.ForeignKey('feedback.feedback_id', onupdate='CASCADE', ondelete='CASCADE'),
                         index=True, nullable=True, primary_key=False, unique=False)
-    domain_id = db.Column(db.Integer, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
+    domain_id = db.Column(db.BigInteger, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
                             index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):

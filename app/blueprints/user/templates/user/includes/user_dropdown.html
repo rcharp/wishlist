@@ -32,8 +32,15 @@
                     {{ current_user.name|title }}
                     {% if current_user.role == 'creator' and current_user.domain == subdomain %} (Admin){% endif %}
                 </div>
+                <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
+                    <i class="si si-envelope mr-2"></i>{{ current_user.email }}
+                </div>
+                {% if current_user.role == 'creator' and current_user.domain == subdomain %}
+                    <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
+                        Domain Id: {{ domain.domain_id }}
+                    </div>
+                {% endif %}
             {% endif %}
-              <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-envelope mr-2"></i>{{ current_user.email }}</div>
             <div class="border-t border-gray-100"></div>
 
             {% if current_user.role == 'creator' and current_user.domain == subdomain and false %}
