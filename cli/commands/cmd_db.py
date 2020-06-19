@@ -13,7 +13,6 @@ from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.vote import Vote
-from app.blueprints.base.models.workspace import Workspace
 
 # Create an app context for the database connection.
 app = create_app()
@@ -104,16 +103,18 @@ def seed_status():
 
 @click.command()
 def seed_domains():
+    u = User.query.filter(User.domain == 'demo').scalar()
+    domain_id = generate_id(Domain, 16)
     demo = {
-        'domain_id': generate_id(Domain, 24),
+        'domain_id': domain_id,
         'name': 'demo',
         'company': 'Demo',
-        'admin_email': 'demo@getwishlist.io',
-        'user_id': 2
+        'admin_email': u.email,
+        'user_id': u.id
     }
 
     wishlist = {
-        'domain_id': generate_id(Domain, 24),
+        'domain_id': generate_id(Domain, 16),
         'name': 'wishlist',
         'company': 'Wishlist',
         'admin_email': app.config['SEED_MEMBER_EMAIL'],
@@ -121,6 +122,8 @@ def seed_domains():
     }
 
     Domain(**demo).save()
+    u.domain_id = domain_id
+    u.save()
     # Domain(**wishlist).save()
 
 
