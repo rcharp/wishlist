@@ -485,12 +485,6 @@ Adding feedback to the demo
 # @login_required
 @csrf.exempt
 def add_feedback_anon():
-    # return redirect(url_for('user.signup_anon'))
-
-    # If there is no user, redirect them to the login for this domain
-    # if not current_user.is_authenticated:
-    # return redirect(url_for('user.login', subdomain=subdomain))
-
     if request.method == 'POST':
         try:
             title = request.form['title']

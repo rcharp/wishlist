@@ -42,7 +42,7 @@ def generate_alphanumeric_id(table, size=8):
 def generate_temp_password(size=15):
     # Generate a random 15-character temporary password
     chars = string.digits
-    return int(''.join(random.choice(chars) for _ in range(size)))
+    return ''.join(random.choice(chars) for _ in range(size))
 
 
 # Feedback ###################################################
@@ -69,6 +69,7 @@ def create_feedback(user, domain, email, title, description):
             f.email = user.email
         else:
             f.email = email
+            create_user(email)
 
         f.save()
 
