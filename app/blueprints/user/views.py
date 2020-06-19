@@ -45,11 +45,13 @@ from app.blueprints.base.models.vote import Vote
 user = Blueprint('user', __name__, template_folder='templates')
 use_username = False
 
+
 # Login and Credentials -------------------------------------------------------------------
+@user.route('/login', methods=['GET', 'POST'])
 @user.route('/login', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def login(subdomain):
+def login(subdomain=None):
 
     form = LoginForm(next=request.args.get('next'))
 
@@ -161,7 +163,7 @@ Signup to post feedback in an existing domain
 @user.route('/signup', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def signup(subdomain):
+def signup(subdomain=None):
     form = SignupForm()
 
     if form.validate_on_submit():
@@ -211,7 +213,7 @@ def signup_anon():
             u = User.query.filter(User.email == request.form.get('email')).scalar()
             if u.domain is not None:
                 return redirect(url_for('user.login', subdomain=u.domain))
-            return redirect(url_for('user.login_anon'))
+            return redirect(url_for('user.login'))
 
         subdomain = request.form.get('domain').replace(' ', '')
 
@@ -247,7 +249,7 @@ def signup_anon():
 
 @user.route('/logout', subdomain='<subdomain>')
 @login_required
-def logout(subdomain):
+def logout(subdomain=None):
 
     logout_user()
 
@@ -260,7 +262,7 @@ def logout(subdomain):
 def logout_anon():
     logout_user()
     flash('You have been logged out.', 'success')
-    return redirect(url_for('user.login_anon'))
+    return redirect(url_for('user.login'))
 
 
 @user.route('/account/begin_password_reset', methods=['GET', 'POST'])
@@ -272,7 +274,7 @@ def begin_password_reset():
         u = User.initialize_password_reset(request.form.get('identity'))
 
         flash('An email has been sent to {0}.'.format(u.email), 'success')
-        return redirect(url_for('user.login_anon'))
+        return redirect(url_for('user.login'))
 
     return render_template('user/begin_password_reset.html', form=form)
 
@@ -303,7 +305,7 @@ def password_reset():
 
 @user.route('/welcome', subdomain='<subdomain>', methods=['GET', 'POST'])
 @login_required
-def welcome(subdomain):
+def welcome(subdomain=None):
     if current_user.username:
         flash('You already picked a username.', 'warning')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
@@ -323,9 +325,9 @@ def welcome(subdomain):
 
 @user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
-def start(subdomain):
+def start(subdomain=None):
     if not (current_user.is_authenticated and current_user.domain == subdomain):
-        return redirect(url_for('user.login_anon'))
+        return redirect(url_for('user.login'))
 
     return render_template('user/start.html', current_user=current_user, subdomain=subdomain)
 
@@ -338,7 +340,7 @@ def start_anon():
 
 @user.route('/settings/update_credentials', subdomain='<subdomain>', methods=['GET', 'POST'])
 @login_required
-def update_credentials(subdomain):
+def update_credentials(subdomain=None):
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
@@ -462,7 +464,7 @@ Add feedback to the list
 '''
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
-def add_feedback(subdomain):
+def add_feedback(subdomain=None):
 
     # If there is no user, redirect them to the login for this domain
     # if not current_user.is_authenticated:
@@ -521,7 +523,7 @@ Update the feedback
 '''
 @user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
-def update_feedback(subdomain):
+def update_feedback(subdomain=None):
     if request.method == 'POST':
         try:
             feedback_id = request.form['feedback_id']
@@ -587,7 +589,7 @@ Add or remove a vote
 '''
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def update_vote(subdomain):
+def update_vote(subdomain=None):
     if request.method == 'POST':
         if 'feedback_id' in request.form and 'user_id' in request.form:
             feedback_id = request.form['feedback_id']
@@ -608,7 +610,7 @@ def update_vote(subdomain):
 # Roadmap -------------------------------------------------------------------
 @user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
-def roadmap(subdomain):
+def roadmap(subdomain=None):
     return render_template('user/roadmap.html', current_user=current_user, subdomain=subdomain)
 
 
@@ -622,7 +624,7 @@ def roadmap_anon():
 @user.route('/settings', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def settings(subdomain):
+def settings(subdomain=None):
     domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
     return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
 
@@ -638,7 +640,7 @@ def settings_anon():
 @user.route('/send_invite', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def send_invite(subdomain):
+def send_invite(subdomain=None):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
