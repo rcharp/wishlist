@@ -6,9 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
-from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.base.models.workspace import Workspace
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
@@ -164,6 +162,7 @@ def create_subdomain(subdomain):
 # Users ###################################################
 def create_anon_user(email):
     password = generate_temp_password()
+    from app.blueprints.user.models.user import User
 
     u = User()
     u.email = email
