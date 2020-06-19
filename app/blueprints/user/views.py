@@ -426,7 +426,7 @@ def dashboard(subdomain=None):
             f.votes = int(f.votes)
 
         feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, use_username=use_username)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=demo, use_username=use_username)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
