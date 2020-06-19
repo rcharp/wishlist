@@ -6,6 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
+from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.workspace import Workspace
 from app.blueprints.base.models.feedback import Feedback
@@ -13,6 +14,7 @@ from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
 
 
+# Generations ###################################################
 def generate_id(table, size=8):
     # Generate a random 7-character record id
     chars = string.digits
@@ -26,7 +28,7 @@ def generate_id(table, size=8):
 
 
 def generate_alphanumeric_id(table, size=8):
-    # Generate a random 7-character record id
+    # Generate a random 8-character alphanumeric id
     chars = string.digits + string.ascii_lowercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
@@ -37,23 +39,13 @@ def generate_alphanumeric_id(table, size=8):
         generate_id(table)
 
 
-def create_workspace(user_id, title, domain, description):
-    try:
-        id = generate_id(Workspace, size=8)
-        w = Workspace()
-        w.admin_id = user_id
-        w.title = title
-        w.workspace_id = id
-        w.domain = domain
-        w.description = description
-        w.save()
-
-        return w
-    except Exception as e:
-        print_traceback(e)
-        return None
+def generate_temp_password(size=15):
+    # Generate a random 15-character temporary password
+    chars = string.digits
+    return int(''.join(random.choice(chars) for _ in range(size)))
 
 
+# Feedback ###################################################
 def create_feedback(user, domain, email, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
@@ -105,6 +97,7 @@ def update_feedback(feedback_id, domain, title, description, status_id):
         return None
 
 
+# Votes ###################################################
 def add_vote(feedback_id, user):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
@@ -140,11 +133,7 @@ def remove_vote(feedback_id, vote):
         return None
 
 
-def print_traceback(e):
-    traceback.print_tb(e.__traceback__)
-    print(e)
-
-
+# Domains ###################################################
 def create_domain(user, form):
     try:
         d = Domain()
@@ -171,6 +160,18 @@ def create_subdomain(subdomain):
     return create_subdomain(subdomain)
 
 
+# Users ###################################################
+def create_user(email):
+    password = generate_temp_password()
+
+    u = User()
+    u.email = email
+    u.user_id = generate_id(User)
+    u.role = 'member'
+    u.password = User.encrypt_password(password)
+    u.save()
+
+
 def populate_signup(request, user):
     user.created_on = dt.now().replace(tzinfo=pytz.utc)
     user.updated_on = dt.now().replace(tzinfo=pytz.utc)
@@ -182,3 +183,9 @@ def populate_signup(request, user):
 
 def generate_name():
     return names.get_first_name()
+
+
+# Other ###################################################
+def print_traceback(e):
+    traceback.print_tb(e.__traceback__)
+    print(e)

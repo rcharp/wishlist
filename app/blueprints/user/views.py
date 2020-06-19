@@ -262,23 +262,23 @@ def logout_anon():
     return redirect(url_for('user.login_anon'))
 
 
-@user.route('/account/begin_password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/account/begin_password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def begin_password_reset(subdomain):
+def begin_password_reset():
     form = BeginPasswordResetForm()
 
     if form.validate_on_submit():
         u = User.initialize_password_reset(request.form.get('identity'))
 
         flash('An email has been sent to {0}.'.format(u.email), 'success')
-        return redirect(url_for('user.login', subdomain=subdomain))
+        return redirect(url_for('user.login_anon'))
 
     return render_template('user/begin_password_reset.html', form=form)
 
 
-@user.route('/account/password_reset', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/account/password_reset', methods=['GET', 'POST'])
 @anonymous_required()
-def password_reset(subdomain):
+def password_reset():
     form = PasswordResetForm(reset_token=request.args.get('reset_token'))
 
     if form.validate_on_submit():
@@ -287,7 +287,7 @@ def password_reset(subdomain):
         if u is None:
             flash('Your reset token has expired or was tampered with.',
                   'error')
-            return redirect(url_for('user.begin_password_reset', subdomain=subdomain))
+            return redirect(url_for('user.begin_password_reset'))
 
         form.populate_obj(u)
         u.password = User.encrypt_password(request.form.get('password'))
@@ -295,9 +295,9 @@ def password_reset(subdomain):
 
         if login_user(u):
             flash('Your password has been reset.', 'success')
-            return redirect(url_for('user.dashboard', subdomain=subdomain))
+            return redirect(url_for('user.settings_anon'))
 
-    return render_template('user/password_reset.html', subdomain=subdomain, form=form)
+    return render_template('user/password_reset.html', form=form)
 
 
 @user.route('/welcome', subdomain='<subdomain>', methods=['GET', 'POST'])
