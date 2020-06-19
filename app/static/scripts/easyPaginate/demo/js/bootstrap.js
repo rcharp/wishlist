@@ -280,7 +280,7 @@
   * ============== */
 
   $(function () {
-    $('body').on('click.modal.data-api', '[data-toggle="modal"]', function ( e ) {
+    $('body').on('click.modal.data-base', '[data-toggle="modal"]', function ( e ) {
       var $this = $(this)
         , href = $this.attr('href')
         , $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
@@ -327,8 +327,8 @@
 
   var toggle = '[data-toggle=dropdown]'
     , Dropdown = function (element) {
-        var $el = $(element).on('click.dropdown.data-api', this.toggle)
-        $('html').on('click.dropdown.data-api', function () {
+        var $el = $(element).on('click.dropdown.data-base', this.toggle)
+        $('html').on('click.dropdown.data-base', function () {
           $el.parent().removeClass('open')
         })
       }
@@ -439,11 +439,11 @@
 
   $(function () {
     $('html')
-      .on('click.dropdown.data-api touchstart.dropdown.data-api', clearMenus)
+      .on('click.dropdown.data-base touchstart.dropdown.data-base', clearMenus)
     $('body')
-      .on('click.dropdown touchstart.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-      .on('click.dropdown.data-api touchstart.dropdown.data-api'  , toggle, Dropdown.prototype.toggle)
-      .on('keydown.dropdown.data-api touchstart.dropdown.data-api', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
+      .on('click.dropdown touchstart.dropdown.data-base', '.dropdown form', function (e) { e.stopPropagation() })
+      .on('click.dropdown.data-base touchstart.dropdown.data-base'  , toggle, Dropdown.prototype.toggle)
+      .on('keydown.dropdown.data-base touchstart.dropdown.data-base', toggle + ', [role=menu]' , Dropdown.prototype.keydown)
   })
 
 }(window.jQuery);
@@ -480,7 +480,7 @@
       , $element = $(element).is('body') ? $(window) : $(element)
       , href
     this.options = $.extend({}, $.fn.scrollspy.defaults, options)
-    this.$scrollElement = $element.on('scroll.scroll-spy.data-api', process)
+    this.$scrollElement = $element.on('scroll.scroll-spy.data-base', process)
     this.selector = (this.options.target
       || ((href = $(element).attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
       || '') + ' .nav li > a'
@@ -726,7 +726,7 @@
   * ============ */
 
   $(function () {
-    $('body').on('click.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
+    $('body').on('click.tab.data-base', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
       e.preventDefault()
       $(this).tab('show')
     })
@@ -1142,7 +1142,7 @@
 
   var Affix = function (element, options) {
     this.options = $.extend({}, $.fn.affix.defaults, options)
-    this.$window = $(window).on('scroll.affix.data-api', $.proxy(this.checkPosition, this))
+    this.$window = $(window).on('scroll.affix.data-base', $.proxy(this.checkPosition, this))
     this.$element = $(element)
     this.checkPosition()
   }
@@ -1302,7 +1302,7 @@
   * ============== */
 
   $(function () {
-    $('body').on('click.alert.data-api', dismiss, Alert.prototype.close)
+    $('body').on('click.alert.data-base', dismiss, Alert.prototype.close)
   })
 
 }(window.jQuery);
@@ -1394,7 +1394,7 @@
   * =============== */
 
   $(function () {
-    $('body').on('click.button.data-api', '[data-toggle^=button]', function ( e ) {
+    $('body').on('click.button.data-base', '[data-toggle^=button]', function ( e ) {
       var $btn = $(e.target)
       if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
       $btn.button('toggle')
@@ -1548,7 +1548,7 @@
   * ==================== */
 
   $(function () {
-    $('body').on('click.collapse.data-api', '[data-toggle=collapse]', function (e) {
+    $('body').on('click.collapse.data-base', '[data-toggle=collapse]', function (e) {
       var $this = $(this), href
         , target = $this.attr('data-target')
           || e.preventDefault()
@@ -1726,7 +1726,7 @@
   * ================= */
 
   $(function () {
-    $('body').on('click.carousel.data-api', '[data-slide]', function ( e ) {
+    $('body').on('click.carousel.data-base', '[data-slide]', function ( e ) {
       var $this = $(this), href
         , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
         , options = !$target.data('modal') && $.extend({}, $target.data(), $this.data())
@@ -2027,7 +2027,7 @@
   * ================== */
 
   $(function () {
-    $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
+    $('body').on('focus.typeahead.data-base', '[data-provide="typeahead"]', function (e) {
       var $this = $(this)
       if ($this.data('typeahead')) return
       e.preventDefault()

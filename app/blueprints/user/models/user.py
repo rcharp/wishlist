@@ -17,7 +17,7 @@ from app.blueprints.billing.models.credit_card import CreditCard
 from app.blueprints.billing.models.subscription import Subscription
 from app.blueprints.billing.models.invoice import Invoice
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.api.models.feedback import Feedback
+from app.blueprints.base.models.feedback import Feedback
 from app.extensions import db
 
 

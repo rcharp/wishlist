@@ -1,6 +1,6 @@
 """
 
-uritemplate.api
+uritemplate.base
 ===============
 
 This module contains the very simple API provided by uritemplate.
@@ -19,8 +19,8 @@ def expand(uri, var_dict=None, **kwargs):
 
     Example::
 
-        expand('https://api.github.com{/end}', {'end': 'users'})
-        expand('https://api.github.com{/end}', end='gists')
+        expand('https://base.github.com{/end}', {'end': 'users'})
+        expand('https://base.github.com{/end}', end='gists')
 
     .. note:: Passing values by both parts, may override values in
               ``var_dict``. For example::
@@ -45,8 +45,8 @@ def partial(uri, var_dict=None, **kwargs):
 
     Example::
 
-        t = URITemplate('https://api.github.com{/end}')
-        t.partial()  # => URITemplate('https://api.github.com{/end}')
+        t = URITemplate('https://base.github.com{/end}')
+        t.partial()  # => URITemplate('https://base.github.com{/end}')
 
     """
     return URITemplate(uri).partial(var_dict, **kwargs)
@@ -62,9 +62,9 @@ def variables(uri):
 
     Example::
 
-        variables('https://api.github.com{/end})
+        variables('https://base.github.com{/end})
         # => {'end'}
-        variables('https://api.github.com/repos{/username}{/repository}')
+        variables('https://base.github.com/repos{/username}{/repository}')
         # => {'username', 'repository'}
 
     """

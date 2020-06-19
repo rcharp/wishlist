@@ -21,7 +21,7 @@
     </div>
   {% endif %}
     <div class="col-md-4 well2" style="float:left">
-      {% call f.form_tag('user.welcome') %}
+      {% call f.form_tag('user.welcome', subdomain=subdomain) %}
         <legend>Pick a username</legend>
         <p class="help-block sm-margin-bottom">
           This will be the name you see on your dashboard.

@@ -1,7 +1,7 @@
 import logging
 import pytz
 from logging.handlers import SMTPHandler
-
+import os
 import json
 from flask_sslify import SSLify
 import stripe
@@ -17,6 +17,7 @@ from app.blueprints.admin import admin
 from app.blueprints.page import page
 from app.blueprints.contact import contact
 from app.blueprints.user import user
+from app.blueprints.base import base
 from app.blueprints.api import api
 from app.blueprints.billing import billing
 from app.blueprints.user.models.user import User
@@ -40,7 +41,7 @@ from app.extensions import (
 
 
 CELERY_TASK_LIST = [
-    'app.blueprints.api.tasks',
+    'app.blueprints.base.tasks',
     'app.blueprints.contact.tasks',
     'app.blueprints.user.tasks',
     'app.blueprints.billing.tasks'
@@ -84,9 +85,14 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    # Set the app server name
-    app.config['SERVER_NAME'] = 'getwishlist.io'
-    app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+    if os.environ.get('PRODUCTION') == 'true':
+        # Set the app server name
+        app.config['SERVER_NAME'] = 'getwishlist.io'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+    else:
+        # Set the app server name
+        app.config['SERVER_NAME'] = 'localhost:5000'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
@@ -110,6 +116,7 @@ def create_app(settings_override=None):
     app.register_blueprint(page)
     app.register_blueprint(contact)
     app.register_blueprint(user)
+    app.register_blueprint(base)
     app.register_blueprint(api)
     app.register_blueprint(billing)
     app.register_blueprint(errors)
@@ -195,7 +202,7 @@ def template_processors(app):
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
     app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
-    app.jinja_env.filters['any_filter'] = any_filter
+    app.jinja_env.filters['any_votes_filter'] = any_votes_filter
     app.jinja_env.filters['initial_filter'] = initial_filter
     app.jinja_env.globals.update(current_year=current_year)
 
@@ -370,7 +377,10 @@ def percent_filter(arg):
     return float(100 / len(arg))
 
 
-def any_filter(arg, k):
+def any_votes_filter(arg, k):
+    if arg is None:
+        return False
+
     return any(x.feedback_id == k for x in arg)
 
 

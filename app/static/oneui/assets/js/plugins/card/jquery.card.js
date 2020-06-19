@@ -1789,7 +1789,7 @@ var card =
 	 * @param {Mixed} value value to test
 	 * @param {String} type type
 	 * @return {Boolean} true if `value` is a type of `type`, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.a = is.type = function (value, type) {
@@ -1802,7 +1802,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is defined, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.defined = function (value) {
@@ -1815,7 +1815,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is empty, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.empty = function (value) {
@@ -1904,7 +1904,7 @@ var card =
 	 * @param {Mixed} value to test
 	 * @param {Mixed} host host to test with
 	 * @return {Boolean} true if `value` is hosted by `host`, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.hosted = function (value, host) {
@@ -1918,7 +1918,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an instance of `constructor`
-	 * @api public
+	 * @base public
 	 */
 
 	is.instance = is['instanceof'] = function (value, constructor) {
@@ -1931,7 +1931,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is null, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.nil = is['null'] = function (value) {
@@ -1944,7 +1944,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is undefined, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.undef = is.undefined = function (value) {
@@ -1961,7 +1961,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an arguments object, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.args = is.arguments = function (value) {
@@ -1980,7 +1980,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an array, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.array = Array.isArray || function (value) {
@@ -1993,7 +1993,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an empty arguments object, false otherwise
-	 * @api public
+	 * @base public
 	 */
 	is.args.empty = function (value) {
 	  return is.args(value) && value.length === 0;
@@ -2005,7 +2005,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an empty array, false otherwise
-	 * @api public
+	 * @base public
 	 */
 	is.array.empty = function (value) {
 	  return is.array(value) && value.length === 0;
@@ -2017,7 +2017,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an arguments object, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.arraylike = function (value) {
@@ -2038,7 +2038,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a boolean, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.bool = is['boolean'] = function (value) {
@@ -2051,7 +2051,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is false, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is['false'] = function (value) {
@@ -2064,7 +2064,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is true, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is['true'] = function (value) {
@@ -2081,7 +2081,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a date, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.date = function (value) {
@@ -2109,7 +2109,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an HTML Element, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.element = function (value) {
@@ -2129,7 +2129,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an error object, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.error = function (value) {
@@ -2146,7 +2146,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a function, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.fn = is['function'] = function (value) {
@@ -2164,7 +2164,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a number, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.number = function (value) {
@@ -2177,7 +2177,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is positive or negative Infinity, false otherwise
-	 * @api public
+	 * @base public
 	 */
 	is.infinite = function (value) {
 	  return value === Infinity || value === -Infinity;
@@ -2189,7 +2189,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a decimal number, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.decimal = function (value) {
@@ -2203,7 +2203,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} n dividend
 	 * @return {Boolean} true if `value` is divisible by `n`, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.divisibleBy = function (value, n) {
@@ -2219,7 +2219,7 @@ var card =
 	 *
 	 * @param value to test
 	 * @return {Boolean} true if `value` is an integer, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.integer = is['int'] = function (value) {
@@ -2233,7 +2233,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Array} others values to compare with
 	 * @return {Boolean} true if `value` is greater than `others` values
-	 * @api public
+	 * @base public
 	 */
 
 	is.maximum = function (value, others) {
@@ -2260,7 +2260,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Array} others values to compare with
 	 * @return {Boolean} true if `value` is less than `others` values
-	 * @api public
+	 * @base public
 	 */
 
 	is.minimum = function (value, others) {
@@ -2286,7 +2286,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is not a number, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.nan = function (value) {
@@ -2299,7 +2299,7 @@ var card =
 	 *
 	 * @param {Number} value value to test
 	 * @return {Boolean} true if `value` is an even number, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.even = function (value) {
@@ -2312,7 +2312,7 @@ var card =
 	 *
 	 * @param {Number} value value to test
 	 * @return {Boolean} true if `value` is an odd number, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.odd = function (value) {
@@ -2326,7 +2326,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean}
-	 * @api public
+	 * @base public
 	 */
 
 	is.ge = function (value, other) {
@@ -2343,7 +2343,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean}
-	 * @api public
+	 * @base public
 	 */
 
 	is.gt = function (value, other) {
@@ -2360,7 +2360,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean} if 'value' is less than or equal to 'other'
-	 * @api public
+	 * @base public
 	 */
 
 	is.le = function (value, other) {
@@ -2377,7 +2377,7 @@ var card =
 	 * @param {Number} value value to test
 	 * @param {Number} other value to compare with
 	 * @return {Boolean} if `value` is less than `other`
-	 * @api public
+	 * @base public
 	 */
 
 	is.lt = function (value, other) {
@@ -2395,7 +2395,7 @@ var card =
 	 * @param {Number} start lower bound
 	 * @param {Number} finish upper bound
 	 * @return {Boolean} true if 'value' is is within 'start' and 'finish'
-	 * @api public
+	 * @base public
 	 */
 	is.within = function (value, start, finish) {
 	  if (isActualNaN(value) || isActualNaN(start) || isActualNaN(finish)) {
@@ -2417,7 +2417,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is an object, false otherwise
-	 * @api public
+	 * @base public
 	 */
 	is.object = function (value) {
 	  return toStr.call(value) === '[object Object]';
@@ -2429,7 +2429,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a primitive, false otherwise
-	 * @api public
+	 * @base public
 	 */
 	is.primitive = function isPrimitive(value) {
 	  if (!value) {
@@ -2447,7 +2447,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a hash, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.hash = function (value) {
@@ -2464,7 +2464,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a regexp, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.regexp = function (value) {
@@ -2481,7 +2481,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a string, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.string = function (value) {
@@ -2498,7 +2498,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a base64 encoded string, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.base64 = function (value) {
@@ -2515,7 +2515,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if 'value' is a hex encoded string, false otherwise
-	 * @api public
+	 * @base public
 	 */
 
 	is.hex = function (value) {
@@ -2528,7 +2528,7 @@ var card =
 	 *
 	 * @param {Mixed} value value to test
 	 * @return {Boolean} true if `value` is a Symbol, false otherise
-	 * @api public
+	 * @base public
 	 */
 
 	is.symbol = function (value) {

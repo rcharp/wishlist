@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Dashboard - {{ 'site_name'|site_name_filter }}</title>
+        <title>Settings - {{ 'site_name'|site_name_filter }}</title>
 
         <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -63,7 +63,7 @@
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
           {% include '/user/includes/mobile_sidebar.html' ignore missing %}
-          {% include '/user/includes/sidebar.html' ignore missing %}
+          {% with page='settings' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
@@ -77,11 +77,11 @@
                     <label for="search_field" class="sr-only">Search</label>
                     <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                       <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                        {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                        </svg>
+                        </svg>#}
                       </div>
-                      <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" type="search" />
+                        <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
                     </div>
                   </div>
                 </div>
@@ -134,7 +134,7 @@
                           Domain
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.domain|title }}
+                          {{ current_user.domain|title }} ({{ current_user.domain }}.getwishlist.io)
                         </dd>
                       </div>
                       {% endif %}
@@ -152,7 +152,7 @@
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                           <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{{ url_for('user.update_credentials') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                              <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
                                 Update email and password
                               </a>
                           </span>
@@ -160,14 +160,24 @@
                       </div>
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Add/update username
+                          Username
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{{ url_for('user.welcome', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Add/update username
-                              </a>
-                          </span>
+                            {% if not current_user.username %}
+                              <span class="mb-4">You don't have a username yet.</span><br /><br />
+                              <span class="inline-flex rounded-md shadow-sm">
+                                  <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Create username
+                                  </a>
+                              </span>
+                            {% else %}
+                                <span class="mb-4">{{ current_user.username }}</span><br /><br />
+                                <span class="inline-flex rounded-md shadow-sm">
+                                  <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Update username
+                                  </a>
+                                </span>
+                            {% endif %}
                         </dd>
                       </div>
                       {% if current_user.subscription %}
