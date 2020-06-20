@@ -185,7 +185,7 @@ def cancel():
                       'success')
                 return redirect(url_for('user.signup'))
 
-            return render_template('billing/cancel.html', form=form)
+        return render_template('billing/cancel.html', form=form)
     except Exception as e:
         print_traceback(e)
         return redirect(url_for('user.settings'))
