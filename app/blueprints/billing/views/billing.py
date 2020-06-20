@@ -8,7 +8,7 @@ from flask import (
   flash,
 )
 
-import traceback
+from app.blueprints.base.functions import print_traceback
 
 from flask_login import login_required, current_user
 from config import settings
@@ -142,50 +142,53 @@ def update():
 @login_required
 @csrf.exempt
 def cancel():
+    try:
+        form = CancelSubscriptionForm()
 
-    form = CancelSubscriptionForm()
+        if form.validate_on_submit():
 
-    if form.validate_on_submit():
+            # If there is no subscription, then delete the user
+            canceled = True
 
-        # If there is no subscription, then delete the user
-        canceled = True
+            # Cancel the user's subscription
+            if current_user.subscription:
+                subscription = Subscription()
+                canceled = subscription.cancel(user=current_user)
 
-        # Cancel the user's subscription
-        if current_user.subscription:
-            subscription = Subscription()
-            canceled = subscription.cancel(user=current_user)
+            # Delete the domain
+            if current_user.domain:
+                from app.blueprints.user.models.domain import Domain
+                d = Domain.query.filter(Domain.domain_id == current_user.domain_id).scalar()
+                d.delete()
 
-        # Delete the domain
-        if current_user.domain:
-            from app.blueprints.user.models.domain import Domain
-            d = Domain.query.filter(Domain.domain_id == current_user.domain_id).scalar()
-            d.delete()
+            if canceled:
 
-        if canceled:
+                # Set the user to inactive
+                current_user.is_active = False
 
-            # Set the user to inactive
-            current_user.is_active = False
+                # Get the user's email
+                # email = current_user.email
 
-            # Get the user's email
-            # email = current_user.email
+                # Delete the user.
+                # from app.blueprints.billing.tasks import delete_users
+                # ids = [current_user.id]
 
-            # Delete the user.
-            # from app.blueprints.billing.tasks import delete_users
-            # ids = [current_user.id]
+                # Delete the user
+                # delete_users.delay(ids)
+                # current_user.delete()
 
-            # Delete the user
-            # delete_users.delay(ids)
-            # current_user.delete()
+                # Send a cancellation email.
+                # from app.blueprints.user.tasks import send_cancel_email
+                # send_cancel_email.delay(email)
 
-            # Send a cancellation email.
-            # from app.blueprints.user.tasks import send_cancel_email
-            # send_cancel_email.delay(email)
+                flash('Sorry to see you go! Your subscription has been canceled.',
+                      'success')
+                return redirect(url_for('user.signup'))
 
-            flash('Sorry to see you go! Your subscription has been canceled.',
-                  'success')
-            return redirect(url_for('user.signup'))
-
-    return render_template('billing/cancel.html', form=form)
+            return render_template('billing/cancel.html', form=form)
+    except Exception as e:
+        print_traceback(e)
+        return redirect(url_for('user.settings'))
 
 
 @billing.route('/update_payment_method', methods=['GET', 'POST'])
