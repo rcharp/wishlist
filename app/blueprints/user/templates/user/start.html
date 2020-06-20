@@ -390,7 +390,7 @@
                 return setTimeout(() => { LoadingMessage(); }, 1500);
             }
 
-            function DomainIsReady(){
+            function DomainIsReady(z){
                 var r = LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
                 // var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
@@ -402,6 +402,7 @@
                         if ('success' in response){
                             UpdateDashboardButton();
                             clearTimeout(r);
+                            clearTimeout(z);
                             // window.location.href = redirect;
                         }
                     },
@@ -409,7 +410,7 @@
                     }
                 });
 
-                setTimeout(() => { DomainIsReady(); }, 5000);
+                setTimeout((x) => { DomainIsReady(x); }, 5000);
             }
 
             function UpdateDashboardButton(){
