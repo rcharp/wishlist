@@ -159,12 +159,17 @@ def cancel():
             if current_user.domain:
                 from app.blueprints.user.models.domain import Domain
                 d = Domain.query.filter(Domain.domain_id == current_user.domain_id).scalar()
-                d.delete()
+
+                if d is not None:
+                    d.delete()
 
             if canceled:
 
                 # Set the user to inactive
+                current_user.domain = None
+                current_user.domain_id = None
                 current_user.is_active = False
+                current_user.save()
 
                 # Get the user's email
                 # email = current_user.email
