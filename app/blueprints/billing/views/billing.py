@@ -163,6 +163,9 @@ def cancel():
 
         if canceled:
 
+            # Set the user to inactive
+            current_user.is_active = False
+
             # Get the user's email
             # email = current_user.email
 
@@ -172,7 +175,7 @@ def cancel():
 
             # Delete the user
             # delete_users.delay(ids)
-            current_user.delete()
+            # current_user.delete()
 
             # Send a cancellation email.
             # from app.blueprints.user.tasks import send_cancel_email
