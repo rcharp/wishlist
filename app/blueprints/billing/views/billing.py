@@ -10,7 +10,7 @@ from flask import (
 
 from app.blueprints.base.functions import print_traceback
 
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
 from config import settings
 from app.blueprints.billing.forms import CreditCardForm, \
     UpdateSubscriptionForm, CancelSubscriptionForm
@@ -170,6 +170,8 @@ def cancel():
                 current_user.domain_id = None
                 current_user.active = False
                 current_user.save()
+
+                logout_user()
 
                 # Get the user's email
                 # email = current_user.email
