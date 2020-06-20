@@ -117,7 +117,7 @@
                           </dd>
                           <dd class="sm:col-span-3"></dd>
                           <dd class="sm:col-span-3">
-                              <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-gray-900">Setting up your domain, please wait...</span>
+                              <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-green-500">Setting up your domain, please wait...</span>
                           </dd>
                           <dd class="sm:col-span-3">
                               <span class="inline-flex rounded-md shadow-sm" id="dashboard-button" style="display:none">
@@ -401,15 +401,13 @@
                     success: function (response) {
                         if ('success' in response){
                             UpdateDashboardButton();
-                            return true;
+                            x = true;
                             // window.location.href = redirect;
                         }
                     },
                     error: function (xhr) {
                     }
                 });
-
-                return false;
             }
 
             function UpdateDashboardButton(){
@@ -443,8 +441,8 @@
         </script>
         <script>
             $( document ).ready(function() {
-                // DomainIsReady();
-                var x = setInterval(() => { DomainIsReady(); }, 5000);
+                var ready = false;
+                var x = setInterval(() => { DomainIsReady(ready); }, 5000);
                 if (x === true){
                     clearInterval(x);
                 }
