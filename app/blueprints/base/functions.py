@@ -143,6 +143,10 @@ def create_domain(user, form):
         d.admin_email = user.email
         d.save()
 
+        user.domain_id = d.domain_id
+        user.domain = d.name
+        user.save()
+
         if create_subdomain(form.domain.data):
             return True
         else:
