@@ -167,8 +167,8 @@ def cancel():
             # email = current_user.email
 
             # Delete the user.
-            from app.blueprints.billing.tasks import delete_users
-            ids = [current_user.id]
+            # from app.blueprints.billing.tasks import delete_users
+            # ids = [current_user.id]
 
             # Delete the user
             # delete_users.delay(ids)
@@ -180,7 +180,7 @@ def cancel():
 
             flash('Sorry to see you go! Your subscription has been canceled.',
                   'success')
-            return redirect(url_for('user.login'))
+            return redirect(url_for('user.signup'))
 
     return render_template('billing/cancel.html', form=form)
 
