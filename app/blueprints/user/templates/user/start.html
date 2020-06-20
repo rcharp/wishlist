@@ -119,7 +119,7 @@
                           <dd class="sm:col-span-3">
                               <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-green-500">Setting up your domain, please wait...</span>
                           </dd>
-                          <dd class="sm:col-span-3">
+                          <dd class="sm:col-span-3 text-right">
                               <span class="inline-flex rounded-md shadow-sm" id="dashboard-button" style="display:none">
                                   <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
                                     Take me to my dashboard!
@@ -387,14 +387,12 @@
                     message.innerText = 'Setting up your domain, please wait.';
                 }
 
-                return setTimeout(() => { LoadingMessage(); }, 1500);
+                setTimeout(() => { LoadingMessage(); }, 1500);
             }
 
             function DomainIsReady(x){
-                alert(x);
-                var r = LoadingMessage();
+                LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
-                // var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -403,7 +401,6 @@
                         if ('success' in response){
                             UpdateDashboardButton();
                             x = true;
-                            // window.location.href = redirect;
                         }
                     },
                     error: function (xhr) {
@@ -444,7 +441,6 @@
             $( document ).ready(function() {
                 var ready = false;
                 var x = setInterval(DomainIsReady(ready), 5000);
-                alert(x);
                 if (x === true){
                     clearInterval(x);
                 }

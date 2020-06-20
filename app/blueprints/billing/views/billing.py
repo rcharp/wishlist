@@ -168,7 +168,7 @@ def cancel():
                 # Set the user to inactive
                 current_user.domain = None
                 current_user.domain_id = None
-                current_user.is_active = False
+                current_user.active = False
                 current_user.save()
 
                 # Get the user's email
