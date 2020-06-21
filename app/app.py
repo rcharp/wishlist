@@ -19,9 +19,9 @@ from app.blueprints.contact import contact
 from app.blueprints.user import user
 from app.blueprints.base import base
 from app.blueprints.api import api
+from app.blueprints.api.functions import deserialize_token
 from app.blueprints.billing import billing
 from app.blueprints.user.models.user import User
-from app.blueprints.user.models.domain import Domain
 from app.blueprints.errors import errors
 from app.blueprints.page.date import get_year_date_string, get_datetime_from_string, get_dt_string, is_date, format_datetime, format_datetime_string
 from app.blueprints.billing.template_processors import (
@@ -388,7 +388,7 @@ def any_votes_filter(arg, k):
 
 def deserialize_private_key(arg):
     if arg is not None:
-        return Domain.deserialize_private_key(arg)
+        return deserialize_token(arg)
     return None
 
 
