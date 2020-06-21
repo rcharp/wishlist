@@ -1,5 +1,5 @@
 import jwt
-from flask import current_app
+import os
 
 
 # Tokens ###########################################
@@ -32,7 +32,10 @@ Create a general token for plaintext
 
 
 def serialize_token(plaintext):
-    return jwt.encode(plaintext, current_app.config['SECRET_KEY'], algorithm='HS256')
+    data = {
+        'value': plaintext
+    }
+    return jwt.encode(data, os.environ.get('SECRET_KEY'), algorithm='HS256')
 
 
 '''
@@ -41,5 +44,5 @@ Deserialize a token
 
 
 def deserialize_token(token):
-    return jwt.decode(token, current_app.config['SECRET_KEY'], verify=True)
+    return jwt.decode(token, os.environ.get('SECRET_KEY'), verify=True)
 

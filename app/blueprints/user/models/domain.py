@@ -14,7 +14,7 @@ class Domain(ResourceMixin, db.Model):
     name = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
     company = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     admin_email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
-    private_key = db.Column(db.String(128), nullable=False, server_default='')
+    private_key = db.Column(db.String(256), unique=True, nullable=False, server_default='')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
@@ -80,40 +80,40 @@ class Domain(ResourceMixin, db.Model):
 
         return delete_count
 
-    @classmethod
-    def serialize_private_key(cls, plaintext):
-        """
-        Hash a plaintext string using PBKDF2. This is good enough according
-        to the NIST (National Institute of Standards and Technology).
-
-        In other words while bcrypt might be superior in practice, if you use
-        PBKDF2 properly (which we are), then your passwords are safe.
-
-        :param plaintext: Password in plain text
-        :type plaintext: str
-        :return: str
-        """
-        if plaintext:
-            from app.blueprints.api.functions import serialize_token
-            return serialize_token(plaintext)
-
-        return None
-
-    @classmethod
-    def deserialize_private_key(cls, token):
-        """
-        Hash a plaintext string using PBKDF2. This is good enough according
-        to the NIST (National Institute of Standards and Technology).
-
-        In other words while bcrypt might be superior in practice, if you use
-        PBKDF2 properly (which we are), then your passwords are safe.
-
-        :param plaintext: Password in plain text
-        :type plaintext: str
-        :return: str
-        """
-        if token:
-            from app.blueprints.api.functions import deserialize_token
-            return deserialize_token(token)
-
-        return None
+    # @classmethod
+    # def serialize_private_key(cls, plaintext):
+    #     """
+    #     Hash a plaintext string using PBKDF2. This is good enough according
+    #     to the NIST (National Institute of Standards and Technology).
+    #
+    #     In other words while bcrypt might be superior in practice, if you use
+    #     PBKDF2 properly (which we are), then your passwords are safe.
+    #
+    #     :param plaintext: Password in plain text
+    #     :type plaintext: str
+    #     :return: str
+    #     """
+    #     if plaintext:
+    #         from app.blueprints.api.functions import serialize_token
+    #         return serialize_token(plaintext)
+    #
+    #     return None
+    #
+    # @classmethod
+    # def deserialize_private_key(cls, token):
+    #     """
+    #     Hash a plaintext string using PBKDF2. This is good enough according
+    #     to the NIST (National Institute of Standards and Technology).
+    #
+    #     In other words while bcrypt might be superior in practice, if you use
+    #     PBKDF2 properly (which we are), then your passwords are safe.
+    #
+    #     :param plaintext: Password in plain text
+    #     :type plaintext: str
+    #     :return: str
+    #     """
+    #     if token:
+    #         from app.blueprints.api.functions import deserialize_token
+    #         return deserialize_token(token)
+    #
+    #     return None

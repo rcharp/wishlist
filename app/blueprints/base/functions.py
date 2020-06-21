@@ -6,6 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
+from app.blueprints.api.functions import serialize_token, deserialize_token
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
@@ -49,7 +50,7 @@ def generate_private_key(size=16):
     id = ''.join(random.choice(chars) for _ in range(size))
 
     # Check to make sure there isn't already that id in the database
-    if not db.session.query(exists().where(Domain.id == id)).scalar():
+    if not db.session.query(exists().where(Domain.private_key == id)).scalar():
         return id
     else:
         generate_private_key()
@@ -148,12 +149,12 @@ def remove_vote(feedback_id, vote):
 def create_domain(user, form):
     try:
         d = Domain()
-        d.domain_id = generate_id(Domain, 12)
+        d.domain_id = generate_id(Domain, 8)
         d.name = form.domain.data
         d.company = form.company.data
         d.user_id = user.id
         d.admin_email = user.email
-        d.private_key = Domain.serialize_private_key(generate_private_key())
+        d.private_key = serialize_token(generate_private_key())
         d.save()
 
         user.domain_id = d.domain_id
