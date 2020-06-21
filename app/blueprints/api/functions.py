@@ -1,5 +1,6 @@
 import jwt
 import os
+from flask import current_app
 
 
 # Tokens ###########################################
@@ -44,5 +45,5 @@ Deserialize a token
 
 
 def deserialize_token(token):
-    return jwt.decode(token, os.environ.get('SECRET_KEY'), verify=True)
+    return jwt.decode(token, current_app.config.get('SECRET_KEY'), verify=True)
 
