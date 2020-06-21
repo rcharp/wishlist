@@ -1,5 +1,5 @@
-from app.blueprints.api.functions import decrypt_token
+from app.blueprints.api.functions import decrypt_user_token
 
 
 def test():
-    return decrypt_token()
+    return decrypt_user_token()

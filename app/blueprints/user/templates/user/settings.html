@@ -128,13 +128,13 @@
                           {{ current_user.email }}
                         </dd>
                       </div>
-                      {% if current_user.domain and current_user.role == 'creator' %}
+                      {% if domain and current_user.role == 'creator' %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Domain
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.domain|title }} ({{ current_user.domain }}.getwishlist.io)
+                          {{ domain.name|title }} ({{ domain.name }}.getwishlist.io)
                         </dd>
                       </div>
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
@@ -142,16 +142,15 @@
                           Domain Id
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.domain_id }}
+                          {{ domain.domain_id }}
                         </dd>
                       </div>
-                      {% endif %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Token
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ token }}
+                          {{ domain.private_key }}
                         </dd>
                       </div>
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
@@ -159,9 +158,10 @@
                           Decrypted
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ decrypted }}
+                          {{ domain.private_key|deserialize_private_key }}
                         </dd>
                       </div>
+                      {% endif %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Membership type

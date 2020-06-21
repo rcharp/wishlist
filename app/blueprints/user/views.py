@@ -547,10 +547,7 @@ def roadmap(subdomain=None):
 def settings(subdomain=None):
     if subdomain:
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
-        from app.blueprints.api.functions import create_token, decrypt_token
-        token = create_token(current_user, 'test_key')
-        decrypted = decrypt_token(token, 'hello')
-        return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain, token=token, decrypted=decrypted)
+        return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
     else:
         return render_template('user/settings.html', current_user=current_user)
 

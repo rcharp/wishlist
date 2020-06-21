@@ -1,6 +1,5 @@
 from sqlalchemy import or_
 
-from werkzeug.security import generate_password_hash, check_password_hash
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
 
@@ -82,7 +81,7 @@ class Domain(ResourceMixin, db.Model):
         return delete_count
 
     @classmethod
-    def encrypt(cls, plaintext_password):
+    def serialize_private_key(cls, plaintext):
         """
         Hash a plaintext string using PBKDF2. This is good enough according
         to the NIST (National Institute of Standards and Technology).
@@ -90,26 +89,31 @@ class Domain(ResourceMixin, db.Model):
         In other words while bcrypt might be superior in practice, if you use
         PBKDF2 properly (which we are), then your passwords are safe.
 
-        :param plaintext_password: Password in plain text
-        :type plaintext_password: str
+        :param plaintext: Password in plain text
+        :type plaintext: str
         :return: str
         """
-        if plaintext_password:
-            return generate_password_hash(plaintext_password)
+        if plaintext:
+            from app.blueprints.api.functions import serialize_token
+            return serialize_token(plaintext)
 
         return None
 
-    def authenticated(self, with_password=True, key=''):
+    @classmethod
+    def deserialize_private_key(cls, token):
         """
-        Ensure a user is authenticated, and optionally check their password.
+        Hash a plaintext string using PBKDF2. This is good enough according
+        to the NIST (National Institute of Standards and Technology).
 
-        :param with_password: Optionally check their password
-        :type with_password: bool
-        :param key: Optionally verify this as their password
-        :type key: str
-        :return: bool
+        In other words while bcrypt might be superior in practice, if you use
+        PBKDF2 properly (which we are), then your passwords are safe.
+
+        :param plaintext: Password in plain text
+        :type plaintext: str
+        :return: str
         """
-        if with_password:
-            return check_password_hash(self.private_key, key)
+        if token:
+            from app.blueprints.api.functions import deserialize_token
+            return deserialize_token(token)
 
-        return True
+        return None

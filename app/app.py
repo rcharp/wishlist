@@ -21,6 +21,7 @@ from app.blueprints.base import base
 from app.blueprints.api import api
 from app.blueprints.billing import billing
 from app.blueprints.user.models.user import User
+from app.blueprints.user.models.domain import Domain
 from app.blueprints.errors import errors
 from app.blueprints.page.date import get_year_date_string, get_datetime_from_string, get_dt_string, is_date, format_datetime, format_datetime_string
 from app.blueprints.billing.template_processors import (
@@ -204,6 +205,7 @@ def template_processors(app):
     app.jinja_env.filters['default_profile_image_url'] = default_profile_image_url
     app.jinja_env.filters['any_votes_filter'] = any_votes_filter
     app.jinja_env.filters['initial_filter'] = initial_filter
+    app.jinja_env.filters['deserialize_private_key'] = deserialize_private_key
     app.jinja_env.globals.update(current_year=current_year)
 
     return app.jinja_env
@@ -382,6 +384,12 @@ def any_votes_filter(arg, k):
         return False
 
     return any(x.feedback_id == k for x in arg)
+
+
+def deserialize_private_key(arg):
+    if arg is not None:
+        return Domain.deserialize_private_key(arg)
+    return None
 
 
 def initial_filter(arg):

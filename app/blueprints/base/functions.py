@@ -153,7 +153,7 @@ def create_domain(user, form):
         d.company = form.company.data
         d.user_id = user.id
         d.admin_email = user.email
-        # d.private_key = Domain.encrypt(generate_private_key())
+        d.private_key = Domain.serialize_private_key(generate_private_key())
         d.save()
 
         user.domain_id = d.domain_id

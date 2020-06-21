@@ -1,15 +1,45 @@
 import jwt
+from flask import current_app
 
 
-def create_token(user, key):
-    user_data = {
+# Tokens ###########################################
+'''
+Create a token for the user using JWT
+'''
+
+
+def create_user_token(user, key):
+    user = {
         'email': user.email,
         'id': user.id,
         'name': user.name,
     }
-    return jwt.encode(user_data, key, algorithm='HS256')
+    return jwt.encode(user, key, algorithm='HS256')
 
 
-def decrypt_token(token, key):
+'''
+Decrypt the passed user token using JWT
+'''
+
+
+def decrypt_user_token(token, key):
     return jwt.decode(token, key, verify=True)
+
+
+'''
+Create a general token for plaintext
+'''
+
+
+def serialize_token(plaintext):
+    return jwt.encode(plaintext, current_app.config['SECRET_KEY'], algorithm='HS256')
+
+
+'''
+Deserialize a token
+'''
+
+
+def deserialize_token(token):
+    return jwt.decode(token, current_app.config['SECRET_KEY'], verify=True)
 
