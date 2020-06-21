@@ -11,7 +11,6 @@ def create_token():
     return jwt.encode(user_data, private_key, algorithm='HS256')
 
 
-def decrypt_token():
-    token = create_token()
+def decrypt_token(token):
     return jwt.decode(token, 'YOUR_PRIVATE_SSO_KEY', verify=True)
 
