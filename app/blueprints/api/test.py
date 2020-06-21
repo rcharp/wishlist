@@ -1,5 +1,5 @@
-from app.blueprints.base.dns.heroku import create_subdomain
+from app.blueprints.api.functions import decrypt_token
 
 
 def test():
-    return create_subdomain('test')
+    return decrypt_token()

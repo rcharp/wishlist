@@ -1,5 +1,6 @@
 from sqlalchemy import or_
 
+from werkzeug.security import generate_password_hash, check_password_hash
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
 
@@ -14,6 +15,7 @@ class Domain(ResourceMixin, db.Model):
     name = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
     company = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     admin_email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    private_key = db.Column(db.String(128), nullable=False, server_default='')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
@@ -78,3 +80,36 @@ class Domain(ResourceMixin, db.Model):
             delete_count += 1
 
         return delete_count
+
+    @classmethod
+    def encrypt(cls, plaintext_password):
+        """
+        Hash a plaintext string using PBKDF2. This is good enough according
+        to the NIST (National Institute of Standards and Technology).
+
+        In other words while bcrypt might be superior in practice, if you use
+        PBKDF2 properly (which we are), then your passwords are safe.
+
+        :param plaintext_password: Password in plain text
+        :type plaintext_password: str
+        :return: str
+        """
+        if plaintext_password:
+            return generate_password_hash(plaintext_password)
+
+        return None
+
+    def authenticated(self, with_password=True, key=''):
+        """
+        Ensure a user is authenticated, and optionally check their password.
+
+        :param with_password: Optionally check their password
+        :type with_password: bool
+        :param key: Optionally verify this as their password
+        :type key: str
+        :return: bool
+        """
+        if with_password:
+            return check_password_hash(self.private_key, key)
+
+        return True

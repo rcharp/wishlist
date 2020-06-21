@@ -104,7 +104,7 @@ def seed_status():
 @click.command()
 def seed_domains():
     u = User.query.filter(User.domain == 'demo').scalar()
-    domain_id = generate_id(Domain, 16)
+    domain_id = generate_id(Domain, 12)
     demo = {
         'domain_id': domain_id,
         'name': 'demo',
@@ -114,7 +114,7 @@ def seed_domains():
     }
 
     wishlist = {
-        'domain_id': generate_id(Domain, 16),
+        'domain_id': generate_id(Domain, 12),
         'name': 'wishlist',
         'company': 'Wishlist',
         'admin_email': app.config['SEED_MEMBER_EMAIL'],

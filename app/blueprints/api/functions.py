@@ -1,14 +1,17 @@
-import string
-import random
-import pytz
-import names
-import traceback
-from datetime import datetime as dt
-from app.extensions import db
-from sqlalchemy import exists, and_
-from app.blueprints.user.models.domain import Domain
-from app.blueprints.base.models.feedback import Feedback
-from app.blueprints.base.models.status import Status
-from app.blueprints.base.models.vote import Vote
+import jwt
 
+
+def create_token():
+    private_key = 'YOUR_PRIVATE_SSO_KEY'
+    user_data = {
+        'email': 'test@gmail.com',
+        'id': 'test_id',
+        'name': 'test_name',
+    }
+    return jwt.encode(user_data, private_key, algorithm='HS256')
+
+
+def decrypt_token():
+    token = create_token()
+    return jwt.decode(token, 'YOUR_PRIVATE_SSO_KEY', verify=True)
 

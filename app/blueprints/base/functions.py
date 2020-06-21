@@ -43,6 +43,18 @@ def generate_temp_password(size=15):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+def generate_private_key(size=16):
+    # Generate a random 16-character alphanumeric id
+    chars = string.digits + string.ascii_lowercase
+    id = ''.join(random.choice(chars) for _ in range(size))
+
+    # Check to make sure there isn't already that id in the database
+    if not db.session.query(exists().where(Domain.id == id)).scalar():
+        return id
+    else:
+        generate_private_key()
+
+
 # Feedback ###################################################
 def create_feedback(user, domain, email, title, description):
     try:
@@ -136,11 +148,12 @@ def remove_vote(feedback_id, vote):
 def create_domain(user, form):
     try:
         d = Domain()
-        d.domain_id = generate_id(Domain, 16)
+        d.domain_id = generate_id(Domain, 12)
         d.name = form.domain.data
         d.company = form.company.data
         d.user_id = user.id
         d.admin_email = user.email
+        # d.private_key = Domain.encrypt(generate_private_key())
         d.save()
 
         user.domain_id = d.domain_id
