@@ -1,16 +1,15 @@
 import jwt
 
 
-def create_token():
-    private_key = 'YOUR_PRIVATE_SSO_KEY'
+def create_token(user, key):
     user_data = {
-        'email': 'test@gmail.com',
-        'id': 'test_id',
-        'name': 'test_name',
+        'email': user.email,
+        'id': user.id,
+        'name': user.name,
     }
-    return jwt.encode(user_data, private_key, algorithm='HS256')
+    return jwt.encode(user_data, key, algorithm='HS256')
 
 
-def decrypt_token(token):
-    return jwt.decode(token, 'YOUR_PRIVATE_SSO_KEY', verify=True)
+def decrypt_token(token, key):
+    return jwt.decode(token, key, verify=True)
 

@@ -548,8 +548,8 @@ def settings(subdomain=None):
     if subdomain:
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
         from app.blueprints.api.functions import create_token, decrypt_token
-        token = create_token()
-        decrypted = decrypt_token(token)
+        token = create_token(current_user, 'test_key')
+        decrypted = decrypt_token(token, 'test_key')
         return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain, token=token, decrypted=decrypted)
     else:
         return render_template('user/settings.html', current_user=current_user)
