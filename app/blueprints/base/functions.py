@@ -6,7 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
-from app.blueprints.api.functions import serialize_token, deserialize_token
+from app.blueprints.base.encryption import encrypt_string
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
@@ -158,7 +158,7 @@ def create_domain(user, form):
         d.company = form.company.data
         d.user_id = user.id
         d.admin_email = user.email
-        d.private_key = serialize_token(generate_private_key())
+        d.private_key = encrypt_string(generate_private_key())
         d.save()
 
         user.domain_id = d.domain_id
