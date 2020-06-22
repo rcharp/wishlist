@@ -391,7 +391,7 @@ def deserialize_private_key(arg):
         from app.blueprints.api.functions import decrypt_string
         print(arg)
         print(type(arg))
-        return decrypt_string(bytes(arg))  # deserialize_token(arg)
+        return decrypt_string(arg.encode('utf-8'))  # deserialize_token(arg)
     return None
 
 
