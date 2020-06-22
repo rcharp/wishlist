@@ -141,9 +141,9 @@ Signup to post feedback in an existing domain
 @csrf.exempt
 def signup(subdomain=None):
     if subdomain:
-        try:
-            form = SignupForm()
+        form = SignupForm()
 
+        try:
             if form.validate_on_submit():
                 if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
                     flash('There is already an account with this email. Please login.', 'error')
@@ -176,9 +176,9 @@ def signup(subdomain=None):
 
         return render_template('user/signup.html', subdomain=subdomain, form=form)
     else:
-        try:
-            form = SignupFormAnon()
+        form = SignupFormAnon()
 
+        try:
             if form.validate_on_submit():
                 if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
                     flash('There is already an account with this email. Please login.', 'error')
