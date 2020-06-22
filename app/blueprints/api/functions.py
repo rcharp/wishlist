@@ -47,3 +47,18 @@ Deserialize a token
 def deserialize_token(token):
     return jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'], verify=True)
 
+
+def encrypt(plaintext):
+    from cryptography.fernet import Fernet
+    message = plaintext.encode()
+
+    f = Fernet(current_app.config['SECRET_KEY'])
+    return f.encrypt(message)
+
+
+def decrypt(encrypted):
+    from cryptography.fernet import Fernet
+
+    f = Fernet(current_app.config['SECRET_KEY'])
+    return f.decrypt(encrypted)
+

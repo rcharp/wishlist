@@ -103,7 +103,7 @@ def seed_status():
 
 @click.command()
 def seed_domains():
-    from app.blueprints.api.functions import serialize_token
+    from app.blueprints.api.functions import encrypt
     u = User.query.filter(User.domain == 'demo').scalar()
     domain_id = generate_id(Domain, 8)
     demo = {
@@ -112,7 +112,7 @@ def seed_domains():
         'company': 'Demo',
         'admin_email': u.email,
         'user_id': u.id,
-        # 'private_key': Domain.serialize_token()  # serialize_token(generate_private_key())
+        'private_key': encrypt(generate_private_key())
     }
 
     # wishlist = {
@@ -125,7 +125,6 @@ def seed_domains():
     # }
 
     d = Domain(**demo).save()
-    d.private_key = d.serialize_token()
 
     u.domain_id = domain_id
     u.save()
