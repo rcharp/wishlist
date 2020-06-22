@@ -47,7 +47,7 @@ def generate_temp_password(size=15):
 def generate_private_key(size=16):
     # Generate a random 16-character alphanumeric id
     chars = string.digits + string.ascii_lowercase
-    id = ''.join(random.choice(chars) for _ in range(size))
+    id = bytes(''.join(random.choice(chars) for _ in range(size)), 'utf-8')
 
     # Check to make sure there isn't already that id in the database
     if not db.session.query(exists().where(Domain.private_key == id)).scalar():
