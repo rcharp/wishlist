@@ -92,7 +92,7 @@ class Domain(ResourceMixin, db.Model):
         :type expiration: int
         :return: JSON
         """
-        secret = os.environ.get['SECRET_KEY']
+        secret = os.environ.get('SECRET_KEY')
 
         serializer = TimedJSONWebSignatureSerializer(secret, expiration)
         return serializer.dumps({'private_key': self.private_key}).decode('utf-8')
@@ -106,7 +106,7 @@ class Domain(ResourceMixin, db.Model):
         :type token: str
         :return: User instance or None
         """
-        secret = TimedJSONWebSignatureSerializer(os.environ.get['SECRET_KEY'])
+        secret = TimedJSONWebSignatureSerializer(os.environ.get('SECRET_KEY'))
         try:
             decoded_payload = secret.loads(token)
 
