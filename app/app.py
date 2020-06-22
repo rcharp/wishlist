@@ -388,7 +388,8 @@ def any_votes_filter(arg, k):
 
 def deserialize_private_key(arg):
     if arg is not None:
-        return deserialize_token(arg)
+        from app.blueprints.user.models.domain import Domain
+        return Domain.deserialize_token(arg)  # deserialize_token(arg)
     return None
 
 

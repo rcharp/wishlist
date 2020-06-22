@@ -1,7 +1,10 @@
 from sqlalchemy import or_
-
+import os
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
+from itsdangerous import URLSafeTimedSerializer, \
+    TimedJSONWebSignatureSerializer
+from flask import current_app
 
 
 class Domain(ResourceMixin, db.Model):
@@ -80,40 +83,33 @@ class Domain(ResourceMixin, db.Model):
 
         return delete_count
 
-    # @classmethod
-    # def serialize_private_key(cls, plaintext):
-    #     """
-    #     Hash a plaintext string using PBKDF2. This is good enough according
-    #     to the NIST (National Institute of Standards and Technology).
-    #
-    #     In other words while bcrypt might be superior in practice, if you use
-    #     PBKDF2 properly (which we are), then your passwords are safe.
-    #
-    #     :param plaintext: Password in plain text
-    #     :type plaintext: str
-    #     :return: str
-    #     """
-    #     if plaintext:
-    #         from app.blueprints.api.functions import serialize_token
-    #         return serialize_token(plaintext)
-    #
-    #     return None
-    #
-    # @classmethod
-    # def deserialize_private_key(cls, token):
-    #     """
-    #     Hash a plaintext string using PBKDF2. This is good enough according
-    #     to the NIST (National Institute of Standards and Technology).
-    #
-    #     In other words while bcrypt might be superior in practice, if you use
-    #     PBKDF2 properly (which we are), then your passwords are safe.
-    #
-    #     :param plaintext: Password in plain text
-    #     :type plaintext: str
-    #     :return: str
-    #     """
-    #     if token:
-    #         from app.blueprints.api.functions import deserialize_token
-    #         return deserialize_token(token)
-    #
-    #     return None
+    def serialize_token(self, expiration=3600):
+        """
+        Sign and create a token that can be used for things such as resetting
+        a password or other tasks that involve a one off token.
+
+        :param expiration: Seconds until it expires, defaults to 1 hour
+        :type expiration: int
+        :return: JSON
+        """
+        secret = os.environ.get['SECRET_KEY']
+
+        serializer = TimedJSONWebSignatureSerializer(secret, expiration)
+        return serializer.dumps({'private_key': self.private_key}).decode('utf-8')
+
+    @classmethod
+    def deserialize_token(cls, token):
+        """
+        Obtain a user from de-serializing a signed token.
+
+        :param token: Signed token.
+        :type token: str
+        :return: User instance or None
+        """
+        secret = TimedJSONWebSignatureSerializer(os.environ.get['SECRET_KEY'])
+        try:
+            decoded_payload = secret.loads(token)
+
+            return decoded_payload.get('private_key')
+        except Exception:
+            return None
