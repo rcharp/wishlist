@@ -50,11 +50,11 @@ def deserialize_token(token):
 
 
 def encrypt_string(plaintext):
-    encoded = encrypt(os.environ.get('SECRET_KEY'), plaintext)
+    encoded = encrypt(os.environ.get('SECRET_KEY'), plaintext).encode('utf_8')
     return encoded
 
 
 def decrypt_string(cipher):
-    plaintext = decrypt(os.environ.get('SECRET_KEY'), cipher)
+    plaintext = decrypt(os.environ.get('SECRET_KEY'), cipher).decode('utf_8')
     return plaintext
 
