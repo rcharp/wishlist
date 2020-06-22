@@ -1,6 +1,7 @@
 import jwt
 import os
 from flask import current_app
+from simplecrypt import encrypt, decrypt
 
 
 # Tokens ###########################################
@@ -48,17 +49,12 @@ def deserialize_token(token):
     return jwt.decode(token, os.environ.get('SECRET_KEY'), algorithms=['HS256'], verify=True)
 
 
-def encrypt(plaintext):
-    from cryptography.fernet import Fernet
-    message = plaintext.encode()
-
-    f = Fernet(current_app.config['SECRET_KEY'])
-    return f.encrypt(message)
+def encrypt_string(plaintext):
+    encoded = encrypt(os.environ.get('SECRET_KEY'), plaintext)
+    return encoded
 
 
-def decrypt(encrypted):
-    from cryptography.fernet import Fernet
-
-    f = Fernet(current_app.config['SECRET_KEY'])
-    return f.decrypt(encrypted)
+def decrypt_string(cipher):
+    plaintext = decrypt(os.environ.get('SECRET_KEY'), cipher)
+    return plaintext
 
