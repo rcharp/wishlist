@@ -112,5 +112,7 @@ class Domain(ResourceMixin, db.Model):
             decoded_payload = secret.loads(token)
 
             return decoded_payload.get('private_key')
-        except Exception:
+        except Exception as e:
+            from app.blueprints.base.functions import print_traceback
+            print_traceback(e)
             return None
