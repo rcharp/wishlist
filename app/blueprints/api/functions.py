@@ -55,7 +55,6 @@ def encrypt_string(plaintext):
 
 
 def decrypt_string(cipher):
-    cipher = cipher.encode('utf_8')
     plaintext = decrypt(os.environ.get('SECRET_KEY'), cipher)
     return plaintext
 
