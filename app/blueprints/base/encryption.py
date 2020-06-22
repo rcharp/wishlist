@@ -10,5 +10,5 @@ def encrypt_string(plaintext):
 
 def decrypt_string(cipher):
     key = 'test'
-    plaintext = decrypt(key, cipher)
+    plaintext = decrypt(key, cipher).decode('utf-8')
     return plaintext
