@@ -41,6 +41,7 @@ from sqlalchemy import or_, and_, exists, inspect, func
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
+from app.blueprints.base.functions import print_traceback
 
 user = Blueprint('user', __name__, template_folder='templates')
 use_username = False
@@ -140,66 +141,21 @@ Signup to post feedback in an existing domain
 @csrf.exempt
 def signup(subdomain=None):
     if subdomain:
-        form = SignupForm()
+        try:
+            form = SignupForm()
 
-        if form.validate_on_submit():
-            if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
-                flash('There is already an account with this email. Please login.', 'error')
-                return redirect(url_for('user.login', subdomain=subdomain))
+            if form.validate_on_submit():
+                if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+                    flash('There is already an account with this email. Please login.', 'error')
+                    return redirect(url_for('user.login', subdomain=subdomain))
 
-            subdomain = request.form.get('domain').replace(' ', '')
+                subdomain = request.form.get('domain').replace(' ', '')
 
-            u = User()
+                u = User()
 
-            form.populate_obj(u)
-            u.password = User.encrypt_password(request.form.get('password'))
-            u.role = 'member'
-            u.save()
-
-            if login_user(u):
-                # from app.blueprints.user.tasks import send_welcome_email
-                # from app.blueprints.contact.mailerlite import create_subscriber
-
-                # send_welcome_email.delay(current_user.email)
-                # create_subscriber(current_user.email)
-
-                # Create the domain from the form
-                # from app.blueprints.base.api_functions import create_domain
-                # create_domain(u, form)
-
-                flash("You've successfully signed up!", 'success')
-                return redirect(url_for('user.dashboard', subdomain=subdomain))
-
-        return render_template('user/signup.html', subdomain=subdomain, form=form)
-    else:
-        form = SignupFormAnon()
-
-        if form.validate_on_submit():
-            if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
-                flash('There is already an account with this email. Please login.', 'error')
-
-                u = User.query.filter(User.email == request.form.get('email')).scalar()
-                if u.domain is not None:
-                    return redirect(url_for('user.login', subdomain=u.domain))
-                return redirect(url_for('user.login'))
-
-            subdomain = request.form.get('domain').replace(' ', '')
-
-            if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                flash('That domain is already in use. Please try another.', 'error')
-                return render_template('user/signup.html', subdomain=subdomain, form=form)
-
-            u = User()
-
-            form.populate_obj(u)
-            u.password = User.encrypt_password(request.form.get('password'))
-            u.role = 'creator'
-
-            # Create the domain from the form
-            from app.blueprints.base.functions import create_domain
-            if create_domain(u, form):
-
-                # Save the user to the database
+                form.populate_obj(u)
+                u.password = User.encrypt_password(request.form.get('password'))
+                u.role = 'member'
                 u.save()
 
                 if login_user(u):
@@ -209,12 +165,63 @@ def signup(subdomain=None):
                     # send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
-                    flash("You've successfully signed up!", 'success')
-                    return redirect(url_for('user.start', subdomain=subdomain))
+                    # Create the domain from the form
+                    # from app.blueprints.base.api_functions import create_domain
+                    # create_domain(u, form)
 
-            else:
-                flash("There was an error creating this domain. Please try again.", 'error')
-                return redirect(url_for('user.signup', form=form))
+                    flash("You've successfully signed up!", 'success')
+                    return redirect(url_for('user.dashboard', subdomain=subdomain))
+        except Exception as e:
+            print_traceback(e)
+
+        return render_template('user/signup.html', subdomain=subdomain, form=form)
+    else:
+        try:
+            form = SignupFormAnon()
+
+            if form.validate_on_submit():
+                if db.session.query(exists().where(User.email == request.form.get('email'))).scalar():
+                    flash('There is already an account with this email. Please login.', 'error')
+
+                    u = User.query.filter(User.email == request.form.get('email')).scalar()
+                    if u.domain is not None:
+                        return redirect(url_for('user.login', subdomain=u.domain))
+                    return redirect(url_for('user.login'))
+
+                subdomain = request.form.get('domain').replace(' ', '')
+
+                if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                    flash('That domain is already in use. Please try another.', 'error')
+                    return render_template('user/signup.html', subdomain=subdomain, form=form)
+
+                u = User()
+
+                form.populate_obj(u)
+                u.password = User.encrypt_password(request.form.get('password'))
+                u.role = 'creator'
+
+                # Create the domain from the form
+                from app.blueprints.base.functions import create_domain
+                if create_domain(u, form):
+
+                    # Save the user to the database
+                    u.save()
+
+                    if login_user(u):
+                        # from app.blueprints.user.tasks import send_welcome_email
+                        # from app.blueprints.contact.mailerlite import create_subscriber
+
+                        # send_welcome_email.delay(current_user.email)
+                        # create_subscriber(current_user.email)
+
+                        flash("You've successfully signed up!", 'success')
+                        return redirect(url_for('user.start', subdomain=subdomain))
+
+                else:
+                    flash("There was an error creating this domain. Please try again.", 'error')
+                    return redirect(url_for('user.signup', form=form))
+        except Exception as e:
+            print_traceback(e)
 
         return render_template('user/signup.html', form=form)
 
