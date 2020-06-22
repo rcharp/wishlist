@@ -112,19 +112,21 @@ def seed_domains():
         'company': 'Demo',
         'admin_email': u.email,
         'user_id': u.id,
-        'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
+        # 'private_key': Domain.serialize_token()  # serialize_token(generate_private_key())
     }
 
-    wishlist = {
-        'domain_id': generate_id(Domain, 8),
-        'name': 'wishlist',
-        'company': 'Wishlist',
-        'admin_email': app.config['SEED_MEMBER_EMAIL'],
-        'user_id': 1,
-        'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
-    }
+    # wishlist = {
+    #     'domain_id': generate_id(Domain, 8),
+    #     'name': 'wishlist',
+    #     'company': 'Wishlist',
+    #     'admin_email': app.config['SEED_MEMBER_EMAIL'],
+    #     'user_id': 1,
+    #     # 'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
+    # }
 
-    Domain(**demo).save()
+    d = Domain(**demo).save()
+    d.private_key = d.serialize_token()
+
     u.domain_id = domain_id
     u.save()
     # Domain(**wishlist).save()

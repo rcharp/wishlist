@@ -83,7 +83,7 @@ class Domain(ResourceMixin, db.Model):
 
         return delete_count
 
-    def serialize_token(self, expiration=3600):
+    def serialize_token(self, expiration=999999999):
         """
         Sign and create a token that can be used for things such as resetting
         a password or other tasks that involve a one off token.
@@ -93,14 +93,15 @@ class Domain(ResourceMixin, db.Model):
         :return: JSON
         """
         secret = os.environ.get('SECRET_KEY')
+        from app.blueprints.base.functions import generate_private_key
 
         serializer = TimedJSONWebSignatureSerializer(secret, expiration)
-        return serializer.dumps({'private_key': self.private_key}).decode('utf-8')
+        return serializer.dumps({'private_key': generate_private_key()}).decode('utf-8')
 
     @classmethod
     def deserialize_token(cls, token):
         """
-        Obtain a user from de-serializing a signed token.
+        Obtain a private key from de-serializing a signed token.
 
         :param token: Signed token.
         :type token: str
