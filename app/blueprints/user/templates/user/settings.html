@@ -128,60 +128,6 @@
                           {{ current_user.email }}
                         </dd>
                       </div>
-                      {% if domain and current_user.role == 'creator' %}
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Domain
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.name|title }} ({{ domain.name }}.getwishlist.io)
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Domain Id
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.domain_id }}
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Token
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.private_key }}
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Decoded
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.private_key|deserialize_private_key }}
-                        </dd>
-                      </div>
-                      {% endif %}
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Membership type
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.role|title }}
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Update email/password
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Update email and password
-                              </a>
-                          </span>
-                        </dd>
-                      </div>
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Username
@@ -204,6 +150,52 @@
                             {% endif %}
                         </dd>
                       </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Update email/password
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          <span class="inline-flex rounded-md shadow-sm">
+                              <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                Update email and password
+                              </a>
+                          </span>
+                        </dd>
+                      </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Membership type
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          {{ current_user.role|title }}
+                        </dd>
+                      </div>
+                      {% if domain and current_user.role == 'creator' %}
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Domain
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          {{ domain.name|title }} ({{ domain.name }}.getwishlist.io)
+                        </dd>
+                      </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Domain Id
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          {{ domain.domain_id }}
+                        </dd>
+                      </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Private Key
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          {{ domain.private_key|deserialize_private_key }}
+                        </dd>
+                      </div>
+                      {% endif %}
                       {% if current_user.subscription %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
