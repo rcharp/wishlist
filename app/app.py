@@ -388,8 +388,8 @@ def any_votes_filter(arg, k):
 
 def deserialize_private_key(arg):
     if arg is not None:
-        from app.blueprints.base.encryption import decode
-        return decode(arg)  # deserialize_token(arg)
+        from app.blueprints.base.encryption import decrypt_string
+        return decrypt_string(arg)  # deserialize_token(arg)
     return None
 
 
