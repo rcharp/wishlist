@@ -346,7 +346,7 @@ def dashboard(subdomain=None):
             f.votes = int(f.votes)
 
         feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, subdomain=subdomain, votes=votes, use_username=use_username)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
     else:
         feedbacks = Feedback.query.all()
         statuses = Status.query.all()
@@ -577,6 +577,24 @@ def check_domain_status():
                     r = requests.get('https://' + subdomain + '.getwishlist.io')
                     if r.status_code == 200:
                         return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
+
+
+@user.route('/set_domain_privacy', subdomain='<subdomain>', methods=['POST'])
+@csrf.exempt
+def set_domain_privacy(subdomain):
+    try:
+        if request.method == 'POST':
+            if 'domain_id' in request.form:
+                domain_id = request.form['domain_id']
+
+                d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+                d.is_private = True
+                d.save()
+
+                return jsonify({'success': 'Success'})
         return jsonify({'error': 'Error'})
     except Exception as e:
         return jsonify({'error': 'Error'})
