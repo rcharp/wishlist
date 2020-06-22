@@ -582,9 +582,9 @@ def check_domain_status():
         return jsonify({'error': 'Error'})
 
 
-@user.route('/set_domain_privacy', subdomain='<subdomain>', methods=['POST'])
+@user.route('/set_domain_privacy', methods=['POST'])
 @csrf.exempt
-def set_domain_privacy(subdomain):
+def set_domain_privacy():
     try:
         if request.method == 'POST':
             if 'domain_id' in request.form:
