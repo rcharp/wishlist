@@ -92,7 +92,7 @@ class Domain(ResourceMixin, db.Model):
         :type expiration: int
         :return: JSON
         """
-        secret = os.environ.get('SECRET_KEY')
+        secret = current_app.config['SECRET_KEY']
         from app.blueprints.base.functions import generate_private_key
 
         serializer = TimedJSONWebSignatureSerializer(secret, expiration)
@@ -107,7 +107,7 @@ class Domain(ResourceMixin, db.Model):
         :type token: str
         :return: User instance or None
         """
-        secret = TimedJSONWebSignatureSerializer(os.environ.get('SECRET_KEY'))
+        secret = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'])
         try:
             decoded_payload = secret.loads(token)
 
