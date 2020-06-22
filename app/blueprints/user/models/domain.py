@@ -18,6 +18,7 @@ class Domain(ResourceMixin, db.Model):
     company = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     admin_email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     private_key = db.Column(db.LargeBinary, unique=True, nullable=False, server_default='')
+    private = db.Column('is_private', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),

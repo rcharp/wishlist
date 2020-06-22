@@ -48,7 +48,7 @@ def generate_private_key(size=16):
     from app.blueprints.base.encryption import encrypt_string, decrypt_string
 
     # Generate a random 16-character alphanumeric id
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits# + string.ascii_lowercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
     enc = encrypt_string(id)
