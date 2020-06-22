@@ -45,12 +45,14 @@ def generate_temp_password(size=15):
 
 
 def generate_private_key(size=16):
+    from app.blueprints.api.functions import decrypt_string
+
     # Generate a random 16-character alphanumeric id
     chars = string.digits + string.ascii_lowercase
-    id = bytes(''.join(random.choice(chars) for _ in range(size)), 'utf-8')
+    id = ''.join(random.choice(chars) for _ in range(size))
 
     # Check to make sure there isn't already that id in the database
-    if not db.session.query(exists().where(Domain.private_key == id)).scalar():
+    if not db.session.query(exists().where(decrypt_string(Domain.private_key) == id)).scalar():
         return id
     else:
         generate_private_key()

@@ -124,7 +124,7 @@ def seed_domains():
     #     # 'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
     # }
 
-    d = Domain(**demo).save()
+    Domain(**demo).save()
 
     u.domain_id = domain_id
     u.save()
