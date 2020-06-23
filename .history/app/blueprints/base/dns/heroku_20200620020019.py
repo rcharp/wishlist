@@ -6,9 +6,9 @@ from requests.exceptions import HTTPError
 def create_subdomain(subdomain):
     from app.blueprints.base.functions import print_traceback
 
+    heroku_conn = heroku3.from_key(current_app.config.get('HEROKU_TOKEN'))
+    app = heroku_conn.apps()['getwishlist']
     try:
-        heroku_conn = heroku3.from_key(current_app.config.get('HEROKU_TOKEN'))
-        app = heroku_conn.apps()['getwishlist']
         if app.get_domain(subdomain + '.getwishlist.io') is not None:
             return True
 
@@ -24,9 +24,6 @@ def create_subdomain(subdomain):
         return False
     except HTTPError as h:
         if h.response.status_code == 422:
-            heroku_conn = heroku3.from_key(current_app.config.get('HEROKU_TOKEN'))
-            app = heroku_conn.apps()['getwishlist']
-            
             d = app.get_domain(subdomain + '.getwishlist.io')
 
             if d is not None:
