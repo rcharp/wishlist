@@ -10,7 +10,6 @@ def create_subdomain(subdomain):
     try:
         print("Heroku sub")
         print(subdomain)
-        print(os.environ.get('HEROKU_TOKEN'))
 
         heroku_conn = heroku3.from_key(os.environ.get('HEROKU_TOKEN'))
         app = heroku_conn.apps()['getwishlist']
