@@ -10,13 +10,12 @@ def create_subdomain(subdomain):
     try:
         print("Heroku sub")
         print(subdomain)
-
+        
         heroku_conn = heroku3.from_key(os.environ.get('HEROKU_TOKEN'))
         app = heroku_conn.apps()['getwishlist']
         if app.get_domain(subdomain + '.getwishlist.io') is not None:
             return True
 
-        print('domain not found')
         d = app.add_domain(subdomain + '.getwishlist.io')
         print(d)
 
@@ -31,7 +30,6 @@ def create_subdomain(subdomain):
 
         return False
     except HTTPError as h:
-        print(h.response.status_code)
         if h.response.status_code == 422:
             heroku_conn = heroku3.from_key(os.environ.get('HEROKU_TOKEN'))
             app = heroku_conn.apps()['getwishlist']

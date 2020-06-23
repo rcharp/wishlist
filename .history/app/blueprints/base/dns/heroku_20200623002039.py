@@ -31,7 +31,6 @@ def create_subdomain(subdomain):
 
         return False
     except HTTPError as h:
-        print(h.response.status_code)
         if h.response.status_code == 422:
             heroku_conn = heroku3.from_key(os.environ.get('HEROKU_TOKEN'))
             app = heroku_conn.apps()['getwishlist']
