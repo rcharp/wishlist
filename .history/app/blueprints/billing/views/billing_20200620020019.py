@@ -8,6 +8,8 @@ from flask import (
   flash,
 )
 
+from app.blueprints.base.functions import print_traceback
+
 from flask_login import login_required, current_user, logout_user
 from config import settings
 from app.blueprints.billing.forms import CreditCardForm, \
@@ -140,7 +142,6 @@ def update():
 @login_required
 @csrf.exempt
 def cancel():
-    from app.blueprints.base.functions import print_traceback
     try:
         form = CancelSubscriptionForm()
 
