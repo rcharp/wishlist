@@ -586,7 +586,7 @@ def check_domain_status():
 
 
 @user.route('/set_domain_privacy', methods=['GET', 'POST'])
-# @login_required
+@login_required
 @csrf.exempt
 def set_domain_privacy():
     print(request.form)
