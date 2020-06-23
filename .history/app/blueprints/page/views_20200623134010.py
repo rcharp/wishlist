@@ -17,10 +17,10 @@ from flask_cors import cross_origin
 page = Blueprint('page', __name__, template_folder='templates')
 
 
-@page.route('/', methods=['GET', 'POST'])
+@page.route('/')
 @page.route('/', subdomain='<subdomain>')
-@cross_origin()
-def home(subdomain=None):
+@cross_origin(subdomain=None)
+def home():
     if current_user.is_authenticated:
         return redirect(url_for('user.login'))
 
