@@ -105,8 +105,8 @@
                               {{ current_user.name }}
                             </h3>
                               {% if current_user.username %}
-                                <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-                                  {{ current_user.username }}
+                                <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-900">
+                                  @{{ current_user.username }}
                                 </p>
                               {% endif %}
                           </dt>
@@ -114,6 +114,14 @@
                               <span class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-200">
                                   <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
                               </span>
+                          </dd>
+                          <dd class="sm:col-span-6"></dd>
+                          <dd class="sm:col-span-3 text-right">
+                            <span class="inline-flex rounded-md mr-4 shadow-sm">
+                              <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                Go to my dashboard
+                              </a>
+                            </span>
                           </dd>
                       </div>
                     </dl>
@@ -128,15 +136,41 @@
                           {{ current_user.email }}
                         </dd>
                       </div>
-                      {% if current_user.domain and current_user.role == 'creator' %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Domain
+                          Username
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.domain|title }} ({{ current_user.domain }}.getwishlist.io)
+                            {% if not current_user.username %}
+                              <span class="mb-4">You don't have a username yet.</span><br /><br />
+                              <span class="inline-flex rounded-md shadow-sm">
+                                  <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Create username
+                                  </a>
+                              </span>
+                            {% else %}
+                                <span class="mb-4">{{ current_user.username }}</span><br /><br />
+                                <span class="inline-flex rounded-md shadow-sm">
+                                  <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Update username
+                                  </a>
+                                </span>
+                            {% endif %}
                         </dd>
                       </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Update email/password
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          <span class="inline-flex rounded-md shadow-sm">
+                              <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                Update email and password
+                              </a>
+                          </span>
+                        </dd>
+                      </div>
+<<<<<<< HEAD
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Domain id
@@ -146,6 +180,8 @@
                         </dd>
                       </div>
                       {% endif %}
+=======
+>>>>>>> bc1e25b933748b45842c2153fcb0845f0f68d260
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Membership type
@@ -154,40 +190,32 @@
                           {{ current_user.role|title }}
                         </dd>
                       </div>
+                      {% if domain and current_user.role == 'creator' %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Update email/password
+                          Domain
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Update email and password
-                              </a>
-                          </span>
+                          {{ domain.name|title }} ({{ domain.name }}.getwishlist.io)
                         </dd>
                       </div>
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Username
+                          Domain Id
                         </dt>
                         <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% if not current_user.username %}
-                              <span class="mb-4">You don't have a username yet.</span><br /><br />
-                              <span class="inline-flex rounded-md shadow-sm">
-                                  <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Create username
-                                  </a>
-                              </span>
-                            {% else %}
-                                <span class="mb-4">{{ current_user.username }}</span><br /><br />
-                                <span class="inline-flex rounded-md shadow-sm">
-                                  <a href="{% if subdomain %}{{ url_for('user.update_credentials', subdomain=subdomain) }}{% else %}{{ url_for('user.update_credentials_anon') }}{% endif %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Update username
-                                  </a>
-                                </span>
-                            {% endif %}
+                          {{ domain.domain_id }}
                         </dd>
                       </div>
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                        <dt class="text-sm leading-5 font-medium text-gray-500">
+                          Private Key
+                        </dt>
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          {{ domain.private_key|deserialize_private_key }}
+                        </dd>
+                      </div>
+                      {% endif %}
                       {% if current_user.subscription %}
                       <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
                         <dt class="text-sm leading-5 font-medium text-gray-500">

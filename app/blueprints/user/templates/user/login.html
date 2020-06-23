@@ -38,7 +38,7 @@
         </div>
       {% endcall %}
     {% else %}
-        {% call f.form_tag('user.login_anon') %}
+        {% call f.form_tag('user.login') %}
         <legend>Log in to a domain</legend>
 
         {% call f.form_group(form.identity, css_class='sm-margin-bottom', placeholder="Username or email",

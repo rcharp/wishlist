@@ -45,7 +45,7 @@ class User(UserMixin, ResourceMixin, db.Model):
     username = db.Column(db.String(24), unique=True, index=True)
     email = db.Column(db.String(255), unique=True, index=True, nullable=False,
                       server_default='')
-    domain = db.Column(db.String(255), unique=False, index=True, nullable=False,
+    domain = db.Column(db.String(255), unique=False, index=True, nullable=True,
                       server_default='')
     domain_id = db.Column(db.BigInteger, unique=False, index=True, nullable=True)
     password = db.Column(db.String(128), nullable=False, server_default='')

@@ -6,6 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
+from app.blueprints.base.encryption import encrypt_string
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
@@ -41,6 +42,22 @@ def generate_temp_password(size=15):
     # Generate a random 15-character temporary password
     chars = string.digits
     return ''.join(random.choice(chars) for _ in range(size))
+
+
+def generate_private_key(size=16):
+    from app.blueprints.base.encryption import encrypt_string, decrypt_string
+
+    # Generate a random 16-character alphanumeric id
+    chars = string.digits + string.ascii_lowercase
+    id = ''.join(random.choice(chars) for _ in range(size))
+
+    enc = encrypt_string(id)
+
+    # Check to make sure there isn't already that id in the database
+    if not db.session.query(exists().where(Domain.private_key == enc)).scalar():
+        return id
+    else:
+        generate_private_key()
 
 
 # Feedback ###################################################
@@ -132,6 +149,7 @@ def remove_vote(feedback_id, vote):
         return None
 
 
+<<<<<<< HEAD
 # Domains ###################################################
 def create_domain(user, form):
     try:
@@ -159,6 +177,8 @@ def create_subdomain(subdomain):
     return create_subdomain(subdomain)
 
 
+=======
+>>>>>>> bc1e25b933748b45842c2153fcb0845f0f68d260
 # Users ###################################################
 def create_anon_user(email):
     from app.blueprints.user.models.user import User
