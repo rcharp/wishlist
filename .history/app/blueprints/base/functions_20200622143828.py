@@ -168,7 +168,7 @@ def create_domain(user, form):
         if create_subdomain(form.domain.data):
             return True
         else:
-            # d.delete()
+            d.delete()
             return False
     except Exception as e:
         print_traceback(e)
