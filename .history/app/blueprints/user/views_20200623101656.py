@@ -595,9 +595,6 @@ def set_domain_privacy():
                 domain_id = request.form['domain_id']
                 privacy = request.form['privacy']
 
-                print(domain_id)
-                print(privacy)
-
                 d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
                 d.is_private = privacy
                 d.save()
