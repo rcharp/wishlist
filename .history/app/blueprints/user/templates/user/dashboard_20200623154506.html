@@ -583,7 +583,7 @@
             }
 
             function SetPrivacy(privacy, domain_id){
-                var url = "{{ url_for('user.set_domain_privacy') }}";
+                var url = "{{ url_for('user.set_domain_privacy', _external=True, _scheme='https') }}";
                 $.ajax({
                     url: url,
                     type: 'POST',
