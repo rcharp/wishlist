@@ -1,7 +1,6 @@
 from app.app import create_celery_app, db
 from flask import jsonify, make_response
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.user.models.user import User
 from app.blueprints.base.encryption import encrypt_string
 from app.blueprints.base.functions import generate_id, generate_private_key, print_traceback
 
@@ -9,14 +8,14 @@ celery = create_celery_app()
 
 
 @celery.task()
-def create_domain(user_id, email, form):
+def create_domain(id, email, form):
     try:
         d = Domain()
         d.domain_id = generate_id(Domain, 8)
         d.name = form.domain.data
         d.company = form.company.data
-        d.user_id = user_id
-        d.admin_email = email
+        d.user_id = user.id
+        d.admin_email = user.email
         d.private_key = encrypt_string(generate_private_key())
         d.save()
 
