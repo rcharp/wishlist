@@ -630,16 +630,19 @@ def check_domain_status():
         return jsonify({'error': 'Error'})
 
 
-@user.route('/set_domain_privacy', methods=['POST'])
+@user.route('/set_domain_privacy', methods=['GET', 'POST'])
+# @login_required
 @csrf.exempt
 def set_domain_privacy():
     try:
         if request.method == 'POST':
-            if 'domain_id' in request.form:
+            print(request.form)
+            if 'domain_id' in request.form and 'privacy' in request.form:
                 domain_id = request.form['domain_id']
+                privacy = request.form['privacy']
 
                 d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
-                d.is_private = True
+                d.private = True if privacy == 'true' else False
                 d.save()
 
                 return jsonify({'success': 'Success'})

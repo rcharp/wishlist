@@ -114,7 +114,7 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Votes ###################################################
-def add_vote(feedback_id, user):
+def add_vote(feedback_id, user_id):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
@@ -123,8 +123,8 @@ def add_vote(feedback_id, user):
         v.vote_id = generate_id(Vote)
         v.domain_id = f.domain_id
 
-        if user is not None:
-            v.user_id = user.id
+        if user_id is not None:
+            v.user_id = user_id
 
         v.save()
 
