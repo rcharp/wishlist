@@ -208,7 +208,7 @@ def signup(subdomain=None):
 
                     # Create the domain from the form
                     from app.blueprints.base.tasks import create_domain
-                    if create_domain.delay(u, form):
+                    if create_domain(u, form):
 
                         flash("You've successfully signed up!", 'success')
                         return redirect(url_for('user.start', subdomain=subdomain))

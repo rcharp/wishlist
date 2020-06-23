@@ -2,7 +2,7 @@ from app.app import create_celery_app, db
 from flask import jsonify, make_response
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.encryption import encrypt_string
-from app.blueprints.base.functions import generate_id, generate_private_key, print_traceback
+from app.blueprints.base.functions import generate_id, print_traceback
 
 celery = create_celery_app()
 

@@ -36,7 +36,6 @@ def create_dns(subdomain, dns):
             if r['name'].startswith(subdomain):
                 return True
         
-        # Otherwise create the record
         record = {'name': subdomain, 'type':'CNAME', 'content': dns, 'proxied': True}
         r = cf.zones.dns_records.post(zone_id, data=record)
         return True
