@@ -14,7 +14,6 @@ def create_subdomain(subdomain):
             return True
 
         d = app.add_domain(subdomain + '.getwishlist.io')
-        print(d)
 
         if d is not None:
             print('DNS')
