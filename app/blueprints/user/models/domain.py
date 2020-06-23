@@ -1,7 +1,10 @@
 from sqlalchemy import or_
-
+import os
 from lib.util_sqlalchemy import ResourceMixin, AwareDateTime
 from app.extensions import db
+from itsdangerous import URLSafeTimedSerializer, \
+    TimedJSONWebSignatureSerializer
+from flask import current_app
 
 
 class Domain(ResourceMixin, db.Model):
@@ -14,6 +17,8 @@ class Domain(ResourceMixin, db.Model):
     name = db.Column(db.String(255), unique=True, index=True, nullable=True, server_default='')
     company = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
     admin_email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    private_key = db.Column(db.LargeBinary, unique=True, nullable=False, server_default='')
+    private = db.Column('is_private', db.Boolean(), nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
@@ -78,3 +83,37 @@ class Domain(ResourceMixin, db.Model):
             delete_count += 1
 
         return delete_count
+
+    # def serialize_token(self, expiration=999999999):
+    #     """
+    #     Sign and create a token that can be used for things such as resetting
+    #     a password or other tasks that involve a one off token.
+    #
+    #     :param expiration: Seconds until it expires, defaults to 1 hour
+    #     :type expiration: int
+    #     :return: JSON
+    #     """
+    #     secret = current_app.config['SECRET_KEY']
+    #     from app.blueprints.base.functions import generate_private_key
+    #
+    #     serializer = TimedJSONWebSignatureSerializer(secret, expiration)
+    #     return serializer.dumps({'private_key': generate_private_key()}).decode('utf-8')
+    #
+    # @classmethod
+    # def deserialize_token(cls, token):
+    #     """
+    #     Obtain a private key from de-serializing a signed token.
+    #
+    #     :param token: Signed token.
+    #     :type token: str
+    #     :return: User instance or None
+    #     """
+    #     secret = TimedJSONWebSignatureSerializer(current_app.config['SECRET_KEY'])
+    #     try:
+    #         decoded_payload = secret.loads(token)
+    #
+    #         return decoded_payload.get('private_key')
+    #     except Exception as e:
+    #         from app.blueprints.base.functions import print_traceback
+    #         print_traceback(e)
+    #         return None

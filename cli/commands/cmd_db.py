@@ -7,7 +7,7 @@ from cli.commands.data import (
 from sqlalchemy_utils import database_exists, create_database
 from app.app import create_app
 from app.extensions import db
-from app.blueprints.base.functions import generate_id, generate_name
+from app.blueprints.base.functions import generate_id, generate_name, generate_private_key
 from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.status import Status
@@ -103,25 +103,29 @@ def seed_status():
 
 @click.command()
 def seed_domains():
+    from app.blueprints.base.encryption import encrypt_string
     u = User.query.filter(User.domain == 'demo').scalar()
-    domain_id = generate_id(Domain, 16)
+    domain_id = generate_id(Domain, 8)
     demo = {
         'domain_id': domain_id,
         'name': 'demo',
         'company': 'Demo',
         'admin_email': u.email,
-        'user_id': u.id
+        'user_id': u.id,
+        'private_key': encrypt_string(generate_private_key())
     }
 
-    wishlist = {
-        'domain_id': generate_id(Domain, 16),
-        'name': 'wishlist',
-        'company': 'Wishlist',
-        'admin_email': app.config['SEED_MEMBER_EMAIL'],
-        'user_id': 1
-    }
+    # wishlist = {
+    #     'domain_id': generate_id(Domain, 8),
+    #     'name': 'wishlist',
+    #     'company': 'Wishlist',
+    #     'admin_email': app.config['SEED_MEMBER_EMAIL'],
+    #     'user_id': 1,
+    #     # 'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
+    # }
 
     Domain(**demo).save()
+
     u.domain_id = domain_id
     u.save()
     # Domain(**wishlist).save()

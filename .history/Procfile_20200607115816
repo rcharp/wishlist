@@ -1,0 +1,1 @@
+web: gunicorn -c "python:config.gunicorn" --reload "app.app:create_app()" --timeout 120
