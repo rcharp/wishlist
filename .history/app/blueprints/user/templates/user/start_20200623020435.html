@@ -409,14 +409,14 @@
             function DomainIsReady(x){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
-                var redirect = ReplaceSubdomain("{{ url_for('user.settings', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         if ('success' in response){
-                            window.location.href = redirect;
+                            UpdateDashboardButton();
+                            x = true;
                         }
                     },
                     error: function (xhr) {
