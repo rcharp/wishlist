@@ -208,14 +208,12 @@ def signup(subdomain=None):
 
                     # Create the domain from the form
                     from app.blueprints.base.tasks import create_domain
-                    create_domain.delay(u.id, u.email, form.domain.data, form.company.data)
-
-                    # Log the user in
-                    flash("You've successfully signed up!", 'success')
-                    return redirect(url_for('user.start', subdomain=subdomain))
-                    # else:
-                        # flash("There was an error creating this domain. Please try again.", 'error')
-                        # return redirect(url_for('user.signup', form=form))
+                    if create_domain.delay(u.id, u.email, form.domain.data, form.company.data):
+                        flash("You've successfully signed up!", 'success')
+                        return redirect(url_for('user.start', subdomain=subdomain))
+                    else:
+                        flash("There was an error creating this domain. Please try again.", 'error')
+                        return redirect(url_for('user.signup', form=form))
         except Exception as e:
             print_traceback(e)
 
