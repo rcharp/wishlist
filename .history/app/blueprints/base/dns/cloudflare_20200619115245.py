@@ -5,7 +5,7 @@ from flask import current_app
 def create_dns(subdomain, dns):
     from app.blueprints.base.functions import print_traceback
     zone_name = 'getwishlist.io'
-    cf = CloudFlare.CloudFlare(token=os.environ.get('CLOUDFLARE_TOKEN'))
+    cf = CloudFlare.CloudFlare(token=current_app.config.get('CLOUDFLARE_TOKEN'))
 
     # query for the zone name and expect only one value back
     try:
