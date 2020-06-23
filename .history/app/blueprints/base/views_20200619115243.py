@@ -10,6 +10,8 @@ base = Blueprint('base', __name__, template_folder='templates')
 @csrf.exempt
 def test():
     if request.method == 'POST':
+        domain = request.form['domain']
+
         try:
             results = t()
             # print(results)
