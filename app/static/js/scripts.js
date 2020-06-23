@@ -20,7 +20,7 @@ function ShowDropdown(id) {
 
 function Vote(feedback_id, feedback_url) {
     $.ajax({
-        url: '{{ url_for("user.update_vote") }}',
+        url: "{{ url_for('user.update_vote',_external=True, _scheme='https') }}",
         type: 'POST',
         beforeSend: UpdateVote(feedback_id),
         data: {'feedback_id': feedback_id},
