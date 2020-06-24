@@ -331,6 +331,9 @@
 
         {% if not current_user.is_authenticated and domain.private %}
             {% include '/user/includes/private_overlay.html' ignore missing %}
+            <script>
+                document.getElementById('search_field').readOnly = true;
+            </script>
         {% endif %}
 
 
