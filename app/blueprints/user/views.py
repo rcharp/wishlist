@@ -573,7 +573,7 @@ def send_invite(subdomain=None):
 @cross_origin()
 def check_domain_status():
     try:
-        time.sleep(10)
+        time.sleep(3)
         if request.method == 'POST':
             if 'subdomain' in request.form and 'user_id' in request.form:
                 subdomain = request.form['subdomain']
@@ -582,11 +582,12 @@ def check_domain_status():
                 u = User.query.filter(User.id == user_id).scalar()
 
                 if subdomain == u.domain:
-                    r = requests.get('https://' + subdomain + '.getwishlist.io')
-                    if r.status_code == 200:
+                    try:
+                        r = requests.get('https://' + subdomain + '.getwishlist.io')
                         r.close()
                         return jsonify({'result': 'Success'})
-                    r.close()
+                    except ConnectionError as c:
+                        return jsonify({'result': 'Error'})
         return jsonify({'result': 'Error'})
     except Exception as e:
         return jsonify({'result': 'Error'})
