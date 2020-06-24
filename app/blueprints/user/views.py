@@ -573,7 +573,7 @@ def send_invite(subdomain=None):
 @cross_origin()
 def check_domain_status():
     try:
-        time.sleep(3)
+        time.sleep(5)
         if request.method == 'POST':
             if 'subdomain' in request.form and 'user_id' in request.form:
                 subdomain = request.form['subdomain']
