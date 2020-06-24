@@ -33,6 +33,7 @@ def create_dns(subdomain, dns):
         # If the DNS already exists, then you can delete it
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
+            print(r)
             if r['name'] == subdomain:
                 cf.zones.dns_records.delete(zone_id, r['id'])
 
