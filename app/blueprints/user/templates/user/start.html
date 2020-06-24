@@ -350,15 +350,12 @@
                 var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
                 var url = 'https://' + '{{ subdomain }}' + '.getwishlist.io';
 
-                alert(url);
-
                 $.ajax({
                     url: url,
                     type: 'GET',
                     //data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     statusCode: {
                         200: function() {
-                            alert("Success");
                             window.location.href = redirect;
                         }
                     },
