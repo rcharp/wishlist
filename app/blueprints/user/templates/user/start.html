@@ -353,6 +353,7 @@
                     success: function (response) {
                         if ('result' in response){
                             if (response['result'] === 'Success'){
+                                alert("Domain is ready");
                                 window.location.href = redirect;
                             }else{
                                 alert("Domain is not ready");
