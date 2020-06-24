@@ -77,11 +77,11 @@
                     <label for="search_field" class="sr-only">Search</label>
                     <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                       <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                        {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                        </svg>
+                        </svg>#}
                       </div>
-                      <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search" type="search" />
+                        <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
                     </div>
                   </div>
                 </div>
@@ -346,7 +346,6 @@
 
             function SubdomainSiteExists(){
                 LoadingMessage();
-                //var url = "{{ url_for('user.check_domain_status') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
                 var url = 'https://' + '{{ subdomain }}' + '.getwishlist.io';
 
@@ -358,43 +357,9 @@
                         200: function() {
                             window.location.href = redirect;
                         }
-                    },
-                    {#success: function (response) {
-                        if ('result' in response){
-                            //alert(response['result']);
-                            if (response['result'] === 'Success'){
-                                window.location.href = redirect;
-                            }else{
-                                //alert("Domain is not ready\n\n" + response['code'] + ':' + response['result']);
-                                // Keep checking the domain to see if it's ready
-                                //SubdomainSiteExists();
-                            }
-                        }
-                    },
-                    error: function (xhr) {
-                    }#}
+                    }
                 });
             }
-
-            {#function isValidURL(url) {
-                var encodedURL = encodeURIComponent(url);
-                var isValid = false;
-
-                $.ajax({
-                  url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" + encodedURL + "%22&format=json",
-                  type: "get",
-                  async: false,
-                  dataType: "json",
-                  success: function(data) {
-                    isValid = data.query.results != null;
-                  },
-                  error: function(){
-                    isValid = false;
-                  }
-                });
-
-                return isValid;
-            }#}
 
             function UpdateDashboardButton(){
                 var message = document.getElementById('dashboard-button-text');
