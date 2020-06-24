@@ -579,6 +579,21 @@ def send_invite(subdomain=None):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
+@user.route('/get_private_key', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def get_private_key():
+    if request.method == 'POST':
+        if 'domain_id' in request.form and 'user_id' in request.form:
+            domain_id = request.form['domain_id']
+            user_id = request.form['user_id']
+
+            from app.blueprints.base.functions import get_private_key
+            key = get_private_key(domain_id, user_id)
+            return jsonify({'success': True, 'key': key})
+    return jsonify({'success': False})
+
+
 @user.route('/check_domain_status', methods=['GET','POST'])
 @login_required
 @csrf.exempt

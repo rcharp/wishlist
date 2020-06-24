@@ -193,6 +193,13 @@ def generate_name():
     return names.get_first_name()
 
 
+def get_private_key(domain_id, user_id):
+
+    d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+    from app.blueprints.base.encryption import decrypt_string
+    return decrypt_string(d.private_key)
+
+
 # Other ###################################################
 def print_traceback(e):
     traceback.print_tb(e.__traceback__)
