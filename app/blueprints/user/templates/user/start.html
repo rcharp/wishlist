@@ -399,7 +399,7 @@
                 setTimeout(() => { LoadingMessage(); }, 500);
             }
 
-            function DomainIsReady(x){
+            function DomainIsReady(){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status', _external=True, _scheme='https') }}";
                 //var url = "{{ url_for('user.check_domain_status') }}";
@@ -450,11 +450,11 @@
         </script>
         <script>
             $( document ).ready(function() {
-                var ready = false;
-                var x = setInterval(DomainIsReady(ready), 5000);
-                if (x === true){
+                //var ready = false;
+                setInterval(DomainIsReady(), 5000);
+                {#if (x === true){
                     clearInterval(x);
-                }
+                }#}
             });
         </script>
     </body>
