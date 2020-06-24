@@ -330,7 +330,7 @@
         <!-- END Page Container -->
 
         {% if not current_user.is_authenticated and domain.private %}
-            {% include '/user/includes/overlay.html' ignore missing %}
+            {% include '/user/includes/private_overlay.html' ignore missing %}
         {% endif %}
 
 
