@@ -609,6 +609,8 @@ def check_domain_status():
         print("something else")
         return jsonify({'result': 'Error'})
     except Exception as e:
+        from app.blueprints.base.functions import print_traceback
+        print_traceback(e)
         print("there was an exception")
         return jsonify({'result': 'Error'})
 
