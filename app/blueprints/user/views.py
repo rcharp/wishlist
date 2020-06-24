@@ -600,12 +600,16 @@ def check_domain_status():
                             r.close()
                             return jsonify({'result': 'Success', 'code': r.status_code})
                         else:
+                            print("The error code is " + str(r.status_code))
                             r.close()
                             return jsonify({'result': 'Error', 'code': r.status_code})
                     except ConnectionError as c:
+                        print("There was a connection error")
                         return jsonify({'result': 'Error'})
+        print("something else")
         return jsonify({'result': 'Error'})
     except Exception as e:
+        print("there was an exception")
         return jsonify({'result': 'Error'})
 
 
