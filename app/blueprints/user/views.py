@@ -586,11 +586,12 @@ def check_domain_status():
 
                 if subdomain == u.domain:
                     try:
-                        r = requests.get('https://' + subdomain + '.getwishlist.io')
+                        r = requests.head('https://' + subdomain + '.getwishlist.io')
 
                         if r.status_code == 200:
                             r.close()
-                            return jsonify({'result': 'Success'})
+                            return redirect(url_for('user.settings', subdomain=subdomain))
+                            # return jsonify({'result': 'Success'})
                         else:
                             r.close()
                             return jsonify({'result': 'Error'})
