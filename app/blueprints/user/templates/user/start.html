@@ -413,7 +413,7 @@
                                 window.location.href = redirect;
                             }else{
                                 // Keep checking the domain to see if it's ready
-                                DomainIsReady();
+                                setTimeout(DomainIsReady(), 5000);
                             }
                         }
                     },
@@ -454,7 +454,7 @@
         <script>
             $( document ).ready(function() {
                 //var ready = false;
-                setInterval(DomainIsReady(), 5000);
+                DomainIsReady();
                 {#if (x === true){
                     clearInterval(x);
                 }#}
