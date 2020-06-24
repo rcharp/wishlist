@@ -355,8 +355,9 @@
                             if (response['result'] === 'Success'){
                                 window.location.href = redirect;
                             }else{
+                                alert("Domain is not ready");
                                 // Keep checking the domain to see if it's ready
-                                DomainIsReady();
+                                //DomainIsReady();
                             }
                         }
                     },
@@ -397,7 +398,7 @@
         <script>
             $( document ).ready(function() {
                 //var ready = false;
-                DomainIsReady();
+                setTimeout(DomainIsReady(), 5000);
                 {#if (x === true){
                     clearInterval(x);
                 }#}
