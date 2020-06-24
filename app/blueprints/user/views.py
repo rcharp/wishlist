@@ -300,10 +300,10 @@ def start(subdomain=None):
     if not (current_user.is_authenticated and current_user.domain == subdomain):
         return redirect(url_for('user.login'))
 
-    if subdomain == current_user.domain:
-        r = requests.get('https://' + subdomain + '.getwishlist.io')
-        if r.status_code == 200:
-            return redirect(url_for('user.settings', subdomain=subdomain))
+    # if subdomain == current_user.domain:
+    #     r = requests.get('https://' + subdomain + '.getwishlist.io')
+    #     if r.status_code == 200:
+    #         return redirect(url_for('user.settings', subdomain=subdomain))
 
     domain = Domain.query.filter(Domain.name == current_user.domain).scalar()
     return render_template('user/start.html', current_user=current_user, domain=domain, subdomain=subdomain)
