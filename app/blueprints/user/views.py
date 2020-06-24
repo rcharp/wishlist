@@ -583,14 +583,18 @@ def send_invite(subdomain=None):
 @login_required
 @csrf.exempt
 def get_private_key():
-    if request.method == 'POST':
-        if 'domain_id' in request.form and 'user_id' in request.form:
-            domain_id = request.form['domain_id']
-            user_id = request.form['user_id']
+    try:
+        if request.method == 'POST':
+            if 'domain_id' in request.form and 'user_id' in request.form:
+                domain_id = request.form['domain_id']
+                user_id = request.form['user_id']
 
-            from app.blueprints.base.functions import get_private_key
-            key = get_private_key(domain_id, user_id)
-            return jsonify({'success': True, 'key': key})
+                from app.blueprints.base.functions import get_private_key
+                key = get_private_key(domain_id, user_id)
+                print(key)
+                return jsonify({'success': True, 'key': key})
+    except Exception as e:
+        return jsonify({'success': False})
     return jsonify({'success': False})
 
 

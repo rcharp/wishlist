@@ -392,9 +392,9 @@
                     type: 'GET',
                     data: {'domain_id': domain_id, 'user_id': user_id},
                     success: function (response) {
-                        if ('success' in response && response['success'] === true){
-                            var key = response['key'];
-                            document.getElementById('private-key').innerText = key;
+                        alert(response['success']);
+                        if (response['success'] === true){
+                            document.getElementById('private-key').innerText = response['key'];
                         }
                     },
                     error: function (xhr) {
