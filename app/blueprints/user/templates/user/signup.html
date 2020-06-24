@@ -102,11 +102,11 @@
   </div>
 
     <script>
-        document.getElementById("company").addEventListener("keyup", function(){
+        document.getElementById("company").addEventListener("input", function(){
             document.getElementById("domain").value = document.getElementById("company").value.toLowerCase().replace(/\s/g, '');
         });
 
-        document.getElementById("domain").addEventListener("keyup", function(){
+        document.getElementById("domain").addEventListener("input", function(){
             document.getElementById("domain").value = document.getElementById("domain").value.toLowerCase().replace(/\s/g, '');
         });
     </script>

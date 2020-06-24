@@ -590,10 +590,10 @@ def check_domain_status():
 
                         if r.status_code == 200:
                             r.close()
-                            return jsonify({'result': 'Success'})
+                            return jsonify({'result': 'Success', 'code': r.status_code})
                         else:
                             r.close()
-                            return jsonify({'result': 'Error'})
+                            return jsonify({'result': 'Error', 'code': r.status_code})
                     except ConnectionError as c:
                         return jsonify({'result': 'Error'})
         return jsonify({'result': 'Error'})

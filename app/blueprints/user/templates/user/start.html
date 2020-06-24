@@ -356,7 +356,7 @@
                                 alert("Domain is ready");
                                 window.location.href = redirect;
                             }else{
-                                alert("Domain is not ready");
+                                alert("Domain is not ready\n\n" + response['code'] + ':' + response['result']);
                                 // Keep checking the domain to see if it's ready
                                 //DomainIsReady();
                             }
