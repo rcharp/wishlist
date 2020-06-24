@@ -208,7 +208,7 @@ def signup(subdomain=None):
 
                     # Create the domain from the form, as well as the heroku subdomain
                     from app.blueprints.base.tasks import create_domain, create_heroku_subdomain
-                    create_domain(u.id, u.email, form.domain.data, form.company.data)
+                    create_domain.delay(u.id, u.email, form.domain.data, form.company.data)
                     create_heroku_subdomain.delay(form.domain.data)
 
                     # Log the user in
