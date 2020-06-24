@@ -206,9 +206,10 @@ def signup(subdomain=None):
                     # send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
-                    # Create the domain from the form
-                    from app.blueprints.base.tasks import create_domain
+                    # Create the domain from the form, as well as the heroku subdomin
+                    from app.blueprints.base.tasks import create_domain, create_heroku_subdomain
                     create_domain(u.id, u.email, form.domain.data, form.company.data)
+                    create_heroku_subdomain.delay(form.domain.data)
 
                     # Log the user in
                     flash("You've successfully signed up!", 'success')
@@ -587,8 +588,6 @@ def check_domain_status():
                 if subdomain == u.domain:
                     try:
                         r = requests.get('https://' + subdomain + '.getwishlist.io')
-                        print(r.status_code)
-
                         if r.status_code == 200:
                             r.close()
                             return jsonify({'result': 'Success', 'code': r.status_code})

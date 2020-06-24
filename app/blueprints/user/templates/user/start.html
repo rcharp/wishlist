@@ -342,7 +342,7 @@
                 setTimeout(() => { LoadingMessage(); }, 500);
             }
 
-            function DomainIsReady(){
+            function SubdomainSiteExists(){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
@@ -357,7 +357,7 @@
                             }else{
                                 //alert("Domain is not ready\n\n" + response['code'] + ':' + response['result']);
                                 // Keep checking the domain to see if it's ready
-                                //DomainIsReady();
+                                //SubdomainSiteExists();
                             }
                         }
                     },
@@ -398,7 +398,7 @@
         <script>
             $( document ).ready(function() {
                 //var ready = false;
-                setInterval(DomainIsReady, 5000);
+                setInterval(SubdomainSiteExists, 5000);
                 {#if (x === true){
                     clearInterval(x);
                 }#}

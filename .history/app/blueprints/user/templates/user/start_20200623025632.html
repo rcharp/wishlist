@@ -399,7 +399,7 @@
                 setTimeout(() => { LoadingMessage(); }, 500);
             }
 
-            function DomainIsReady(x){
+            function SubdomainSiteExists(x){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status', _external=True, _scheme='https') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.settings', subdomain='DUMMY_VALUE') }}");
@@ -450,7 +450,7 @@
         <script>
             $( document ).ready(function() {
                 var ready = false;
-                var x = setInterval(DomainIsReady(ready), 5000);
+                var x = setInterval(SubdomainSiteExists(ready), 5000);
                 if (x === true){
                     clearInterval(x);
                 }

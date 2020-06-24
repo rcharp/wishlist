@@ -26,7 +26,7 @@ def create_domain(user_id, email, domain, company):
         u.domain = d.name
         u.save()
 
-        create_heroku_subdomain.delay(domain)
+        # create_heroku_subdomain.delay(domain)
         return True
     except Exception as e:
         print_traceback(e)

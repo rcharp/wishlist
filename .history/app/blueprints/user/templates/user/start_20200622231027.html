@@ -406,7 +406,7 @@
                 setTimeout(() => { LoadingMessage(); }, 1500);
             }
 
-            function DomainIsReady(x){
+            function SubdomainSiteExists(x){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
                 $.ajax({
@@ -456,7 +456,7 @@
         <script>
             $( document ).ready(function() {
                 var ready = false;
-                var x = setInterval(DomainIsReady(ready), 5000);
+                var x = setInterval(SubdomainSiteExists(ready), 5000);
                 if (x === true){
                     clearInterval(x);
                 }
