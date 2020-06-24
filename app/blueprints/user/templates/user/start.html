@@ -408,8 +408,9 @@
                     type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
-                        alert("Successfully validated domain");
-                        window.location.href = redirect;
+                        if ('success' in response){
+                            window.location.href = redirect;
+                        }
                     },
                     error: function (xhr) {
                     }
