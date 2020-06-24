@@ -590,8 +590,7 @@ def check_domain_status():
 
                         if r.status_code == 200:
                             r.close()
-                            return redirect(url_for('user.settings', subdomain=subdomain))
-                            # return jsonify({'result': 'Success'})
+                            return jsonify({'result': 'Success'})
                         else:
                             r.close()
                             return jsonify({'result': 'Error'})
