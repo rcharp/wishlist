@@ -21,7 +21,7 @@ page = Blueprint('page', __name__, template_folder='templates')
 @page.route('/', subdomain='<subdomain>')
 @cross_origin()
 def home(subdomain=None):
-    if current_user.is_authenticated:
+    if not current_user.is_authenticated:
         return redirect(url_for('user.login'))
 
     if subdomain:
