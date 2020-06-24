@@ -345,7 +345,7 @@
             function DomainIsReady(){
                 LoadingMessage();
                 var url = "{{ url_for('user.check_domain_status') }}";
-                var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
+                var redirect = ReplaceSubdomain("{{ url_for('user.settings', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
                     type: 'POST',

@@ -339,20 +339,23 @@ def update_credentials(subdomain=None):
 def dashboard(subdomain=None):
     if subdomain:
         d = Domain.query.filter(Domain.name == subdomain).scalar()
-        feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
 
-        if current_user.is_authenticated:
-            votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
-        else:
-            votes = None
+        if d is not None:
+            feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
 
-        statuses = Status.query.all()
+            if current_user.is_authenticated:
+                votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+            else:
+                votes = None
 
-        for f in feedbacks:
-            f.votes = int(f.votes)
+            statuses = Status.query.all()
 
-        feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
+            for f in feedbacks:
+                f.votes = int(f.votes)
+
+            feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+            return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
+        return redirect(url_for('user.settings', subdomain=subdomain))
     else:
         d = Domain.query.filter(Domain.name == 'demo').scalar()
         feedbacks = Feedback.query.all()
