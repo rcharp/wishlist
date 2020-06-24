@@ -389,7 +389,7 @@
             function GetPrivateKey(user_id, domain_id){
                 $.ajax({
                     url: "{{ url_for('user.get_private_key') }}",
-                    type: 'GET',
+                    type: 'POST',
                     data: {'domain_id': domain_id, 'user_id': user_id},
                     success: function (response) {
                         alert(response['success']);
