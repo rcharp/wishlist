@@ -588,7 +588,7 @@ def check_domain_status():
                     try:
                         r = requests.head('https://' + subdomain + '.getwishlist.io')
 
-                        if r.status_code == 200:
+                        if r.status_code < 400:
                             r.close()
                             return jsonify({'result': 'Success', 'code': r.status_code})
                         else:
