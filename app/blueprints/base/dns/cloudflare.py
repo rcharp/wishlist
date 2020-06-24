@@ -34,13 +34,11 @@ def create_dns(subdomain, dns):
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
             if r['name'] == subdomain:
-                record = {'name': subdomain, 'type': 'CNAME', 'content': dns, 'proxied': True}
-                r = cf.zones.dns_records.put(zone_id, r['id'], data=record)
-                return True
-        
+                cf.zones.dns_records.delete(zone_id, r['id'])
+
         # Otherwise create the record
         record = {'name': subdomain, 'type':'CNAME', 'content': dns, 'proxied': True}
-        r = cf.zones.dns_records.post(zone_id, data=record)
+        cf.zones.dns_records.post(zone_id, data=record)
         return True
     except CloudFlare.exceptions.CloudFlareAPIError as e:
         print_traceback(e)
