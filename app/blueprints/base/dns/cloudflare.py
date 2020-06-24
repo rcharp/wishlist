@@ -30,10 +30,12 @@ def create_dns(subdomain, dns):
     # request the DNS records from that zone
     try:
 
-        # If the DNS already exists, then you can return True
+        # If the DNS already exists, then you can update it and return True
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
-            if r['name'].startswith(subdomain):
+            if r['name'] == subdomain:
+                record = {'name': subdomain, 'type': 'CNAME', 'content': dns, 'proxied': True}
+                r = cf.zones.dns_records.put(zone_id, r['id'], data=record)
                 return True
         
         # Otherwise create the record
