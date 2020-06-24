@@ -356,11 +356,11 @@
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         if ('result' in response){
-                            alert(response['result']);
+                            //alert(response['result']);
                             if (response['result'] === 'Success'){
                                 window.location.href = redirect;
                             }else{
-                                alert("Domain is not ready\n\n" + response['code'] + ':' + response['result']);
+                                //alert("Domain is not ready\n\n" + response['code'] + ':' + response['result']);
                                 // Keep checking the domain to see if it's ready
                                 //SubdomainSiteExists();
                             }
