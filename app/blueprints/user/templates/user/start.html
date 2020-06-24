@@ -410,6 +410,7 @@
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         if ('success' in response){
+                            alert("Successfully validated domain");
                             window.location.href = redirect;
                         }
                     },
