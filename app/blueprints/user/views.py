@@ -587,8 +587,13 @@ def check_domain_status():
                 if subdomain == u.domain:
                     try:
                         r = requests.get('https://' + subdomain + '.getwishlist.io')
-                        r.close()
-                        return jsonify({'result': 'Success'})
+
+                        if r.status_code == 200:
+                            r.close()
+                            return jsonify({'result': 'Success'})
+                        else:
+                            r.close()
+                            return jsonify({'result': 'Error'})
                     except ConnectionError as c:
                         return jsonify({'result': 'Error'})
         return jsonify({'result': 'Error'})
