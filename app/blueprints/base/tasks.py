@@ -6,26 +6,15 @@ celery = create_celery_app()
 
 
 @celery.task()
-def create_domain(user_id, email, domain, company):
+def populate_domain(domain_id):
     from app.blueprints.base.functions import generate_id, generate_private_key, print_traceback
-    from app.blueprints.base.encryption import encrypt_string
+    # from app.blueprints.base.encryption import encrypt_string
 
     try:
-        d = Domain()
-        d.domain_id = generate_id(Domain, 8)
-        d.name = domain
-        d.company = company
-        d.user_id = user_id
-        d.admin_email = email
-        d.private_key = encrypt_string(generate_private_key())
+        d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+        d.private_key = encrypt_string.delay(generate_private_key())
         d.save()
 
-        u = User.query.filter(User.id == user_id).scalar()
-        u.domain_id = d.domain_id
-        u.domain = d.name
-        u.save()
-
-        # create_heroku_subdomain.delay(domain)
         return True
     except Exception as e:
         print_traceback(e)
@@ -39,7 +28,7 @@ def create_heroku_subdomain(subdomain):
     return create_subdomain(subdomain)
 
 
-# @celery.task()
-# def encrypt_string(plaintext):
-#     from app.blueprints.base.encryption import encrypt_string
-#     return encrypt_string(plaintext)
+@celery.task()
+def encrypt_string(plaintext):
+    from app.blueprints.base.encryption import encrypt_string
+    return encrypt_string(plaintext)

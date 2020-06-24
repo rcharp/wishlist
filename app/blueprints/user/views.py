@@ -207,8 +207,16 @@ def signup(subdomain=None):
                     # create_subscriber(current_user.email)
 
                     # Create the domain from the form, as well as the heroku subdomain
-                    from app.blueprints.base.tasks import create_domain, create_heroku_subdomain
-                    create_domain.delay(u.id, u.email, form.domain.data, form.company.data)
+                    from app.blueprints.base.functions import create_domain
+                    from app.blueprints.base.tasks import populate_domain, create_heroku_subdomain
+
+                    # Create the domain in the database
+                    d = create_domain(u, form.domain.data, form.company.data)
+
+                    # Populate the domain with a private key
+                    populate_domain.delay(d)
+
+                    # Create the Heroku and Cloudflare subdomains
                     create_heroku_subdomain.delay(form.domain.data)
 
                     # Log the user in

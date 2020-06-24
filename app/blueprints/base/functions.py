@@ -61,6 +61,23 @@ def generate_private_key(size=16):
 
 
 # Feedback ###################################################
+def create_domain(user, domain, company):
+    d = Domain()
+    d.domain_id = generate_id(Domain, 8)
+    d.name = domain
+    d.company = company
+    d.user_id = user.id
+    d.admin_email = user.email
+    d.save()
+
+    user.domain_id = d.domain_id
+    user.domain = domain
+    user.save()
+
+    return d.domain_id
+
+
+# Feedback ###################################################
 def create_feedback(user, domain, email, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
