@@ -30,7 +30,7 @@ def create_dns(subdomain, dns):
     # request the DNS records from that zone
     try:
 
-        # If the DNS already exists, then you can update it and return True
+        # If the DNS already exists, then you can delete it
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
             if r['name'] == subdomain:
