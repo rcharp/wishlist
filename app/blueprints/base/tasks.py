@@ -26,18 +26,17 @@ def create_domain(user_id, email, domain, company):
         u.domain = d.name
         u.save()
 
-        if create_subdomain(domain):
-            return True
-        else:
-            # d.delete()
-            return False
+        create_heroku_subdomain.delay(domain)
+        return True
     except Exception as e:
         print_traceback(e)
         return False
 
 
 @celery.task()
-def create_subdomain(subdomain):
+def create_heroku_subdomain(subdomain):
+
     # Create the subdomain in Heroku
     from app.blueprints.base.dns.heroku import create_subdomain
+
     return create_subdomain(subdomain)
