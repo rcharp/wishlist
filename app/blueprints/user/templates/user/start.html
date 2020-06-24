@@ -401,7 +401,8 @@
 
             function DomainIsReady(x){
                 LoadingMessage();
-                var url = "{{ url_for('user.check_domain_status', _external=True, _scheme='https') }}";
+                //var url = "{{ url_for('user.check_domain_status', _external=True, _scheme='https') }}";
+                var url = "{{ url_for('user.check_domain_status') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.settings', subdomain='DUMMY_VALUE') }}");
                 $.ajax({
                     url: url,
