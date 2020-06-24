@@ -587,6 +587,7 @@ def check_domain_status():
                 if subdomain == u.domain:
                     try:
                         r = requests.head('https://' + subdomain + '.getwishlist.io')
+                        print(r.status_code)
 
                         if r.status_code < 400:
                             r.close()
