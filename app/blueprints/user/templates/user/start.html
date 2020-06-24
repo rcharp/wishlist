@@ -408,8 +408,13 @@
                     type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
-                        alert(response['success']);
-                        window.location.href = redirect;
+                        if ('result' in response){
+                            alert(response['result']);
+                            if (response['result'] === 'Success'){
+                                alert("Success!");
+                                window.location.href = redirect;
+                            }
+                        }
                     },
                     error: function (xhr) {
                     }

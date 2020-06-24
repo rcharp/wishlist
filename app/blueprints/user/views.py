@@ -583,10 +583,10 @@ def check_domain_status():
                 if subdomain == u.domain:
                     r = requests.get('https://' + subdomain + '.getwishlist.io')
                     if r.status_code == 200:
-                        return jsonify({'success': 'Success'})
-        return jsonify({'error': 'Error'})
+                        return jsonify({'result': 'Success'})
+        return jsonify({'result': 'Error'})
     except Exception as e:
-        return jsonify({'error': 'Error'})
+        return jsonify({'result': 'Error'})
 
 
 @user.route('/set_domain_privacy', methods=['GET', 'POST'])
