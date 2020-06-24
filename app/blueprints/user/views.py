@@ -595,14 +595,29 @@ def check_domain_status():
 
                 if subdomain == u.domain:
                     try:
-                        r = requests.get('https://' + subdomain + '.getwishlist.io')
-                        if r.status_code == 200:
-                            r.close()
-                            return jsonify({'result': 'Success', 'code': r.status_code})
-                        else:
-                            print("The error code is " + str(r.status_code))
-                            r.close()
-                            return jsonify({'result': 'Error', 'code': r.status_code})
+
+                        url = 'https://' + subdomain + '.getwishlist.io'
+
+                        import urllib.request
+
+                        r = urllib.request.Request(url)
+                        r.get_method = lambda: 'HEAD'
+
+                        try:
+                            urllib.request.urlopen(r)
+                            return jsonify({'result': 'Success'})
+                        except urllib.request.HTTPError:
+                            return jsonify({'result': 'Error'})
+
+                        # r = requests.get('https://' + subdomain + '.getwishlist.io')
+
+                        # if r.status_code == 200:
+                        #     r.close()
+                        #     return jsonify({'result': 'Success', 'code': r.status_code})
+                        # else:
+                        #     print("The error code is " + str(r.status_code))
+                        #     r.close()
+                        #     return jsonify({'result': 'Error', 'code': r.status_code})
                     except ConnectionError as c:
                         print("There was a connection error")
                         return jsonify({'result': 'Error'})

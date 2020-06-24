@@ -346,16 +346,11 @@
 
             function SubdomainSiteExists(){
                 LoadingMessage();
-                //var url = "{{ url_for('user.check_domain_status') }}";
+                var url = "{{ url_for('user.check_domain_status') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
-                var url = 'https://' + '{{ subdomain }}' + '.getwishlist.io';
+                //var url = 'https://' + '{{ subdomain }}' + '.getwishlist.io';
 
-                alert(checkUrl('https://google.com'));
-                alert(checkUrl(url));
-                if (checkUrl(url) === true){
-                    window.location.href = redirect;
-                }
-                {#$.ajax({
+                $.ajax({
                     url: url,
                     type: 'POST',
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
@@ -373,24 +368,28 @@
                     },
                     error: function (xhr) {
                     }
-                });#}
+                });
             }
 
-            function checkUrl(url) {
-                var request = false;
-                if (window.XMLHttpRequest) {
-                        request = new XMLHttpRequest;
-                } else if (window.ActiveXObject) {
-                        request = new ActiveXObject("Microsoft.XMLHttp");
-                }
+            {#function isValidURL(url) {
+                var encodedURL = encodeURIComponent(url);
+                var isValid = false;
 
-                if (request) {
-                        request.open("GET", url);
-                        if (request.status === 200) { return true; }
-                }
+                $.ajax({
+                  url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" + encodedURL + "%22&format=json",
+                  type: "get",
+                  async: false,
+                  dataType: "json",
+                  success: function(data) {
+                    isValid = data.query.results != null;
+                  },
+                  error: function(){
+                    isValid = false;
+                  }
+                });
 
-                return false;
-            }
+                return isValid;
+            }#}
 
             function UpdateDashboardButton(){
                 var message = document.getElementById('dashboard-button-text');
