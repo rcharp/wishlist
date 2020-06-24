@@ -103,11 +103,11 @@
 
     <script>
         document.getElementById("company").addEventListener("input", function(){
-            document.getElementById("domain").value = document.getElementById("company").value.toLowerCase().replace(/\s/g, '');
+            document.getElementById("domain").value = document.getElementById("company").value.toLowerCase().replace(/[^a-z]+/g, '');
         });
 
         document.getElementById("domain").addEventListener("input", function(){
-            document.getElementById("domain").value = document.getElementById("domain").value.toLowerCase().replace(/\s/g, '');
+            document.getElementById("domain").value = document.getElementById("domain").value.toLowerCase().replace(/[^a-z]+/g, '');
         });
     </script>
 {% endblock %}
