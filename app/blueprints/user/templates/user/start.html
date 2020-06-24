@@ -409,12 +409,9 @@
                     data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         if ('result' in response){
-                            alert(response['result']);
                             if (response['result'] === 'Success'){
-                                alert("Success!");
                                 window.location.href = redirect;
                             }else{
-
                                 // Keep checking the domain to see if it's ready
                                 DomainIsReady();
                             }
