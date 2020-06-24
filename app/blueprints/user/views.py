@@ -598,7 +598,7 @@ def check_domain_status():
 
                         url = 'https://' + subdomain + '.getwishlist.io'
 
-                        r = requests.get(url)
+                        r = requests.get(url, verify=False)
 
                         if r.status_code == 200:
                             r.close()
