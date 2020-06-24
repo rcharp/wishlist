@@ -7,12 +7,11 @@ celery = create_celery_app()
 
 @celery.task()
 def populate_domain(domain_id):
-    from app.blueprints.base.functions import generate_id, generate_private_key, print_traceback
-    # from app.blueprints.base.encryption import encrypt_string
+    from app.blueprints.base.functions import generate_private_key, print_traceback
 
     try:
         d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
-        d.private_key = encrypt_string.delay(generate_private_key())
+        d.private_key = generate_private_key()
         d.save()
 
         return True
