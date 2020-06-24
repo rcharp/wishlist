@@ -348,7 +348,8 @@
                 LoadingMessage();
                 //var url = "{{ url_for('user.check_domain_status') }}";
                 var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
-                if (checkUrl('{{ subdomain }}.getwishlist.io')){
+                alert(checkUrl('{{ subdomain }}.getwishlist.io');
+                if (checkUrl('{{ subdomain }}.getwishlist.io') === true){
                     window.location.href = redirect;
                 }
                 {#$.ajax({
