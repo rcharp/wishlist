@@ -151,7 +151,7 @@
                                             <label for="title" class="sr-only">Title
                                             </label>
                                             <div class="rounded-md">
-                                                <input id="title" name="title" class="form-input block w-3/4 sm:text-lg sm:leading-5" value="{{ feedback.title }}" placeholder="Enter a title" required />
+                                                <input id="title" name="title" class="form-input w-3/4 sm:text-lg sm:leading-5 mr-3" value="{{ feedback.title }}" placeholder="Enter a title" required />
                                                 <a href="{{ url_for('user.delete_feedback', feedback_id=feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x" style="color:red;"></i></a>
                                             </div>
                                         </div>

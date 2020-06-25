@@ -488,7 +488,7 @@ Delete the feedback
 '''
 
 
-@user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['POST'])
+@user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET'])
 @csrf.exempt
 def delete_feedback(feedback_id, subdomain=None):
     try:
@@ -498,7 +498,7 @@ def delete_feedback(feedback_id, subdomain=None):
         return redirect(url_for('user.dashboard', subdomain=subdomain))
     except Exception:
         flash("Uh oh, something went wrong!", "error")
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        return redirect(url_for('user.feedback', feedback_id=feedback_id, subdomain=subdomain))
 
 
 '''
