@@ -152,8 +152,8 @@
                                             </label>
                                             <div class="rounded-md">
                                                 <input id="title" name="title" class="form-input block w-3/4 sm:text-lg sm:leading-5" value="{{ feedback.title }}" placeholder="Enter a title" required />
+                                                <a href="{{ url_for('user.delete_feedback', feedback_id=feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x" style="color:red;"></i></a>
                                             </div>
-                                            <a href="{{ url_for('user.delete_feedback', feedback_id=feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o text-red"></i></a>
                                         </div>
                                         <p class="mt-1 ml-3 max-w-2xl text-sm leading-5 text-gray-500">
                                             <i class="si si-clock mr-2"></i>{{ feedback.created_on|datetime_filter }}
