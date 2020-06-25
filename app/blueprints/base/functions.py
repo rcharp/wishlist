@@ -100,14 +100,16 @@ def create_feedback(user, domain, email, title, description):
             f.username = user.username
             f.fullname = user.name
             f.email = user.email
+            f.save()
 
             add_vote(f, user)
         else:
             f.email = email
-            user = create_anon_user(email)
-            add_vote(f, user, email)
+            f.save()
 
-        f.save()
+            user = create_anon_user(email)
+
+            add_vote(f, user, email)
 
         return f
     except Exception as e:
