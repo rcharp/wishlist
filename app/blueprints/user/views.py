@@ -484,6 +484,24 @@ def update_feedback(subdomain=None):
 
 
 '''
+Delete the feedback
+'''
+
+
+@user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['POST'])
+@csrf.exempt
+def delete_feedback(feedback_id, subdomain=None):
+    try:
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        f.delete()
+
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+    except Exception:
+        flash("Uh oh, something went wrong!", "error")
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+
+
+'''
 Sort the feedback by newest, oldest, or most votes
 '''
 
