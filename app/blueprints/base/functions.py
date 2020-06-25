@@ -100,13 +100,14 @@ def create_feedback(user, domain, email, title, description):
             f.username = user.username
             f.fullname = user.name
             f.email = user.email
+
+            add_vote(feedback_id, user)
         else:
             f.email = email
-            create_anon_user(email)
+            user = create_anon_user(email)
+            add_vote(feedback_id, user, email)
 
         f.save()
-
-        add_vote(feedback_id, user)
 
         return f
     except Exception as e:
@@ -132,7 +133,7 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Votes ###################################################
-def add_vote(feedback_id, user):
+def add_vote(feedback_id, user, email=None):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
@@ -143,6 +144,8 @@ def add_vote(feedback_id, user):
 
         if user is not None:
             v.user_id = user.id
+        else:
+            v.email = email
 
         v.save()
 
@@ -178,6 +181,9 @@ def create_anon_user(email):
         u.role = 'member'
         u.password = User.encrypt_password(password)
         u.save()
+
+        return u
+    return None
 
 
 def populate_signup(request, user):
