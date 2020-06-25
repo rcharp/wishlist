@@ -568,7 +568,8 @@ def settings(subdomain=None):
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
         return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
     else:
-        return render_template('user/settings.html', current_user=current_user)
+        domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
+        return render_template('user/settings.html', current_user=current_user, domain=domain)
 
 
 # Actions -------------------------------------------------------------------

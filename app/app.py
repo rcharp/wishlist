@@ -111,10 +111,10 @@ def create_app(settings_override=None):
         #             code = 301
         #             r = redirect(url, code=code)
         #             return r 
-    else:
-        # Set the app server name
-        app.config['SERVER_NAME'] = 'localhost:5000'
-        app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
+    # else:
+    #     # Set the app server name
+    #     app.config['SERVER_NAME'] = 'localhost:5000'
+    #     app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499

@@ -63,7 +63,7 @@
     </head>
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
-          {% include '/user/includes/mobile.html' ignore missing %}
+{#          {% include '/user/includes/mobile.html' ignore missing %}#}
           {% with page='dashboard' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -115,7 +115,7 @@
             <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Replace with your content -->
-                <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right">
+                <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right" style="display:flex; float:right;">
                     <div class="sm:col-span-3 text-lg leading-5 font-medium">
                         <div id="search-results" class="text-gray-500 text-left" style="display:none">Showing results for: '<span id="search-term" class="text-gray-700"></span>'</div>
                     </div>
@@ -155,9 +155,9 @@
                     </div>
                 </div>
 
-                <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">
+                <div class="mt-1 flex flex-wrap{#grid grid-cols-4 gap-5 sm:grid-cols-4#}" style="clear:both;">
                     <!-- submit box -->
-                    <div class="sm:col-span-1">
+                    <div class="{#sm:col-span-1#}mr-5 w-1/4">
                         <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
                           <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                             <form action="{{ url_for('user.add_feedback', subdomain=subdomain) }}" method="post">
@@ -250,7 +250,7 @@
                     </div>
                     <!-- end submit box -->
 
-                    <div class="sm:col-span-3">
+                    <div class="{#sm:col-span-3 #}w-3/4">
                     {% if feedbacks|length > 0 %}
                         {% for feedback in feedbacks %}
                             <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
