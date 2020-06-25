@@ -101,11 +101,11 @@ def create_feedback(user, domain, email, title, description):
             f.fullname = user.name
             f.email = user.email
 
-            add_vote(feedback_id, user)
+            add_vote(f, user)
         else:
             f.email = email
             user = create_anon_user(email)
-            add_vote(feedback_id, user, email)
+            add_vote(f, user, email)
 
         f.save()
 
@@ -133,12 +133,11 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Votes ###################################################
-def add_vote(feedback_id, user, email=None):
+def add_vote(f, user, email=None):
     try:
-        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
         v = Vote()
-        v.feedback_id = feedback_id
+        v.feedback_id = f.feedback_id
         v.vote_id = generate_id(Vote)
         v.domain_id = f.domain_id
 
