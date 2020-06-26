@@ -197,6 +197,7 @@ def add_vote(f, user_id, email=None):
         v.domain_id = f.domain_id
 
         if user_id is not None:
+            print(user_id)
             v.user_id = user_id
         else:
             v.email = email
