@@ -6,7 +6,7 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
-from app.blueprints.base.encryption import encrypt_string
+from app.blueprints.page.date import get_year_date_string
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
@@ -139,13 +139,23 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id=None):
     return
 
 
-def format_comments(comments):
+def format_comments(comments, current_user):
     comment_list = list()
 
     for comment in comments:
         c = dict()
+        created_date = get_year_date_string(comment.created_on)
+        created_by_user = True if comment.user_id == current_user.id else False
+        created_by_admin = True if created_by_user and current_user.role == 'creator' else False
         parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
-        c.update({'id': comment.comment_id, 'content': comment.comment, 'fullname': comment.fullname, 'parent': parent_id, 'creator': comment.user_id})
+        c.update({'id': comment.comment_id,
+                  'content': comment.comment,
+                  'fullname': comment.fullname,
+                  'parent': parent_id,
+                  'creator': comment.user_id,
+                  'created_by_user': created_by_user,
+                  'created_by_admin': created_by_admin,
+                  'created': created_date})
 
         comment_list.append(c)
     return comment_list

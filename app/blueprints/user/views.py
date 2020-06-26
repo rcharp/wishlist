@@ -563,11 +563,6 @@ def sort_feedback(s, subdomain=None):
 Add a comment
 '''
 
-# Votes -------------------------------------------------------------------
-'''
-Add or remove a vote
-'''
-
 
 @user.route('/add_comment', subdomain='<subdomain>', methods=['GET','POST'])
 @login_required
@@ -576,6 +571,13 @@ def add_comment(subdomain=None):
     if request.method == 'POST':
         print(request.form)
     return jsonify({'success': 'Success'})
+
+
+# Votes -------------------------------------------------------------------
+'''
+Add or remove a vote
+'''
+
 
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
