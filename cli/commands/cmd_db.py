@@ -13,6 +13,7 @@ from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.vote import Vote
+from app.blueprints.base.models.comment import Comment
 
 # Create an app context for the database connection.
 app = create_app()

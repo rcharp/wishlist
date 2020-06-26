@@ -61,7 +61,7 @@ def generate_private_key(size=16):
         generate_private_key()
 
 
-# Feedback ###################################################
+# Domains ###################################################
 def create_domain(user, domain, company):
     d = Domain()
     d.domain_id = generate_id(Domain, 8)
@@ -132,6 +132,11 @@ def update_feedback(feedback_id, domain, title, description, status_id):
     except Exception as e:
         print_traceback(e)
         return None
+
+
+# Comments ################################################
+def add_comment(feedback_id, content, domain_id, user_id, parent_id=None):
+    return
 
 
 # Votes ###################################################

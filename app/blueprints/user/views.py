@@ -41,6 +41,7 @@ from sqlalchemy import or_, and_, exists, inspect, func
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
+from app.blueprints.base.models.comment import Comment
 
 user = Blueprint('user', __name__, template_folder='templates')
 use_username = False
@@ -397,7 +398,10 @@ def feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted, use_username=use_username)
+    comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
+    return render_template('user/view_feedback.html', current_user=current_user,
+                           feedback=f, statuses=statuses, subdomain=subdomain,
+                           voted=voted, comments=comments, use_username=use_username)
 
 
 '''
