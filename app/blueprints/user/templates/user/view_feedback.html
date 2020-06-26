@@ -325,19 +325,23 @@
 
             // Initialize comments
             $('#comments-container').comments({
-              profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
-              getComments: function(success, error) {
-                {#var commentsArray = [{
-                  id: 1,
-                  created: '2015-10-01',
-                  content: 'Lorem ipsum dolort sit amet',
-                  fullname: 'Simon Powell',
-                  upvote_count: 2,
-                  user_has_upvoted: false
-                }];#}
-                var commentsArray = JSON.parse('{{ comments | tojson}}');
-                success(commentsArray);
-              }
+                profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                enableUpvoting: false,
+                getComments: function(success, error) {
+                    var commentsArray = JSON.parse('{{ comments | tojson}}');
+                    success(commentsArray);
+                },
+                postComment: function(commentJSON, success, error) {
+                    $.ajax({
+                      type: 'post',
+                      url:  ReplaceSubdomain("{{ url_for('user.add_comment', subdomain='DUMMY_VALUE') }}"),
+                      data: commentJSON,
+                      success: function(comment) {
+                        success(comment)
+                      },
+                      error: error
+                    });
+                }
             });
         </script>
     </body>

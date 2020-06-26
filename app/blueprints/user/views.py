@@ -558,11 +558,24 @@ def sort_feedback(s, subdomain=None):
         return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, subdomain=demo)
 
 
+# Comments -------------------------------------------------------------------
+'''
+Add a comment
+'''
+
 # Votes -------------------------------------------------------------------
 '''
 Add or remove a vote
 '''
 
+
+@user.route('/add_comment', subdomain='<subdomain>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def add_comment(subdomain=None):
+    if request.method == 'POST':
+        print(request.form)
+    return jsonify({'success': 'Success'})
 
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
