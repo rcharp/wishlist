@@ -131,7 +131,7 @@
                                             </label>
                                             <div class="rounded-md">
                                                 <input id="title" name="title" class="form-input w-3/4 sm:text-lg sm:leading-5 mr-3" value="{{ feedback.title }}" placeholder="Enter a title" required />
-                                                <a href="{{ url_for('user.delete_feedback', feedback_id=feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x" style="color:red;"></i></a>
+                                                <a href="{{ url_for('user.delete_feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x" style="color:red;"></i></a>
                                             </div>
                                         </div>
                                         <p class="mt-1 ml-3 max-w-2xl text-sm leading-5 text-gray-500">
@@ -309,9 +309,32 @@
                     data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
                         alert(response['comments']);
-                        return response['comments'];
+                        InitializeComments(response['comments']);
                     },
                     error: function (xhr) {
+                    }
+                });
+            }
+
+
+            function InitializeComments(comments){
+                // Initialize comments
+                $('#comments-container').comments({
+                    profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    enableUpvoting: false,
+                    getComments: function(success, error) {
+                        success(comments);
+                    },
+                    postComment: function(commentJSON, success, error) {
+                        $.ajax({
+                          type: 'post',
+                          url:  ReplaceSubdomain("{{ url_for('user.add_comment', subdomain='DUMMY_VALUE') }}"),
+                          data: commentJSON,
+                          success: function(comment) {
+                            success(comment)
+                          },
+                          error: error
+                        });
                     }
                 });
             }
@@ -338,26 +361,7 @@
             }, false);
 
 
-            // Initialize comments
-            $('#comments-container').comments({
-                profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
-                enableUpvoting: false,
-                getComments: function(success, error) {
-                    var comments = GetComments('{{ feedback_id }}');
-                    success(comments);
-                },
-                postComment: function(commentJSON, success, error) {
-                    $.ajax({
-                      type: 'post',
-                      url:  ReplaceSubdomain("{{ url_for('user.add_comment', subdomain='DUMMY_VALUE') }}"),
-                      data: commentJSON,
-                      success: function(comment) {
-                        success(comment)
-                      },
-                      error: error
-                    });
-                }
-            });
+            GetComments('{{ feedback.feedback_id }}')
         </script>
     </body>
 </html>
