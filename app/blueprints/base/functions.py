@@ -138,19 +138,22 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 # Comments ################################################
 def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user, fullname):
-    c = Comment()
-    c.comment_id = generate_id(Comment)
-    c.feedback_id = feedback_id
-    c.user_id = user_id
-    c.comment = content
-    c.domain_id = domain_id
-    c.parent_id = parent_id
+    try:
+        c = Comment()
+        c.comment_id = generate_id(Comment)
+        c.feedback_id = feedback_id
+        c.user_id = user_id
+        c.comment = content
+        c.domain_id = domain_id
+        c.parent_id = parent_id
 
-    if created_by_user:
-        u = User.query.filter(User.id == user_id).scalar()
-        c.fullname = u.name
+        if created_by_user:
+            u = User.query.filter(User.id == user_id).scalar()
+            c.fullname = u.name
 
-    c.save()
+        c.save()
+    except Exception as e:
+        print_traceback(e)
     return
 
 
