@@ -376,6 +376,7 @@
         <script>
             var body = document.getElementsByTagName("body")[0];
             var except = document.getElementById('user-dropdown-menu');
+            var user_menu = document.getElementById('user-menu');
 
             body.addEventListener("click", function () {
                 except.classList.remove('opacity-100');
@@ -385,9 +386,12 @@
 
                 except.style.display = 'none';
             }, false);
-            document.getElementById('user-menu').addEventListener("click", function (ev) {
-                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-            }, false);
+
+            if (user_menu !== null){
+                user_menu.addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
 
             // Load the comments
             GetComments('{{ feedback.feedback_id }}')
