@@ -460,9 +460,12 @@ def add_feedback(subdomain=None):
                 from app.blueprints.base.functions import create_feedback
 
                 if current_user.is_authenticated:
-                    create_feedback(current_user, 'demo', None, title, description)
+                    f = create_feedback(current_user, 'demo', None, title, description)
                 else:
-                    create_feedback(None, 'demo', email, title, description)
+                    f = create_feedback(None, 'demo', email, title, description)
+
+                from app.blueprints.base.tasks import delete_demo_feedback
+                delete_demo_feedback.delay(f.feedback_id)
 
                 return redirect(url_for('user.dashboard'))
             except Exception:
