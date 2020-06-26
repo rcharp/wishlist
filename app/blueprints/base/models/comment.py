@@ -13,6 +13,7 @@ class Comment(ResourceMixin, db.Model):
     comment_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
     comment = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     fullname = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),

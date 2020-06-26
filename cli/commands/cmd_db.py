@@ -189,6 +189,25 @@ def seed_feedback():
 
 
 @click.command()
+def seed_comments():
+    d = Domain.query.filter(Domain.name == 'demo').scalar()
+    demo_user = User.query.filter(User.username == 'demo').scalar()
+    f = Feedback.query.order_by(Feedback.created_on.desc()).first()
+
+    for x in range(1, 10):
+        c = Comment()
+        c.user_id = demo_user.id
+        c.comment_id = generate_id(Comment)
+        c.fullname = generate_name()
+        c.comment = 'Lorem Ipsum'
+        c.feedback_id = f.feedback_id
+        c.domain_id = d.domain_id
+        c.save()
+
+    return
+
+
+@click.command()
 @click.option('--with-testdb/--no-with-testdb', default=False,
               help='Create a test db too?')
 @click.pass_context
@@ -204,6 +223,7 @@ def reset(ctx, with_testdb):
     ctx.invoke(seed_domains)
     ctx.invoke(seed_status)
     ctx.invoke(seed_feedback)
+    ctx.invoke(seed_comments)
 
     return None
 

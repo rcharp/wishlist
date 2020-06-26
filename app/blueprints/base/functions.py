@@ -139,6 +139,17 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id=None):
     return
 
 
+def format_comments(comments):
+    comment_list = list()
+
+    for comment in comments:
+        c = dict()
+        c.update({'id': comment.comment_id, 'content': comment.comment, 'fullname': comment.fullname, 'parent': comment.parent_id, 'creator': comment.user_id})
+
+        comment_list.append(c)
+    return comment_list
+
+
 # Votes ###################################################
 def add_vote(f, user, email=None):
     try:
@@ -206,7 +217,6 @@ def generate_name():
 
 
 def get_private_key(domain_id, user_id):
-
     d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
     from app.blueprints.base.encryption import decrypt_string
     return decrypt_string(d.private_key)

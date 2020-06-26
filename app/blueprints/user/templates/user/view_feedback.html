@@ -224,8 +224,10 @@
                         </div>
                       </div>
                     </form>
-
-                    <div id="comments-container"></div>
+                  <div class="text-sm leading-5 font-medium text-gray-500 mt-5">
+                      Comments
+                  </div>
+                  <div id="comments-container" class="mt-1"></div>
                 <!-- /End replace -->
               </div>
             </main>
@@ -325,14 +327,15 @@
             $('#comments-container').comments({
               profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
               getComments: function(success, error) {
-                var commentsArray = [{
+                {#var commentsArray = [{
                   id: 1,
                   created: '2015-10-01',
                   content: 'Lorem ipsum dolort sit amet',
                   fullname: 'Simon Powell',
                   upvote_count: 2,
                   user_has_upvoted: false
-                }];
+                }];#}
+                  var commentsArray = '{{ comments|safe }}';
                 success(commentsArray);
               }
             });

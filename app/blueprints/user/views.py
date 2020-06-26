@@ -395,10 +395,11 @@ View feedback details
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def feedback(feedback_id, subdomain):
+    from app.blueprints.base.functions import format_comments
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
+    comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all())
     return render_template('user/view_feedback.html', current_user=current_user,
                            feedback=f, statuses=statuses, subdomain=subdomain,
                            voted=voted, comments=comments, use_username=use_username)
