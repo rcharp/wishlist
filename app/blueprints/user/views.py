@@ -99,7 +99,7 @@ def login(subdomain=None):
                 subdomain = request.form.get('domain')
 
                 # Check if the entered domain exists
-                if subdomain is not None:
+                if subdomain:
                     if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
                         flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
                               category='error')
