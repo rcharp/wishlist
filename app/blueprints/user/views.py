@@ -593,6 +593,7 @@ Get comments
 @user.route('/get_comments', methods=['GET','POST'])
 @csrf.exempt
 def get_comments():
+    print(request.form)
     try:
         if request.method == 'POST':
             from app.blueprints.base.tasks import format_comments
