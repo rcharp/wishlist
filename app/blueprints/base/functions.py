@@ -248,9 +248,9 @@ def create_anon_user(email):
         u.role = 'member'
         u.password = User.encrypt_password(password)
         u.save()
-
-        return u
-    return None
+    else:
+        u = User.query.filter(User.email == 'email').scalar()
+    return u
 
 
 def populate_signup(request, user):
