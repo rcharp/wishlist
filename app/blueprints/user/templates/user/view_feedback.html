@@ -328,7 +328,7 @@
             function InitializeComments(comments){
                 var user_id = null;
                 var readOnly = false;
-                if ('{{ current_user.is_authenticated }}' === true){
+                if ('{{ current_user.is_authenticated }}' === 'true'){
                     user_id = '{{ current_user.id }}';
                 }else{
                     readOnly = true;
