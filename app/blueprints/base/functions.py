@@ -180,7 +180,6 @@ def update_comment(c, content):
 
 def format_comments(comments, current_user):
     try:
-        print(current_user)
         comment_list = list()
 
         for comment in comments:
@@ -208,7 +207,6 @@ def format_comments(comments, current_user):
 # Votes ###################################################
 def add_vote(f, user_id, email=None):
     try:
-
         v = Vote()
         v.feedback_id = f.feedback_id
         v.vote_id = generate_id(Vote)

@@ -237,9 +237,6 @@ def signup(subdomain=None):
                     # Log the user in
                     flash("You've successfully signed up!", 'success')
                     return redirect(url_for('user.start', subdomain=subdomain))
-                    # else:
-                        # flash("There was an error creating this domain. Please try again.", 'error')
-                        # return redirect(url_for('user.signup', form=form))
         except Exception as e:
             print_traceback(e)
 
@@ -763,18 +760,14 @@ def check_domain_status():
                             r.close()
                             return jsonify({'result': 'Success', 'code': r.status_code})
                         else:
-                            print("The error code is " + str(r.status_code))
                             r.close()
                             return jsonify({'result': 'Error', 'code': r.status_code})
                     except ConnectionError as c:
-                        print("There was a connection error")
                         return jsonify({'result': 'Error'})
-        print("something else")
         return jsonify({'result': 'Error'})
     except Exception as e:
         from app.blueprints.base.functions import print_traceback
         print_traceback(e)
-        print("there was an exception")
         return jsonify({'result': 'Error'})
 
 
@@ -784,7 +777,6 @@ def check_domain_status():
 def set_domain_privacy():
     try:
         if request.method == 'POST':
-            print(request.form)
             if 'domain_id' in request.form and 'privacy' in request.form:
                 domain_id = request.form['domain_id']
                 privacy = request.form['privacy']
