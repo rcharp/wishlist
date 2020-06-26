@@ -330,7 +330,7 @@
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
                             success: function(comment) {
-                                success(comment)
+                                success(comment);
                             },
                             error: error
                         });
