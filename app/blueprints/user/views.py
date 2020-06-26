@@ -94,13 +94,16 @@ def login(subdomain=None):
             u = User.find_by_identity(request.form.get('identity'))
 
             if u and u.is_active() and u.authenticated(password=request.form.get('password')):
+
                 # If the user doesn't have a company, make them sign up for one
                 subdomain = request.form.get('domain')
 
-                if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
-                    flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
-                          category='error')
-                    return render_template('user/login.html', form=form)
+                # Check if the entered domain exists
+                if subdomain is not None:
+                    if not db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
+                        flash(Markup("That domain wasn't found. Please try again or <a href='" + url_for('user.signup') + "'><span class='text-indigo-700'><u>create a new company</span></u></a>."),
+                              category='error')
+                        return render_template('user/login.html', form=form)
 
                 if login_user(u, remember=True) and u.is_active():
                     if current_user.role == 'admin':
@@ -111,7 +114,12 @@ def login(subdomain=None):
                     next_url = request.form.get('next')
 
                     if next_url == url_for('user.login') or next_url == '' or next_url is None:
-                        next_url = url_for('user.dashboard')
+
+                        if subdomain is not None:
+                            next_url = url_for('user.dashboard', subdomain=subdomain)
+                        else:
+                            if u.domain:
+                                next_url = url_for('user.dashboard', subdomain=u.domain)
 
                     if next_url:
                         return redirect(safe_next_url(next_url), code=307)

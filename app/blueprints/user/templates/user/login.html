@@ -43,21 +43,21 @@
       {% endcall %}
     {% else %}
         {% call f.form_tag('user.login') %}
-        <legend>Log in to a domain</legend>
+        <legend>Log in</legend>
 
         {% call f.form_group(form.identity, css_class='sm-margin-bottom', placeholder="Username or email",
                              autofocus='autofocus') %}
         {% endcall %}
 
-         <div id="domain-group" class="input-group" style="margin-bottom:25px;">
+        {% call f.form_group(form.password, css_class='sm-margin-bottom', placeholder="Password") %}
+        {% endcall %}
+
+        <div id="domain-group" class="input-group" style="margin-bottom:25px;">
             {% call f.form_group(form.domain, css_class='sm-margin-bottom',
-                placeholder='Domain to login to') %}
+                placeholder='Domain (optional)') %}
             {% endcall %}
             <span class="input-group-addon bg-white">.{{ 'site'|site_url_filter }}</span>
          </div>
-
-        {% call f.form_group(form.password, css_class='sm-margin-bottom', placeholder="Password") %}
-        {% endcall %}
 
         <div class="row">
           <div class="col-md-6">

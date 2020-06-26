@@ -22,9 +22,7 @@ class LoginFormAnon(Form):
     next = HiddenField()
     identity = StringField('Username or email',
                            [DataRequired(), Length(3, 254)])
-    domain = StringField('Domain to login to', validators=[
-        DataRequired()
-    ])
+    domain = StringField('Domain (optional)')
     password = PasswordField('Password', [DataRequired(), Length(8, 128)])
     # remember = BooleanField('Stay signed in')
 
