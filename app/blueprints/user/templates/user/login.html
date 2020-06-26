@@ -4,10 +4,14 @@
 {% block title %}Login - {{ 'site_name'|site_name_filter }}{% endblock %}
 
 {% block body %}
-    <head>
-        <!-- Tailwind CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
-    </head>
+<head>
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+
+    <!-- Icons -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
+</head>
+
   <div class="row" style="margin-top:50px;">
     <div class="block-content" style="width:50%;min-width:300px;max-width:350px;margin:0 auto;
     border:1px solid #c5c5c5;border-radius:4px; padding:20px;float:none;margin-top:50px; background-color:#fff;">

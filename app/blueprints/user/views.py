@@ -41,6 +41,7 @@ from sqlalchemy import or_, and_, exists, inspect, func
 from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
+from app.blueprints.base.models.comment import Comment
 
 user = Blueprint('user', __name__, template_folder='templates')
 use_username = False
@@ -213,9 +214,18 @@ def signup(subdomain=None):
                     # send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
-                    # Create the domain from the form
-                    from app.blueprints.base.tasks import create_domain
-                    create_domain.delay(u.id, u.email, form.domain.data, form.company.data)
+                    # Create the domain from the form, as well as the heroku subdomain
+                    from app.blueprints.base.functions import create_domain
+                    from app.blueprints.base.tasks import populate_domain, create_heroku_subdomain
+
+                    # Create the domain in the database
+                    d = create_domain(u, form.domain.data, form.company.data)
+
+                    # Populate the domain with a private key
+                    populate_domain.delay(d)
+
+                    # Create the Heroku and Cloudflare subdomains
+                    create_heroku_subdomain.delay(form.domain.data)
 
                     # Log the user in
                     flash("You've successfully signed up!", 'success')
@@ -323,8 +333,12 @@ def start(subdomain=None):
     if not (current_user.is_authenticated and current_user.domain == subdomain):
         return redirect(url_for('user.login'))
 
-    domain = Domain.query.filter(Domain.name == current_user.domain).scalar()
+    # if subdomain == current_user.domain:
+    #     r = requests.get('https://' + subdomain + '.getwishlist.io')
+    #     if r.status_code == 200:
+    #         return redirect(url_for('user.settings', subdomain=subdomain))
 
+    domain = Domain.query.filter(Domain.name == current_user.domain).scalar()
     return render_template('user/start.html', current_user=current_user, domain=domain, subdomain=subdomain)
 
 
@@ -358,20 +372,23 @@ def update_credentials(subdomain=None):
 def dashboard(subdomain=None):
     if subdomain:
         d = Domain.query.filter(Domain.name == subdomain).scalar()
-        feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
 
-        if current_user.is_authenticated:
-            votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
-        else:
-            votes = None
+        if d is not None:
+            feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
 
-        statuses = Status.query.all()
+            if current_user.is_authenticated:
+                votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
+            else:
+                votes = None
 
-        for f in feedbacks:
-            f.votes = int(f.votes)
+            statuses = Status.query.all()
 
-        feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
+            for f in feedbacks:
+                f.votes = int(f.votes)
+
+            feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+            return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
+        return redirect(url_for('user.settings', subdomain=subdomain))
     else:
         d = Domain.query.filter(Domain.name == 'demo').scalar()
         feedbacks = Feedback.query.all()
@@ -417,10 +434,15 @@ def feedback(feedback_id, subdomain):
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def feedback(feedback_id, subdomain):
+    from app.blueprints.base.functions import format_comments
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user, feedback=f, statuses=statuses, subdomain=subdomain, voted=voted, use_username=use_username)
+    # comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), current_user)
+    # print(comments)
+    return render_template('user/view_feedback.html', current_user=current_user,
+                           feedback=f, statuses=statuses, subdomain=subdomain,
+                           voted=voted, use_username=use_username)
 
 
 '''
@@ -446,9 +468,19 @@ def add_feedback(subdomain=None):
                 from app.blueprints.base.functions import create_feedback
 
                 if current_user.is_authenticated:
-                    create_feedback(current_user, subdomain, None, title, description)
+                    f = create_feedback(current_user, subdomain, None, title, description)
+
+                    # Delete demo feedback after 60 seconds
+                    if subdomain == 'demo':
+                        time.sleep(60)
+                        f.delete()
                 else:
-                    create_feedback(None, subdomain, email, title, description)
+                    f = create_feedback(None, subdomain, email, title, description)
+
+                    # Delete demo feedback after 60 seconds
+                    if subdomain == 'demo':
+                        time.sleep(60)
+                        f.delete()
 
                 return redirect(url_for('user.dashboard', subdomain=subdomain))
             except Exception:
@@ -507,6 +539,24 @@ def update_feedback(subdomain=None):
 
 
 '''
+Delete the feedback
+'''
+
+
+@user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET'])
+@csrf.exempt
+def delete_feedback(feedback_id, subdomain=None):
+    try:
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        f.delete()
+
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+    except Exception:
+        flash("Uh oh, something went wrong!", "error")
+        return redirect(url_for('user.feedback', feedback_id=feedback_id, subdomain=subdomain))
+
+
+'''
 Sort the feedback by newest, oldest, or most votes
 '''
 
@@ -545,6 +595,55 @@ def sort_feedback(s, subdomain=None):
             feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
         return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, subdomain=demo)
+
+
+# Comments -------------------------------------------------------------------
+'''
+Get comments
+'''
+
+
+@user.route('/get_comments', methods=['GET','POST'])
+@csrf.exempt
+def get_comments():
+    try:
+        if request.method == 'POST':
+            from app.blueprints.base.tasks import format_comments
+            feedback_id = request.form['feedback_id']
+            user_id = request.form['user_id']
+
+            comments = format_comments(feedback_id, user_id)
+
+            return jsonify({'comments': comments})
+    except Exception as e:
+        return jsonify({'comments': None})
+
+
+'''
+Add a comment
+'''
+
+
+@user.route('/add_comment', methods=['POST'])
+@csrf.exempt
+def add_comment():
+    try:
+        print(request.form)
+        from app.blueprints.base.functions import add_comment
+        if request.method == 'POST':
+            feedback_id = request.form['feedback_id']
+            user_id = request.form['user_id']
+            parent_id = request.form['parent']
+            content = request.form['content']
+            created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+
+            f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+            if f is not None:
+                add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user)
+        return jsonify({'result': 'Success'})
+    except Exception as e:
+        return jsonify({'result': 'Error'})
 
 
 # Votes -------------------------------------------------------------------
@@ -597,7 +696,8 @@ def settings(subdomain=None):
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
         return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
     else:
-        return render_template('user/settings.html', current_user=current_user)
+        domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
+        return render_template('user/settings.html', current_user=current_user, domain=domain)
 
 
 # Actions -------------------------------------------------------------------
@@ -608,12 +708,32 @@ def send_invite(subdomain=None):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
+@user.route('/get_private_key', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def get_private_key():
+    try:
+        if request.method == 'POST':
+            if 'domain_id' in request.form and 'user_id' in request.form:
+                domain_id = request.form['domain_id']
+                user_id = request.form['user_id']
+
+                from app.blueprints.base.functions import get_private_key
+                key = get_private_key(domain_id, user_id)
+                print(key)
+                return jsonify({'success': True, 'key': key})
+    except Exception as e:
+        return jsonify({'success': False})
+    return jsonify({'success': False})
+
+
 @user.route('/check_domain_status', methods=['GET','POST'])
 @login_required
 @csrf.exempt
 @cross_origin()
 def check_domain_status():
     try:
+        # time.sleep(10)
         if request.method == 'POST':
             if 'subdomain' in request.form and 'user_id' in request.form:
                 subdomain = request.form['subdomain']
@@ -622,12 +742,29 @@ def check_domain_status():
                 u = User.query.filter(User.id == user_id).scalar()
 
                 if subdomain == u.domain:
-                    r = requests.get('https://' + subdomain + '.getwishlist.io')
-                    if r.status_code == 200:
-                        return jsonify({'success': 'Success'})
-        return jsonify({'error': 'Error'})
+                    try:
+
+                        url = 'https://' + subdomain + '.getwishlist.io'
+
+                        r = requests.get(url, verify=False)
+
+                        if r.status_code == 200:
+                            r.close()
+                            return jsonify({'result': 'Success', 'code': r.status_code})
+                        else:
+                            print("The error code is " + str(r.status_code))
+                            r.close()
+                            return jsonify({'result': 'Error', 'code': r.status_code})
+                    except ConnectionError as c:
+                        print("There was a connection error")
+                        return jsonify({'result': 'Error'})
+        print("something else")
+        return jsonify({'result': 'Error'})
     except Exception as e:
-        return jsonify({'error': 'Error'})
+        from app.blueprints.base.functions import print_traceback
+        print_traceback(e)
+        print("there was an exception")
+        return jsonify({'result': 'Error'})
 
 
 @user.route('/set_domain_privacy', methods=['GET', 'POST'])

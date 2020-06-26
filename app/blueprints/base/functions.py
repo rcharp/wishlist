@@ -6,9 +6,11 @@ import traceback
 from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
-from app.blueprints.base.encryption import encrypt_string
+from app.blueprints.page.date import get_year_date_string
+from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
+from app.blueprints.base.models.comment import Comment
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
 
@@ -45,19 +47,37 @@ def generate_temp_password(size=15):
 
 
 def generate_private_key(size=16):
-    from app.blueprints.base.encryption import encrypt_string, decrypt_string
+    from app.blueprints.base.encryption import encrypt_string
 
     # Generate a random 16-character alphanumeric id
     chars = string.digits + string.ascii_lowercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
+    # Encrypt the private key
     enc = encrypt_string(id)
 
     # Check to make sure there isn't already that id in the database
     if not db.session.query(exists().where(Domain.private_key == enc)).scalar():
-        return id
+        return enc
     else:
         generate_private_key()
+
+
+# Domains ###################################################
+def create_domain(user, domain, company):
+    d = Domain()
+    d.domain_id = generate_id(Domain, 8)
+    d.name = domain
+    d.company = company
+    d.user_id = user.id
+    d.admin_email = user.email
+    d.save()
+
+    user.domain_id = d.domain_id
+    user.domain = domain
+    user.save()
+
+    return d.domain_id
 
 
 # Feedback ###################################################
@@ -82,13 +102,16 @@ def create_feedback(user, domain, email, title, description):
             f.username = user.username
             f.fullname = user.name
             f.email = user.email
+            f.save()
+
+            add_vote(f, user)
         else:
             f.email = email
-            create_anon_user(email)
+            f.save()
 
-        f.save()
+            user = create_anon_user(email)
 
-        add_vote(feedback_id, user)
+            add_vote(f, user, email)
 
         return f
     except Exception as e:
@@ -113,18 +136,68 @@ def update_feedback(feedback_id, domain, title, description, status_id):
         return None
 
 
-# Votes ###################################################
-def add_vote(feedback_id, user_id):
+# Comments ################################################
+def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user):
     try:
-        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        c = Comment()
+        c.comment_id = generate_id(Comment)
+        c.feedback_id = feedback_id
+        c.user_id = user_id
+        c.comment = content
+        c.domain_id = domain_id
+
+        # Set the parent
+        if parent_id:
+            parent = Comment.query.filter(Comment.comment_id == parent_id).scalar()
+            if parent is not None:
+                c.parent_id = parent.id
+
+        if created_by_user:
+            u = User.query.filter(User.id == user_id).scalar()
+            if u is not None:
+                c.fullname = u.name
+
+        c.save()
+    except Exception as e:
+        print_traceback(e)
+    return
+
+
+def format_comments(comments, current_user):
+    comment_list = list()
+
+    for comment in comments:
+        c = dict()
+        created_date = get_year_date_string(comment.created_on)
+        created_by_user = True if (current_user.is_authenticated is not None and comment.user_id == current_user.id) else False
+        created_by_admin = True if (current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
+        parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
+        c.update({'id': comment.comment_id,
+                  'content': comment.comment,
+                  'fullname': comment.fullname,
+                  'parent': parent_id,
+                  'creator': comment.user_id,
+                  'created_by_current_user': created_by_user,
+                  'created_by_admin': created_by_admin,
+                  'created': created_date})
+
+        comment_list.append(c)
+    return comment_list
+
+
+# Votes ###################################################
+def add_vote(f, user, email=None):
+    try:
 
         v = Vote()
-        v.feedback_id = feedback_id
+        v.feedback_id = f.feedback_id
         v.vote_id = generate_id(Vote)
         v.domain_id = f.domain_id
 
-        if user_id is not None:
-            v.user_id = user_id
+        if user is not None:
+            v.user_id = user.id
+        else:
+            v.email = email
 
         v.save()
 
@@ -191,6 +264,9 @@ def create_anon_user(email):
         u.password = User.encrypt_password(password)
         u.save()
 
+        return u
+    return None
+
 
 def populate_signup(request, user):
     user.created_on = dt.now().replace(tzinfo=pytz.utc)
@@ -203,6 +279,12 @@ def populate_signup(request, user):
 
 def generate_name():
     return names.get_first_name()
+
+
+def get_private_key(domain_id, user_id):
+    d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+    from app.blueprints.base.encryption import decrypt_string
+    return decrypt_string(d.private_key)
 
 
 # Other ###################################################

@@ -15,7 +15,7 @@
 
         <!-- Icons -->
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-        <link rel="shortcut icon" href="../../../../static/logo/favicon.ico">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='logo/favicon.ico', subdomain=subdomain) }}">
 
         <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="16x16">
         <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="32x32">
@@ -62,7 +62,7 @@
     </head>
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
-          {% include '/user/includes/mobile_sidebar.html' ignore missing %}
+          {% include '/user/includes/mobile.html' ignore missing %}
           {% with page='settings' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -117,11 +117,13 @@
                           </dd>
                           <dd class="sm:col-span-6"></dd>
                           <dd class="sm:col-span-3 text-right">
-                            <span class="inline-flex rounded-md mr-4 shadow-sm">
-                              <a href="{{ url_for('user.dashboard', subdomain=domain.name) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Go to my dashboard
-                              </a>
-                            </span>
+                              {% if domain %}
+                                <span class="inline-flex rounded-md mr-4 shadow-sm">
+                                  <a href="{{ url_for('user.dashboard', subdomain=domain.name) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Go to my dashboard
+                                  </a>
+                                </span>
+                              {% endif %}
                           </dd>
                       </div>
                     </dl>
@@ -211,8 +213,8 @@
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Private Key
                         </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.private_key|deserialize_private_key }}
+                        <dd id="private-key" class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          Loading...
                         </dd>
                       </div>
                       {% endif %}
@@ -397,6 +399,21 @@
             function ConfirmDeleteAccount(){
                 return confirm("Are you sure you want to delete your account? This can't be undone.");
             }
+
+            function GetPrivateKey(user_id, domain_id){
+                $.ajax({
+                    url: "{{ url_for('user.get_private_key') }}",
+                    type: 'POST',
+                    data: {'domain_id': domain_id, 'user_id': user_id},
+                    success: function (response) {
+                        if (response['success'] === true){
+                            document.getElementById('private-key').innerText = response['key'];
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
@@ -413,6 +430,8 @@
             document.getElementById('user-menu').addEventListener("click", function (ev) {
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
+
+            GetPrivateKey('{{ current_user.id }}', '{{ domain.domain_id }}');
         </script>
     </body>
 </html>
