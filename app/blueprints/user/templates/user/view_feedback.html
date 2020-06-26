@@ -269,14 +269,18 @@
 
             function Vote(feedback_id) {
                 var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+
+                var user_id = null;
+                if ('{{ current_user }}' !== null){
+                    user_id = '{{ current_user.id }}';
+                }
                 $.ajax({
                     url: url,
                     type: 'POST',
                     beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    data: {'feedback_id': feedback_id, 'user_id': user_id},
                     success: function (response) {
                         if ('success' in response){
-                            //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
                         }
                     },
                     error: function (xhr) {
@@ -303,10 +307,14 @@
 
             function GetComments(feedback_id){
                 var url = "{{ url_for('user.get_comments') }}";
+                var user_id = null;
+                if ('{{ current_user }}' !== null){
+                    user_id = '{{ current_user.id }}';
+                }
                 $.ajax({
                     url: url,
                     type: 'POST',
-                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    data: {'feedback_id': feedback_id, 'user_id': user_id},
                     success: function (response) {
                         InitializeComments(response['comments']);
                     },
@@ -317,6 +325,11 @@
 
             // Initialize comments
             function InitializeComments(comments){
+                var user_id = null;
+                if ('{{ current_user }}' !== null){
+                    user_id = '{{ current_user.id }}';
+                }
+
                 $('#comments-container').comments({
                     profilePictureURL: "{{ url_for('static', filename='icons/user.png') }}",
                     enableUpvoting: false,
@@ -325,7 +338,7 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
                         $.ajax({
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
@@ -337,7 +350,7 @@
                         });
                     },
                     putComment: function(commentJSON, success, error) {
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
                         $.ajax({
                             type: 'POST',
                             url:  "{{ url_for('user.update_comment') }}",
