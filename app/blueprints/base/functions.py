@@ -145,11 +145,16 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
         c.user_id = user_id
         c.comment = content
         c.domain_id = domain_id
-        c.parent_id = parent_id
+
+        # Set the parent
+        parent = Comment.query.filter(Comment.comment_id == parent_id).scalar()
+        if parent is not None:
+            c.parent_id = parent.id
 
         if created_by_user:
             u = User.query.filter(User.id == user_id).scalar()
-            c.fullname = u.name
+            if u is not None:
+                c.fullname = u.name
 
         c.save()
     except Exception as e:

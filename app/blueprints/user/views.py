@@ -601,7 +601,8 @@ def add_comment():
 
             f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
-            add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user, fullname)
+            if f is not None:
+                add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user, fullname)
         return jsonify({'result': 'Success'})
     except Exception as e:
         return jsonify({'result': 'Error'})

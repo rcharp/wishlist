@@ -328,7 +328,7 @@
                         $.ajax({
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
-                            data: commentJSON,
+                            data: data,
                             success: function(comment) {
                                 success(comment);
                             },
