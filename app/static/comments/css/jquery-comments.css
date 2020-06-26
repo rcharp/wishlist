@@ -524,7 +524,7 @@ http://viima.github.io/jquery-comments/*/
 }
 
 .jquery-comments ul.main li.comment .comment-header .name {
-	color: #42389d;
+	color: #42389d !important;
 	font-weight: bold;
 }
 
@@ -561,7 +561,7 @@ http://viima.github.io/jquery-comments/*/
 
 /* Content */
 .jquery-comments ul.main li.comment .wrapper .content {
-	color: #252f3f;
+	color: #252f3f !important;
 	white-space: pre-line;
 	word-break: break-word;
 }
