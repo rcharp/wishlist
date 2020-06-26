@@ -144,7 +144,8 @@ def format_comments(comments):
 
     for comment in comments:
         c = dict()
-        c.update({'id': comment.comment_id, 'content': comment.comment, 'fullname': comment.fullname, 'parent': comment.parent_id, 'creator': comment.user_id})
+        parent_id = [p.comment_id for p in comments if p.id == comment.parent_id]
+        c.update({'id': comment.comment_id, 'content': comment.comment, 'fullname': comment.fullname, 'parent': parent_id, 'creator': comment.user_id})
 
         comment_list.append(c)
     return comment_list
