@@ -330,10 +330,10 @@
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
-                            beforeSend: success(comment),
+                            //beforeSend: success(comment),
                             success: function(comment) {
-                                alert(comment);
-                                //success(comment);
+                                //alert(comment);
+                                success(comment);
                             },
                             error: alert(error)
                         });
