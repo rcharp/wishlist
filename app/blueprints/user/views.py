@@ -362,6 +362,7 @@ def dashboard(subdomain=None):
 
             for f in feedbacks:
                 f.votes = int(f.votes)
+                f.comments = int(f.comments)
 
             feedbacks.sort(key=lambda x: x.created_on, reverse=True)
             return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
