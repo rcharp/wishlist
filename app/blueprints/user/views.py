@@ -586,11 +586,12 @@ Add a comment
 '''
 
 
-@user.route('/add_comment', methods=['GET','POST'])
+@user.route('/add_comment', methods=['POST'])
 @login_required
 @csrf.exempt
 def add_comment():
     try:
+        print(request.form)
         from app.blueprints.base.functions import add_comment
         if request.method == 'POST':
             feedback_id = request.form['feedback_id']
