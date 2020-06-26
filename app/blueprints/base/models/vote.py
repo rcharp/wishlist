@@ -11,6 +11,7 @@ class Vote(ResourceMixin, db.Model):
     # Objects.
     id = db.Column(db.Integer, primary_key=True)
     vote_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
+    email = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),

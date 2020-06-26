@@ -14,7 +14,7 @@
 
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="../../../../static/logo/favicon.ico">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo/favicon.ico', subdomain=subdomain) }}">
 
     <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="16x16">
     <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="32x32">
@@ -49,7 +49,7 @@
 </head>
 
 <body class="text-black base-font-size">
-
+    {% include '/page/includes/mobile.html' ignore missing %}
     <div class="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full">
 
         <!-- Header -->

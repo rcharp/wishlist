@@ -49,6 +49,7 @@ def create_subdomain(subdomain):
                 print("Domain already exists.")
                 
                 try:
+                    d = app.get_domain(subdomain + '.getwishlist.io')
                     dns = d.cname
 
                     # Create the DNS in CloudFlare

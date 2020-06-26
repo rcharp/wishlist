@@ -22,10 +22,10 @@ page = Blueprint('page', __name__, template_folder='templates')
 @cross_origin()
 def home(subdomain=None):
     if current_user.is_authenticated:
-        return redirect(url_for('user.login'))
-
-    if subdomain:
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
+        if subdomain:
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
+        else:
+            return redirect(url_for('user.settings'))
 
     return render_template('page/index.html', plans=settings.STRIPE_PLANS)
 

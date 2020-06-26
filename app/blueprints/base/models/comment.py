@@ -13,6 +13,7 @@ class Comment(ResourceMixin, db.Model):
     comment_id = db.Column(db.Integer, unique=True, index=True, nullable=False)
     comment = db.Column(db.UnicodeText, unique=False, index=True, nullable=True, server_default='')
     fullname = db.Column(db.String(255), unique=False, index=True, nullable=True, server_default='')
+    votes = db.Column(db.Integer, unique=False, index=True, nullable=False, server_default='0')
 
     # Relationships.
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', onupdate='CASCADE', ondelete='CASCADE'),
@@ -21,8 +22,8 @@ class Comment(ResourceMixin, db.Model):
                         index=True, nullable=True, primary_key=False, unique=False)
     domain_id = db.Column(db.BigInteger, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
                             index=True, nullable=True, primary_key=False, unique=False)
-    parent_id = db.Column(db.Integer, db.ForeignKey('comments.comment_id', onupdate='CASCADE', ondelete='CASCADE'),
-                          index=True, nullable=True, primary_key=False, unique=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.id', onupdate='CASCADE', ondelete='CASCADE'),
+                                        index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.

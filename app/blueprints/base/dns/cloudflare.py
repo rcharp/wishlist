@@ -30,15 +30,17 @@ def create_dns(subdomain, dns):
     # request the DNS records from that zone
     try:
 
-        # If the DNS already exists, then you can return True
+        # If the DNS already exists, then you can update it and return True
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
-            if r['name'].startswith(subdomain):
+            if r['name'] == subdomain + '.getwishlist.io':
+                record = {'name': subdomain, 'type': 'CNAME', 'content': dns, 'proxied': True}
+                cf.zones.dns_records.put(zone_id, r['id'], data=record)
                 return True
-        
+
         # Otherwise create the record
         record = {'name': subdomain, 'type':'CNAME', 'content': dns, 'proxied': True}
-        r = cf.zones.dns_records.post(zone_id, data=record)
+        cf.zones.dns_records.post(zone_id, data=record)
         return True
     except CloudFlare.exceptions.CloudFlareAPIError as e:
         print_traceback(e)
