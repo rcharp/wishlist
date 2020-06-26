@@ -181,6 +181,7 @@ def update_comment(c, content):
 def format_comments(comments, current_user):
 
     try:
+        print(current_user)
         comment_list = list()
 
         for comment in comments:

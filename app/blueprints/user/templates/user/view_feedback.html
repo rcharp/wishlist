@@ -317,7 +317,6 @@
                     type: 'POST',
                     data: {'feedback_id': feedback_id, 'user_id': user_id},
                     success: function (response) {
-                        alert(response['comments']);
                         InitializeComments(response['comments']);
                     },
                     error: function (xhr) {
