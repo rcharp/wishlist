@@ -400,6 +400,7 @@ def feedback(feedback_id, subdomain):
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
     comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all())
+    print(comments)
     return render_template('user/view_feedback.html', current_user=current_user,
                            feedback=f, statuses=statuses, subdomain=subdomain,
                            voted=voted, comments=comments, use_username=use_username)
