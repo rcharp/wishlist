@@ -48,5 +48,5 @@ def format_comments(feedback_id, user_id):
 @celery.task()
 def delete_demo_feedback(feedback_id):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-    time.sleep(30)
+    time.sleep(10)
     f.delete()
