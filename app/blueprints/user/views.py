@@ -399,11 +399,11 @@ def feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
     statuses = Status.query.all()
-    comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), current_user)
-    print(comments)
+    # comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), current_user)
+    # print(comments)
     return render_template('user/view_feedback.html', current_user=current_user,
                            feedback=f, statuses=statuses, subdomain=subdomain,
-                           voted=voted, comments=comments, use_username=use_username)
+                           voted=voted, use_username=use_username)
 
 
 '''
@@ -559,6 +559,28 @@ def sort_feedback(s, subdomain=None):
 
 
 # Comments -------------------------------------------------------------------
+'''
+Get comments
+'''
+
+
+@user.route('/get_comments', subdomain='<subdomain>', methods=['GET','POST'])
+@csrf.exempt
+def get_comments(subdomain=None):
+    try:
+        if request.method == 'POST':
+            from app.blueprints.base.functions import format_comments
+            feedback_id = request.form['feedback_id']
+            user_id = request.form['user_id']
+            u = User.query.filter(User.id == user_id).scalar()
+
+            comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), u)
+
+            return jsonify({'comments': comments})
+    except Exception as e:
+        return jsonify({'comments': None})
+
+
 '''
 Add a comment
 '''
