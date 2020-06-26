@@ -371,8 +371,6 @@
                         });
                     }
                 });
-
-                ChangeIcons();
             }
 
             function ReplaceSubdomain(url){
@@ -412,7 +410,10 @@
             }
 
             // Load the comments
-            GetComments('{{ feedback.feedback_id }}')
+            GetComments('{{ feedback.feedback_id }}');
+
+            // Change the icons
+            ChangeIcons();
         </script>
     </body>
 </html>
