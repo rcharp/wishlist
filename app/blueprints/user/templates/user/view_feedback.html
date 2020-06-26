@@ -330,9 +330,10 @@
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
                             success: function(comment) {
+                                alert("Success");
                                 success(comment);
                             },
-                            error: error
+                            error: alert(error);
                         });
                     }
                 });
