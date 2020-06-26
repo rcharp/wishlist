@@ -111,7 +111,7 @@ def create_feedback(user, domain, email, title, description):
 
             user = create_anon_user(email)
 
-            add_vote(f, user, email)
+            add_vote(f, user.id, email)
 
         return f
     except Exception as e:
