@@ -434,15 +434,15 @@ def add_feedback(subdomain=None):
 
                     # Delete demo feedback after 60 seconds
                     if subdomain == 'demo':
-                        time.sleep(60)
-                        f.delete()
+                        from app.blueprints.base.tasks import delete_demo_feedback
+                        delete_demo_feedback.delay(f.feedback_id)
                 else:
                     f = create_feedback(None, subdomain, email, title, description)
 
                     # Delete demo feedback after 60 seconds
                     if subdomain == 'demo':
-                        time.sleep(60)
-                        f.delete()
+                        from app.blueprints.base.tasks import delete_demo_feedback
+                        delete_demo_feedback.delay(f.feedback_id)
 
                 return redirect(url_for('user.dashboard', subdomain=subdomain))
             except Exception:

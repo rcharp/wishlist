@@ -1,6 +1,7 @@
 from app.app import create_celery_app
 from app.blueprints.user.models.domain import Domain
-from app.blueprints.user.models.user import User
+from app.blueprints.base.models.feedback import Feedback
+import time
 
 celery = create_celery_app()
 
@@ -42,3 +43,10 @@ def format_comments(feedback_id, user_id):
     user = User.query.filter(User.id == user_id).scalar()
     comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
     return format_comments(comments, user)
+
+
+@celery.task()
+def delete_demo_feedback(feedback_id):
+    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    time.sleep(30)
+    f.delete()
