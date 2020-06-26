@@ -323,7 +323,7 @@
                     getComments: function(success, error) {
                         success(comments);
                     },
-                    postComment: function(commentJSON, success, error) {
+                    {#postComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
                         $.ajax({
                             type: 'POST',
@@ -334,7 +334,7 @@
                             },
                             error: error
                         });
-                    }
+                    }#}
                 });
             }
 
