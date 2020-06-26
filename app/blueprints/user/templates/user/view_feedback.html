@@ -329,7 +329,7 @@
                 var user_id = null;
                 var readOnly = false;
                 alert('{{ current_user.is_authenticated }}');
-                if ('{{ current_user.is_authenticated }}' === 'true'){
+                if ('{{ current_user.is_authenticated }}' === 'True'){
                     user_id = '{{ current_user.id }}';
                 }else{
                     readOnly = true;
