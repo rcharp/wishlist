@@ -249,7 +249,7 @@ def create_anon_user(email):
         u.password = User.encrypt_password(password)
         u.save()
     else:
-        u = User.query.filter(User.email == 'email').scalar()
+        u = User.query.filter(User.email == email).scalar()
     return u
 
 
