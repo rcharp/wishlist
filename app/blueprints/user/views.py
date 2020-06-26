@@ -625,9 +625,15 @@ def update_vote(subdomain=None):
 
             if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
                 vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
-                remove_vote(feedback_id, vote)
+                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                if f is not None:
+                    remove_vote(f, vote)
             else:
-                add_vote(feedback_id, user_id)
+                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                if f is not None:
+                    add_vote(f, user_id)
 
             return jsonify({'success': 'Success'})
 
