@@ -614,6 +614,29 @@ def add_comment():
         return jsonify({'result': 'Error'})
 
 
+'''
+Update a comment
+'''
+
+
+@user.route('/update_comment', methods=['POST'])
+@csrf.exempt
+def update_comment():
+    try:
+        from app.blueprints.base.functions import update_comment
+        if request.method == 'POST':
+            comment_id = request.form['id']
+            content = request.form['content']
+
+            c = Comment.query.filter(Comment.comment_id == comment_id).scalar()
+            if c is not None:
+                update_comment(c, content)
+
+        return jsonify({'result': 'Success'})
+    except Exception as e:
+        return jsonify({'result': 'Error'})
+
+
 # Votes -------------------------------------------------------------------
 '''
 Add or remove a vote

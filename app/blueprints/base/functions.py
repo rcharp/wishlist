@@ -165,6 +165,19 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
     return False
 
 
+def update_comment(c, content):
+    try:
+
+        # Update the comment
+        c.comment = content
+        c.save()
+
+        return True
+    except Exception as e:
+        print_traceback(e)
+    return False
+
+
 def format_comments(comments, current_user):
     comment_list = list()
 

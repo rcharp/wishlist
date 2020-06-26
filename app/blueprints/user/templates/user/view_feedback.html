@@ -335,6 +335,18 @@
                             },
                             error: error
                         });
+                    },
+                    putComment: function(commentJSON, success, error) {
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
+                        $.ajax({
+                            type: 'POST',
+                            url:  "{{ url_for('user.update_comment') }}",
+                            data: data,
+                            beforeSend: success(commentJSON),
+                            success: function(comment) {
+                            },
+                            error: error
+                        });
                     }
                 });
             }
