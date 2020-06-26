@@ -2,6 +2,7 @@ import click
 import random
 from cli.commands.data import (
     statuses,
+    generate_comments,
     generate_feedback
 )
 from sqlalchemy_utils import database_exists, create_database
@@ -193,6 +194,7 @@ def seed_comments():
     d = Domain.query.filter(Domain.name == 'demo').scalar()
     # demo_user = User.query.filter(User.username == 'demo').scalar()
     feedback = Feedback.query.order_by(Feedback.created_on.desc()).limit(10).all()
+    comments = generate_comments()
 
     for f in feedback:
         for x in range(random.randint(1, 21)):
@@ -200,7 +202,7 @@ def seed_comments():
             # c.user_id = demo_user.id
             c.comment_id = generate_id(Comment)
             c.fullname = generate_name()
-            c.comment = 'Lorem Ipsum'
+            c.comment = random.choice(comments)
             c.feedback_id = f.feedback_id
             c.domain_id = d.domain_id
             c.save()
