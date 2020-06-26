@@ -318,7 +318,7 @@
             // Initialize comments
             function InitializeComments(comments){
                 $('#comments-container').comments({
-                    profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    profilePictureURL: "{{ url_for('static', filename='icons/user.svg') }}",
                     enableUpvoting: false,
                     postCommentOnEnter: true,
                     getComments: function(success, error) {
@@ -332,8 +332,6 @@
                             data: data,
                             beforeSend: success(commentJSON),
                             success: function(comment) {
-                                //alert(comment);
-                                //success(comment);
                             },
                             error: error
                         });
