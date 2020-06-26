@@ -381,11 +381,13 @@
             }
 
             function ChangeIcons(){
-                var icons = document.getElementsByClassName('fa fa-user');
+                var icons = document.getElementsByClassName('fa-user');
 
                 for (var i = 0; i < icons.length; i++){
-                    icons[i].classList.remove('fa fa-user');
-                    icons[i].classList.add('si si-user');
+                    icons[i].classList.remove('fa');
+                    icons[i].classList.remove('fa-user');
+                    icons[i].classList.add('si');
+                    icons[i].classList.add('si-user');
                 }
             }
         </script>
