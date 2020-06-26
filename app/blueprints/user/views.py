@@ -590,7 +590,6 @@ Add a comment
 @csrf.exempt
 def add_comment():
     try:
-        print(request.form)
         from app.blueprints.base.functions import add_comment
         if request.method == 'POST':
             feedback_id = request.form['feedback_id']
@@ -602,7 +601,9 @@ def add_comment():
             f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
             if f is not None:
-                add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user)
+                if add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user):
+                    f.comments += 1
+                    f.save()
         return jsonify({'result': 'Success'})
     except Exception as e:
         return jsonify({'result': 'Error'})

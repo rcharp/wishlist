@@ -158,9 +158,11 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
                 c.fullname = u.name
 
         c.save()
+
+        return True
     except Exception as e:
         print_traceback(e)
-    return
+    return False
 
 
 def format_comments(comments, current_user):
