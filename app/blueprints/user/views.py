@@ -115,11 +115,17 @@ def login(subdomain=None):
 
                     if next_url == url_for('user.login') or next_url == '' or next_url is None:
 
-                        if subdomain is not None:
+                        # If they entered a domain in the form, take them there after login
+                        if subdomain:
                             next_url = url_for('user.dashboard', subdomain=subdomain)
                         else:
+
+                            # If not, and they have a domain, take them to that dashboard
                             if u.domain:
                                 next_url = url_for('user.dashboard', subdomain=u.domain)
+                            # Otherwise, take them to their settings page.
+                            else:
+                                next_url = url_for('user.settings')
 
                     if next_url:
                         return redirect(safe_next_url(next_url), code=307)
