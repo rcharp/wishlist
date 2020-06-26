@@ -186,8 +186,8 @@ def format_comments(comments, current_user):
         for comment in comments:
             c = dict()
             created_date = get_year_date_string(comment.created_on)
-            created_by_user = True if (current_user.is_authenticated and comment.user_id == current_user.id) else False
-            created_by_admin = True if (current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
+            created_by_user = True if (current_user is not None and current_user.is_authenticated and comment.user_id == current_user.id) else False
+            created_by_admin = True if (current_user is not None and current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
             parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
             c.update({'id': comment.comment_id,
                       'content': comment.comment,

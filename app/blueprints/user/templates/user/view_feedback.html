@@ -308,8 +308,6 @@
             function GetComments(feedback_id){
                 var url = "{{ url_for('user.get_comments') }}";
 
-                alert('{{ current_user }}');
-                alert('{{ current_user.id }}');
                 var user_id = null;
                 if ('{{ current_user }}' !== null){
                     user_id = '{{ current_user.id }}';
