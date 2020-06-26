@@ -302,13 +302,12 @@
             }
 
             function GetComments(feedback_id){
-                var url = ReplaceSubdomain("{{ url_for('user.get_comments', subdomain='DUMMY_VALUE') }}");
+                var url = "{{ url_for('user.get_comments') }}";
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
                     success: function (response) {
-                        alert(response['comments']);
                         InitializeComments(response['comments']);
                     },
                     error: function (xhr) {
@@ -316,9 +315,8 @@
                 });
             }
 
-
+            // Initialize comments
             function InitializeComments(comments){
-                // Initialize comments
                 $('#comments-container').comments({
                     profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
                     enableUpvoting: false,
@@ -326,10 +324,11 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
                         $.ajax({
                           type: 'post',
-                          url:  ReplaceSubdomain("{{ url_for('user.add_comment', subdomain='DUMMY_VALUE') }}"),
-                          data: commentJSON,
+                          url:  "{{ url_for('user.add_comment') }}",
+                          data: data,
                           success: function(comment) {
                             success(comment)
                           },
@@ -360,7 +359,7 @@
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
 
-
+            // Load the comments
             GetComments('{{ feedback.feedback_id }}')
         </script>
     </body>

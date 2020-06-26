@@ -564,9 +564,9 @@ Get comments
 '''
 
 
-@user.route('/get_comments', subdomain='<subdomain>', methods=['GET','POST'])
+@user.route('/get_comments', methods=['GET','POST'])
 @csrf.exempt
-def get_comments(subdomain=None):
+def get_comments():
     try:
         if request.method == 'POST':
             from app.blueprints.base.functions import format_comments
@@ -575,7 +575,6 @@ def get_comments(subdomain=None):
             u = User.query.filter(User.id == user_id).scalar()
 
             comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), u)
-            print(comments)
 
             return jsonify({'comments': comments})
     except Exception as e:
@@ -587,13 +586,26 @@ Add a comment
 '''
 
 
-@user.route('/add_comment', subdomain='<subdomain>', methods=['GET','POST'])
+@user.route('/add_comment', methods=['GET','POST'])
 @login_required
 @csrf.exempt
-def add_comment(subdomain=None):
-    if request.method == 'POST':
-        print(request.form)
-    return jsonify({'success': 'Success'})
+def add_comment():
+    try:
+        from app.blueprints.base.functions import add_comment
+        if request.method == 'POST':
+            feedback_id = request.form['feedback_id']
+            user_id = request.form['user_id']
+            parent_id = request.form['parent']
+            content = request.form['content']
+            created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+            fullname = request.form['fullname']
+
+            f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+            add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user, fullname)
+        return jsonify({'result': 'Success'})
+    except Exception as e:
+        return jsonify({'result': 'Error'})
 
 
 # Votes -------------------------------------------------------------------

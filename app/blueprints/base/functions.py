@@ -7,8 +7,10 @@ from datetime import datetime as dt
 from app.extensions import db
 from sqlalchemy import exists, and_
 from app.blueprints.page.date import get_year_date_string
+from app.blueprints.user.models.user import User
 from app.blueprints.user.models.domain import Domain
 from app.blueprints.base.models.feedback import Feedback
+from app.blueprints.base.models.comment import Comment
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
 
@@ -135,7 +137,20 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Comments ################################################
-def add_comment(feedback_id, content, domain_id, user_id, parent_id=None):
+def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user, fullname):
+    c = Comment()
+    c.comment_id = generate_id(Comment)
+    c.feedback_id = feedback_id
+    c.user_id = user_id
+    c.comment = content
+    c.domain_id = domain_id
+    c.parent_id = parent_id
+
+    if created_by_user:
+        u = User.query.filter(User.id == user_id).scalar()
+        c.fullname = u.name
+
+    c.save()
     return
 
 
