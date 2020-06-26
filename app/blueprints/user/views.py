@@ -575,6 +575,7 @@ def get_comments(subdomain=None):
             u = User.query.filter(User.id == user_id).scalar()
 
             comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), u)
+            print(comments)
 
             return jsonify({'comments': comments})
     except Exception as e:
