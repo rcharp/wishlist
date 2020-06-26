@@ -597,12 +597,11 @@ def add_comment():
             parent_id = request.form['parent']
             content = request.form['content']
             created_by_user = True if request.form['created_by_current_user'] == 'true' else False
-            fullname = request.form['fullname']
 
             f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
             if f is not None:
-                add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user, fullname)
+                add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user)
         return jsonify({'result': 'Success'})
     except Exception as e:
         return jsonify({'result': 'Error'})

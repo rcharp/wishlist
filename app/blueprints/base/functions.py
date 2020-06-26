@@ -137,7 +137,7 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Comments ################################################
-def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user, fullname):
+def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user):
     try:
         c = Comment()
         c.comment_id = generate_id(Comment)
@@ -147,9 +147,10 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
         c.domain_id = domain_id
 
         # Set the parent
-        parent = Comment.query.filter(Comment.comment_id == parent_id).scalar()
-        if parent is not None:
-            c.parent_id = parent.id
+        if parent_id:
+            parent = Comment.query.filter(Comment.comment_id == parent_id).scalar()
+            if parent is not None:
+                c.parent_id = parent.id
 
         if created_by_user:
             u = User.query.filter(User.id == user_id).scalar()
