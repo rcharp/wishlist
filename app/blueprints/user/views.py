@@ -573,7 +573,7 @@ def get_comments():
             feedback_id = request.form['feedback_id']
             user_id = request.form['user_id']
 
-            comments = format_comments.delay(feedback_id, user_id)
+            comments = format_comments(feedback_id, user_id)
 
             return jsonify({'comments': comments})
     except Exception as e:
