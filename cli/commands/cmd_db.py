@@ -156,7 +156,7 @@ def seed_feedback():
             'fullname': generate_name(),
             'description': f['description'],
             'votes': random.randint(10, 1000),
-            'comments': random.randint(1, 500),
+            # 'comments': random.randint(1, 500),
             'status_id': status.status_id,
             'status': status.name,
             'domain': d.name,
@@ -191,18 +191,22 @@ def seed_feedback():
 @click.command()
 def seed_comments():
     d = Domain.query.filter(Domain.name == 'demo').scalar()
-    demo_user = User.query.filter(User.username == 'demo').scalar()
-    f = Feedback.query.order_by(Feedback.created_on.desc()).first()
+    # demo_user = User.query.filter(User.username == 'demo').scalar()
+    feedback = Feedback.query.order_by(Feedback.created_on.desc()).limit(10).all()
 
-    for x in range(1, 10):
-        c = Comment()
-        c.user_id = demo_user.id
-        c.comment_id = generate_id(Comment)
-        c.fullname = generate_name()
-        c.comment = 'Lorem Ipsum'
-        c.feedback_id = f.feedback_id
-        c.domain_id = d.domain_id
-        c.save()
+    for f in feedback:
+        for x in range(random.randint(1, 21)):
+            c = Comment()
+            # c.user_id = demo_user.id
+            c.comment_id = generate_id(Comment)
+            c.fullname = generate_name()
+            c.comment = 'Lorem Ipsum'
+            c.feedback_id = f.feedback_id
+            c.domain_id = d.domain_id
+            c.save()
+
+            f.comments += 1
+        f.save()
 
     return
 
