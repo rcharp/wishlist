@@ -153,7 +153,7 @@ def format_comments(comments, current_user):
                   'fullname': comment.fullname,
                   'parent': parent_id,
                   'creator': comment.user_id,
-                  'created_by_user': created_by_user,
+                  'created_by_current_user': created_by_user,
                   'created_by_admin': created_by_admin,
                   'created': created_date})
 
