@@ -394,14 +394,17 @@
             var except = document.getElementById('user-dropdown-menu');
             var user_menu = document.getElementById('user-menu');
 
-            body.addEventListener("click", function () {
-                except.classList.remove('opacity-100');
-                except.classList.remove('scale-100');
-                except.classList.add('opacity-0');
-                except.classList.add('scale-95');
+            if (except != null){
+                body.addEventListener("click", function () {
+                    except.classList.remove('opacity-100');
+                    except.classList.remove('scale-100');
+                    except.classList.add('opacity-0');
+                    except.classList.add('scale-95');
 
-                except.style.display = 'none';
-            }, false);
+                    except.style.display = 'none';
+
+                }, false);
+            }
 
             if (user_menu !== null){
                 user_menu.addEventListener("click", function (ev) {
