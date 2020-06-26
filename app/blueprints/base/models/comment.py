@@ -21,7 +21,8 @@ class Comment(ResourceMixin, db.Model):
                         index=True, nullable=True, primary_key=False, unique=False)
     domain_id = db.Column(db.BigInteger, db.ForeignKey('domains.domain_id', onupdate='CASCADE', ondelete='CASCADE'),
                             index=True, nullable=True, primary_key=False, unique=False)
-    parent_id = db.relation('Comment', remote_side=[comment_id], primaryjoin="comments.parent_id==comments.comment_id")
+    parent_id = db.Column(db.Integer, db.ForeignKey('comments.id', onupdate='CASCADE', ondelete='CASCADE'),
+                                        index=True, nullable=True, primary_key=False, unique=False)
 
     def __init__(self, **kwargs):
         # Call Flask-SQLAlchemy's constructor.
