@@ -40,7 +40,10 @@ def format_comments(feedback_id, user_id):
     from app.blueprints.base.models.comment import Comment
     from app.blueprints.user.models.user import User
 
-    user = User.query.filter(User.id == user_id).scalar()
+    if user_id:
+        user = User.query.filter(User.id == user_id).scalar()
+    else:
+        user = None
     comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
     return format_comments(comments, user)
 
