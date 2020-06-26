@@ -325,7 +325,7 @@
                     },
                     postComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
-                        alert(JSON.parse(data));
+                        alert(data);
                         $.ajax({
                             type: 'post',
                             url:  "{{ url_for('user.add_comment') }}",
