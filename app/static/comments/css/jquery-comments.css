@@ -142,6 +142,7 @@ http://viima.github.io/jquery-comments/*/
 }
 
 .jquery-comments i.profile-picture {
+	color: #d3d3d3 !important;
 	font-size: 3.4em;
 	text-align: center;
 }
@@ -503,6 +504,7 @@ http://viima.github.io/jquery-comments/*/
 }
 
 .jquery-comments ul.main li.comment .comment-wrapper > .profile-picture {
+	color: #d3d3d3 !important;
 	margin-right: 1rem;
 }
 
