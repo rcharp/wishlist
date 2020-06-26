@@ -569,12 +569,11 @@ Get comments
 def get_comments():
     try:
         if request.method == 'POST':
-            from app.blueprints.base.functions import format_comments
+            from app.blueprints.base.tasks import format_comments
             feedback_id = request.form['feedback_id']
             user_id = request.form['user_id']
-            u = User.query.filter(User.id == user_id).scalar()
 
-            comments = format_comments(Comment.query.filter(Comment.feedback_id == feedback_id).all(), u)
+            comments = format_comments.delay(feedback_id, user_id)
 
             return jsonify({'comments': comments})
     except Exception as e:

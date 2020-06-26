@@ -31,3 +31,14 @@ def create_heroku_subdomain(subdomain):
 def encrypt_string(plaintext):
     from app.blueprints.base.encryption import encrypt_string
     return encrypt_string(plaintext)
+
+
+@celery.task()
+def format_comments(feedback_id, user_id):
+    from app.blueprints.base.functions import format_comments
+    from app.blueprints.base.models.comment import Comment
+    from app.blueprints.user.models.user import User
+
+    user = User.query.filter(User.id == user_id).scalar()
+    comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
+    return format_comments(comments, user)
