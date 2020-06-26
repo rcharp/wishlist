@@ -343,7 +343,6 @@
                 enableUpvoting: false,
                 getComments: function(success, error) {
                     var comments = GetComments('{{ feedback_id }}');
-                    //var commentsArray = JSON.parse('{{ comments|tojson }}');
                     success(comments);
                 },
                 postComment: function(commentJSON, success, error) {
