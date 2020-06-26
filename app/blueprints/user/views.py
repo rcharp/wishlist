@@ -416,7 +416,11 @@ def feedback(feedback_id, subdomain):
     if f is None:
         return redirect(url_for('user.dashboard', subdomain=subdomain))
 
-    voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
+    if current_user.is_authenticated:
+        voted = db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == current_user.id))).scalar()
+    else:
+        voted = False
+
     statuses = Status.query.all()
     return render_template('user/view_feedback.html', current_user=current_user,
                            feedback=f, statuses=statuses, subdomain=subdomain,
