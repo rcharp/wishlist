@@ -226,6 +226,10 @@
                     </form>
                   <div class="text-sm leading-5 font-lg text-gray-500 mt-5 mb-5">
                       Comments ({{ feedback.comments }})
+
+                      {% if not current_user.is_authenticated %}
+                          <br /><br />Please log in to comment
+                      {% endif %}
                   </div>
                   <div id="comments-container" class="mt-1"></div>
                 <!-- /End replace -->
