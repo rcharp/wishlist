@@ -179,25 +179,30 @@ def update_comment(c, content):
 
 
 def format_comments(comments, current_user):
-    comment_list = list()
 
-    for comment in comments:
-        c = dict()
-        created_date = get_year_date_string(comment.created_on)
-        created_by_user = True if (current_user.is_authenticated is not None and comment.user_id == current_user.id) else False
-        created_by_admin = True if (current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
-        parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
-        c.update({'id': comment.comment_id,
-                  'content': comment.comment,
-                  'fullname': comment.fullname,
-                  'parent': parent_id,
-                  'creator': comment.user_id,
-                  'created_by_current_user': created_by_user,
-                  'created_by_admin': created_by_admin,
-                  'created': created_date})
+    try:
+        comment_list = list()
 
-        comment_list.append(c)
-    return comment_list
+        for comment in comments:
+            c = dict()
+            created_date = get_year_date_string(comment.created_on)
+            created_by_user = True if (current_user.is_authenticated and comment.user_id == current_user.id) else False
+            created_by_admin = True if (current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
+            parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
+            c.update({'id': comment.comment_id,
+                      'content': comment.comment,
+                      'fullname': comment.fullname,
+                      'parent': parent_id,
+                      'creator': comment.user_id,
+                      'created_by_current_user': created_by_user,
+                      'created_by_admin': created_by_admin,
+                      'created': created_date})
+
+            comment_list.append(c)
+        return comment_list
+    except Exception as e:
+        print_traceback(e)
+        return None
 
 
 # Votes ###################################################
