@@ -188,7 +188,7 @@ def format_comments(comments, current_user):
 
 
 # Votes ###################################################
-def add_vote(f, user, email=None):
+def add_vote(f, user_id, email=None):
     try:
 
         v = Vote()
@@ -196,8 +196,8 @@ def add_vote(f, user, email=None):
         v.vote_id = generate_id(Vote)
         v.domain_id = f.domain_id
 
-        if user is not None:
-            v.user_id = user.id
+        if user_id is not None:
+            v.user_id = user_id
         else:
             v.email = email
 
