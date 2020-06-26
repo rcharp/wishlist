@@ -586,7 +586,6 @@ Add a comment
 
 
 @user.route('/add_comment', methods=['POST'])
-@login_required
 @csrf.exempt
 def add_comment():
     try:
