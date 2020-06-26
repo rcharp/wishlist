@@ -104,7 +104,7 @@ def create_feedback(user, domain, email, title, description):
             f.email = user.email
             f.save()
 
-            add_vote(f, user)
+            add_vote(f, user.id)
         else:
             f.email = email
             f.save()
