@@ -686,6 +686,13 @@ def update_vote(subdomain=None):
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
+# Widgets -------------------------------------------------------------------
+@user.route('/widgets', subdomain='<subdomain>', methods=['GET','POST'])
+def widgets(subdomain=None):
+    if subdomain:
+        return render_template('user/widgets.html', current_user=current_user, subdomain=subdomain)
+
+
 # Roadmap -------------------------------------------------------------------
 @user.route('/roadmap', methods=['GET','POST'])
 @user.route('/roadmap', subdomain='<subdomain>', methods=['GET','POST'])
