@@ -422,6 +422,10 @@
                     status_dropdown_menu.style.display = 'none';
                 }, false);
 
+                status_dropdown_button.addEventListener(("click"), function (ev) {
+                    ev.stopPropagation();
+                }, false);
+
                 status_dropdown_menu.addEventListener(("click"), function (ev) {
                     ev.stopPropagation();
                 }, false);
