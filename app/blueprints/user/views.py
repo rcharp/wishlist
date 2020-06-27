@@ -687,10 +687,13 @@ def update_vote(subdomain=None):
 
 
 # Widgets -------------------------------------------------------------------
+@user.route('/widgets', methods=['GET','POST'])
 @user.route('/widgets', subdomain='<subdomain>', methods=['GET','POST'])
 def widgets(subdomain=None):
     if subdomain:
         return render_template('user/widgets.html', current_user=current_user, subdomain=subdomain)
+    else:
+        return render_template('user/widgets.html', current_user=current_user)
 
 
 # Roadmap -------------------------------------------------------------------
