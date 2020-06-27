@@ -70,8 +70,9 @@
             <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <!-- Replace with your content -->
-                <div class="mt-1 grid grid-cols-8 gap-5 sm:grid-cols-8">
-                    <div class="pull-right sm:col-span-3"></div>
+                <div class="mt-1 grid grid-cols-8 gap-5 sm:grid-cols-8 mt-20">
+                    <div class="pull-right sm:col-span-1"></div>
+
                     <!-- submit box -->
                     <div class="sm:col-span-2">
                         <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
@@ -121,7 +122,59 @@
                         </div>
                     </div>
                     <!-- end submit box -->
-                    <div class="pull-right sm:col-span-3"></div>
+
+                    <!-- Divider -->
+                    <div class="pull-right sm:col-span-2"></div>
+
+                    <!-- submit box -->
+                    <div class="sm:col-span-2">
+                        <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
+                          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            <form action="{{ url_for('user.add_feedback', subdomain=subdomain) }}" method="post">
+                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                      Submit feedback
+                                  </div>
+                                  <div class="sm:col-span-6">
+                                      <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                        <input id="email" name="email" autofocus="autofocus" placeholder="Your email" required type="email" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                      </div>
+                                  </div>
+                                <div class="sm:col-span-6">
+                                  <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                    <input id="title" name="title" autofocus="autofocus" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                  </div>
+                                </div>
+
+                                <div class="sm:col-span-6">
+                                  <div class="mt-1 rounded-md shadow-sm">
+                                    <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="mt-4 mb-4 border-t border-gray-200 pt-3 pb-2">
+                                <div class="flex justify-end">
+                                  <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                      Submit
+                                    </button>
+                                  </span>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+
+                        <div class="mt-2 mb-4 text-center">
+                            <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="text-sm leading-5 font-medium text-gray-500">
+                                Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- end submit box -->
+
+                    <div class="pull-right sm:col-span-1"></div>
+
                 </div>
                 <!-- /End replace -->
               </div>
