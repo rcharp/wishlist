@@ -18,9 +18,9 @@ MAIL_USERNAME = os.environ.get('MAIL_USERNAME', None)
 MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', None)
 MAIL_DEFAULT_SENDER = os.environ.get('MAIL_USERNAME', None)
 MAIL_SERVER = os.environ.get('MAIL_SERVER', None)
-MAIL_PORT = 465
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
+MAIL_PORT = 587
+MAIL_USE_TLS = True
+MAIL_USE_SSL = False
 
 CARD_NAME = ''
 CARD_NUMBER = ''
