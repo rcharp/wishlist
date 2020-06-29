@@ -61,6 +61,8 @@ def send_temp_password_email(email, password, domain):
 
     mail.send(msg)
 
+    print("Set email")
+
 
 def contact_us_email(email, message):
     app = Flask(__name__)
