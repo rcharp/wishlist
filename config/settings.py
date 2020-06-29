@@ -20,7 +20,7 @@ MAIL_DEFAULT_SENDER = os.environ.get('MAIL_USERNAME', None)
 MAIL_SERVER = os.environ.get('MAIL_SERVER', None)
 MAIL_PORT = os.environ.get('MAIL_PORT', None)
 MAIL_USE_TLS = False
-MAIL_USE_SSL = False
+MAIL_USE_SSL = True
 
 CARD_NAME = ''
 CARD_NUMBER = ''
