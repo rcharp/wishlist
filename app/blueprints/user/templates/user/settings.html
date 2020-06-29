@@ -414,6 +414,21 @@
                     }
                 });
             }
+
+            function CopyPrivateKey(){
+                var private_key = document.getElementById('private-key').innerText;
+                if (private_key === 'Loading...'){
+                    return false;
+                }
+                else{
+                    /* Select the text field */
+                    private_key.select();
+                    private_key.setSelectionRange(0, 99999); /*For mobile devices*/
+
+                    /* Copy the text inside the text field */
+                    document.execCommand("copy");
+                }
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
