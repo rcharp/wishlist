@@ -1,3 +1,5 @@
+{% import 'macros/form.html' as f with context %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,24 +39,29 @@
           </div>
           <div class="mt-3 text-center sm:mt-5">
             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-              This board is private.
+              You have to be logged in to vote or comment on feedback.
             </h3>
             <div class="mt-2">
-              <p class="text-sm leading-5 text-gray-500">
-                The owner of this board has set it to private, meaning that you have to be an authorized user to access it. Please sign up or log in below to leave feedback for {{ subdomain }}.getwishlist.io.
-              </p>
+                {% call f.form_tag('user.login', subdomain=subdomain) %}
+                    {% call f.form_group(form.identity, css_class='sm-margin-bottom', placeholder="Username or email",
+                             autofocus='autofocus') %}
+                    {% endcall %}
+
+                    {% call f.form_group(form.password, css_class='sm-margin-bottom', placeholder="Password") %}
+                    {% endcall %}
+                {% endcall %}
             </div>
           </div>
         </div>
         <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
           <span class="flex w-full rounded-md shadow-sm sm:col-start-2">
-            <a href="{{ url_for('user.signup', subdomain=subdomain) }}" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              Sign up
+            <a href="{{ url_for('user.login', subdomain=subdomain) }}" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              Log in
             </a>
           </span>
           <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:col-start-1">
-            <a href="{{ url_for('user.login', subdomain=subdomain) }}" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-              Log in
+            <a href="{{ url_for('user.signup', subdomain=subdomain) }}" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              Sign up
             </a>
           </span>
         </div>
