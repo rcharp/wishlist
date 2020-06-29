@@ -727,7 +727,6 @@ def send_invite(subdomain=None):
 
 
 @user.route('/get_private_key', methods=['GET','POST'])
-@login_required
 @csrf.exempt
 def get_private_key():
     try:

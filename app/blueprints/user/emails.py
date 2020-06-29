@@ -19,37 +19,6 @@ def send_welcome_email(email):
     mail.send(msg)
 
 
-def send_reservation_email(email, domain, available):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("You've successfully reserved " + domain + "!",
-                  sender="support@getwishlist.io",
-                  recipients=[email])
-    msg.html = render_template('user/mail/reservation_email.html', domain=domain, available=available)
-
-    response = Message("User " + email + " reserved " + domain + ".",
-                       recipients=["support@getwishlist.io"],
-                       sender="support@getwishlist.io")
-
-    response.body = email + " reserved the following domain:\n\n" + domain + ".\n\nIt's available on " + available + "."
-
-    mail.send(msg)
-    mail.send(response)
-
-
-def send_secured_email(email, domain):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("We successfully secured " + domain + " for you!",
-                  sender="support@getwishlist.io",
-                  recipients=[email])
-    msg.html = render_template('user/mail/secured_domain.html', domain=domain)
-
-    mail.send(msg)
-
-
 def send_temp_password_email(email, password, domain):
     app = Flask(__name__)
     mail = Mail()
