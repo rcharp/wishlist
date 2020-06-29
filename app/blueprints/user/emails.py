@@ -61,7 +61,7 @@ def send_temp_password_email(email, password, domain):
 
     mail.send(msg)
 
-    print("Set email")
+    print("Sent email")
 
 
 def contact_us_email(email, message):
