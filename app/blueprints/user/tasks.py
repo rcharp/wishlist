@@ -34,7 +34,7 @@ def deliver_password_reset_email(user_id, reset_token):
 
     ctx = {'user': user, 'reset_token': reset_token}
 
-    send_template_message(subject='Password reset from Domain',
+    send_template_message(subject='Password reset from Wishlist',
                           recipients=[user.email],
                           template='user/mail/password_reset', ctx=ctx)
 
@@ -48,30 +48,6 @@ def send_welcome_email(email):
 
     if send:
         send_welcome_email(email)
-    return
-
-
-@celery.task()
-def send_reservation_email(email, domain, available):
-    from app.blueprints.user.emails import send_reservation_email
-    if send:
-        send_reservation_email(email, domain, available)
-    return
-
-
-@celery.task()
-def send_secured_email(email, domain):
-    from app.blueprints.user.emails import send_secured_email
-    if send:
-        send_secured_email(email, domain)
-    return
-
-
-@celery.task()
-def send_purchase_email(email, domain):
-    from app.blueprints.user.emails import send_purchase_email
-    if send:
-        send_purchase_email(email, domain)
     return
 
 

@@ -251,6 +251,9 @@ def create_anon_user(email):
         u.role = 'member'
         u.password = User.encrypt_password(password)
         u.save()
+
+        # Send them a password reset email
+        User.initialize_password_reset(u.email)
     else:
         u = User.query.filter(User.email == email).scalar()
     return u

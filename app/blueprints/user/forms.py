@@ -5,7 +5,7 @@ from wtforms_components import EmailField, Email
 from wtforms_alchemy import Unique
 
 from lib.util_wtforms import ModelForm
-from app.blueprints.user.models.user import User, Domain, db
+from app.blueprints.user.models.user import User, db
 from app.blueprints.user.validations import ensure_identity_exists, \
     ensure_existing_password_matches
 
