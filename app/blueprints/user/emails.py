@@ -54,7 +54,7 @@ def send_temp_password_email(email, password, domain):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
-    msg = Message("Your temporary password for Wishlist",
+    msg = Message("Thanks for leaving feedback for " + domain.title() + "!",
                   sender="support@getwishlist.io",
                   recipients=[email])
     msg.html = render_template('user/mail/temp_password_email.html', password=password, domain=domain)
