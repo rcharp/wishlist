@@ -254,8 +254,11 @@ def create_anon_user(email, domain):
         u.password = User.encrypt_password(password)
         u.save()
 
-        # Send them a password reset email
-        send_temp_password_email.delay(email, password, domain.title())
+        try:
+            # Send them a password reset email
+            send_temp_password_email.delay(email, password, domain.title())
+        except Exception as e:
+            print_traceback(e)
     else:
         u = User.query.filter(User.email == email).scalar()
     return u
