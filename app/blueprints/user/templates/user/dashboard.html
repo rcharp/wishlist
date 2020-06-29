@@ -330,10 +330,12 @@
         <!-- END Page Container -->
 
         {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and domain.private %}
-            {% include '/user/includes/private_overlay.html' ignore missing %}
-            <script>
-                document.getElementById('search_field').readOnly = true;
-            </script>
+            <div id="private-overlay">
+                {% include '/user/includes/private_overlay.html' ignore missing %}
+                <script>
+                    document.getElementById('search_field').readOnly = true;
+                </script>
+            </div>
         {% endif %}
 
 

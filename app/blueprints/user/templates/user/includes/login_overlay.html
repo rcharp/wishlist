@@ -30,7 +30,7 @@
           From: "opacity-100 translate-y-0 sm:scale-100"
           To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       -->
-      <div class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div id="overlay-box" class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
         <div>
           <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
             <i class="si si-lock text-green-600"></i>
@@ -60,5 +60,20 @@
         </div>
       </div>
     </div>
+
+    <script>
+        var body = document.getElementsByTagName("body")[0];
+        var overlay = document.getElementById('login-overlay');
+        var box = document.getElementById('overlay-box');
+
+        if (box !== null && overlay != null){
+            body.addEventListener("click", function () {
+                overlay.style.display = 'none';
+            }, false);
+            box.addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+        }
+    </script>
 </body>
 </html>
