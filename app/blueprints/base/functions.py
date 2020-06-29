@@ -106,10 +106,11 @@ def create_feedback(user, domain, email, title, description):
 
             add_vote(f, user.id)
         else:
-            f.email = email
-            f.save()
-
             user = create_anon_user(email, domain)
+
+            f.email = email
+            f.user_id = user.id
+            f.save()
 
             add_vote(f, user.id, email)
 
