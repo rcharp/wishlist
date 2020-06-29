@@ -10,8 +10,8 @@ def send_welcome_email(email):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
-    msg = Message("You've successfully signed up for NameCatcher.io!",
-                  sender="namecatcherio@gmail.com",
+    msg = Message("You've successfully signed up for GetWishlist.io!",
+                  sender="support@getwishlist.io",
                   recipients=[email])
 
     msg.html = render_template('user/mail/welcome_email.html')
@@ -24,13 +24,13 @@ def send_reservation_email(email, domain, available):
     mail = Mail()
     mail.init_app(app)
     msg = Message("You've successfully reserved " + domain + "!",
-                  sender="namecatcherio@gmail.com",
+                  sender="support@getwishlist.io",
                   recipients=[email])
     msg.html = render_template('user/mail/reservation_email.html', domain=domain, available=available)
 
     response = Message("User " + email + " reserved " + domain + ".",
-                       recipients=["namecatcherio@gmail.com"],
-                       sender="namecatcherio@gmail.com")
+                       recipients=["support@getwishlist.io"],
+                       sender="support@getwishlist.io")
 
     response.body = email + " reserved the following domain:\n\n" + domain + ".\n\nIt's available on " + available + "."
 
@@ -43,21 +43,21 @@ def send_secured_email(email, domain):
     mail = Mail()
     mail.init_app(app)
     msg = Message("We successfully secured " + domain + " for you!",
-                  sender="namecatcherio@gmail.com",
+                  sender="support@getwishlist.io",
                   recipients=[email])
     msg.html = render_template('user/mail/secured_domain.html', domain=domain)
 
     mail.send(msg)
 
 
-def send_purchase_email(email, domain):
+def send_temp_password_email(email, password, domain):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
-    msg = Message("You've successfully purchased " + domain + "!",
-                  sender="namecatcherio@gmail.com",
+    msg = Message("Your temporary password for Wishlist",
+                  sender="support@getwishlist.io",
                   recipients=[email])
-    msg.html = render_template('user/mail/purchase_email.html', domain=domain)
+    msg.html = render_template('user/mail/temp_password_email.html', password=password, domain=domain)
 
     mail.send(msg)
 
@@ -66,39 +66,17 @@ def contact_us_email(email, message):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
-    msg = Message("[NameCatcher.io Contact] Support request from " + email,
-                  recipients=["namecatcherio@gmail.com"],
-                  sender="namecatcherio@gmail.com",
+    msg = Message("[GetWishlist.io Contact] Support request from " + email,
+                  recipients=["support@getwishlist.io"],
+                  sender="support@getwishlist.io",
                   reply_to=email)
     msg.body = email + " sent you a message:\n\n" + message
 
-    response = Message("Your email to NameCatcher.io has been received.",
+    response = Message("Your email to GetWishlist.io has been received.",
                        recipients=[email],
-                       sender="namecatcherio@gmail.com")
+                       sender="support@getwishlist.io")
 
     response.html = render_template('user/mail/contact_email.html',email=email, message=message)
-
-    mail.send(msg)
-    mail.send(response)
-
-
-def request_email(email, request_to, request_from, message):
-    app = Flask(__name__)
-    mail = Mail()
-    mail.init_app(app)
-    msg = Message("[NameCatcher.io Contact] Support request from " + email,
-                  recipients=["namecatcherio@gmail.com"],
-                  sender="namecatcherio@gmail.com",
-                  reply_to=email)
-    msg.body = email + " sent you an integration request:\n\n" + "From: " + request_from + "\n\n" +\
-               "To: " + request_to + "\n\n" + \
-               "Message: " + message
-
-    response = Message("Your email to NameCatcher.io has been received.",
-                       recipients=[email],
-                       sender="namecatcherio@gmail.com")
-
-    response.html = render_template('user/mail/request_email.html', email=email, request_from=request_from, request_to=request_to, message=message)
 
     mail.send(msg)
     mail.send(response)
@@ -108,8 +86,8 @@ def send_cancel_email(email):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
-    msg = Message("Goodbye from NameCatcher.io",
-                  sender="namecatcherio@gmail.com",
+    msg = Message("Goodbye from GetWishlist.io",
+                  sender="support@getwishlist.io",
                   recipients=[email])
 
     msg.html = render_template('user/mail/cancel_email.html')

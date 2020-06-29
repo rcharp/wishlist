@@ -109,7 +109,7 @@ def create_feedback(user, domain, email, title, description):
             f.email = email
             f.save()
 
-            user = create_anon_user(email)
+            user = create_anon_user(email, domain)
 
             add_vote(f, user.id, email)
 
@@ -241,8 +241,10 @@ def remove_vote(f, vote):
 
 
 # Users ###################################################
-def create_anon_user(email):
+def create_anon_user(email, domain):
     from app.blueprints.user.models.user import User
+    from app.blueprints.user.tasks import send_temp_password_email
+
     if not db.session.query(exists().where(User.email == email)).scalar():
         password = generate_temp_password()
         u = User()
@@ -253,7 +255,7 @@ def create_anon_user(email):
         u.save()
 
         # Send them a password reset email
-        User.initialize_password_reset(u.email)
+        send_temp_password_email.delay(email, password, domain.title())
     else:
         u = User.query.filter(User.email == email).scalar()
     return u

@@ -52,6 +52,15 @@ def send_welcome_email(email):
 
 
 @celery.task()
+def send_temp_password_email(email, password, domain):
+    from app.blueprints.user.emails import send_temp_password_email
+
+    if send:
+        send_temp_password_email(email, password, domain)
+    return
+
+
+@celery.task()
 def send_contact_us_email(email, message):
     from app.blueprints.user.emails import contact_us_email
     if send:
