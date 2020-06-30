@@ -16,7 +16,7 @@ from app.blueprints.base.models.vote import Vote
 
 
 # Generations ###################################################
-def generate_id(table, size=8):
+def generate_id(table, size=10):
     # Generate a random 8-digit id
     chars = string.digits
     id = int(''.join(random.choice(chars) for _ in range(size)))
@@ -30,7 +30,7 @@ def generate_id(table, size=8):
 
 def generate_alphanumeric_id(table, size=8):
     # Generate a random 8-character alphanumeric id
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
     # Check to make sure there isn't already that id in the database
@@ -42,7 +42,7 @@ def generate_alphanumeric_id(table, size=8):
 
 def generate_temp_password(size=15):
     # Generate a random 15-character temporary password
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     return ''.join(random.choice(chars) for _ in range(size))
 
 
@@ -50,7 +50,7 @@ def generate_private_key(size=16):
     from app.blueprints.base.encryption import encrypt_string
 
     # Generate a random 16-character alphanumeric id
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
     # Encrypt the private key
