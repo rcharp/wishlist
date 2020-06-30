@@ -58,7 +58,7 @@ def seed_users():
     if User.find_by_identity(app.config['SEED_ADMIN_EMAIL']) is not None:
         return None
 
-    params = {
+    admin = {
         'role': 'admin',
         'email': app.config['SEED_ADMIN_EMAIL'],
         'username': app.config['SEED_ADMIN_USERNAME'],
@@ -71,6 +71,7 @@ def seed_users():
         'email': app.config['SEED_MEMBER_EMAIL'],
         'username': app.config['SEED_MEMBER_USERNAME'],
         'password': app.config['SEED_ADMIN_PASSWORD'],
+        'domain': 'feedback',
         'name': 'Ricky'
     }
 
@@ -78,15 +79,15 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'domain': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD'],
+        'domain': 'demo',
         'name': 'Demo User'
     }
 
-    # User(**member).save()
+    User(**member).save()
     User(**demo).save()
 
-    return User(**params).save()
+    return User(**admin).save()
 
 
 @click.command()
@@ -106,31 +107,35 @@ def seed_status():
 @click.command()
 def seed_domains():
     from app.blueprints.base.encryption import encrypt_string
-    u = User.query.filter(User.domain == 'demo').scalar()
-    domain_id = generate_id(Domain, 8)
+    d = User.query.filter(User.domain == 'demo').scalar()
+    d_id = generate_id(Domain, 8)
     demo = {
-        'domain_id': domain_id,
+        'domain_id': d_id,
         'name': 'demo',
         'company': 'Demo',
+        'admin_email': d.email,
+        'user_id': d.id,
+        'private_key': encrypt_string(generate_private_key())
+    }
+
+    u = User.query.filter(User.domain == 'feedback').scalar()
+    u_id = generate_id(Domain, 8)
+    feedback = {
+        'domain_id': u_id,
+        'name': 'feedback',
+        'company': 'Wishlist',
         'admin_email': u.email,
         'user_id': u.id,
         'private_key': encrypt_string(generate_private_key())
     }
 
-    # wishlist = {
-    #     'domain_id': generate_id(Domain, 8),
-    #     'name': 'wishlist',
-    #     'company': 'Wishlist',
-    #     'admin_email': app.config['SEED_MEMBER_EMAIL'],
-    #     'user_id': 1,
-    #     # 'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
-    # }
-
     Domain(**demo).save()
+    d.domain_id = d_id
+    d.save()
 
-    u.domain_id = domain_id
+    Domain(**feedback).save()
+    u.domain_id = u_id
     u.save()
-    # Domain(**wishlist).save()
 
 
 @click.command()
