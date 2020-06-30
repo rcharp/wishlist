@@ -423,6 +423,10 @@
             }
 
             function ShowLogin(){
+                if ('{{ demo }}' === 'True'){
+                    return false;
+                }
+
                 var login_overlay = document.getElementById('login-overlay');
                 login_overlay.style.display = '';
 
@@ -467,6 +471,9 @@
                     document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
                 }
 
+                if ('{{ demo }}' === 'True'){
+                    return false;
+                }
             }
 
             function FilterByStatus(){
@@ -656,16 +663,6 @@
                     ev.stopPropagation(); //this is important! If removed, you'll get both alerts
                 }, false);
             }
-
-            {#if (login_overlay_modal !== null){
-                body.addEventListener("click", function () {
-                    login_overlay.style.display = 'none';
-                }, false);
-
-                #}{#login_overlay_box.addEventListener("click", function (ev) {
-                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-                }, false);#}{#
-            }#}
         </script>
     </body>
 </html>

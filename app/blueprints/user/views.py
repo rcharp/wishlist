@@ -324,11 +324,6 @@ def start(subdomain=None):
     if not (current_user.is_authenticated and current_user.domain == subdomain):
         return redirect(url_for('user.login'))
 
-    # if subdomain == current_user.domain:
-    #     r = requests.get('https://' + subdomain + '.getwishlist.io')
-    #     if r.status_code == 200:
-    #         return redirect(url_for('user.settings', subdomain=subdomain))
-
     domain = Domain.query.filter(Domain.name == current_user.domain).scalar()
     return render_template('user/start.html', current_user=current_user, domain=domain, subdomain=subdomain)
 
@@ -363,7 +358,12 @@ def update_credentials(subdomain=None):
 @csrf.exempt
 @cross_origin()
 def dashboard(subdomain=None):
+    demo = False
+
     if subdomain:
+        if subdomain == 'demo':
+            demo = True
+
         d = Domain.query.filter(Domain.name == subdomain).scalar()
 
         if d is not None:
@@ -381,9 +381,19 @@ def dashboard(subdomain=None):
                 f.comments = int(f.comments)
 
             feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-            return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain=subdomain, votes=votes, use_username=use_username)
+            return render_template('user/dashboard.html',
+                                   current_user=current_user,
+                                   feedbacks=feedbacks,
+                                   statuses=statuses,
+                                   domain=d,
+                                   demo=demo,
+                                   subdomain=subdomain,
+                                   votes=votes,
+                                   use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
     else:
+        demo = True
+
         d = Domain.query.filter(Domain.name == 'demo').scalar()
         feedbacks = Feedback.query.all()
         statuses = Status.query.all()
@@ -392,7 +402,14 @@ def dashboard(subdomain=None):
             f.votes = int(f.votes)
 
         feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, domain=d, subdomain='demo', use_username=use_username)
+        return render_template('user/dashboard.html',
+                               current_user=current_user,
+                               feedbacks=feedbacks,
+                               statuses=statuses,
+                               domain=d,
+                               subdomain='demo',
+                               demo=demo,
+                               use_username=use_username)
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -412,6 +429,10 @@ View feedback details
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def feedback(feedback_id, subdomain):
+    demo = False
+    if subdomain == 'demo':
+        demo = True
+
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
     # Redirect if feedback no longer exists
@@ -426,9 +447,14 @@ def feedback(feedback_id, subdomain):
 
     # Get the statuses
     statuses = Status.query.all()
-    return render_template('user/view_feedback.html', current_user=current_user,
-                           feedback=f, statuses=statuses, subdomain=subdomain,
-                           voted=voted, use_username=use_username)
+    return render_template('user/view_feedback.html',
+                           current_user=current_user,
+                           feedback=f,
+                           statuses=statuses,
+                           subdomain=subdomain,
+                           voted=voted,
+                           demo=demo,
+                           use_username=use_username)
 
 
 '''
