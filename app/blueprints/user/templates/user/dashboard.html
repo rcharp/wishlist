@@ -267,6 +267,7 @@
                                     <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer">
                                         {{ feedback.title }}
                                     </a>
+                                    {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<small><u>Edit</u></small>{% endif %}
                                 </div>
                               </div>
                                 <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer;">
