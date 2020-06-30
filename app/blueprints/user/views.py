@@ -251,6 +251,7 @@ def signup(subdomain=None):
 def logout(subdomain=None):
     if subdomain:
         logout_user()
+        next = request.referrer
         flash('You have been logged out.', 'success')
         return redirect(url_for('user.dashboard', subdomain=subdomain))
     else:
