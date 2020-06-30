@@ -16,7 +16,7 @@ from app.blueprints.base.models.vote import Vote
 
 
 # Generations ###################################################
-def generate_id(table, size=10):
+def generate_id(table, size=8):
     # Generate a random 8-digit id
     chars = string.digits
     id = int(''.join(random.choice(chars) for _ in range(size)))
