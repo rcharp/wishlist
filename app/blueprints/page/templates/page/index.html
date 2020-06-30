@@ -181,10 +181,15 @@
               </div>
             </div>
 
-            <div class="mt-12 text-center justify-center" style="width:100%">
-              <span class="inline-flex rounded-md shadow-sm">
+            <div class="mt-12" style="width:100%">
+              <span class="inline-flex rounded-md shadow-sm mr-5">
                 <a type="button" href="{{ url_for('user.signup') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                   Get started for free
+                </a>
+              </span>
+              <span class="inline-flex rounded-md shadow-sm">
+                <a type="button" href="{{ url_for('user.dashboard', subdomain='demo') }}" class="inline-flex items-center text-center px-6 py-3 border justify-center leading-6 font-medium rounded-md text-indigo-600 bg-transparent focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150" style="width:193px;">
+                  Try the demo
                 </a>
               </span>
             </div>
@@ -472,9 +477,14 @@
             </div>
 
             <div class="mt-12 text-center justify-center" style="width:100%">
-              <span class="inline-flex rounded-md shadow-sm">
+              <span class="inline-flex rounded-md shadow-sm mr-5">
                 <a type="button" href="{{ url_for('user.signup') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
                   Get started for free
+                </a>
+              </span>
+              <span class="inline-flex rounded-md shadow-sm">
+                <a type="button" href="{{ url_for('user.dashboard', subdomain='demo') }}" class="inline-flex items-center text-center px-6 py-3 border justify-center leading-6 font-medium rounded-md text-indigo-600 bg-transparent focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150" style="width:193px;">
+                  Try the demo
                 </a>
               </span>
             </div>
