@@ -416,7 +416,9 @@
             }
 
             function CopyPrivateKey(){
+                return false;
                 var private_key = document.getElementById('private-key').innerText;
+
                 if (private_key === 'Loading...'){
                     return false;
                 }
@@ -427,6 +429,8 @@
 
                     /* Copy the text inside the text field */
                     document.execCommand("copy");
+
+                    alert('Copied the private key to clipboard.')
                 }
             }
         </script>
