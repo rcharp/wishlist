@@ -48,11 +48,11 @@ use_username = False
 
 
 # Login and Credentials -------------------------------------------------------------------
-@user.route('/login/<next>', methods=['GET', 'POST'])
-@user.route('/login/<next>', subdomain='<subdomain>', methods=['GET', 'POST'])
+@user.route('/login', methods=['GET', 'POST'])
+@user.route('/login', subdomain='<subdomain>', methods=['GET', 'POST'])
 @anonymous_required()
 @csrf.exempt
-def login(next=None, subdomain=None):
+def login(subdomain=None):
 
     if subdomain:
         form = LoginForm(next=request.args.get('next'))
@@ -69,10 +69,8 @@ def login(next=None, subdomain=None):
 
                     u.update_activity_tracking(request.remote_addr)
 
-                    if next:
-                        next_url = next
-                    else:
-                        next_url = request.form.get('next')
+                    # next_url = request.form.get('next')
+                    next_url = request.referrer
 
                     if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
                         next_url = url_for('user.dashboard', subdomain=subdomain)
