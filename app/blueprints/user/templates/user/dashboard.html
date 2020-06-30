@@ -339,9 +339,7 @@
         {% endif %}
 
 
-        <div id="login-overlay" style="display:none">
-            {% include '/user/includes/login_overlay.html' ignore missing %}
-        </div>
+        {% include '/user/includes/login_overlay.html' ignore missing %}
 
 
         {#<!-- Invite new user modal -->
@@ -421,8 +419,13 @@
             }
 
             function ShowLogin(){
-                var login_modal = document.getElementById('login-overlay');
-                login_modal.style.display = '';
+                var login_overlay = document.getElementById('login-overlay');
+                var login_box = document.getElementById('login-overlay-box');
+                login_overlay.classList.remove('opacity-0');
+                login_overlay.classList.remove('opacity-100');
+
+                login_box.classList.remove('opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95');
+                login_box.classList.add('opacity-100 translate-y-0 sm:scale-100');
             }
 
             function Vote(feedback_id) {
