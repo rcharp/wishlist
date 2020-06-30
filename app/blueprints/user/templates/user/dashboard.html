@@ -338,8 +338,9 @@
             </div>
         {% endif %}
 
-
-        {% include '/user/includes/login_overlay.html' ignore missing %}
+        <div id="login-overlay" style="display:none">
+            {% include '/user/includes/login_overlay.html' ignore missing %}
+        </div>
 
 
         {#<!-- Invite new user modal -->
@@ -420,12 +421,15 @@
 
             function ShowLogin(){
                 var login_overlay = document.getElementById('login-overlay');
-                var login_box = document.getElementById('login-overlay-box');
-                login_overlay.classList.remove('opacity-0');
-                login_overlay.classList.remove('opacity-100');
+                login_overlay.style.display = '';
 
-                login_box.classList.remove('opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95');
-                login_box.classList.add('opacity-100 translate-y-0 sm:scale-100');
+                var login_overlay_modal = document.getElementById('login-overlay-modal');
+
+                if (login_overlay_modal !== null){
+                    login_overlay_modal.addEventListener("click", function () {
+                        login_overlay.style.display = 'none';
+                    }, false);
+                }
             }
 
             function Vote(feedback_id) {
@@ -624,7 +628,6 @@
 
             if (user_dropdown !== null){
                 body.addEventListener("click", function () {
-
                     // Hide the user dropdown when you click outside of it
                     user_dropdown.classList.remove('opacity-100');
                     user_dropdown.classList.remove('scale-100');
@@ -639,8 +642,7 @@
 
             if (sort_dropdown !== null){
                 body.addEventListener("click", function () {
-
-                    // Hide the user dropdown when you click outside of it
+                    // Hide the sort dropdown when you click outside of it
                     sort_dropdown.classList.remove('opacity-100');
                     sort_dropdown.classList.remove('scale-100');
                     sort_dropdown.classList.add('opacity-0');
@@ -651,6 +653,16 @@
                     ev.stopPropagation(); //this is important! If removed, you'll get both alerts
                 }, false);
             }
+
+            {#if (login_overlay_modal !== null){
+                body.addEventListener("click", function () {
+                    login_overlay.style.display = 'none';
+                }, false);
+
+                #}{#login_overlay_box.addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);#}{#
+            }#}
         </script>
     </body>
 </html>
