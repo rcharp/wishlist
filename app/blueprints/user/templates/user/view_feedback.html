@@ -239,7 +239,7 @@
         </div>
         <!-- END Page Container -->
 
-        {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and domain.private %}
+        {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
             <div id="private-overlay">
                 {% include '/user/includes/private_overlay.html' ignore missing %}
                 <script>
