@@ -55,7 +55,8 @@ use_username = False
 def login(subdomain=None):
 
     if subdomain:
-        form = LoginForm(next=request.args.get('next'))
+        # form = LoginForm(next=request.args.get('next'))
+        form = LoginForm(next=request.referrer)
 
         if form.validate_on_submit():
 
@@ -69,8 +70,8 @@ def login(subdomain=None):
 
                     u.update_activity_tracking(request.remote_addr)
 
-                    # next_url = request.form.get('next')
-                    next_url = request.referrer
+                    next_url = request.form.get('next')
+                    # next_url = request.referrer
 
                     if next_url == url_for('user.login', subdomain=subdomain) or next_url == '' or next_url is None:
                         next_url = url_for('user.dashboard', subdomain=subdomain)
