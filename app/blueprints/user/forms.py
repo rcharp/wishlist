@@ -106,6 +106,8 @@ class UpdateCredentials(ModelForm):
         )
     ])
 
+    name = StringField('Full name')
+
     username = StringField(validators=[
         Unique(
             User.username,

@@ -340,6 +340,7 @@ def update_credentials(subdomain=None):
     form = UpdateCredentials(current_user, uid=current_user.id)
 
     if form.validate_on_submit():
+        name = request.form.get('name', '')
         username = request.form.get('username', '')
         new_password = request.form.get('password', '')
         current_user.email = request.form.get('email')
@@ -347,6 +348,7 @@ def update_credentials(subdomain=None):
         if new_password:
             current_user.password = User.encrypt_password(new_password)
 
+        current_user.name = name
         current_user.username = username
         current_user.save()
 
