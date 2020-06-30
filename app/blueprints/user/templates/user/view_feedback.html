@@ -191,7 +191,9 @@
                               Posted by
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% if feedback.username and use_username %}
+                            {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                You
+                            {% elif feedback.username and use_username %}
                                 {{ feedback.username }}
                             {% elif feedback.fullname %}
                                 {{ feedback.fullname }}

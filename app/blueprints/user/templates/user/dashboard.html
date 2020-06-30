@@ -285,7 +285,9 @@
                                 <span class="text-sm leading-5 font-medium text-gray-500">
                                     <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }} by
                                     <span style="font-weight:900">
-                                        {% if feedback.username and use_username %}
+                                        {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                            You
+                                        {% elif feedback.username and use_username %}
                                             {{ feedback.username }}
                                         {% elif feedback.fullname %}
                                             {{ feedback.fullname }}
