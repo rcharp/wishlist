@@ -255,7 +255,7 @@
                         {% for feedback in feedbacks %}
                             <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                 <div style="padding:10px 25px 0 0;">
-                                    <div class="pull-right text-right" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}')"{% else %}onclick="ShowLogin();"{% endif %}>
+                                    <div class="pull-right text-right" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
                                           <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
                                               <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
                                           </span>
@@ -439,21 +439,27 @@
                 }
             }
 
-            function Vote(feedback_id) {
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
-                    success: function (response) {
-                        if ('success' in response){
-                            //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+            function Vote(feedback_id, logged_in) {
+                if (logged_in){
+                    var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        beforeSend: UpdateVote(feedback_id),
+                        data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                        success: function (response) {
+                            if ('success' in response){
+                                //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+                            }
+                        },
+                        error: function (xhr) {
                         }
-                    },
-                    error: function (xhr) {
-                    }
-                });
+                    });
+                }
+                else{
+                    ShowLogin('vote');
+                }
+
             }
 
             function UpdateVote(feedback_id) {
