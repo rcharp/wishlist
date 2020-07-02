@@ -8,6 +8,22 @@ def statuses():
             {'name': 'Future', 'color': 'gray'}]
 
 
+def generate_comments():
+    return ['This is a great idea! I love it!',
+            'Yes please!',
+            'I could really use this. Please implement this feature ASAP.',
+            'I\'ve been waiting for this for a long time. Please make it happen.',
+            'Same.',
+            'Thanks for finally working on this!',
+            'Any word on how long this will take to finish?',
+            'Sounds like a great idea!',
+            'Make it happen!',
+            'Hi team, any update on this?',
+            'This feature is an absolute MUST.',
+            'Needed!',
+            'Thanks!']
+
+
 def generate_feedback():
     return [{'title': 'Allow users to add their own comment sections',
              'description':'It would be cool if users could have their own comment sections. I would love to be able to leave comments, and reply to other comments. Make it happen!'},

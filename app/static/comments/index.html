@@ -42,7 +42,8 @@
 					return data;
 				}
 				$('#comments-container').comments({
-					profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+					//profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    profilePicutreURL: "{{ url_for('static', filename='icons/user.svg') }}",
 					currentUserId: 1,
 					roundProfilePictures: true,
 					textareaRows: 1,

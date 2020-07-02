@@ -2,6 +2,7 @@ import click
 import random
 from cli.commands.data import (
     statuses,
+    generate_comments,
     generate_feedback
 )
 from sqlalchemy_utils import database_exists, create_database
@@ -57,7 +58,7 @@ def seed_users():
     if User.find_by_identity(app.config['SEED_ADMIN_EMAIL']) is not None:
         return None
 
-    params = {
+    admin = {
         'role': 'admin',
         'email': app.config['SEED_ADMIN_EMAIL'],
         'username': app.config['SEED_ADMIN_USERNAME'],
@@ -65,11 +66,12 @@ def seed_users():
         'name': 'Admin'
     }
 
-    member = {
-        'role': 'member',
+    feedback = {
+        'role': 'creator',
         'email': app.config['SEED_MEMBER_EMAIL'],
         'username': app.config['SEED_MEMBER_USERNAME'],
         'password': app.config['SEED_ADMIN_PASSWORD'],
+        'domain': 'feedback',
         'name': 'Ricky'
     }
 
@@ -77,15 +79,15 @@ def seed_users():
         'role': 'creator',
         'email': 'demo@getwishlist.io',
         'username': 'demo',
-        'domain': 'demo',
         'password': app.config['SEED_ADMIN_PASSWORD'],
+        'domain': 'demo',
         'name': 'Demo User'
     }
 
-    # User(**member).save()
+    User(**feedback).save()
     User(**demo).save()
 
-    return User(**params).save()
+    return User(**admin).save()
 
 
 @click.command()
@@ -105,31 +107,35 @@ def seed_status():
 @click.command()
 def seed_domains():
     from app.blueprints.base.encryption import encrypt_string
-    u = User.query.filter(User.domain == 'demo').scalar()
-    domain_id = generate_id(Domain, 8)
+    d = User.query.filter(User.domain == 'demo').scalar()
+    d_id = generate_id(Domain, 8)
     demo = {
-        'domain_id': domain_id,
+        'domain_id': d_id,
         'name': 'demo',
         'company': 'Demo',
+        'admin_email': d.email,
+        'user_id': d.id,
+        'private_key': encrypt_string(generate_private_key())
+    }
+
+    u = User.query.filter(User.domain == 'feedback').scalar()
+    u_id = generate_id(Domain, 8)
+    feedback = {
+        'domain_id': u_id,
+        'name': 'feedback',
+        'company': 'Wishlist',
         'admin_email': u.email,
         'user_id': u.id,
         'private_key': encrypt_string(generate_private_key())
     }
 
-    # wishlist = {
-    #     'domain_id': generate_id(Domain, 8),
-    #     'name': 'wishlist',
-    #     'company': 'Wishlist',
-    #     'admin_email': app.config['SEED_MEMBER_EMAIL'],
-    #     'user_id': 1,
-    #     # 'private_key': Domain.serialize_token(generate_private_key())  # serialize_token(generate_private_key())
-    # }
-
     Domain(**demo).save()
+    d.domain_id = d_id
+    d.save()
 
-    u.domain_id = domain_id
+    Domain(**feedback).save()
+    u.domain_id = u_id
     u.save()
-    # Domain(**wishlist).save()
 
 
 @click.command()
@@ -156,7 +162,7 @@ def seed_feedback():
             'fullname': generate_name(),
             'description': f['description'],
             'votes': random.randint(10, 1000),
-            'comments': random.randint(1, 500),
+            # 'comments': random.randint(1, 500),
             'status_id': status.status_id,
             'status': status.name,
             'domain': d.name,
@@ -191,18 +197,23 @@ def seed_feedback():
 @click.command()
 def seed_comments():
     d = Domain.query.filter(Domain.name == 'demo').scalar()
-    demo_user = User.query.filter(User.username == 'demo').scalar()
-    f = Feedback.query.order_by(Feedback.created_on.desc()).first()
+    # demo_user = User.query.filter(User.username == 'demo').scalar()
+    feedback = Feedback.query.order_by(Feedback.created_on.desc()).limit(10).all()
+    comments = generate_comments()
 
-    for x in range(1, 10):
-        c = Comment()
-        c.user_id = demo_user.id
-        c.comment_id = generate_id(Comment)
-        c.fullname = generate_name()
-        c.comment = 'Lorem Ipsum'
-        c.feedback_id = f.feedback_id
-        c.domain_id = d.domain_id
-        c.save()
+    for f in feedback:
+        for x in range(random.randint(1, 21)):
+            c = Comment()
+            # c.user_id = demo_user.id
+            c.comment_id = generate_id(Comment)
+            c.fullname = generate_name()
+            c.comment = random.choice(comments)
+            c.feedback_id = f.feedback_id
+            c.domain_id = d.domain_id
+            c.save()
+
+            f.comments += 1
+        f.save()
 
     return
 

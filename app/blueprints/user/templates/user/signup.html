@@ -21,7 +21,7 @@
           <div class="text-center" style="width:100%;">
             <span style="margin-bottom:15px;font-size:16px;">or
                 <a href="{{ url_for('user.signup') }}">
-                    <span class="text-inidigo-600">
+                    <span class="text-indigo-600">
                         <u> create your own feedback board</u>
                     </span>
                 </a>
@@ -58,7 +58,8 @@
       {% endcall %}<br />
     {% else %}
         {% call f.form_tag('user.signup') %}
-        <legend>Sign up for a free 14-day trial</legend>
+{#        <legend>Sign up for a free 14-day trial</legend>#}
+        <legend>Sign up for free</legend>
 
         {% call f.form_group(form.name, css_class='sm-margin-bottom',
                              autofocus='autofocus',
