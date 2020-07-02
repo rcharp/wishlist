@@ -102,9 +102,6 @@
             var feedback_id = document.getElementById('feedback_id').value;
             var email = document.getElementById('email').value;
 
-            alert(feedback_id);
-            alert(email);
-
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -112,6 +109,7 @@
                 data: {'feedback_id': feedback_id, 'email': email},
                 success: function (response) {
                     if ('success' in response){
+                        location.reload();
                     }
                 },
                 error: function (xhr) {
