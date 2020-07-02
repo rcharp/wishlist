@@ -216,8 +216,9 @@ def add_vote(f, user_id, email=None):
         if user_id is not None:
             v.user_id = user_id
         else:
-            create_anon_user(email, f.domain)
+            u = create_anon_user(email, f.domain)
             v.email = email
+            v.user_id = u.id
 
         v.save()
 
