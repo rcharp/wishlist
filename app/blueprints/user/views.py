@@ -696,37 +696,41 @@ Add or remove a vote
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 def update_vote(subdomain=None):
-    if request.method == 'POST':
-        if 'feedback_id' in request.form:
-            feedback_id = request.form['feedback_id']
+    try:
+        if request.method == 'POST':
+            if 'feedback_id' in request.form:
+                feedback_id = request.form['feedback_id']
 
-            if 'email' in request.form:
-                email = request.form['email']
-                from app.blueprints.base.functions import add_vote
+                if 'email' in request.form:
+                    email = request.form['email']
+                    from app.blueprints.base.functions import add_vote
 
-                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-
-                if f is not None:
-                    add_vote(f, None, email)
-
-                return jsonify({'success': 'Success'})
-            elif 'user_id' in request.form:
-                user_id = request.form['user_id']
-                from app.blueprints.base.functions import add_vote, remove_vote
-
-                if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
-                    vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
                     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
                     if f is not None:
-                        remove_vote(f, vote)
-                else:
-                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                        add_vote(f, None, email)
 
-                    if f is not None:
-                        add_vote(f, user_id)
+                    return jsonify({'success': 'Success'})
+                elif 'user_id' in request.form:
+                    user_id = request.form['user_id']
+                    from app.blueprints.base.functions import add_vote, remove_vote
 
-                return jsonify({'success': 'Success'})
+                    if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
+                        vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
+                        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                        if f is not None:
+                            remove_vote(f, vote)
+                    else:
+                        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                        if f is not None:
+                            add_vote(f, user_id)
+
+                    return jsonify({'success': 'Success'})
+    except Exception as e:
+        from app.blueprints.base.functions import print_traceback
+        print_traceback(e)
 
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
