@@ -422,12 +422,13 @@
                 }
             }
 
-            function ShowLogin(action){
+            function ShowLogin(action, feedback_id){
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
                 var login_overlay = document.getElementById('login-overlay-' + action);
+                login_overlay.getElementById('feedback-id').value = feedback_id;
                 login_overlay.style.display = '';
 
                 var login_overlay_modal = document.getElementById('login-overlay-modal-' + action);
@@ -457,7 +458,7 @@
                     });
                 }
                 else{
-                    ShowLogin('vote');
+                    ShowLogin('vote', feedback_id);
                 }
 
             }
