@@ -109,6 +109,7 @@
                 data: {'feedback_id': feedback_id, 'email': email},
                 success: function (response) {
                     if ('success' in response){
+                        alert("Success");
                         location.reload();
                     }
                 },
