@@ -61,7 +61,7 @@
                   {% elif action == 'comment' %}
                       <form onsubmit="AnonComment()">
                           <div class="mt-1 relative rounded-md shadow-sm">
-                              <input type="hidden" name="feedback_id" value="" />
+                              <input type="hidden" id="feedback_id" name="feedback_id" value="" />
                               <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                           </div>
                           <div class="text-center flex justify-center">
@@ -99,8 +99,8 @@
     <script>
         function AnonVote(){
             var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-            var feedback_id = document.getElementById('feedback_id');
-            var email = document.getElementById('email');
+            var feedback_id = document.getElementById('feedback_id').value;
+            var email = document.getElementById('email').value;
 
             alert(feedback_id);
             alert(email);
