@@ -47,6 +47,7 @@
                   {% if action == 'vote' %}
                       <form action="{{ url_for('user.update_vote', subdomain=subdomain) }}" method="post">
                           <div class="mt-1 relative rounded-md shadow-sm">
+                            <input id="feedback-id" type="hidden" name="feedback_id" value="{{ feedback.feedback_id }}" />
                             <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                           </div>
                           <div class="text-center flex justify-center">
