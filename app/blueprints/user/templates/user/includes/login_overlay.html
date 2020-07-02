@@ -96,6 +96,8 @@
       </div>
     </div>
 
+    <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
+
     <script>
         function AnonVote(){
             var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
