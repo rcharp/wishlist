@@ -434,6 +434,7 @@ def feedback(feedback_id, subdomain):
         demo = True
 
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    d = Domain.query.filter(Domain.name == subdomain).scalar()
 
     # Redirect if feedback no longer exists
     if f is None:
@@ -450,6 +451,7 @@ def feedback(feedback_id, subdomain):
     return render_template('user/view_feedback.html',
                            current_user=current_user,
                            feedback=f,
+                           domain=d,
                            statuses=statuses,
                            subdomain=subdomain,
                            voted=voted,
