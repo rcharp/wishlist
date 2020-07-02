@@ -318,6 +318,23 @@
 
             }
 
+            function AnonVote(){
+                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                var feedback_id = document.getElementById('feedback-id');
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    beforeSend: UpdateVote(feedback_id),
+                    data: {'feedback_id': feedback_id, 'email': document.getElementById('email')},
+                    success: function (response) {
+                        if ('success' in response){
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
+
             function UpdateVote(feedback_id) {
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);
@@ -409,16 +426,21 @@
             }
 
             function ShowLogin(action, feedback_id){
+
+                // Do nothing if we are on the demo dashboard
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
+                // Show the modal
                 var login_overlay = document.getElementById('login-overlay-' + action);
                 login_overlay.style.display = '';
+
+                // Set the feedback id
                 document.getElementById('feedback-id').value = feedback_id;
 
+                // Set the event listener to close the model when clicking outside of the box
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
-
                 if (login_overlay_modal !== null){
                     login_overlay_modal.addEventListener("click", function () {
                         login_overlay.style.display = 'none';

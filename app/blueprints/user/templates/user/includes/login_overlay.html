@@ -45,19 +45,19 @@
               </p>
               <div class="mb-6">
                   {% if action == 'vote' %}
-                      <form action="{{ url_for('user.update_vote', subdomain=subdomain) }}" method="post">
-                          <div class="mt-1 relative rounded-md shadow-sm">
-                            <input id="feedback-id" type="hidden" name="feedback_id" value="" />
-                            <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
-                          </div>
-                          <div class="text-center flex justify-center">
-                              <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
-                                <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                  {{ action|title }}!
-                                </button>
-                              </span>
-                          </div>
-                      </form>
+                      {#<form action="{{ url_for('user.update_vote', subdomain=subdomain) }}" method="post">#}
+                      <div class="mt-1 relative rounded-md shadow-sm">
+                        <input type="hidden" name="feedback-id" value="" />
+                        <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                      </div>
+                      <div class="text-center flex justify-center">
+                          <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
+                            <button type="submit" onclick="AnonVote()" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                              {{ action|title }}!
+                            </button>
+                          </span>
+                      </div>
+                      {#</form>#}
                   {% elif action == 'comment' %}
                       <form action="" method="post">
                           <div class="mt-1 relative rounded-md shadow-sm">
