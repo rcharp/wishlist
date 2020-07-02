@@ -66,8 +66,8 @@ def seed_users():
         'name': 'Admin'
     }
 
-    member = {
-        'role': 'member',
+    feedback = {
+        'role': 'creator',
         'email': app.config['SEED_MEMBER_EMAIL'],
         'username': app.config['SEED_MEMBER_USERNAME'],
         'password': app.config['SEED_ADMIN_PASSWORD'],
@@ -84,7 +84,7 @@ def seed_users():
         'name': 'Demo User'
     }
 
-    User(**member).save()
+    User(**feedback).save()
     User(**demo).save()
 
     return User(**admin).save()
