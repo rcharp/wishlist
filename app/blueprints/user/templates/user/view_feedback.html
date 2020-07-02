@@ -318,23 +318,6 @@
 
             }
 
-            function AnonVote(){
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-                var feedback_id = document.getElementById('feedback-id');
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'email': document.getElementById('email')},
-                    success: function (response) {
-                        if ('success' in response){
-                        }
-                    },
-                    error: function (xhr) {
-                    }
-                });
-            }
-
             function UpdateVote(feedback_id) {
                 var votes = document.getElementById(feedback_id + '-votes').innerText;
                 var count = parseInt(votes);

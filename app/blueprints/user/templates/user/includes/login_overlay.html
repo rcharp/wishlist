@@ -47,8 +47,8 @@
                   {% if action == 'vote' %}
                       <form onsubmit="AnonVote()">
                           <div class="mt-1 relative rounded-md shadow-sm">
-                            <input type="hidden" name="feedback-id" value="" />
-                            <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                            <input type="hidden" name="feedback_id" value="" />
+                            <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                           </div>
                           <div class="text-center flex justify-center">
                               <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
@@ -59,9 +59,10 @@
                           </div>
                       </form>
                   {% elif action == 'comment' %}
-                      <form action="" method="post">
+                      <form onsubmit="AnonComment()">
                           <div class="mt-1 relative rounded-md shadow-sm">
-                            <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                              <input type="hidden" name="feedback_id" value="" />
+                              <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                           </div>
                           <div class="text-center flex justify-center">
                               <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
@@ -95,6 +96,33 @@
       </div>
     </div>
 
+    <script>
+        function AnonVote(){
+            var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+            var feedback_id = document.getElementById('feedback_id');
+            var email = document.getElementById('email');
+
+            alert(feedback_id);
+            alert(email);
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                beforeSend: UpdateVote(feedback_id),
+                data: {'feedback_id': feedback_id, 'email': email},
+                success: function (response) {
+                    if ('success' in response){
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+
+        function AnonComment(){
+
+        }
+    </script>
     <script>
         var body = document.getElementsByTagName("body")[0];
         var overlay = document.getElementById('login-overlay');
