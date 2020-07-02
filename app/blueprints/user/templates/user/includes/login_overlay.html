@@ -37,11 +37,26 @@
           </div>
           <div class="mt-3 text-center sm:mt-5">
             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-              You have to log in to do that!
+              You're not currently logged in.
             </h3>
             <div class="mt-2">
               <p class="text-sm leading-5 text-gray-500">
-                In order to comment or vote on feedback, please log in. If you don't have an account, you can sign up below.
+                In order to comment or vote on feedback, please leave your email address so that {{ domain.company }} knows who you are.
+              </p>
+              <div>
+                  <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email
+                  </label>
+                  <div class="mt-1 relative rounded-md shadow-sm">
+                    <input id="email" class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                  </div>
+                  <span class="inline-flex rounded-md shadow-sm">
+                      <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                        Continue
+                      </button>
+                  </span>
+              </div>
+              <p class="text-sm leading-5 text-gray-500">
+                If you have an account, or would like to sign up, please login/sign up below.
               </p>
             </div>
           </div>
