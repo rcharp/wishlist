@@ -45,7 +45,7 @@
               </p>
               <div class="mb-6">
                   {% if action == 'vote' %}
-                      <form onsubmit="AnonVote()">
+                      <form id="submit_form" onsubmit="AnonVote()">
                           <div class="mt-1 relative rounded-md shadow-sm">
                             <input type="hidden" name="feedback_id" value="" />
                             <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
@@ -118,8 +118,6 @@
                 error: function (xhr) {
                 }
             });
-
-            return false;
         }
 
         function AnonComment(){
@@ -139,6 +137,13 @@
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
         }
+
+         $(document).ready(function() {
+            //option A
+            $('#submit_form').submit(function(e){
+                e.preventDefault(e);
+            });
+        });
     </script>
 </body>
 </html>
