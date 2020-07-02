@@ -313,7 +313,7 @@
                         }
                     });
                 }else{
-                    var email = ShowLogin('vote');
+                    ShowLogin('vote');
                 }
 
             }
@@ -422,15 +422,6 @@
                     login_overlay_modal.addEventListener("click", function () {
                         login_overlay.style.display = 'none';
                     }, false);
-                }
-            }
-
-            function ChangeIcons(){
-                var icons = document.getElementsByClassName('fa-user');
-
-                for (var i = 0; i < icons.length; i++){
-                    icons[i].classList.remove('fa-user');
-                    icons[i].classList.add('fa-user-o');
                 }
             }
         </script>

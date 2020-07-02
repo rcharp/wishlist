@@ -422,15 +422,15 @@
                 }
             }
 
-            function ShowLogin(){
+            function ShowLogin(action){
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
-                var login_overlay = document.getElementById('login-overlay');
+                var login_overlay = document.getElementById('login-overlay-' + action);
                 login_overlay.style.display = '';
 
-                var login_overlay_modal = document.getElementById('login-overlay-modal');
+                var login_overlay_modal = document.getElementById('login-overlay-modal-' + action);
 
                 if (login_overlay_modal !== null){
                     login_overlay_modal.addEventListener("click", function () {
