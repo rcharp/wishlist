@@ -107,7 +107,7 @@
             $.ajax({
                 url: url,
                 type: 'POST',
-                //beforeSend: UpdateVote(feedback_id),
+                beforeSend: UpdateVote(feedback_id),
                 data: {'feedback_id': feedback_id, 'email': email},
                 success: function (response) {
                     if ('success' in response){
