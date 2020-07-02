@@ -709,7 +709,7 @@ def update_vote(subdomain=None):
                 if f is not None:
                     add_vote(f, None, email)
 
-                return jsonify({'success': 'Success'})
+                return redirect(request.referrer)
             elif 'user_id' in request.form:
                 user_id = request.form['user_id']
                 from app.blueprints.base.functions import add_vote, remove_vote
