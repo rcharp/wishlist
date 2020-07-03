@@ -59,7 +59,7 @@
                               </div>
                           </form>
                       {% elif action == 'comment' %}
-                          <form onsubmit="AnonComment()">
+                          <form id="submit_form" onsubmit="AnonComment()">
                               <div class="mt-1 relative rounded-md shadow-sm">
                                   <input type="hidden" id="feedback_id" name="feedback_id" value="" />
                                   <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
