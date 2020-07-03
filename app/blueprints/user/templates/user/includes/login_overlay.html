@@ -62,7 +62,6 @@
                           <form id="submit_form" onsubmit="AnonComment()">
                               <div class="mt-1 relative rounded-md shadow-sm">
                                   <input type="hidden" id="feedback_id" name="feedback_id" value="" />
-                                  <input type="hidden" id="commentJSON" name="commentJSON" value="" />
                                   <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                               </div>
                               <div class="text-center flex justify-center">
@@ -121,21 +120,6 @@
             }
 
             function AnonComment(){
-                var email = document.getElementById('email').value;
-                var commentJSON = document.getElementById('commentJSON').value;
-
-                var data = Object.assign(commentJSON, {'feedback_id': document.getElementById('feedback_id').value, 'email': email});
-                $.ajax({
-                    type: 'POST',
-                    url:  "{{ url_for('user.add_comment') }}",
-                    data: data,
-                    beforeSend: success(commentJSON),
-                    success: function(comment) {
-                    },
-                    error: error
-                });
-
-                return false;
             }
 
         </script>

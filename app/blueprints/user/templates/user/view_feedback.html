@@ -391,7 +391,7 @@
                             });
                         }
                         else{
-                            ShowLogin('comment', '{{ feedback.feedback_id }}', commentJSON);
+                            ShowLogin('comment', '{{ feedback.feedback_id }}');
                         }
                     },
                     putComment: function(commentJSON, success, error) {
@@ -414,7 +414,7 @@
                 return new_url;
             }
 
-            function ShowLogin(action, feedback_id, commentJSON=null){
+            function ShowLogin(action, feedback_id){
 
                 // Do nothing if we are on the demo dashboard
                 if ('{{ demo }}' === 'True'){
@@ -427,10 +427,6 @@
 
                 // Set the feedback id and comment JSON
                 document.getElementById('feedback_id').value = feedback_id;
-
-                if (commentJSON !== null){
-                    document.getElementById('commentJSON').value = commentJSON;
-                }
 
                 // Set the event listener to close the model when clicking outside of the box
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
