@@ -187,7 +187,7 @@ def update_comment(c, content):
     return False
 
 
-def format_comments(comments, current_user):
+def format_comments(comments, current_user, is_admin):
     try:
         comment_list = list()
 
@@ -197,9 +197,10 @@ def format_comments(comments, current_user):
             created_by_user = True if (current_user is not None and current_user.is_authenticated and comment.user_id == current_user.id) else False
             created_by_admin = True if (current_user is not None and current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
             parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
+            name = comment.fullname if comment.fullname is not None else comment.email if is_admin else 'An anonymous user'
             c.update({'id': comment.comment_id,
                       'content': comment.comment,
-                      'fullname': comment.fullname if comment.fullname is not None else 'An anonymous user',
+                      'fullname': name,
                       'parent': parent_id,
                       'creator': comment.user_id,
                       'created_by_current_user': created_by_user,
