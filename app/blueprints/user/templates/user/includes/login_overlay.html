@@ -47,7 +47,7 @@
                       {% if action == 'vote' %}
                           <form id="submit_form" onsubmit="AnonVote()">
                               <div class="mt-1 relative rounded-md shadow-sm">
-                                <input type="hidden" name="feedback_id" value="" />
+                                <input type="hidden" id="feedback_id" name="feedback_id" value="" />
                                 <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
                               </div>
                               <div class="text-center flex justify-center">

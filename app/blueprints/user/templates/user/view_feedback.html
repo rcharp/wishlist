@@ -361,6 +361,7 @@
             // Initialize comments
             function InitializeComments(comments){
                 var user_id = null;
+                var email = null;
                 var readOnly = false;
                 if ('{{ current_user.is_authenticated }}' === 'True'){
                     user_id = '{{ current_user.id }}';
@@ -377,6 +378,9 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
+                        if (!('{{ current_user.is_authenticated }}' === 'True')) {
+                            ShowLogin('comment', '{{ feedback.feedback_id }}');
+                        }
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
                         $.ajax({
                             type: 'POST',
