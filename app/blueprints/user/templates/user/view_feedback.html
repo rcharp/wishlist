@@ -430,11 +430,10 @@
 
                 // Set the event listener to close the model when clicking outside of the box
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
+                alert(login_overlay_modal.outerHTML);
                 if (login_overlay_modal !== null){
                     login_overlay_modal.addEventListener("click", function () {
-                        //login_overlay.style.display = 'none';
-                        alert("OK");
-                        alert(login_overlay.outerHTML);
+                        login_overlay.style.display = 'none';
                     }, false);
                 }
             }
