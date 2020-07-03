@@ -647,19 +647,33 @@ def add_comment():
     try:
         from app.blueprints.base.functions import add_comment
         if request.method == 'POST':
-            feedback_id = request.form['feedback_id']
-            user_id = request.form['user_id']
-            parent_id = request.form['parent']
-            content = request.form['content']
-            created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+            if 'feedback_id' in request.form:
+                feedback_id = request.form['feedback_id']
+                if 'email' in request.form:
+                    email = request.form['email']
+                    parent_id = request.form['parent']
+                    content = request.form['content']
+                    created_by_user = True if request.form['created_by_current_user'] == 'true' else False
 
-            f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
-            if f is not None:
-                if add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user):
-                    f.comments += 1
-                    f.save()
-        return jsonify({'result': 'Success'})
+                    if f is not None:
+                        if add_comment(feedback_id, content, f.domain_id, None, email, parent_id, created_by_user):
+                            f.comments += 1
+                            f.save()
+                elif 'user_id' in request.form:
+                    user_id = request.form['user_id']
+                    parent_id = request.form['parent']
+                    content = request.form['content']
+                    created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+
+                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                    if f is not None:
+                        if add_comment(feedback_id, content, f.domain_id, user_id, None, parent_id, created_by_user):
+                            f.comments += 1
+                            f.save()
+                    return jsonify({'result': 'Success'})
     except Exception as e:
         return jsonify({'result': 'Error'})
 

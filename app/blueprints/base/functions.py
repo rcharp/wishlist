@@ -138,12 +138,11 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Comments ################################################
-def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user):
+def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, created_by_user):
     try:
         c = Comment()
         c.comment_id = generate_id(Comment)
         c.feedback_id = feedback_id
-        c.user_id = user_id
         c.comment = content
         c.domain_id = domain_id
 
@@ -153,10 +152,18 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
             if parent is not None:
                 c.parent_id = parent.id
 
-        if created_by_user:
-            u = User.query.filter(User.id == user_id).scalar()
-            if u is not None:
-                c.fullname = u.name
+        if user_id is not None:
+            c.user_id = user_id
+
+            if created_by_user:
+                u = User.query.filter(User.id == user_id).scalar()
+                if u is not None:
+                    c.fullname = u.name
+        elif email is not None:
+            d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+            if d is not None:
+                u = create_anon_user(email, d.name)
+                c.user_id = u.id
 
         c.save()
 
