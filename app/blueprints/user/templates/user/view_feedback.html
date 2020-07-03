@@ -387,7 +387,7 @@
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
-                            beforeSend: CheckIfLoggedIn(success, commentJSON),
+                            beforeSend: success(commentJSON),
                             success: function(comment) {
                             },
                             error: error

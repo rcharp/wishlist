@@ -164,6 +164,7 @@ def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, crea
             if d is not None:
                 u = create_anon_user(email, d.name)
                 c.user_id = u.id
+                c.email = email
 
         c.save()
 
