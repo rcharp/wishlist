@@ -197,7 +197,7 @@ def format_comments(comments, current_user, is_admin):
             created_by_user = True if (current_user is not None and current_user.is_authenticated and comment.user_id == current_user.id) else False
             created_by_admin = True if (current_user is not None and current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
             parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
-            name = comment.fullname if comment.fullname is not None else comment.email if is_admin else 'An anonymous user'
+            name = comment.fullname if comment.fullname else comment.email if is_admin else 'An anonymous user'
             c.update({'id': comment.comment_id,
                       'content': comment.comment,
                       'fullname': name,
