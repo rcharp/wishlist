@@ -199,7 +199,7 @@ def format_comments(comments, current_user):
             parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
             c.update({'id': comment.comment_id,
                       'content': comment.comment,
-                      'fullname': comment.fullname,
+                      'fullname': comment.fullname if comment.fullname is not None else 'An anonymous user',
                       'parent': parent_id,
                       'creator': comment.user_id,
                       'created_by_current_user': created_by_user,
