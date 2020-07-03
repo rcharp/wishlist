@@ -382,7 +382,7 @@
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
-                            beforeSend: success(commentJSON),
+                            beforeSend: CheckIfLoggedIn(success, commentJSON),
                             success: function(comment) {
                             },
                             error: error
@@ -401,6 +401,14 @@
                         });
                     }
                 });
+            }
+
+            function CheckIfLoggedIn(success, commentJSON){
+                if ('{{ current_user.is_authenticated }}' === 'True'){
+                    success(commentJSON);
+                }else{
+
+                }
             }
 
             function ReplaceSubdomain(url){
@@ -477,9 +485,6 @@
 
             // Load the comments
             GetComments('{{ feedback.feedback_id }}');
-
-            // Change the icons
-            // ChangeIcons();
         </script>
     </body>
 </html>
