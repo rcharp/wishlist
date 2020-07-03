@@ -380,7 +380,7 @@
                     postComment: function(commentJSON, success, error) {
                         if (!('{{ current_user.is_authenticated }}' === 'True')) {
                             ShowLogin('comment', '{{ feedback.feedback_id }}');
-                            email = document.getElementById('email').value;
+                            email = encodeURIComponent(document.getElementById('email').value);
                         }
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id, 'email': email});
                         $.ajax({
