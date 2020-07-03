@@ -378,21 +378,21 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        if (!('{{ current_user.is_authenticated }}' === 'True')) {
-                            ShowLogin('comment', '{{ feedback.feedback_id }}');
-                            email = document.getElementById('email').value;
-                            alert(email);
+                        if ('{{ current_user.is_authenticated }}' === 'True') {
+                            var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
+                            $.ajax({
+                                type: 'POST',
+                                url:  "{{ url_for('user.add_comment') }}",
+                                data: data,
+                                beforeSend: success(commentJSON),
+                                success: function(comment) {
+                                },
+                                error: error
+                            });
                         }
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id, 'email': email});
-                        $.ajax({
-                            type: 'POST',
-                            url:  "{{ url_for('user.add_comment') }}",
-                            data: data,
-                            beforeSend: success(commentJSON),
-                            success: function(comment) {
-                            },
-                            error: error
-                        });
+                        else{
+                            ShowLogin('comment', '{{ feedback.feedback_id }}', commentJSON);
+                        }
                     },
                     putComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
@@ -409,20 +409,12 @@
                 });
             }
 
-            function CheckIfLoggedIn(success, commentJSON){
-                if ('{{ current_user.is_authenticated }}' === 'True'){
-                    success(commentJSON);
-                }else{
-
-                }
-            }
-
             function ReplaceSubdomain(url){
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
                 return new_url;
             }
 
-            function ShowLogin(action, feedback_id){
+            function ShowLogin(action, feedback_id, commentJSON=null){
 
                 // Do nothing if we are on the demo dashboard
                 if ('{{ demo }}' === 'True'){
@@ -433,8 +425,12 @@
                 var login_overlay = document.getElementById('login-overlay-' + action);
                 login_overlay.style.display = '';
 
-                // Set the feedback id
+                // Set the feedback id and comment JSON
                 document.getElementById('feedback_id').value = feedback_id;
+
+                if (commentJSON !== null){
+                    document.getElementById('commentJSON').value = commentJSON;
+                }
 
                 // Set the event listener to close the model when clicking outside of the box
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
