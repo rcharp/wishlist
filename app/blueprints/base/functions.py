@@ -140,6 +140,9 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 # Comments ################################################
 def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, created_by_user):
     try:
+        print(email)
+        print(domain_id)
+
         c = Comment()
         c.comment_id = generate_id(Comment)
         c.feedback_id = feedback_id
