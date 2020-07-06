@@ -434,7 +434,7 @@
                 document.getElementById('modal-submit').innerText = action;
 
                 document.getElementById('login-overlay').style.display = '';
-                document.getElementById('submit_form').setAttribute("onSubmit", "VoteOrComment(" + action + ")");
+                document.getElementById('submit_form').setAttribute("onSubmit", "VoteOrComment('" + action + "')");
             }
 
             function HideModal(){
