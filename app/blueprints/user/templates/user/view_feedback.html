@@ -402,6 +402,8 @@
                         });
                     }
                 });
+
+                SetCommentBoxes();
             }
 
             function ReplaceSubdomain(url){
@@ -434,6 +436,23 @@
 
             function UserIsLoggedIn(){
                 return '{{ current_user.is_authenticated }}' === 'True';
+            }
+
+            function SetCommentBoxes(){
+                // Set the event listener for comment boxes if the user isn't logged in
+                if (!(UserIsLoggedIn())){
+                    alert("User not logged in");
+                    var commentBoxes = document.getElementsByTagName('textarea');
+                    for (var i = 0; i<commentBoxes.length; i++){
+                        var box = commentBoxes[i];
+                        alert(box.outerHTML);
+                        box.addEventListener("click", function () {
+                            if (localStorage.getItem("email") === null){
+                                ShowLogin('comment', '{{ feedback.feedback_id }}');
+                            }
+                        }, false);
+                    }
+                }
             }
         </script>
         <script>
@@ -482,23 +501,6 @@
 
             // Load the comments
             GetComments('{{ feedback.feedback_id }}');
-
-            $(document).ready(function() {
-                // Set the event listener for comment boxes if the user isn't logged in
-                if (!(UserIsLoggedIn())){
-                    alert("User not logged in");
-                    var commentBoxes = document.getElementsByTagName('textarea');
-                    for (var i = 0; i<commentBoxes.length; i++){
-                        var box = commentBoxes[i];
-                        alert(box.outerHTML);
-                        box.addEventListener("click", function () {
-                            if (localStorage.getItem("email") === null){
-                                ShowLogin('comment', '{{ feedback.feedback_id }}');
-                            }
-                        }, false);
-                    }
-                }
-            });
 
         </script>
     </body>
