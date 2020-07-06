@@ -297,7 +297,7 @@
                     var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
 
                     var user_id = null;
-                    if ('{{ current_user.is_authenticated }}' === 'True'){
+                    if (UserIsLoggedIn()){
                         user_id = '{{ current_user.id }}';
                     }
                     $.ajax({
@@ -343,7 +343,7 @@
                 var url = "{{ url_for('user.get_comments') }}";
 
                 var user_id = null;
-                if ('{{ current_user.is_authenticated }}' === 'True'){
+                if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
                 }
                 $.ajax({
@@ -363,7 +363,7 @@
                 var user_id = null;
                 var email = null;
                 var readOnly = false;
-                if ('{{ current_user.is_authenticated }}' === 'True'){
+                if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
                 }else{
                     //readOnly = true;
@@ -431,6 +431,10 @@
                     }, false);
                 }
             }
+
+            function UserIsLoggedIn(){
+                return '{{ current_user.is_authenticated }}' === 'True';
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
@@ -478,6 +482,22 @@
 
             // Load the comments
             GetComments('{{ feedback.feedback_id }}');
+
+            $(document).ready(function() {
+                // Set the event listener for comment boxes if the user isn't logged in
+                if (!(UserIsLoggedIn())){
+                    var commentBoxes = document.getElementsByTagName('textarea');
+                    for (var i = 0; i<commentBoxes.length; i++){
+                        var box = commentBoxes[i];
+                        box.addEventListener("click", function () {
+                            if (localStorage.getItem("email") === null){
+                                ShowLogin('comment', '{{ feedback.feedback_id }}');
+                            }
+                        }, false);
+                    }
+                }
+            });
+
         </script>
     </body>
 </html>
