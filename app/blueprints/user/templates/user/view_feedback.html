@@ -361,7 +361,6 @@
             // Initialize comments
             function InitializeComments(comments){
                 var user_id = null;
-                var email = null;
                 var readOnly = false;
                 if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
@@ -412,23 +411,18 @@
             }
 
             function ShowLogin(action, feedback_id){
-
-                // Do nothing if we are on the demo dashboard
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
-                // Show the modal
                 var login_overlay = document.getElementById('login-overlay-' + action);
                 login_overlay.style.display = '';
-
-                // Set the feedback id
                 document.getElementById('feedback_id').value = feedback_id;
 
-                // Set the event listener to close the model when clicking outside of the box
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
+
                 if (login_overlay_modal !== null){
-                    body.addEventListener("click", function () {
+                    login_overlay_modal.addEventListener("click", function () {
                         login_overlay.style.display = 'none';
                     }, false);
                 }
@@ -445,10 +439,8 @@
                     var commentBoxes = document.getElementsByClassName('textarea');
                     for (var i = 0; i<commentBoxes.length; i++){
                         var box = commentBoxes[i];
-                        alert(localStorage.getItem("email"));
                         box.addEventListener("click", function () {
                             if (localStorage.getItem("email") === null){
-                                alert("No email");
                                 ShowLogin('comment', '{{ feedback.feedback_id }}');
                             }
                         }, false);
