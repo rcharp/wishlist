@@ -428,7 +428,8 @@
             function ShowModal(action){
                 document.getElementById('modal-action').innerText = action;
                 document.getElementById('modal-submit').innerText = action;
-                document.getElementById('submit_form').onsubmit = function(){VoteOrComment(action);};
+
+                document.getElementById('submit_form').addEventListener("click", function () {VoteOrComment(action);}, false);
                 document.getElementById('login-overlay').style.display = '';
             }
 
