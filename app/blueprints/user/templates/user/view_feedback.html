@@ -242,8 +242,6 @@
         </div>
         <!-- END Page Container -->
 
-        {% include '/user/includes/login_overlay.html' ignore missing %}
-
         {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
             <div id="private-overlay">
                 {% include '/user/includes/private_overlay.html' ignore missing %}
@@ -253,13 +251,9 @@
             </div>
         {% endif %}
 
-        {#<div id="login-overlay-vote" style="display:none">
-            {% with action='vote' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
+        <div id="login-overlay" style="display:none">
+            {% include '/user/includes/login_overlay.html' ignore missing %}
         </div>
-
-        <div id="login-overlay-comment" style="display:none">
-            {% with action='comment' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
-        </div>#}
 
 
 
@@ -424,60 +418,22 @@
                 var modal = document.getElementById('login-overlay-modal');
                 var box = document.getElementById('login-overlay-box');
 
-                ShowModal(modal, box);
+                ShowModal();
 
                 if (modal !== null && box !== null){
                     document.getElementById('submit_form').onsubmit = function(){VoteOrComment(action);};
                     modal.addEventListener("click", function () {
-                        HideModal(modal, box);
+                        HideModal();
                     }, false);
                 }
             }
 
-            function ShowModal(modal, box){
-                modal.classList.remove('ease-in');
-                modal.classList.remove('duration-200');
-                modal.classList.remove('opacity-0');
-
-                modal.classList.add('ease-out');
-                modal.classList.add('duration-300');
-                modal.classList.add('opacity-100');
-
-                box.classList.remove('ease-in');
-                box.classList.remove('duration-200');
-                box.classList.remove('opacity-0');
-                box.classList.remove('translate-y-4');
-                box.classList.remove('sm:translate-y-0');
-                box.classList.remove('sm:scale-95');
-
-                box.classList.add('ease-out');
-                box.classList.add('duration-300');
-                box.classList.add('opacity-100');
-                box.classList.add('translate-y-0');
-                box.classList.add('sm:scale-100');
+            function ShowModal(){
+                document.getElementById('login-modal').style.display = '';
             }
 
-            function HideModal(modal, box){
-                modal.classList.remove('ease-out');
-                modal.classList.remove('duration-300');
-                modal.classList.remove('opacity-100');
-
-                modal.classList.add('ease-in');
-                modal.classList.add('duration-200');
-                modal.classList.add('opacity-0');
-
-                box.classList.remove('ease-out');
-                box.classList.remove('duration-300');
-                box.classList.remove('opacity-100');
-                box.classList.remove('translate-y-0');
-                box.classList.remove('sm:scale-100');
-
-                box.classList.add('ease-in');
-                box.classList.add('duration-200');
-                box.classList.add('opacity-0');
-                box.classList.add('translate-y-4');
-                box.classList.add('sm:translate-y-0');
-                box.classList.add('sm:scale-95');
+            function HideModal(){
+                document.getElementById('login-modal').style.display = 'none';
             }
 
             function UserIsLoggedIn(){
@@ -492,9 +448,6 @@
                         var box = commentBoxes[i];
                         box.addEventListener("click", function () {
                             ShowLoginModal('comment', '{{ feedback.feedback_id }}');
-                            {#if (localStorage.getItem("email") === null){
-                                ShowLoginModal('comment', '{{ feedback.feedback_id }}');
-                            }#}
                         }, false);
                     }
                 }
