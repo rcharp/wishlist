@@ -378,21 +378,16 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        if ('{{ current_user.is_authenticated }}' === 'True') {
-                            var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
-                            $.ajax({
-                                type: 'POST',
-                                url:  "{{ url_for('user.add_comment') }}",
-                                data: data,
-                                beforeSend: success(commentJSON),
-                                success: function(comment) {
-                                },
-                                error: error
-                            });
-                        }
-                        else{
-                            ShowLogin('comment', '{{ feedback.feedback_id }}');
-                        }
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
+                        $.ajax({
+                            type: 'POST',
+                            url:  "{{ url_for('user.add_comment') }}",
+                            data: data,
+                            beforeSend: success(commentJSON),
+                            success: function(comment) {
+                            },
+                            error: error
+                        });
                     },
                     putComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
