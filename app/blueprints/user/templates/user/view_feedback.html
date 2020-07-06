@@ -445,9 +445,10 @@
                     var commentBoxes = document.getElementsByClassName('textarea');
                     for (var i = 0; i<commentBoxes.length; i++){
                         var box = commentBoxes[i];
-                        alert(box.outerHTML);
+                        alert(localStorage.getItem("email"));
                         box.addEventListener("click", function () {
                             if (localStorage.getItem("email") === null){
+                                alert("No email");
                                 ShowLogin('comment', '{{ feedback.feedback_id }}');
                             }
                         }, false);
