@@ -44,7 +44,7 @@
                     In order to <span id="modal-action">vote or comment</span> on feedback, please leave your email address so that {% if domain %}{{ domain.company }} knows{% else %}we know{% endif %} who left it.
                   </p>
                   <div class="mb-6">
-                      <form id="submit_form" onsubmit="VoteOrComment('{{ action }}')">
+                      <form id="submit_form">
                           <div class="mt-1 relative rounded-md shadow-sm">
                             <input type="hidden" id="feedback_id" name="feedback_id" value="" />
                             <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
