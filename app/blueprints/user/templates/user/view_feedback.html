@@ -386,7 +386,7 @@
                             });
                         }else {
                             ShowLoginModal('comment', '{{ feedback.feedback_id }}');
-                            var email = window.localStorage.get('email');
+                            var email = localStorage.getItem("email");
                             if (email === null){
                                 location.reload();
                             }
