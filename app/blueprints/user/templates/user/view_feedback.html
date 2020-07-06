@@ -415,12 +415,16 @@
 
                 document.getElementById('feedback_id').value = feedback_id;
                 var modal = document.getElementById('login-overlay-modal');
+                var box = document.getElementById('login-overlay-box');
 
                 ShowModal(action);
 
-                if (modal !== null){
+                if (modal !== null && box !== null){
                     modal.addEventListener("click", function () {
                         HideModal();
+                    }, false);
+                    box.addEventListener("click", function (ev) {
+                        ev.stopPropagation();
                     }, false);
                 }
             }
