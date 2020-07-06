@@ -446,12 +446,17 @@ def feedback(feedback_id, subdomain):
     else:
         voted = False
 
+    votes = len(Vote.query.filter(Vote.feedback_id == feedback_id).all())
+    comments = len(Comment.query.filter(Comment.feedback_id == feedback_id).all())
+
     # Get the statuses
     statuses = Status.query.all()
     return render_template('user/view_feedback.html',
                            current_user=current_user,
                            feedback=f,
                            domain=d,
+                           vote_count=votes,
+                           comment_count=comments,
                            statuses=statuses,
                            subdomain=subdomain,
                            voted=voted,
