@@ -385,9 +385,12 @@
                                 error: error
                             });
                         }else {
+                            localStorage.setItem('comment', commentJSON);
+                            localStorage.setItem('success', success);
+
                             ShowLoginModal('comment', '{{ feedback.feedback_id }}');
 
-                            // only submit the comment if the modal is closed
+                            {#// only submit the comment if the modal is closed
                             var modal = document.getElementById('login-overlay-modal');
                             if (modal.style.display === 'none'){
                                 var email = localStorage.getItem("email");
@@ -406,7 +409,7 @@
                                         error: error
                                     });
                                 }
-                            }
+                            }#}
                         }
 
                     },

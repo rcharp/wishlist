@@ -110,6 +110,25 @@
                     });
                 }
                 else if (action === 'comment'){
+                    if (email === null){
+                        location.reload();
+                    }
+                    else{
+                        var commentJSON = localStorage.getItem('commentJSON');
+                        var success = localStorage.getItem('success');
+
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
+                        $.ajax({
+                            type: 'POST',
+                            url:  "{{ url_for('user.add_comment') }}",
+                            data: data,
+                            beforeSend: success(commentJSON),
+                            success: function(comment) {
+                            },
+                            error: error
+                        });
+                    }
+
                     HideModal();
                 }
             }
