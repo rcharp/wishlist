@@ -439,9 +439,10 @@
                     for (var i = 0; i<commentBoxes.length; i++){
                         var box = commentBoxes[i];
                         box.addEventListener("click", function () {
-                            if (localStorage.getItem("email") === null){
+                            ShowLogin('comment', '{{ feedback.feedback_id }}');
+                            {#if (localStorage.getItem("email") === null){
                                 ShowLogin('comment', '{{ feedback.feedback_id }}');
-                            }
+                            }#}
                         }, false);
                     }
                 }
