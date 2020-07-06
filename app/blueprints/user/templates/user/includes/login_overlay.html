@@ -115,7 +115,7 @@
 
         </script>
         <script>
-            var body = document.getElementsByTagName("body")[0];
+            {#var body = document.getElementsByTagName("body")[0];
             var overlay = document.getElementById('login-overlay-modal');
             var box = document.getElementById('login-overlay-box');
 
@@ -126,7 +126,7 @@
                 box.addEventListener("click", function (ev) {
                     ev.stopPropagation(); //this is important! If removed, you'll get both alerts
                 }, false);
-            }
+            }#}
 
             $(document).ready(function() {
                 // Don't submit the form normally
