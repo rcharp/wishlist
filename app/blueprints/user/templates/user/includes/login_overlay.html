@@ -44,35 +44,19 @@
                     In order to {{ action }} on feedback, please leave your email address so that {% if domain %}{{ domain.company }} knows{% else %}we know{% endif %} who left it.
                   </p>
                   <div class="mb-6">
-                      {% if action == 'vote' %}
-                          <form id="submit_form" onsubmit="AnonVote()">
-                              <div class="mt-1 relative rounded-md shadow-sm">
-                                <input type="hidden" id="feedback_id" name="feedback_id" value="" />
-                                <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
-                              </div>
-                              <div class="text-center flex justify-center">
-                                  <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
-                                    <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                      {{ action|title }}!
-                                    </button>
-                                  </span>
-                              </div>
-                          </form>
-                      {% elif action == 'comment' %}
-                          <form id="submit_form" onsubmit="AnonComment()">
-                              <div class="mt-1 relative rounded-md shadow-sm">
-                                  <input type="hidden" id="feedback_id" name="feedback_id" value="" />
-                                  <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
-                              </div>
-                              <div class="text-center flex justify-center">
-                                  <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
-                                    <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                                      {{ action|title }}!
-                                    </button>
-                                  </span>
-                              </div>
-                          </form>
-                      {% endif %}
+                      <form id="submit_form" {% if action == 'vote' %}onsubmit="AnonVote()" {% else %}onsubmit="AnonComment()"{% endif %}>
+                          <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="hidden" id="feedback_id" name="feedback_id" value="" />
+                            <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                          </div>
+                          <div class="text-center flex justify-center">
+                              <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
+                                <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                  {{ action|title }}!
+                                </button>
+                              </span>
+                          </div>
+                      </form>
                   </div>
                   <hr class="mb-4" />
                   <p class="text-sm leading-5 text-gray-500">
