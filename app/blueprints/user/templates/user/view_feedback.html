@@ -42,6 +42,7 @@
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
           {% include '/user/includes/mobile.html' ignore missing %}
+          {% include '/user/includes/login_overlay.html' ignore missing %}
           {% with page='feedback' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -257,7 +258,7 @@
         <div id="login-overlay-comment" style="display:none">
             {% with action='comment' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
         </div>#}
-        {% include '/user/includes/login_overlay.html' ignore missing %}
+
 
 
         <!-- jQuery -->
