@@ -314,7 +314,7 @@
                         }
                     });
                 }else{
-                    ShowLogin('vote', feedback_id);
+                    ShowLoginModal('vote', feedback_id);
                 }
 
             }
@@ -411,25 +411,47 @@
                 return new_url;
             }
 
-            function ShowLogin(action, feedback_id){
+            function ShowLoginModal(action, feedback_id){
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
-                var login_overlay = document.getElementById('login-overlay-' + action);
-                login_overlay.style.display = '';
-
                 document.getElementById('feedback_id').value = feedback_id;
 
-                var login_overlay_modal = document.getElementById('login-overlay-modal');
+                var modal = document.getElementById('login-overlay-modal');
+                var box = document.getElementById('login-overlay-box');
 
-                if (login_overlay_modal !== null){
+                ShowModal(modal, box);
 
+                if (modal !== null && box !== null){
                     document.getElementById('submit_form').onsubmit = function(){VoteOrComment(action);};
-                    login_overlay_modal.addEventListener("click", function () {
-                        login_overlay.style.display = 'none';
+                    modal.addEventListener("click", function () {
+
                     }, false);
                 }
+            }
+
+            function ShowModal(modal, box){
+                modal.classList.remove('ease-out');
+                modal.classList.remove('duration-300');
+                modal.classList.remove('opacity-0');
+
+                modal.classList.add('ease-in');
+                modal.classList.add('duration-200');
+                modal.classList.add('opacity-100');
+
+                box.classList.remove('ease-out');
+                box.classList.remove('duration-300');
+                box.classList.remove('opacity-0');
+                box.classList.remove('translate-y-4');
+                box.classList.remove('sm:translate-y-0');
+                box.classList.remove('sm:scale-95');
+
+                box.classList.add('ease-in');
+                box.classList.add('duration-200');
+                box.classList.add('opacity-100');
+                box.classList.add('translate-y-0');
+                box.classList.add('sm:scale-100');
             }
 
             function UserIsLoggedIn(){
@@ -443,9 +465,9 @@
                     for (var i = 0; i<commentBoxes.length; i++){
                         var box = commentBoxes[i];
                         box.addEventListener("click", function () {
-                            ShowLogin('comment', '{{ feedback.feedback_id }}');
+                            ShowLoginModal('comment', '{{ feedback.feedback_id }}');
                             {#if (localStorage.getItem("email") === null){
-                                ShowLogin('comment', '{{ feedback.feedback_id }}');
+                                ShowLoginModal('comment', '{{ feedback.feedback_id }}');
                             }#}
                         }, false);
                     }

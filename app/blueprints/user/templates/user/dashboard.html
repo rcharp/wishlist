@@ -426,7 +426,7 @@
                 }
             }
 
-            function ShowLogin(action, feedback_id){
+            function ShowLoginModal(action, feedback_id){
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
@@ -462,7 +462,7 @@
                     });
                 }
                 else{
-                    ShowLogin('vote', feedback_id);
+                    ShowLoginModal('vote', feedback_id);
                 }
 
             }
