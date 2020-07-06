@@ -62,7 +62,7 @@
                           <form id="submit_form" onsubmit="AnonComment()">
                               <div class="mt-1 relative rounded-md shadow-sm">
                                   <input type="hidden" id="feedback_id" name="feedback_id" value="" />
-                                  <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
+                                  <input id="email" name="email" type="email" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" value="GetEmailFromLocalStorage()" />
                               </div>
                               <div class="text-center flex justify-center">
                                   <span class="flex w-1/2 rounded-md shadow-sm sm:col-start-2 mt-4">
@@ -145,9 +145,15 @@
             }
 
             $(document).ready(function() {
+                // Don't submit the form normally
                 $('#submit_form').submit(function(e){
                     e.preventDefault(e);
                 });
+
+                // If there is an email in localStorage, fill the overlay box with that
+                if (!(localStorage.getItem("email") !== null)){
+                    document.getElementById('email').value = localStorage.getItem("email");
+                }
             });
         </script>
     </body>
