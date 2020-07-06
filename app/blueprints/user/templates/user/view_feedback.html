@@ -362,8 +362,6 @@
                 var readOnly = false;
                 if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
-                }else{
-                    //readOnly = true;
                 }
 
                 $('#comments-container').comments({
@@ -380,7 +378,7 @@
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
                             data: data,
-                            beforeSend: success(commentJSON),
+                            beforeSend: CheckAnonComment(success, commentJSON),
                             success: function(comment) {
                             },
                             error: error
@@ -406,6 +404,15 @@
             function ReplaceSubdomain(url){
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
                 return new_url;
+            }
+
+            function CheckAnonComment(success, commentJSON){
+                if(UserIsLoggedIn()){
+                    success(commentJSON);
+                }
+                else{
+                    return false;
+                }
             }
 
             function ShowLoginModal(action, feedback_id){
@@ -445,7 +452,7 @@
                 return '{{ current_user.is_authenticated }}' === 'True';
             }
 
-            function SetCommentBoxes(){
+            {#function SetCommentBoxes(){
                 // Set the event listener for comment boxes if the user isn't logged in
                 if (!(UserIsLoggedIn())){
                     var commentBoxes = document.getElementsByClassName('textarea');
@@ -456,7 +463,7 @@
                         }, false);
                     }
                 }
-            }
+            }#}
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
