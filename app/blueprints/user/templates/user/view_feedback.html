@@ -386,21 +386,26 @@
                             });
                         }else {
                             ShowLoginModal('comment', '{{ feedback.feedback_id }}');
-                            var email = localStorage.getItem("email");
-                            if (email === null){
-                                location.reload();
-                            }
-                            else{
-                                var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
-                                $.ajax({
-                                    type: 'POST',
-                                    url:  "{{ url_for('user.add_comment') }}",
-                                    data: data,
-                                    beforeSend: success(commentJSON),
-                                    success: function(comment) {
-                                    },
-                                    error: error
-                                });
+
+                            // only submit the comment if the modal is closed
+                            var modal = document.getElementById('login-overlay-modal');
+                            if (modal.style.display === 'none'){
+                                var email = localStorage.getItem("email");
+                                if (email === null){
+                                    location.reload();
+                                }
+                                else{
+                                    var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
+                                    $.ajax({
+                                        type: 'POST',
+                                        url:  "{{ url_for('user.add_comment') }}",
+                                        data: data,
+                                        beforeSend: success(commentJSON),
+                                        success: function(comment) {
+                                        },
+                                        error: error
+                                    });
+                                }
                             }
                         }
 
