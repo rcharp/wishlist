@@ -373,16 +373,37 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
-                        $.ajax({
-                            type: 'POST',
-                            url:  "{{ url_for('user.add_comment') }}",
-                            data: data,
-                            beforeSend: CheckAnonComment(success, commentJSON),
-                            success: function(comment) {
-                            },
-                            error: error
-                        });
+                        if (UserIsLoggedIn()){
+                            var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
+                            $.ajax({
+                                type: 'POST',
+                                url:  "{{ url_for('user.add_comment') }}",
+                                data: data,
+                                beforeSend: success(commentJSON),
+                                success: function(comment) {
+                                },
+                                error: error
+                            });
+                        }else {
+                            ShowLoginModal('comment', '{{ feedback.feedback_id }}');
+                            var email = window.localStorage.get('email');
+                            if (email === null){
+                                location.reload();
+                            }
+                            else{
+                                var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
+                                $.ajax({
+                                    type: 'POST',
+                                    url:  "{{ url_for('user.add_comment') }}",
+                                    data: data,
+                                    beforeSend: success(commentJSON),
+                                    success: function(comment) {
+                                    },
+                                    error: error
+                                });
+                            }
+                        }
+
                     },
                     putComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
@@ -398,7 +419,7 @@
                     }
                 });
 
-                SetCommentBoxes();
+                // SetCommentBoxes();
             }
 
             function ReplaceSubdomain(url){
