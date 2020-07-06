@@ -385,7 +385,7 @@
                                 error: error
                             });
                         }else {
-                            localStorage.setItem('comment', commentJSON);
+                            localStorage.setItem('comment', JSON.stringify(commentJSON));
                             ShowLoginModal('comment', '{{ feedback.feedback_id }}');
                             success(commentJSON);
 

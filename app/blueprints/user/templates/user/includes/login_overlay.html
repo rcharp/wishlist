@@ -114,7 +114,7 @@
                         location.reload();
                     }
                     else{
-                        var commentJSON = localStorage.getItem('comment');
+                        var commentJSON = JSON.parse(localStorage.getItem('comment'));
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
                         alert(JSON.stringify(data));
                         $.ajax({
