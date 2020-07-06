@@ -442,7 +442,7 @@
                 // Set the event listener for comment boxes if the user isn't logged in
                 if (!(UserIsLoggedIn())){
                     alert("User not logged in");
-                    var commentBoxes = document.getElementsByTagName('textarea');
+                    var commentBoxes = document.getElementsByClassName('textarea');
                     for (var i = 0; i<commentBoxes.length; i++){
                         var box = commentBoxes[i];
                         alert(box.outerHTML);
