@@ -151,7 +151,7 @@
                 });
 
                 // If there is an email in localStorage, fill the overlay box with that
-                if (!(localStorage.getItem("email") !== null)){
+                if (localStorage.getItem("email") !== null){
                     document.getElementById('email').value = localStorage.getItem("email");
                 }
             });
