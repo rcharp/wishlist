@@ -89,7 +89,9 @@
                 var email = document.getElementById('email').value;
 
                 // Set the email in localStorage
-                localStorage.setItem('email', email);
+                if (email.includes('@')){
+                    localStorage.setItem('email', email);
+                }
 
                 $.ajax({
                     url: url,
@@ -110,7 +112,9 @@
                 var email = document.getElementById('email').value;
 
                 // Set the email in localStorage
-                localStorage.setItem('email', email);
+                if (email.includes('@')){
+                    localStorage.setItem('email', email);
+                }
             }
 
         </script>
@@ -135,7 +139,7 @@
                 });
 
                 // If there is an email in localStorage, fill the overlay box with that
-                if (localStorage.getItem("email") !== null){
+                if (localStorage.getItem("email") !== null && localStorage.getItem("email").includes('@')){
                     document.getElementById('email').value = localStorage.getItem("email");
                 }
             });
