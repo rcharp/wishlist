@@ -115,19 +115,6 @@
             }
         </script>
         <script>
-            {#var body = document.getElementsByTagName("body")[0];
-            var overlay = document.getElementById('login-overlay-modal');
-            var box = document.getElementById('login-overlay-box');
-
-            if (box !== null && overlay != null){
-                body.addEventListener("click", function () {
-                    overlay.style.display = 'none';
-                }, false);
-                box.addEventListener("click", function (ev) {
-                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-                }, false);
-            }#}
-
             $(document).ready(function() {
                 // Don't submit the form normally
                 $('#submit_form').submit(function(e){

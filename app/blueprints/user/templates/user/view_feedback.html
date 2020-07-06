@@ -456,6 +456,7 @@
                 if (modal !== null && box !== null){
                     modal.addEventListener("click", function () {
                         HideModal();
+                        location.reload();
                     }, false);
                     box.addEventListener("click", function (ev) {
                         ev.stopPropagation();
@@ -478,19 +479,6 @@
             function UserIsLoggedIn(){
                 return '{{ current_user.is_authenticated }}' === 'True';
             }
-
-            {#function SetCommentBoxes(){
-                // Set the event listener for comment boxes if the user isn't logged in
-                if (!(UserIsLoggedIn())){
-                    var commentBoxes = document.getElementsByClassName('textarea');
-                    for (var i = 0; i<commentBoxes.length; i++){
-                        var box = commentBoxes[i];
-                        box.addEventListener("click", function () {
-                            ShowLoginModal('comment', '{{ feedback.feedback_id }}');
-                        }, false);
-                    }
-                }
-            }#}
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
