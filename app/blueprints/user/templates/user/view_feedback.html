@@ -433,7 +433,7 @@
                 document.getElementById('modal-action').innerText = action;
                 document.getElementById('modal-submit').innerText = action;
 
-                document.getElementById('submit_form').addEventListener("click", function () {VoteOrComment(action);}, false);
+                document.getElementById('submit_form').addEventListener("submit", function () {VoteOrComment(action);}, false);
                 document.getElementById('login-overlay').style.display = '';
             }
 
