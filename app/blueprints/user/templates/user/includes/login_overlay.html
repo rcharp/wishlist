@@ -44,7 +44,7 @@
                     In order to {{ action }} on feedback, please leave your email address so that {% if domain %}{{ domain.company }} knows{% else %}we know{% endif %} who left it.
                   </p>
                   <div class="mb-6">
-                      <form id="submit_form" {% if action == 'vote' %}onsubmit="AnonVote()" {% else %}onsubmit="AnonComment()"{% endif %}>
+                      <form id="submit_form" onsubmit="VoteOrComment('{{ action }}')">
                           <div class="mt-1 relative rounded-md shadow-sm">
                             <input type="hidden" id="feedback_id" name="feedback_id" value="" />
                             <input id="email" name="email" type="email" autofocus="autofocus" required class="form-input block w-full sm:text-sm sm:leading-5" placeholder="you@example.com" />
@@ -83,9 +83,7 @@
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
 
         <script>
-            function AnonVote(){
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-                var feedback_id = document.getElementById('feedback_id').value;
+            function VoteOrComment(action){
                 var email = document.getElementById('email').value;
 
                 // Set the email in localStorage
@@ -93,30 +91,25 @@
                     localStorage.setItem('email', email);
                 }
 
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'email': email},
-                    success: function (response) {
-                        if ('success' in response){
-                            location.reload();
+                if (action === 'vote'){
+                    var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+                    var feedback_id = document.getElementById('feedback_id').value;
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        beforeSend: UpdateVote(feedback_id),
+                        data: {'feedback_id': feedback_id, 'email': email},
+                        success: function (response) {
+                            if ('success' in response){
+                                location.reload();
+                            }
+                        },
+                        error: function (xhr) {
                         }
-                    },
-                    error: function (xhr) {
-                    }
-                });
-            }
-
-            function AnonComment(){
-                var email = document.getElementById('email').value;
-
-                // Set the email in localStorage
-                if (email.includes('@')){
-                    localStorage.setItem('email', email);
+                    });
                 }
             }
-
         </script>
         <script>
             {#var body = document.getElementsByTagName("body")[0];

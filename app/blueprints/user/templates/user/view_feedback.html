@@ -417,11 +417,14 @@
 
                 var login_overlay = document.getElementById('login-overlay-' + action);
                 login_overlay.style.display = '';
+
                 document.getElementById('feedback_id').value = feedback_id;
 
                 var login_overlay_modal = document.getElementById('login-overlay-modal');
 
                 if (login_overlay_modal !== null){
+
+                    document.getElementById('submit_form').onsubmit = function(){VoteOrComment(action);};
                     login_overlay_modal.addEventListener("click", function () {
                         login_overlay.style.display = 'none';
                     }, false);
