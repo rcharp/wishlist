@@ -116,7 +116,7 @@
                     else{
                         var commentJSON = JSON.parse(localStorage.getItem('comment'));
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
-                        alert(JSON.stringify(data));
+
                         $.ajax({
                             type: 'POST',
                             url:  "{{ url_for('user.add_comment') }}",
