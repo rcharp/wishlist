@@ -104,6 +104,9 @@
                 var feedback_id = document.getElementById('feedback_id').value;
                 var email = document.getElementById('email').value;
 
+                // Set the email in localStorage
+                localStorage.setItem('email', email);
+
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -120,6 +123,10 @@
             }
 
             function AnonComment(){
+                var email = document.getElementById('email').value;
+
+                // Set the email in localStorage
+                localStorage.setItem('email', email);
             }
 
         </script>
