@@ -250,13 +250,14 @@
             </div>
         {% endif %}
 
-        <div id="login-overlay-vote" style="display:none">
+        {#<div id="login-overlay-vote" style="display:none">
             {% with action='vote' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
         </div>
 
         <div id="login-overlay-comment" style="display:none">
             {% with action='comment' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
-        </div>
+        </div>#}
+        {% include '/user/includes/login_overlay.html' ignore missing %}
 
 
         <!-- jQuery -->
