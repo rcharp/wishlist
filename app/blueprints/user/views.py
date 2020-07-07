@@ -428,6 +428,7 @@ View feedback details
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def feedback(feedback_id, subdomain):
     demo = False
     if subdomain == 'demo':
@@ -472,6 +473,7 @@ Add feedback to the list
 @user.route('/add_feedback', methods=['POST'])
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def add_feedback(subdomain=None):
     if subdomain:
         # If there is no user, redirect them to the login for this domain
@@ -539,6 +541,7 @@ Update the feedback
 
 @user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def update_feedback(subdomain=None):
     if request.method == 'POST':
         try:
@@ -567,6 +570,7 @@ Delete the feedback
 
 @user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET'])
 @csrf.exempt
+@cross_origin()
 def delete_feedback(feedback_id, subdomain=None):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
@@ -586,6 +590,7 @@ Sort the feedback by newest, oldest, or most votes
 @user.route('/dashboard/<s>', methods=['GET', 'POST'])
 @user.route('/dashboard/<s>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def sort_feedback(s, subdomain=None):
     if subdomain:
         feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
@@ -627,6 +632,7 @@ Get comments
 
 @user.route('/get_comments', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def get_comments():
     try:
         if request.method == 'POST':
@@ -648,6 +654,7 @@ Add a comment
 
 @user.route('/add_comment', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def add_comment():
     try:
         from app.blueprints.base.functions import add_comment
@@ -690,6 +697,7 @@ Update a comment
 
 @user.route('/update_comment', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def update_comment():
     try:
         from app.blueprints.base.functions import update_comment
@@ -714,6 +722,7 @@ Add or remove a vote
 
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def update_vote(subdomain=None):
     try:
         if request.method == 'POST':
@@ -796,6 +805,7 @@ def send_invite(subdomain=None):
 
 @user.route('/get_private_key', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def get_private_key():
     try:
         if request.method == 'POST':
