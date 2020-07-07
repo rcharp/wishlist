@@ -447,7 +447,7 @@
 
             function ShowModal(action){
                 document.getElementById('modal-action').innerText = action;
-                document.getElementById('modal-submit').innerText = action;
+                document.getElementById('modal-submit').innerText = 'Send ' + action;
 
                 document.getElementById('login-overlay').style.display = '';
                 document.getElementById('login-overlay-form').setAttribute("onSubmit", "VoteOrComment('" + action + "')");
