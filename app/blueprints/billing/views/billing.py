@@ -165,10 +165,8 @@ def cancel():
             if canceled:
 
                 # Set the user to inactive
-                current_user.domain = None
-                current_user.domain_id = None
-                current_user.active = False
-                current_user.save()
+                from app.blueprints.base.functions import set_inactive
+                # set_inactive(current_user)
 
                 logout_user()
 
@@ -181,10 +179,10 @@ def cancel():
 
                 # Delete the user
                 # delete_users.delay(ids)
-                # current_user.delete()
+                current_user.delete()
 
                 # Send a cancellation email.
-                # from app.blueprints.user.tasks import send_cancel_email
+                from app.blueprints.user.tasks import send_cancel_email
                 # send_cancel_email.delay(email)
 
                 flash('Sorry to see you go! Your subscription has been canceled.',

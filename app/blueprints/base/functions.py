@@ -297,6 +297,13 @@ def get_private_key(domain_id, user_id):
     return decrypt_string(d.private_key)
 
 
+def set_inactive(current_user):
+    current_user.domain = None
+    current_user.domain_id = None
+    current_user.active = False
+    current_user.save()
+
+
 # Other ###################################################
 def print_traceback(e):
     traceback.print_tb(e.__traceback__)
