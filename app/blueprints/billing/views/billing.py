@@ -166,7 +166,7 @@ def cancel():
 
                 # Set the user to inactive
                 from app.blueprints.base.functions import set_inactive
-                # set_inactive(current_user)
+                set_inactive(current_user)
 
                 logout_user()
 
@@ -179,7 +179,7 @@ def cancel():
 
                 # Delete the user
                 # delete_users.delay(ids)
-                current_user.delete()
+                # current_user.delete()
 
                 # Send a cancellation email.
                 from app.blueprints.user.tasks import send_cancel_email
