@@ -114,8 +114,10 @@
                         location.reload();
                     }
                     else{
+                        var feedback_id = document.getElementById('feedback_id').value;
+
                         var commentJSON = JSON.parse(localStorage.getItem('comment'));
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'email': email});
+                        var data = Object.assign(commentJSON, {'feedback_id': feedback_id, 'email': email});
 
                         $.ajax({
                             type: 'POST',
