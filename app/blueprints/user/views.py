@@ -888,3 +888,17 @@ def contact():
         flash('Thanks for your email! You can expect a response shortly.', 'success')
         return redirect(url_for('user.contact'))
     return render_template('user/contact.html', current_user=current_user)
+
+
+# Testing ----------------------------------------------------------------------
+@user.route('/test', methods=['GET','POST'])
+@user.route('/test', subdomain='<subdomain>', methods=['GET','POST'])
+@login_required
+@csrf.exempt
+def test(subdomain=None):
+    if subdomain:
+        domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
+        return render_template('user/test.html', current_user=current_user, domain=domain, subdomain=subdomain)
+    else:
+        domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
+        return render_template('user/test.html', current_user=current_user, domain=domain)

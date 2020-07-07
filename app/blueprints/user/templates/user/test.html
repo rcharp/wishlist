@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Widgets - {{ 'site_name'|site_name_filter }}</title>
+        <title>Settings - {{ 'site_name'|site_name_filter }}</title>
 
         <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
         <meta name="author" content="pixelcave">
@@ -34,8 +34,7 @@
     </head>
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
-          {% include '/user/includes/mobile.html' ignore missing %}
-          {% with page='widgets' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
+          {% with page='test' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
@@ -49,57 +48,56 @@
                     <label for="search_field" class="sr-only">Search</label>
                     <div class="relative w-full text-gray-400 focus-within:text-gray-600">
                       <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                        {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                        </svg>
+                        </svg>#}
                       </div>
-                      <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="Search feedback" type="search" onkeyup="SearchFeedback(this)" />
+                        <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
                     </div>
                   </div>
                 </div>
                 <div class="ml-4 flex items-center md:ml-6">
-                    {% if current_user.is_authenticated %}
-                        {% include '/user/includes/user_dropdown.html' ignore missing %}
-                    {% else %}
-                        {% include '/user/includes/header_buttons.html' ignore missing %}
-                    {% endif %}
+                  {% if current_user.is_authenticated %}
+                      {% include '/user/includes/user_dropdown.html' ignore missing %}
+                  {% else %}
+                      {% include '/user/includes/header_buttons.html' ignore missing %}
+                  {% endif %}
                 </div>
               </div>
             </div>
 
-            <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <!-- Replace with your content -->
-                  <div class="mt-1 mb-4 grid grid-cols-4 gap-2 sm:grid-cols-4">
-                      <div class="sm:col-span-1"></div>
-                      <div class="bg-white overflow-hidden shadow rounded-lg sm:col-span-2">
-                            <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
-                                <code id="widget-code" class="text-sm leading-5 font-medium text-gray-500" style="max-height:300px;overflow-x:scroll;"></code>
-                            </div>
-                            <div class="px-4 py-5 sm:p-6">
-                            <!-- Content goes here -->
-                            </div>
+          <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                <div class="bg-white shadow overflow-hidden  sm:rounded-lg w-full" style="height:500px;">
+                  <div class="px-4 py-5 sm:p- w-full" style="height:500px;">
+                      <div id="wishlist-widget" style="height:500px;">
+                            <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+                            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+                            crossorigin="anonymous"></script>
+
+                            <script>
+                                (function(){
+                                    var d = document,
+                                    h = d.getElementsByTagName('head')[0],
+                                    s = d.createElement('script');
+                                    s.type = 'text/javascript';
+                                    s.async = true;
+                                    s.src = "{{ url_for('static', filename='widget/widget.js', subdomain=subdomain) }}";
+                                    h.appendChild(s);
+                                });
+                            </script>
                       </div>
-                      <div class="sm:col-span-1"></div>
                   </div>
-                <!-- /End replace -->
-              </div>
-            </main>
+                </div>
+            </div>
+          </main>
+
+
           </div>
         </div>
         <!-- END Page Container -->
-
-        {% if not current_user.role == 'creator' and current_user.domain == subdomain and domain.private %}
-            {% include '/user/includes/private_overlay.html' ignore missing %}
-            <script>
-                document.getElementById('search_field').readOnly = true;
-            </script>
-        {% endif %}
-
-
         <!-- jQuery -->
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
-        <script src="{{ url_for('static', filename='widget/widget.js', subdomain=subdomain) }}"></script>
 
         <script>
             function ShowDropdown(id) {
@@ -121,42 +119,22 @@
                     dropdown.style.display = 'none';
                 }
             }
-
-            function ReplaceSubdomain(url){
-                var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
-                return new_url;
-            }
         </script>
-
-        <script>
-            function LoadWidgetCode(){
-                var widget_code = code;
-
-                widget_code = widget_code + widget.toString();
-                document.getElementById('widget-code').innerText = widget_code;
-            }
-        </script>
-
         <script>
             var body = document.getElementsByTagName("body")[0];
-            var user_dropdown = document.getElementById('user-dropdown-menu');
+            var except = document.getElementById('user-dropdown-menu');
 
-            if (user_dropdown !== null){
-                body.addEventListener("click", function () {
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
 
-                    // Hide the user dropdown when you click outside of it
-                    user_dropdown.classList.remove('opacity-100');
-                    user_dropdown.classList.remove('scale-100');
-                    user_dropdown.classList.add('opacity-0');
-                    user_dropdown.classList.add('scale-95');
-                    user_dropdown.style.display = 'none';
-                }, false);
-                document.getElementById('user-menu').addEventListener("click", function (ev) {
-                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-                }, false);
-            }
-
-            LoadWidgetCode();
+                except.style.display = 'none';
+            }, false);
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation();
+            }, false);
         </script>
     </body>
 </html>
