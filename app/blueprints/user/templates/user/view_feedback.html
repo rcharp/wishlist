@@ -42,6 +42,7 @@
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
           {% include '/user/includes/mobile.html' ignore missing %}
+
           {% with page='feedback' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -85,7 +86,7 @@
                         <div class="relative inline-block text-left">
                           <div>
                             <span class="rounded-md shadow-sm">
-                              <button type="button" onclick="ShowDropdown('status-dropdown-menu')" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="options-menu" aria-haspopup="true" aria-expanded="true">
+                              <button id="status-dropdown-button" type="button" onclick="ShowDropdown('status-dropdown-menu')" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="options-menu" aria-haspopup="true" aria-expanded="true">
                                 <span id="selected-status">{{ feedback.status }}</span>
                                 <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                   <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
@@ -131,7 +132,7 @@
                                             </label>
                                             <div class="rounded-md">
                                                 <input id="title" name="title" class="form-input w-3/4 sm:text-lg sm:leading-5 mr-3" value="{{ feedback.title }}" placeholder="Enter a title" required />
-                                                <a href="{{ url_for('user.delete_feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x" style="color:red;"></i></a>
+                                                <a href="{{ url_for('user.delete_feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" style="cursor:pointer"><i class="fa fa-trash-o fa-2x translate-y-1" style="color:red;"></i></a>
                                             </div>
                                         </div>
                                         <p class="mt-1 ml-3 max-w-2xl text-sm leading-5 text-gray-500">
@@ -147,10 +148,10 @@
                                         {% endif %}
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-1">
-                                        <dl class="pull-right text-right" style="cursor:pointer" onclick="Vote('{{ feedback.feedback_id }}')">
+                                        <dl class="pull-right text-right" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
                                             <dd class="mt-1 text-3xl leading-9 text-gray-900">
                                                 <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not voted %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
-                                                    <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
+                                                    <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ vote_count }}</span><br />
                                                 </span>
                                             </dd>
                                             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
@@ -191,7 +192,9 @@
                               Posted by
                             </dt>
                             <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% if feedback.username and use_username %}
+                            {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                You
+                            {% elif feedback.username and use_username %}
                                 {{ feedback.username }}
                             {% elif feedback.fullname %}
                                 {{ feedback.fullname }}
@@ -224,16 +227,36 @@
                         </div>
                       </div>
                     </form>
-                  <div class="text-sm leading-5 font-medium text-gray-500 mt-5">
-                      Comments
+                  <div class="text-sm leading-5 font-lg text-gray-600 mt-5 mb-5">
+                      Comments ({{ comment_count }})
+
+                      {#{% if not current_user.is_authenticated %}
+                          <br /><br />Please sign up or log in to comment.
+                      {% endif %}#}
                   </div>
-                  <div id="comments-container" class="mt-1"></div>
+                  <div id="comments-container" class="mt-1 text-sm leading-5 font-lg text-gray-700"></div>
                 <!-- /End replace -->
               </div>
             </main>
           </div>
         </div>
         <!-- END Page Container -->
+
+        {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
+            <div id="private-overlay">
+                {% include '/user/includes/private_overlay.html' ignore missing %}
+                <script>
+                    document.getElementById('search_field').readOnly = true;
+                </script>
+            </div>
+        {% endif %}
+
+        <div id="login-overlay" style="display:none">
+            {% include '/user/includes/login_overlay.html' ignore missing %}
+        </div>
+
+
+
         <!-- jQuery -->
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
 
@@ -267,21 +290,30 @@
                 document.getElementById('selected-status').innerText = sel.getAttribute('data-status-name');
             }
 
-            function Vote(feedback_id) {
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
-                    success: function (response) {
-                        if ('success' in response){
-                            //window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
-                        }
-                    },
-                    error: function (xhr) {
+            function Vote(feedback_id, logged_in) {
+                if (logged_in){
+                    var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+
+                    var user_id = null;
+                    if (UserIsLoggedIn()){
+                        user_id = '{{ current_user.id }}';
                     }
-                });
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        beforeSend: UpdateVote(feedback_id),
+                        data: {'feedback_id': feedback_id, 'user_id': user_id},
+                        success: function (response) {
+                            if ('success' in response){
+                            }
+                        },
+                        error: function (xhr) {
+                        }
+                    });
+                }else{
+                    ShowLoginModal('vote', feedback_id);
+                }
+
             }
 
             function UpdateVote(feedback_id) {
@@ -299,14 +331,23 @@
                     document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
                 }
 
+                if ('{{ demo }}' === 'True'){
+                    return false;
+                }
+
             }
 
             function GetComments(feedback_id){
                 var url = "{{ url_for('user.get_comments') }}";
+
+                var user_id = null;
+                if (UserIsLoggedIn()){
+                    user_id = '{{ current_user.id }}';
+                }
                 $.ajax({
                     url: url,
                     type: 'POST',
-                    data: {'feedback_id': feedback_id, 'user_id': '{{ current_user.id }}'},
+                    data: {'feedback_id': feedback_id, 'user_id': user_id},
                     success: function (response) {
                         InitializeComments(response['comments']);
                     },
@@ -317,53 +358,156 @@
 
             // Initialize comments
             function InitializeComments(comments){
+                var user_id = null;
+                var readOnly = false;
+                if (UserIsLoggedIn()){
+                    user_id = '{{ current_user.id }}';
+                }
+
                 $('#comments-container').comments({
-                    profilePictureURL: 'https://viima-app.s3.amazonaws.com/media/public/defaults/user-icon.png',
+                    //profilePictureURL: "{{ url_for('static', filename='icons/user.png') }}",
                     enableUpvoting: false,
                     postCommentOnEnter: true,
+                    readOnly: readOnly,
                     getComments: function(success, error) {
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': '{{ current_user.id }}'});
+                        if (UserIsLoggedIn()){
+                            var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
+                            $.ajax({
+                                type: 'POST',
+                                url:  "{{ url_for('user.add_comment') }}",
+                                data: data,
+                                beforeSend: success(commentJSON),
+                                success: function(comment) {
+                                },
+                                error: error
+                            });
+                        }else {
+                            localStorage.setItem('comment', JSON.stringify(commentJSON));
+                            ShowLoginModal('comment', '{{ feedback.feedback_id }}');
+                            success(commentJSON);
+                        }
+
+                    },
+                    putComment: function(commentJSON, success, error) {
+                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
                         $.ajax({
                             type: 'POST',
-                            url:  "{{ url_for('user.add_comment') }}",
+                            url:  "{{ url_for('user.update_comment') }}",
                             data: data,
                             beforeSend: success(commentJSON),
                             success: function(comment) {
-                                //alert(comment);
-                                //success(comment);
                             },
                             error: error
                         });
                     }
                 });
+
+                // SetCommentBoxes();
             }
 
             function ReplaceSubdomain(url){
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
                 return new_url;
             }
+
+            function CheckAnonComment(success, commentJSON){
+                if(UserIsLoggedIn()){
+                    success(commentJSON);
+                }
+                else{
+                    ShowLoginModal('comment', '{{ feedback.feedback_id }}');
+                    return false;
+                }
+            }
+
+            function ShowLoginModal(action, feedback_id){
+                if ('{{ demo }}' === 'True'){
+                    return false;
+                }
+
+                document.getElementById('feedback_id').value = feedback_id;
+                var modal = document.getElementById('login-overlay-modal');
+                var box = document.getElementById('login-overlay-box');
+
+                ShowModal(action);
+
+                if (modal !== null && box !== null){
+                    modal.addEventListener("click", function () {
+                        HideModal();
+                        location.reload();
+                    }, false);
+                    box.addEventListener("click", function (ev) {
+                        ev.stopPropagation();
+                    }, false);
+                }
+            }
+
+            function ShowModal(action){
+                document.getElementById('modal-action').innerText = action;
+                document.getElementById('modal-submit').innerText = action;
+
+                document.getElementById('login-overlay').style.display = '';
+                document.getElementById('login-overlay-form').setAttribute("onSubmit", "VoteOrComment('" + action + "')");
+            }
+
+            function HideModal(){
+                document.getElementById('login-overlay').style.display = 'none';
+            }
+
+            function UserIsLoggedIn(){
+                return '{{ current_user.is_authenticated }}' === 'True';
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
             var except = document.getElementById('user-dropdown-menu');
+            var user_menu = document.getElementById('user-menu');
+            var status_dropdown_button = document.getElementById('status-dropdown-button');
+            var status_dropdown_menu = document.getElementById('status-dropdown-menu');
 
-            body.addEventListener("click", function () {
-                except.classList.remove('opacity-100');
-                except.classList.remove('scale-100');
-                except.classList.add('opacity-0');
-                except.classList.add('scale-95');
+            if (except != null){
+                body.addEventListener("click", function () {
+                    except.classList.remove('opacity-100');
+                    except.classList.remove('scale-100');
+                    except.classList.add('opacity-0');
+                    except.classList.add('scale-95');
 
-                except.style.display = 'none';
-            }, false);
-            document.getElementById('user-menu').addEventListener("click", function (ev) {
-                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-            }, false);
+                    except.style.display = 'none';
+
+                }, false);
+            }
+
+            if (user_menu !== null){
+                user_menu.addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
+
+            if (status_dropdown_button !== null){
+                body.addEventListener("click", function () {
+                    status_dropdown_menu.classList.remove('opacity-100');
+                    status_dropdown_menu.classList.remove('scale-100');
+                    status_dropdown_menu.classList.add('opacity-0');
+                    status_dropdown_menu.classList.add('scale-95');
+
+                    status_dropdown_menu.style.display = 'none';
+                }, false);
+
+                status_dropdown_button.addEventListener(("click"), function (ev) {
+                    ev.stopPropagation();
+                }, false);
+
+                status_dropdown_menu.addEventListener(("click"), function (ev) {
+                    ev.stopPropagation();
+                }, false);
+            }
 
             // Load the comments
-            GetComments('{{ feedback.feedback_id }}')
+            GetComments('{{ feedback.feedback_id }}');
+
         </script>
     </body>
 </html>

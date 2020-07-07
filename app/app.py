@@ -415,6 +415,8 @@ def deserialize_private_key(arg):
 
 
 def initial_filter(arg):
+    if arg is None:
+        return 'W'
     if ' ' in arg:
         initials = list()
         name = arg.split(' ')

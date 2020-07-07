@@ -191,14 +191,14 @@ ul li, ol li {
 					<td>
 						<p>Hi,</p>
 						<p>Thank you for joining {{ 'site_name'|site_name_filter }}!<br>
-						We're happy to help you get started with getting the domain names you want.</p>
+						We're happy to help you get started with collecting feedback from your users.</p>
 						<h1>What do I do next?</h1>
-						<p>Sign in to start searching domains!<br>
+						<p>Sign in to start collecting user feedback!<br>
 						Just click the button below to be taken to your dashboard.</p>
 						<table>
 							<tr>
 								<td class="padding">
-									<p><a href="https://www.namecatcher.io/dashboard" class="btn-primary"><span style="color:white">Take me there</span></a></p>
+									<p><a href="{{ url_for('user.dashboard') }}" class="btn-primary"><span style="color:white">Take me there</span></a></p>
 								</td>
 							</tr>
 						</table>

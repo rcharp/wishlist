@@ -30,7 +30,7 @@ def generate_id(table, size=8):
 
 def generate_alphanumeric_id(table, size=8):
     # Generate a random 8-character alphanumeric id
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
     # Check to make sure there isn't already that id in the database
@@ -42,7 +42,7 @@ def generate_alphanumeric_id(table, size=8):
 
 def generate_temp_password(size=15):
     # Generate a random 15-character temporary password
-    chars = string.digits
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     return ''.join(random.choice(chars) for _ in range(size))
 
 
@@ -50,7 +50,7 @@ def generate_private_key(size=16):
     from app.blueprints.base.encryption import encrypt_string
 
     # Generate a random 16-character alphanumeric id
-    chars = string.digits + string.ascii_lowercase
+    chars = string.digits + string.ascii_lowercase + string.ascii_uppercase
     id = ''.join(random.choice(chars) for _ in range(size))
 
     # Encrypt the private key
@@ -104,14 +104,15 @@ def create_feedback(user, domain, email, title, description):
             f.email = user.email
             f.save()
 
-            add_vote(f, user)
+            add_vote(f, user.id)
         else:
+            user = create_anon_user(email, domain)
+
             f.email = email
+            f.user_id = user.id
             f.save()
 
-            user = create_anon_user(email)
-
-            add_vote(f, user, email)
+            add_vote(f, user.id, email)
 
         return f
     except Exception as e:
@@ -137,12 +138,14 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Comments ################################################
-def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user):
+def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, created_by_user):
     try:
+        print(email)
+        print(domain_id)
+
         c = Comment()
         c.comment_id = generate_id(Comment)
         c.feedback_id = feedback_id
-        c.user_id = user_id
         c.comment = content
         c.domain_id = domain_id
 
@@ -152,52 +155,82 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
             if parent is not None:
                 c.parent_id = parent.id
 
-        if created_by_user:
-            u = User.query.filter(User.id == user_id).scalar()
-            if u is not None:
-                c.fullname = u.name
+        if user_id is not None:
+            c.user_id = user_id
+
+            if created_by_user:
+                u = User.query.filter(User.id == user_id).scalar()
+                if u is not None:
+                    c.fullname = u.name
+        elif email is not None:
+            d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+            if d is not None:
+                u = create_anon_user(email, d.name)
+                c.user_id = u.id
+                c.email = email
 
         c.save()
+
+        return True
     except Exception as e:
         print_traceback(e)
-    return
+    return False
 
 
-def format_comments(comments, current_user):
-    comment_list = list()
+def update_comment(c, content):
+    try:
 
-    for comment in comments:
-        c = dict()
-        created_date = get_year_date_string(comment.created_on)
-        created_by_user = True if (current_user.is_authenticated is not None and comment.user_id == current_user.id) else False
-        created_by_admin = True if (current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
-        parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
-        c.update({'id': comment.comment_id,
-                  'content': comment.comment,
-                  'fullname': comment.fullname,
-                  'parent': parent_id,
-                  'creator': comment.user_id,
-                  'created_by_current_user': created_by_user,
-                  'created_by_admin': created_by_admin,
-                  'created': created_date})
+        # Update the comment
+        c.comment = content
+        c.save()
 
-        comment_list.append(c)
-    return comment_list
+        return True
+    except Exception as e:
+        print_traceback(e)
+    return False
+
+
+def format_comments(comments, current_user, is_admin):
+    try:
+        comment_list = list()
+
+        for comment in comments:
+            c = dict()
+            created_date = get_year_date_string(comment.created_on)
+            created_by_user = True if (current_user is not None and current_user.is_authenticated and comment.user_id == current_user.id) else False
+            created_by_admin = True if (current_user is not None and current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
+            parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
+            name = comment.fullname if comment.fullname else comment.email if is_admin else 'An anonymous user'
+            c.update({'id': comment.comment_id,
+                      'content': comment.comment,
+                      'fullname': name,
+                      'parent': parent_id,
+                      'creator': comment.user_id,
+                      'created_by_current_user': created_by_user,
+                      'created_by_admin': created_by_admin,
+                      'created': created_date})
+
+            comment_list.append(c)
+        return comment_list
+    except Exception as e:
+        print_traceback(e)
+        return None
 
 
 # Votes ###################################################
-def add_vote(f, user, email=None):
+def add_vote(f, user_id, email=None):
     try:
-
         v = Vote()
         v.feedback_id = f.feedback_id
         v.vote_id = generate_id(Vote)
         v.domain_id = f.domain_id
 
-        if user is not None:
-            v.user_id = user.id
+        if user_id is not None:
+            v.user_id = user_id
         else:
+            u = create_anon_user(email, f.domain)
             v.email = email
+            v.user_id = u.id
 
         v.save()
 
@@ -210,11 +243,10 @@ def add_vote(f, user, email=None):
         return None
 
 
-def remove_vote(feedback_id, vote):
+def remove_vote(f, vote):
     try:
         vote.delete()
 
-        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
         f.votes -= 1
         f.save()
     except Exception as e:
@@ -253,8 +285,10 @@ def create_subdomain(subdomain):
 =======
 >>>>>>> bc1e25b933748b45842c2153fcb0845f0f68d260
 # Users ###################################################
-def create_anon_user(email):
+def create_anon_user(email, domain):
     from app.blueprints.user.models.user import User
+    from app.blueprints.user.tasks import send_temp_password_email
+
     if not db.session.query(exists().where(User.email == email)).scalar():
         password = generate_temp_password()
         u = User()
@@ -264,8 +298,14 @@ def create_anon_user(email):
         u.password = User.encrypt_password(password)
         u.save()
 
-        return u
-    return None
+        try:
+            # Send them a password reset email
+            send_temp_password_email.delay(email, password, domain.title())
+        except Exception as e:
+            print_traceback(e)
+    else:
+        u = User.query.filter(User.email == email).scalar()
+    return u
 
 
 def populate_signup(request, user):

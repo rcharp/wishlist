@@ -101,9 +101,17 @@
                     <dl>
                       <div class="px-4 py-5 sm:grid sm:grid-cols-12 border-b border-gray-200 sm:px-6">
                           <dt class="mr-5 sm:col-span-2">
+                            {% if current_user.name %}
                             <h3 class="text-lg leading-6 font-medium text-gray-900">
                               {{ current_user.name }}
                             </h3>
+                            {% else %}
+                                <span class="inline-flex rounded-md shadow-sm">
+                                  <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    Set your name
+                                  </a>
+                                </span>
+                            {% endif %}
                               {% if current_user.username %}
                                 <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-900">
                                   @{{ current_user.username }}
@@ -112,7 +120,11 @@
                           </dt>
                           <dd class="sm:col-span-1">
                               <span class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-200">
-                                  <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
+                                  {% if current_user.name %}
+                                    <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
+                                  {% else %}
+                                      <i class="si si-user fa-2x"></i>
+                                  {% endif %}
                               </span>
                           </dd>
                           <dd class="sm:col-span-6"></dd>
@@ -209,12 +221,13 @@
                           {{ domain.domain_id }}
                         </dd>
                       </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5" style="display:none">
                         <dt class="text-sm leading-5 font-medium text-gray-500">
                           Private Key
                         </dt>
-                        <dd id="private-key" class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          Loading...
+                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+                          <span id="private-key" class="mr-5">Loading...</span>
+                            <i class="si si-docs" style="cursor:pointer;display:none;" onclick="CopyPrivateKey();"></i>
                         </dd>
                       </div>
                       {% endif %}
@@ -414,6 +427,25 @@
                     }
                 });
             }
+
+            function CopyPrivateKey(){
+                return false;
+                var private_key = document.getElementById('private-key').innerText;
+
+                if (private_key === 'Loading...'){
+                    return false;
+                }
+                else{
+                    /* Select the text field */
+                    private_key.select();
+                    private_key.setSelectionRange(0, 99999); /*For mobile devices*/
+
+                    /* Copy the text inside the text field */
+                    document.execCommand("copy");
+
+                    alert('Copied the private key to clipboard.')
+                }
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
@@ -431,7 +463,7 @@
                 ev.stopPropagation(); //this is important! If removed, you'll get both alerts
             }, false);
 
-            GetPrivateKey('{{ current_user.id }}', '{{ domain.domain_id }}');
+            //GetPrivateKey('{{ current_user.id }}', '{{ domain.domain_id }}');
         </script>
     </body>
 </html>

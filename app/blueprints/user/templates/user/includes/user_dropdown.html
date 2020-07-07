@@ -10,7 +10,11 @@
         <div>
           <button class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" onclick="ShowDropdown('user-dropdown-menu');">
               <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-200">
-                  <span class="text-sm font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
+                  {% if current_user.name %}
+                    <span class="text-sm font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
+                  {% else %}
+                    <i class="si si-user"></i>
+                  {% endif %}
               </span>
           </button>
         </div>
@@ -26,7 +30,7 @@
         -->
         <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none;" {#onmouseleave="ShowDropdown(this.id)"#}>
           <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-            {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated and current_user.name %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
                     <i class="si si-user mr-2"></i>
                     {{ current_user.name|title }}

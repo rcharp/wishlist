@@ -5,7 +5,7 @@ from wtforms_components import EmailField, Email
 from wtforms_alchemy import Unique
 
 from lib.util_wtforms import ModelForm
-from app.blueprints.user.models.user import User, Domain, db
+from app.blueprints.user.models.user import User, db
 from app.blueprints.user.validations import ensure_identity_exists, \
     ensure_existing_password_matches
 
@@ -22,9 +22,7 @@ class LoginFormAnon(Form):
     next = HiddenField()
     identity = StringField('Username or email',
                            [DataRequired(), Length(3, 254)])
-    domain = StringField('Domain to login to', validators=[
-        DataRequired()
-    ])
+    domain = StringField('Domain (optional)')
     password = PasswordField('Password', [DataRequired(), Length(8, 128)])
     # remember = BooleanField('Stay signed in')
 
@@ -107,6 +105,8 @@ class UpdateCredentials(ModelForm):
             get_session=lambda: db.session
         )
     ])
+
+    name = StringField('Full name')
 
     username = StringField(validators=[
         Unique(
