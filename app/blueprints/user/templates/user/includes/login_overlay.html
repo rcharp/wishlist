@@ -85,6 +85,7 @@
         <script>
             function VoteOrComment(action){
                 var email = document.getElementById('email').value;
+                var feedback_id = document.getElementById('feedback_id').value;
 
                 // Set the email in localStorage
                 if (email.includes('@')){
@@ -93,7 +94,6 @@
 
                 if (action === 'vote'){
                     var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
-                    var feedback_id = document.getElementById('feedback_id').value;
 
                     $.ajax({
                         url: url,
@@ -114,8 +114,6 @@
                         location.reload();
                     }
                     else{
-                        var feedback_id = document.getElementById('feedback_id').value;
-
                         var commentJSON = JSON.parse(localStorage.getItem('comment'));
                         var data = Object.assign(commentJSON, {'feedback_id': feedback_id, 'email': email});
 
