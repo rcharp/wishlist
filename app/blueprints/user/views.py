@@ -179,7 +179,7 @@ def signup(subdomain=None):
                     from app.blueprints.user.tasks import send_welcome_email
                     # from app.blueprints.contact.mailerlite import create_subscriber
 
-                    # send_welcome_email.delay(current_user.email)
+                    send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
                     flash("You've successfully signed up!", 'success')
@@ -220,7 +220,7 @@ def signup(subdomain=None):
                     from app.blueprints.user.tasks import send_welcome_email
                     # from app.blueprints.contact.mailerlite import create_subscriber
 
-                    # send_welcome_email.delay(current_user.email)
+                    send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
                     # Create the domain from the form, as well as the heroku subdomain
