@@ -42,6 +42,7 @@
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
           {% include '/user/includes/mobile.html' ignore missing %}
+
           {% with page='feedback' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -147,10 +148,10 @@
                                         {% endif %}
                                     </dt>
                                     <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-1">
-                                        <dl class="pull-right text-right" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}')"{% else %}onclick="ShowLogin();"{% endif %}>
+                                        <dl class="pull-right text-right" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
                                             <dd class="mt-1 text-3xl leading-9 text-gray-900">
                                                 <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not voted %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
-                                                    <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span><br />
+                                                    <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ vote_count }}</span><br />
                                                 </span>
                                             </dd>
                                             <dt class="text-sm leading-5 font-medium text-gray-500 truncate">
@@ -227,11 +228,11 @@
                       </div>
                     </form>
                   <div class="text-sm leading-5 font-lg text-gray-600 mt-5 mb-5">
-                      Comments ({{ feedback.comments }})
+                      Comments ({{ comment_count }})
 
-                      {% if not current_user.is_authenticated %}
+                      {#{% if not current_user.is_authenticated %}
                           <br /><br />Please sign up or log in to comment.
-                      {% endif %}
+                      {% endif %}#}
                   </div>
                   <div id="comments-container" class="mt-1 text-sm leading-5 font-lg text-gray-700"></div>
                 <!-- /End replace -->
@@ -253,6 +254,7 @@
         <div id="login-overlay" style="display:none">
             {% include '/user/includes/login_overlay.html' ignore missing %}
         </div>
+
 
 
         <!-- jQuery -->
@@ -288,25 +290,30 @@
                 document.getElementById('selected-status').innerText = sel.getAttribute('data-status-name');
             }
 
-            function Vote(feedback_id) {
-                var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
+            function Vote(feedback_id, logged_in) {
+                if (logged_in){
+                    var url = ReplaceSubdomain("{{ url_for('user.update_vote', subdomain='DUMMY_VALUE') }}");
 
-                var user_id = null;
-                if ('{{ current_user.is_authenticated }}' === 'True'){
-                    user_id = '{{ current_user.id }}';
-                }
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    beforeSend: UpdateVote(feedback_id),
-                    data: {'feedback_id': feedback_id, 'user_id': user_id},
-                    success: function (response) {
-                        if ('success' in response){
-                        }
-                    },
-                    error: function (xhr) {
+                    var user_id = null;
+                    if (UserIsLoggedIn()){
+                        user_id = '{{ current_user.id }}';
                     }
-                });
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        beforeSend: UpdateVote(feedback_id),
+                        data: {'feedback_id': feedback_id, 'user_id': user_id},
+                        success: function (response) {
+                            if ('success' in response){
+                            }
+                        },
+                        error: function (xhr) {
+                        }
+                    });
+                }else{
+                    ShowLoginModal('vote', feedback_id);
+                }
+
             }
 
             function UpdateVote(feedback_id) {
@@ -334,7 +341,7 @@
                 var url = "{{ url_for('user.get_comments') }}";
 
                 var user_id = null;
-                if ('{{ current_user.is_authenticated }}' === 'True'){
+                if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
                 }
                 $.ajax({
@@ -353,10 +360,8 @@
             function InitializeComments(comments){
                 var user_id = null;
                 var readOnly = false;
-                if ('{{ current_user.is_authenticated }}' === 'True'){
+                if (UserIsLoggedIn()){
                     user_id = '{{ current_user.id }}';
-                }else{
-                    readOnly = true;
                 }
 
                 $('#comments-container').comments({
@@ -368,16 +373,23 @@
                         success(comments);
                     },
                     postComment: function(commentJSON, success, error) {
-                        var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
-                        $.ajax({
-                            type: 'POST',
-                            url:  "{{ url_for('user.add_comment') }}",
-                            data: data,
-                            beforeSend: success(commentJSON),
-                            success: function(comment) {
-                            },
-                            error: error
-                        });
+                        if (UserIsLoggedIn()){
+                            var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
+                            $.ajax({
+                                type: 'POST',
+                                url:  "{{ url_for('user.add_comment') }}",
+                                data: data,
+                                beforeSend: success(commentJSON),
+                                success: function(comment) {
+                                },
+                                error: error
+                            });
+                        }else {
+                            localStorage.setItem('comment', JSON.stringify(commentJSON));
+                            ShowLoginModal('comment', '{{ feedback.feedback_id }}');
+                            success(commentJSON);
+                        }
+
                     },
                     putComment: function(commentJSON, success, error) {
                         var data = Object.assign(commentJSON, {'feedback_id': '{{ feedback.feedback_id }}', 'user_id': user_id});
@@ -392,6 +404,8 @@
                         });
                     }
                 });
+
+                // SetCommentBoxes();
             }
 
             function ReplaceSubdomain(url){
@@ -399,30 +413,52 @@
                 return new_url;
             }
 
-            function ShowLogin(){
+            function CheckAnonComment(success, commentJSON){
+                if(UserIsLoggedIn()){
+                    success(commentJSON);
+                }
+                else{
+                    ShowLoginModal('comment', '{{ feedback.feedback_id }}');
+                    return false;
+                }
+            }
+
+            function ShowLoginModal(action, feedback_id){
                 if ('{{ demo }}' === 'True'){
                     return false;
                 }
 
-                var login_overlay = document.getElementById('login-overlay');
-                login_overlay.style.display = '';
+                document.getElementById('feedback_id').value = feedback_id;
+                var modal = document.getElementById('login-overlay-modal');
+                var box = document.getElementById('login-overlay-box');
 
-                var login_overlay_modal = document.getElementById('login-overlay-modal');
+                ShowModal(action);
 
-                if (login_overlay_modal !== null){
-                    login_overlay_modal.addEventListener("click", function () {
-                        login_overlay.style.display = 'none';
+                if (modal !== null && box !== null){
+                    modal.addEventListener("click", function () {
+                        HideModal();
+                        location.reload();
+                    }, false);
+                    box.addEventListener("click", function (ev) {
+                        ev.stopPropagation();
                     }, false);
                 }
             }
 
-            function ChangeIcons(){
-                var icons = document.getElementsByClassName('fa-user');
+            function ShowModal(action){
+                document.getElementById('modal-action').innerText = action;
+                document.getElementById('modal-submit').innerText = action;
 
-                for (var i = 0; i < icons.length; i++){
-                    icons[i].classList.remove('fa-user');
-                    icons[i].classList.add('fa-user-o');
-                }
+                document.getElementById('login-overlay').style.display = '';
+                document.getElementById('login-overlay-form').setAttribute("onSubmit", "VoteOrComment('" + action + "')");
+            }
+
+            function HideModal(){
+                document.getElementById('login-overlay').style.display = 'none';
+            }
+
+            function UserIsLoggedIn(){
+                return '{{ current_user.is_authenticated }}' === 'True';
             }
         </script>
         <script>
@@ -472,8 +508,6 @@
             // Load the comments
             GetComments('{{ feedback.feedback_id }}');
 
-            // Change the icons
-            // ChangeIcons();
         </script>
     </body>
 </html>

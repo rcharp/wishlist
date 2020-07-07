@@ -138,12 +138,14 @@ def update_feedback(feedback_id, domain, title, description, status_id):
 
 
 # Comments ################################################
-def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_user):
+def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, created_by_user):
     try:
+        print(email)
+        print(domain_id)
+
         c = Comment()
         c.comment_id = generate_id(Comment)
         c.feedback_id = feedback_id
-        c.user_id = user_id
         c.comment = content
         c.domain_id = domain_id
 
@@ -153,10 +155,19 @@ def add_comment(feedback_id, content, domain_id, user_id, parent_id, created_by_
             if parent is not None:
                 c.parent_id = parent.id
 
-        if created_by_user:
-            u = User.query.filter(User.id == user_id).scalar()
-            if u is not None:
-                c.fullname = u.name
+        if user_id is not None:
+            c.user_id = user_id
+
+            if created_by_user:
+                u = User.query.filter(User.id == user_id).scalar()
+                if u is not None:
+                    c.fullname = u.name
+        elif email is not None:
+            d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+            if d is not None:
+                u = create_anon_user(email, d.name)
+                c.user_id = u.id
+                c.email = email
 
         c.save()
 
@@ -179,7 +190,7 @@ def update_comment(c, content):
     return False
 
 
-def format_comments(comments, current_user):
+def format_comments(comments, current_user, is_admin):
     try:
         comment_list = list()
 
@@ -189,9 +200,10 @@ def format_comments(comments, current_user):
             created_by_user = True if (current_user is not None and current_user.is_authenticated and comment.user_id == current_user.id) else False
             created_by_admin = True if (current_user is not None and current_user.is_authenticated and created_by_user and current_user.role == 'creator') else False
             parent_id = next(iter([p.comment_id for p in comments if p.id == comment.parent_id]), None)
+            name = comment.fullname if comment.fullname else comment.email if is_admin else 'An anonymous user'
             c.update({'id': comment.comment_id,
                       'content': comment.comment,
-                      'fullname': comment.fullname,
+                      'fullname': name,
                       'parent': parent_id,
                       'creator': comment.user_id,
                       'created_by_current_user': created_by_user,
@@ -214,10 +226,11 @@ def add_vote(f, user_id, email=None):
         v.domain_id = f.domain_id
 
         if user_id is not None:
-            print(user_id)
             v.user_id = user_id
         else:
+            u = create_anon_user(email, f.domain)
             v.email = email
+            v.user_id = u.id
 
         v.save()
 

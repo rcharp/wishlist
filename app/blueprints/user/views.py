@@ -179,7 +179,7 @@ def signup(subdomain=None):
                     from app.blueprints.user.tasks import send_welcome_email
                     # from app.blueprints.contact.mailerlite import create_subscriber
 
-                    send_welcome_email.delay(current_user.email)
+                    # send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
                     flash("You've successfully signed up!", 'success')
@@ -220,7 +220,7 @@ def signup(subdomain=None):
                     from app.blueprints.user.tasks import send_welcome_email
                     # from app.blueprints.contact.mailerlite import create_subscriber
 
-                    send_welcome_email.delay(current_user.email)
+                    # send_welcome_email.delay(current_user.email)
                     # create_subscriber(current_user.email)
 
                     # Create the domain from the form, as well as the heroku subdomain
@@ -428,12 +428,14 @@ View feedback details
 @user.route('/feedback/<feedback_id>', methods=['GET','POST'])
 @user.route('/feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def feedback(feedback_id, subdomain):
     demo = False
     if subdomain == 'demo':
         demo = True
 
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+    d = Domain.query.filter(Domain.name == subdomain).scalar()
 
     # Redirect if feedback no longer exists
     if f is None:
@@ -445,11 +447,17 @@ def feedback(feedback_id, subdomain):
     else:
         voted = False
 
+    votes = len(Vote.query.filter(Vote.feedback_id == feedback_id).all())
+    comments = len(Comment.query.filter(Comment.feedback_id == feedback_id).all())
+
     # Get the statuses
     statuses = Status.query.all()
     return render_template('user/view_feedback.html',
                            current_user=current_user,
                            feedback=f,
+                           domain=d,
+                           vote_count=votes,
+                           comment_count=comments,
                            statuses=statuses,
                            subdomain=subdomain,
                            voted=voted,
@@ -465,6 +473,7 @@ Add feedback to the list
 @user.route('/add_feedback', methods=['POST'])
 @user.route('/add_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def add_feedback(subdomain=None):
     if subdomain:
         # If there is no user, redirect them to the login for this domain
@@ -532,6 +541,7 @@ Update the feedback
 
 @user.route('/update_feedback', subdomain='<subdomain>', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def update_feedback(subdomain=None):
     if request.method == 'POST':
         try:
@@ -560,6 +570,7 @@ Delete the feedback
 
 @user.route('/delete_feedback/<feedback_id>', subdomain='<subdomain>', methods=['GET'])
 @csrf.exempt
+@cross_origin()
 def delete_feedback(feedback_id, subdomain=None):
     try:
         f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
@@ -579,6 +590,7 @@ Sort the feedback by newest, oldest, or most votes
 @user.route('/dashboard/<s>', methods=['GET', 'POST'])
 @user.route('/dashboard/<s>', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def sort_feedback(s, subdomain=None):
     if subdomain:
         feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
@@ -620,6 +632,7 @@ Get comments
 
 @user.route('/get_comments', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def get_comments():
     try:
         if request.method == 'POST':
@@ -641,23 +654,38 @@ Add a comment
 
 @user.route('/add_comment', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def add_comment():
     try:
         from app.blueprints.base.functions import add_comment
         if request.method == 'POST':
-            feedback_id = request.form['feedback_id']
-            user_id = request.form['user_id']
-            parent_id = request.form['parent']
-            content = request.form['content']
-            created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+            if 'feedback_id' in request.form:
+                feedback_id = request.form['feedback_id']
+                if 'email' in request.form:
+                    email = request.form['email']
+                    parent_id = request.form['parent']
+                    content = request.form['content']
+                    created_by_user = True if request.form['created_by_current_user'] == 'true' else False
 
-            f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
-            if f is not None:
-                if add_comment(feedback_id, content, f.domain_id, user_id, parent_id, created_by_user):
-                    f.comments += 1
-                    f.save()
-        return jsonify({'result': 'Success'})
+                    if f is not None:
+                        if add_comment(feedback_id, content, f.domain_id, None, email, parent_id, created_by_user):
+                            f.comments += 1
+                            f.save()
+                elif 'user_id' in request.form:
+                    user_id = request.form['user_id']
+                    parent_id = request.form['parent']
+                    content = request.form['content']
+                    created_by_user = True if request.form['created_by_current_user'] == 'true' else False
+
+                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                    if f is not None:
+                        if add_comment(feedback_id, content, f.domain_id, user_id, None, parent_id, created_by_user):
+                            f.comments += 1
+                            f.save()
+                    return jsonify({'result': 'Success'})
     except Exception as e:
         return jsonify({'result': 'Error'})
 
@@ -669,6 +697,7 @@ Update a comment
 
 @user.route('/update_comment', methods=['POST'])
 @csrf.exempt
+@cross_origin()
 def update_comment():
     try:
         from app.blueprints.base.functions import update_comment
@@ -693,26 +722,43 @@ Add or remove a vote
 
 @user.route('/update_vote', subdomain='<subdomain>', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def update_vote(subdomain=None):
-    if request.method == 'POST':
-        if 'feedback_id' in request.form and 'user_id' in request.form:
-            feedback_id = request.form['feedback_id']
-            user_id = request.form['user_id']
-            from app.blueprints.base.functions import add_vote, remove_vote
+    try:
+        if request.method == 'POST':
+            if 'feedback_id' in request.form:
+                feedback_id = request.form['feedback_id']
 
-            if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
-                vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
-                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                if 'email' in request.form:
+                    email = request.form['email']
+                    from app.blueprints.base.functions import add_vote
 
-                if f is not None:
-                    remove_vote(f, vote)
-            else:
-                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                    f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
 
-                if f is not None:
-                    add_vote(f, user_id)
+                    if f is not None:
+                        add_vote(f, None, email)
 
-            return jsonify({'success': 'Success'})
+                    return jsonify({'success': 'Success'})
+                elif 'user_id' in request.form:
+                    user_id = request.form['user_id']
+                    from app.blueprints.base.functions import add_vote, remove_vote
+
+                    if db.session.query(exists().where(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id))).scalar():
+                        vote = Vote.query.filter(and_(Vote.feedback_id == feedback_id, Vote.user_id == user_id)).scalar()
+                        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                        if f is not None:
+                            remove_vote(f, vote)
+                    else:
+                        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+
+                        if f is not None:
+                            add_vote(f, user_id)
+
+                    return jsonify({'success': 'Success'})
+    except Exception as e:
+        from app.blueprints.base.functions import print_traceback
+        print_traceback(e)
 
     return redirect(url_for('user.dashboard', subdomain=subdomain))
 
@@ -759,6 +805,7 @@ def send_invite(subdomain=None):
 
 @user.route('/get_private_key', methods=['GET','POST'])
 @csrf.exempt
+@cross_origin()
 def get_private_key():
     try:
         if request.method == 'POST':

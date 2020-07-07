@@ -40,12 +40,22 @@ def format_comments(feedback_id, user_id):
     from app.blueprints.base.models.comment import Comment
     from app.blueprints.user.models.user import User
 
+    is_admin = False
+
     if user_id:
         user = User.query.filter(User.id == user_id).scalar()
+
+        f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+        if f is not None:
+            d = Domain.query.filter(Domain.domain_id == f.domain_id).scalar()
+
+            if d is not None:
+                is_admin = (user.domain_id == d.domain_id)
     else:
         user = None
     comments = Comment.query.filter(Comment.feedback_id == feedback_id).all()
-    return format_comments(comments, user)
+
+    return format_comments(comments, user, is_admin)
 
 
 @celery.task()
