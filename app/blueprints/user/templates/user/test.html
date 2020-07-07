@@ -75,7 +75,17 @@
                             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
                             crossorigin="anonymous"></script>
 
-                            <script src="{{ url_for('static', filename='widget/widget.js', subdomain=subdomain) }}"></script>
+                            <script>
+                                (function(){
+                                    var d = document,
+                                    h = d.getElementsByTagName('head')[0],
+                                    s = d.createElement('script');
+                                    s.type = 'text/javascript';
+                                    s.async = true;
+                                    s.src = "{{ url_for('static', filename='widget/widget.js', subdomain=subdomain) }}";
+                                    h.appendChild(s);
+                                });
+                            </script>
                       </div>
                   </div>
                 </div>

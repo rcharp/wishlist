@@ -58,4 +58,5 @@ var render_code = '<script>\n' +
     '    basePath: null, // See step 2\n' +
     '    ssoToken: null, // See step 3\n' +
     '  });\n' +
-    '</script>';*/
+    '</script>';
+*/
