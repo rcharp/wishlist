@@ -86,10 +86,14 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    if os.environ.get('PRODUCTION') == 'true':
+    if os.environ.get('PRODUCTION') != 'true':
         # Set the app server name
-        app.config['SERVER_NAME'] = 'getwishlist.io'
-        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
+        app.config['SERVER_NAME'] = 'localhost:5000'
+        app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
+    # else:
+        # Set the app server name
+        # app.config['SERVER_NAME'] = 'getwishlist.io'
+        # app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
 
         # # Set the http -> https redirect
         # @app.before_request
@@ -110,11 +114,7 @@ def create_app(settings_override=None):
         #             url = request.url.replace('http://', 'https://', 1)
         #             code = 301
         #             r = redirect(url, code=code)
-        #             return r 
-    else:
-        # Set the app server name
-        app.config['SERVER_NAME'] = 'localhost:5000'
-        app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
+        #             return r
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
@@ -377,7 +377,7 @@ def site_name_filter(arg):
 
 
 def site_url_filter(arg):
-    return 'getwishlist.io'
+    return current_app.config.get('SERVER_NAME') # 'getwishlist.io'
 
 
 def site_color_filter(arg):

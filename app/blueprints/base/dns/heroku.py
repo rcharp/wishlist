@@ -6,6 +6,7 @@ from requests.exceptions import HTTPError
 
 def create_subdomain(subdomain):
     from app.blueprints.base.functions import print_traceback
+    server_name = '.' + current_app.config.get('SERVER_NAME')
 
     try:
         heroku_conn = heroku3.from_key(current_app.config.get('HEROKU_TOKEN'))
@@ -13,7 +14,7 @@ def create_subdomain(subdomain):
 
         # See if the domain exists already. If so, then just create the DNS
         try:
-            d = app.get_domain(subdomain + '.getwishlist.io')
+            d = app.get_domain(subdomain + server_name)
             if d is not None:
                 try:
                     dns = d.cname
@@ -32,7 +33,7 @@ def create_subdomain(subdomain):
 
         # If the domain doesn't exist, then go ahead and create it
         try:
-            d = app.add_domain(subdomain + '.getwishlist.io')
+            d = app.add_domain(subdomain + server_name)
             if d is not None:
                 try:
                     dns = d.cname
@@ -49,7 +50,7 @@ def create_subdomain(subdomain):
                 print("Domain already exists.")
                 
                 try:
-                    d = app.get_domain(subdomain + '.getwishlist.io')
+                    d = app.get_domain(subdomain + server_name)
                     dns = d.cname
 
                     # Create the DNS in CloudFlare

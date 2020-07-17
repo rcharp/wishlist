@@ -5,7 +5,7 @@ from flask import current_app
 
 def create_dns(subdomain, dns):
     from app.blueprints.base.functions import print_traceback
-    zone_name = 'getwishlist.io'
+    zone_name = current_app.config.get('SERVER_NAME') # 'getwishlist.io'
     cf = CloudFlare.CloudFlare(token=current_app.config.get('CLOUDFLARE_TOKEN'))
 
     # query for the zone name and expect only one value back
@@ -33,7 +33,7 @@ def create_dns(subdomain, dns):
         # If the DNS already exists, then you can update it and return True
         dns_records = cf.zones.dns_records.get(zone_id)
         for r in dns_records:
-            if r['name'] == subdomain + '.getwishlist.io':
+            if r['name'] == subdomain + '.' + current_app.config.get('SERVER_NAME'): # subdomain + '.getwishlist.io':
                 record = {'name': subdomain, 'type': 'CNAME', 'content': dns, 'proxied': True}
                 cf.zones.dns_records.put(zone_id, r['id'], data=record)
                 return True
