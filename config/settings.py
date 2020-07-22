@@ -5,6 +5,7 @@ from celery.schedules import crontab
 PRODUCTION = True
 
 SERVER_NAME = os.environ.get('SERVER_NAME', None)
+SITE_NAME = os.environ.get('SITE_NAME', None)
 REMEMBER_COOKIE_DOMAIN = os.environ.get('REMEMBER_COOKIE_DOMAIN', None)
 HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
 

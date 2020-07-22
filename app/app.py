@@ -373,7 +373,8 @@ def today_filter(arg):
 
 
 def site_name_filter(arg):
-    return 'Wishlist'
+    from flask import current_app
+    return current_app.config.get('SITE_NAME')
 
 
 def site_url_filter(arg):
