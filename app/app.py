@@ -86,7 +86,7 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    if os.environ.get('PRODUCTION') != 'true':
+    if os.environ.get('PRODUCTION') == 'Development':
         # Set the app server name
         app.config['SERVER_NAME'] = 'localhost:5000'
         app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
