@@ -2,7 +2,7 @@ from datetime import timedelta
 import os
 from celery.schedules import crontab
 
-PRODUCTION = True
+PRODUCTION = os.environ.get('PRODUCTION', None)
 
 SERVER_NAME = os.environ.get('SERVER_NAME', None)
 SITE_NAME = os.environ.get('SITE_NAME', None)
