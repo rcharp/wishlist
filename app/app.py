@@ -373,7 +373,7 @@ def today_filter(arg):
 
 
 def site_name_filter(arg):
-    return 'Wishlist'
+    return 'Test'
 
 
 def site_url_filter(arg):
