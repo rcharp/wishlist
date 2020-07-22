@@ -377,6 +377,7 @@ def site_name_filter(arg):
 
 
 def site_url_filter(arg):
+    from flask import current_app
     return current_app.config.get('SERVER_NAME') # 'getwishlist.io'
 
 
