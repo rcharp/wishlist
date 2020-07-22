@@ -95,27 +95,6 @@ def create_app(settings_override=None):
         # app.config['SERVER_NAME'] = 'getwishlist.io'
         # app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
 
-        # # Set the http -> https redirect
-        # @app.before_request
-        # def before_request():
-        #     # if not request.is_secure:
-        #     #     url = request.url.replace("http://", "https://", 1)
-        #     #     code = 301
-        #     #     return redirect(url, code=code)
-        #     """Redirect incoming requests to HTTPS."""
-        #     # Should we redirect?
-        #     criteria = [
-        #         request.is_secure,
-        #         request.headers.get('X-Forwarded-Proto', 'http') == 'https'
-        #     ]
-
-        #     if not any(criteria):
-        #         if request.url.startswith('http://'):
-        #             url = request.url.replace('http://', 'https://', 1)
-        #             code = 301
-        #             r = redirect(url, code=code)
-        #             return r
-
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
     app.config['SQLALCHEMY_POOL_TIMEOUT'] = 120
