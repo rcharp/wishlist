@@ -595,6 +595,7 @@ Sort the feedback by newest, oldest, or most votes
 def sort_feedback(s, subdomain=None):
     if subdomain:
         feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
         statuses = Status.query.all()
 
         if s == 'newest':
@@ -607,9 +608,10 @@ def sort_feedback(s, subdomain=None):
 
             feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, subdomain=subdomain)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, domain=d, subdomain=subdomain)
     else:
         feedbacks = Feedback.query.filter(Feedback.domain == 'demo').all()
+        d = Domain.query.filter(Domain.name == 'demo').scalar()
         statuses = Status.query.all()
 
         if s == 'newest':
@@ -622,7 +624,7 @@ def sort_feedback(s, subdomain=None):
 
             feedbacks.sort(key=lambda x: x.votes, reverse=True)
 
-        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, subdomain=demo)
+        return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, domain=d, subdomain=demo)
 
 
 # Comments -------------------------------------------------------------------
