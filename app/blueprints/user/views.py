@@ -363,8 +363,9 @@ def dashboard(subdomain=None):
     if subdomain:
         if subdomain == 'demo':
             demo = True
-
-        d = Domain.query.filter(Domain.name == subdomain).scalar()
+            d = Domain.query.filter(Domain.name == 'demo').scalar()
+        else:
+            d = Domain.query.filter(Domain.name == subdomain).scalar()
 
         if d is not None:
             feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
