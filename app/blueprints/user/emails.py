@@ -6,7 +6,7 @@ from app.app import create_celery_app
 celery = create_celery_app()
 
 
-def send_welcome_email(email):
+def send_creator_welcome_email(email):
     app = Flask(__name__)
     mail = Mail()
     mail.init_app(app)
@@ -14,7 +14,20 @@ def send_welcome_email(email):
                   sender="support@getwishlist.io",
                   recipients=[email])
 
-    msg.html = render_template('user/mail/welcome_email.html')
+    msg.html = render_template('user/mail/creator_welcome_email.html')
+
+    mail.send(msg)
+
+
+def send_member_welcome_email(email, domain):
+    app = Flask(__name__)
+    mail = Mail()
+    mail.init_app(app)
+    msg = Message("You've successfully signed up for GetWishlist.io!",
+                  sender="support@getwishlist.io",
+                  recipients=[email])
+
+    msg.html = render_template('user/mail/member_welcome_email.html', domain=domain)
 
     mail.send(msg)
 
