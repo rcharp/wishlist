@@ -1,3 +1,6 @@
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+
 {% macro card_expiring_warning() -%}
   {% if current_user.is_authenticated and 
         current_user.subscription and current_user.credit_card.is_expiring %}
