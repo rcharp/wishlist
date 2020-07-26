@@ -1,3 +1,6 @@
+<!-- Tailwind CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+
 {% extends 'layouts/app.html' %}
 {% import 'macros/form.html' as f with context %}
 {% import 'billing/macros/billing.html' as billing with context %}
@@ -19,7 +22,7 @@
   {% else %}
     <h2 class="text-center">Choose a Plan</h2>
     <h3 class="text-center text-muted">
-      Select the plan that best fits your needs.
+        Select the plan that best fits your needs.
     </h3>
     <h6 class="text-center text-muted lg-margin-bottom">
         All plans come with a free 14-day trial. No credit card required.
