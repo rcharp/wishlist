@@ -133,7 +133,7 @@ STRIPE_PLANS = {
     '1': {
         'id': 'hobby',
         'name': 'Hobby',
-        'amount': 700,
+        'amount': 1900,
         'currency': 'usd',
         'interval': 'month',
         'interval_count': 1,
@@ -144,7 +144,7 @@ STRIPE_PLANS = {
     '2': {
         'id': 'startup',
         'name': 'Startup',
-        'amount': 2000,
+        'amount': 4900,
         'currency': 'usd',
         'interval': 'month',
         'interval_count': 1,
@@ -157,7 +157,7 @@ STRIPE_PLANS = {
     '3': {
         'id': 'professional',
         'name': 'Professional',
-        'amount': 5000,
+        'amount': 14900,
         'currency': 'usd',
         'interval': 'month',
         'interval_count': 1,
@@ -166,28 +166,6 @@ STRIPE_PLANS = {
         'metadata': {}
     },
     '4': {
-        'id': 'premium',
-        'name': 'Premium',
-        'amount': 12000,
-        'currency': 'usd',
-        'interval': 'month',
-        'interval_count': 1,
-        'trial_period_days': 0,
-        'statement_descriptor': 'PREMIUM',
-        'metadata': {}
-    },
-    '5': {
-        'id': 'enterprise',
-        'name': 'Enterprise',
-        'amount': 25000,
-        'currency': 'usd',
-        'interval': 'month',
-        'interval_count': 1,
-        'trial_period_days': 0,
-        'statement_descriptor': 'ENTERPRISE',
-        'metadata': {}
-    },
-    '6': {
         'id': 'developer',
         'name': 'Developer',
         'amount': 1,
