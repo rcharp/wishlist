@@ -199,6 +199,7 @@ def template_processors(app):
     app.jinja_env.filters['today_filter'] = today_filter
     app.jinja_env.filters['site_name_filter'] = site_name_filter
     app.jinja_env.filters['site_url_filter'] = site_url_filter
+    app.jinja_env.filters['site_version_filter'] = site_version_filter
     app.jinja_env.filters['site_color_filter'] = site_color_filter
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
@@ -354,6 +355,11 @@ def today_filter(arg):
 def site_name_filter(arg):
     from flask import current_app
     return current_app.config.get('SITE_NAME')
+
+
+def site_version_filter(arg):
+    # return 'v1.0'
+    return 'Beta'
 
 
 def site_url_filter(arg):
