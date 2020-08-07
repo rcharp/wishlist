@@ -1,6 +1,9 @@
 import os
 import time
 
+'''
+Pushes the live version of the site.
+'''
 os.system("git checkout dev")
 os.system("git add .")
 os.system('git commit -m "changes"')
