@@ -650,6 +650,29 @@ def feedback_approval(subdomain=None):
                                    use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
 
+
+@user.route('/approve_feedback', methods=['GET', 'POST'])
+# @login_required
+@csrf.exempt
+def approve_feedback():
+    try:
+        if request.method == 'POST':
+            if 'feedback_id' in request.form and 'approve' in request.form:
+                feedback_id = request.form['feedback_id']
+                approve = True if request.form['approve'] == 'true' else False
+
+                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                if approve:
+                    f.approved = True
+                    f.save()
+                else:
+                    f.delete()
+
+                return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
+
 # Comments -------------------------------------------------------------------
 '''
 Get comments

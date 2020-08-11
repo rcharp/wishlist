@@ -20,7 +20,7 @@
           <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="notification-menu">
             {% if current_user.is_authenticated and new_feedback and new_feedback|length > 0 %}
                 <a href="{{ url_for('user.feedback_approval', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem" style="cursor:pointer;">
-                    There {% if new_feedback|length > 1 %}are{% else %}is{% endif %} <span class="text-indigo-600 font-w600">{{ new_feedback|length }}</span> new post{% if new_feedback|length > 1 %}s{% endif %} that require{% if new_feedback|length == 1 %}s{% endif %} your approval.
+                    There {% if new_feedback|length > 1 %}are{% else %}is{% endif %} <span class="text-indigo-600 font-w600"><b>{{ new_feedback|length }}</b></span> new post{% if new_feedback|length > 1 %}s{% endif %} that require{% if new_feedback|length == 1 %}s{% endif %} your approval.
                 </a>
             {% else %}
                 You have no new notifications.
