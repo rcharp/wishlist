@@ -140,6 +140,7 @@
                     type: 'POST',
                     data: {'feedback_id': feedback_id, 'approve': approve},
                     success: function (response) {
+                        location.reload();
                     },
                     error: function (xhr) {
                     }
