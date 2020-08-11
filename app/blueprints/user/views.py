@@ -369,6 +369,7 @@ def dashboard(subdomain=None):
 
         if d is not None:
             feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
+            new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
 
             if current_user.is_authenticated:
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
@@ -385,6 +386,7 @@ def dashboard(subdomain=None):
             return render_template('user/dashboard.html',
                                    current_user=current_user,
                                    feedbacks=feedbacks,
+                                   new_feedback=new_feedback,
                                    statuses=statuses,
                                    domain=d,
                                    demo=demo,
