@@ -73,7 +73,7 @@ def site_exists(domain):
     url = 'https://' + domain + '.getwishlist.io'
 
     try:
-        request = requests.get(url)
+        request = requests.get(url, timeout=10)
         if request.status_code < 400:
             return True
     except ConnectionError:
