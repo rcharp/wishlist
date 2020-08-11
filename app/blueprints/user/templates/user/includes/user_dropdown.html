@@ -20,7 +20,7 @@
           <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="notification-menu">
             {% if current_user.is_authenticated and new_feedback %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
-                    There are <span class="text-indigo-600 font-w600">{{ new_feedback.length }}</span> new post{% if new_feedback.length > 1 %}s{% endif %} that require{% if new_feedback.length == 1 %}s{% endif %} your approval.
+                    There are <span class="text-indigo-600 font-w600">{{ new_feedback|length }}</span> new post{% if new_feedback|length > 1 %}s{% endif %} that require{% if new_feedback|length == 1 %}s{% endif %} your approval.
                 </div>
             {% else %}
                 You have no new notifications.
