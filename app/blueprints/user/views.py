@@ -382,7 +382,7 @@ def dashboard(subdomain=None):
                 f.comments = int(f.comments)
 
             feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-            return render_template('user/dashboard2.html',
+            return render_template('user/dashboard.html',
                                    current_user=current_user,
                                    feedbacks=feedbacks,
                                    statuses=statuses,
@@ -403,7 +403,7 @@ def dashboard(subdomain=None):
             f.votes = int(f.votes)
 
         feedbacks.sort(key=lambda x: x.created_on, reverse=True)
-        return render_template('user/dashboard2.html',
+        return render_template('user/dashboard.html',
                                current_user=current_user,
                                feedbacks=feedbacks,
                                statuses=statuses,
