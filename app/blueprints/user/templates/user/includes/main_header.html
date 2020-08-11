@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+      <nav class="bg-indigo-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <img class="h-12 w-12" src="{{ url_for('static', filename='logo/logo.png') }}" alt="Wishlist logo">
+              </div>
+              <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline">
+                  <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="px-3 py-2 rounded-md text-sm font-medium {% if page == 'dashboard' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Dashboard</a>
+                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {% if page == 'settings' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
+                  {#<a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Projects</a>
+                  <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Calendar</a>
+                  <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Reports</a>#}
+                </div>
+              </div>
+            </div>
+            {% if page == 'dashboard' and current_user.authenticated and current_user.domain == subdomain and current_user.role == 'creator' %}
+                {% include '/user/includes/privacy_switch.html' ignore missing %}
+            {% endif %}
+            <div class="hidden md:block">
+                <div class="ml-4 flex items-center md:ml-6">
+                    {% if current_user.is_authenticated %}
+                        {% include '/user/includes/user_dropdown.html' ignore missing %}
+                    {% else %}
+                        {% include '/user/includes/header_buttons.html' ignore missing %}
+                    {% endif %}
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+</body>
+</html>
