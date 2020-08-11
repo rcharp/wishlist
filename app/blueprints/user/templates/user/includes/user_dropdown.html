@@ -23,7 +23,7 @@
                     There {% if new_feedback|length > 1 %}are{% else %}is{% endif %} <span class="text-indigo-600 font-w600"><b>{{ new_feedback|length }}</b></span> new post{% if new_feedback|length > 1 %}s{% endif %} that require{% if new_feedback|length == 1 %}s{% endif %} your approval.
                 </a>
             {% else %}
-                <span class="text-sm font-medium leading-none text-gray-500">
+                <span class="text-sm font-medium leading-none text-gray-500 ml-5">
                     You have no new notifications.
                 </span>
             {% endif %}

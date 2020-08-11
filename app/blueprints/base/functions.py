@@ -97,6 +97,9 @@ def create_feedback(user, domain, email, title, description):
         f.status = s.name
         f.status_id = s.status_id
 
+        if not d.requires_approval:
+            f.approved = True
+
         if user is not None:
             f.user_id = user.id
             f.username = user.username

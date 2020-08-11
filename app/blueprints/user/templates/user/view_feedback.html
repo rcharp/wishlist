@@ -316,7 +316,7 @@
                     data: {'feedback_id': feedback_id, 'approve': approve},
                     success: function (response) {
                         if (approve === false){
-                            window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+                            window.location.href = "{{ url_for('user.feedback_approval', subdomain=subdomain) }}";
                         }
                         else{
                             location.reload();
