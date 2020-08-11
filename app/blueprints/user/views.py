@@ -440,6 +440,10 @@ def feedback(feedback_id, subdomain):
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     d = Domain.query.filter(Domain.name == subdomain).scalar()
 
+    # If the feedback isn't approved yet, only let creators view it
+    if not (f.approved and current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'):
+        return redirect(url_for('user.dashboard', subdomain=subdomain))
+
     # Redirect if feedback no longer exists
     if f is None:
         return redirect(url_for('user.dashboard', subdomain=subdomain))

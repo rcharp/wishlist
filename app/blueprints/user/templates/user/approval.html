@@ -133,13 +133,16 @@
                 }
             }
 
-            function ApproveFeedback(feedback_id, approve){
+            function ApproveFeedback(feedback_id, approve, redirect=false){
                 var url = "{{ url_for('user.approve_feedback') }}";
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {'feedback_id': feedback_id, 'approve': approve},
                     success: function (response) {
+                        if (redirect === true){
+                            window.location.href = "{{ url_for('user.dashboard', subdomain=subdomain) }}";
+                        }
                         location.reload();
                     },
                     error: function (xhr) {
