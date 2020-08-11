@@ -5,6 +5,7 @@ import base64
 from flask import current_app
 from simplecrypt import encrypt, decrypt
 from cryptography.fernet import Fernet
+from requests.exceptions import ConnectionError
 
 
 # Tokens ###########################################
@@ -70,6 +71,13 @@ def decrypt_string(b):
 
 def site_exists(domain):
     url = 'https://' + domain + '.getwishlist.io'
-    r = requests.get(url)
-    return r.status_code < 400
+
+    try:
+        request = requests.get(url)
+        if request.status_code < 400:
+            return True
+    except ConnectionError:
+        return False
+    else:
+        return True
 

@@ -362,9 +362,9 @@ def dashboard(subdomain=None):
     demo = False
 
     if subdomain:
-        # from app.blueprints.api.functions import site_exists
-        # if not site_exists(subdomain):
-        #     return redirect(url_for('user.settings'))
+        from app.blueprints.api.functions import site_exists
+        if not site_exists(subdomain):
+            return redirect(url_for('user.settings'))
 
         if subdomain == 'demo':
             demo = True
