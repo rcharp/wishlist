@@ -70,13 +70,19 @@ def decrypt_string(b):
 
 
 def site_exists(domain):
+    from app.blueprints.base.functions import print_traceback
     url = 'https://' + domain + '.getwishlist.io'
 
     try:
-        request = requests.get(url, timeout=10)
-        if request.status_code < 400:
+        r = requests.get(url, headers={"content-type":"text"})
+        print(r.status_code)
+        if r.status_code < 400:
             return True
-    except ConnectionError:
+    except ConnectionError as c:
+        print_traceback(c)
+        return False
+    except Exception as e:
+        print_traceback(e)
         return False
     else:
         return True
