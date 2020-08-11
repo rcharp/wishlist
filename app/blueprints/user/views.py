@@ -880,6 +880,26 @@ def set_domain_privacy():
         return jsonify({'error': 'Error'})
 
 
+@user.route('/set_domain_approval', methods=['GET', 'POST'])
+# @login_required
+@csrf.exempt
+def set_domain_approval():
+    try:
+        if request.method == 'POST':
+            if 'domain_id' in request.form and 'approval' in request.form:
+                domain_id = request.form['domain_id']
+                approval = request.form['approval']
+
+                d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+                d.requires_approval = True if approval == 'true' else False
+                d.save()
+
+                return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
+
+
 # Contact us -------------------------------------------------------------------
 @user.route('/contact', methods=['GET','POST'])
 @csrf.exempt
