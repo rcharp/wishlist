@@ -24,6 +24,9 @@
             </div>
 
             <div class="hidden md:block">
+                {% if page == 'dashboard' and current_user.authenticated and current_user.domain == subdomain and current_user.role == 'creator' %}
+                    {% include '/user/includes/privacy_switch.html' ignore missing %}
+                {% endif %}
                 <div class="ml-4 flex items-center md:ml-6">
                     {% if current_user.is_authenticated %}
                         {% include '/user/includes/user_dropdown.html' ignore missing %}
