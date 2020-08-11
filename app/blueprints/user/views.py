@@ -166,8 +166,6 @@ def signup(subdomain=None):
                     flash('There is already an account with this email. Please login.', 'error')
                     return redirect(url_for('user.login', subdomain=subdomain))
 
-                # subdomain = request.form.get('domain').replace(' ', '')
-
                 u = User()
 
                 form.populate_obj(u)
