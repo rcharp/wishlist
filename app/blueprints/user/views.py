@@ -368,7 +368,8 @@ def dashboard(subdomain=None):
             d = Domain.query.filter(Domain.name == subdomain).scalar()
 
         if d is not None:
-            feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
+            feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
+            new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
 
             if current_user.is_authenticated:
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
@@ -385,6 +386,7 @@ def dashboard(subdomain=None):
             return render_template('user/dashboard.html',
                                    current_user=current_user,
                                    feedbacks=feedbacks,
+                                   new_feedback=new_feedback,
                                    statuses=statuses,
                                    domain=d,
                                    demo=demo,
@@ -437,6 +439,11 @@ def feedback(feedback_id, subdomain):
 
     f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
     d = Domain.query.filter(Domain.name == subdomain).scalar()
+
+    # If the feedback isn't approved yet, only let creators view it
+    if not f.approved:
+        if not (current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'):
+            return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     # Redirect if feedback no longer exists
     if f is None:
@@ -626,6 +633,50 @@ def sort_feedback(s, subdomain=None):
 
         return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, domain=d, subdomain=demo)
 
+
+@user.route('/feedback_approval', subdomain='<subdomain>', methods=['GET','POST'])
+@csrf.exempt
+@cross_origin()
+def feedback_approval(subdomain=None):
+    if not subdomain:
+        return redirect(url_for('user.settings'))
+    else:
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
+
+        if d is not None:
+            feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+
+            feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+            return render_template('user/approval.html',
+                                   current_user=current_user,
+                                   feedbacks=feedbacks,
+                                   domain=d,
+                                   subdomain=subdomain,
+                                   use_username=use_username)
+        return redirect(url_for('user.settings', subdomain=subdomain))
+
+
+@user.route('/approve_feedback', methods=['GET', 'POST'])
+# @login_required
+@csrf.exempt
+def approve_feedback():
+    try:
+        if request.method == 'POST':
+            if 'feedback_id' in request.form and 'approve' in request.form:
+                feedback_id = request.form['feedback_id']
+                approve = True if request.form['approve'] == 'true' else False
+
+                f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
+                if approve:
+                    f.approved = True
+                    f.save()
+                else:
+                    f.delete()
+
+                return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
 
 # Comments -------------------------------------------------------------------
 '''
@@ -872,6 +923,26 @@ def set_domain_privacy():
 
                 d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
                 d.private = True if privacy == 'true' else False
+                d.save()
+
+                return jsonify({'success': 'Success'})
+        return jsonify({'error': 'Error'})
+    except Exception as e:
+        return jsonify({'error': 'Error'})
+
+
+@user.route('/set_domain_approval', methods=['GET', 'POST'])
+# @login_required
+@csrf.exempt
+def set_domain_approval():
+    try:
+        if request.method == 'POST':
+            if 'domain_id' in request.form and 'approval' in request.form:
+                domain_id = request.form['domain_id']
+                approval = request.form['approval']
+
+                d = Domain.query.filter(Domain.domain_id == domain_id).scalar()
+                d.requires_approval = True if approval == 'true' else False
                 d.save()
 
                 return jsonify({'success': 'Success'})

@@ -84,7 +84,7 @@ def create_domain(user, domain, company):
 def create_feedback(user, domain, email, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
-        s = Status.query.filter(Status.name == 'In backlog').scalar()
+        s = Status.query.filter(Status.name == 'General').scalar()
 
         feedback_id = generate_id(Feedback, size=8)
 
@@ -96,6 +96,9 @@ def create_feedback(user, domain, email, title, description):
         f.domain = d.name
         f.status = s.name
         f.status_id = s.status_id
+
+        if not d.requires_approval:
+            f.approved = True
 
         if user is not None:
             f.user_id = user.id
