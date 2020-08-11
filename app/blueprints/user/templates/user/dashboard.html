@@ -62,7 +62,6 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        <div style="overflow:hidden;">
             {% include '/user/includes/mobile.html' ignore missing %}
             {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
             <div class="h-screen flex overflow-hidden bg-gray-100">
@@ -349,7 +348,6 @@
             <div id="login-overlay-comment" style="display:none">
                 {% with action='comment' %}{% include '/user/includes/login_overlay.html' ignore missing %}{% endwith %}
             </div>
-        </div>
 
         <!-- jQuery -->
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
