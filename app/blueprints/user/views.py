@@ -321,8 +321,11 @@ def welcome(subdomain=None):
 @user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
 def start(subdomain=None):
-    if not (current_user.is_authenticated and current_user.domain == subdomain):
+    if not current_user.is_authenticated:
         return redirect(url_for('user.login'))
+
+    if not current_user.domain == subdomain:
+        return redirect(url_for('user.settings'))
 
     domain = Domain.query.filter(Domain.name == current_user.domain).scalar()
     return render_template('user/start.html', current_user=current_user, domain=domain, subdomain=subdomain)
