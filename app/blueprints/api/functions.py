@@ -71,7 +71,7 @@ def decrypt_string(b):
 
 def site_exists(domain):
     from app.blueprints.base.functions import print_traceback
-    url = 'https://' + domain + '.getwishlist.io'
+    url = 'https://' + domain + '.getwishlist.io/dashboard'
 
     try:
         r = requests.get(url, headers={"content-type":"text"})
