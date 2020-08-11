@@ -1,4 +1,5 @@
 import jwt
+import requests
 import os
 import base64
 from flask import current_app
@@ -65,4 +66,10 @@ def decrypt_string(b):
     f = Fernet(key)
     plaintext = f.decrypt(b)
     return plaintext
+
+
+def site_exists(domain):
+    url = 'https://' + domain + '.getwishlist.io'
+    r = requests.get(url)
+    return r.status_code < 400
 
