@@ -368,7 +368,7 @@ def dashboard(subdomain=None):
             d = Domain.query.filter(Domain.name == subdomain).scalar()
 
         if d is not None:
-            feedbacks = Feedback.query.filter(Feedback.domain_id == d.domain_id).all()
+            feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
 
             if current_user.is_authenticated:
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
