@@ -629,6 +629,27 @@ def sort_feedback(s, subdomain=None):
         return render_template('user/dashboard.html', current_user=current_user, feedbacks=feedbacks, statuses=statuses, s=s, domain=d, subdomain=demo)
 
 
+@user.route('/feedback_approval', subdomain='<subdomain>', methods=['GET','POST'])
+@csrf.exempt
+@cross_origin()
+def feedback_approval(subdomain=None):
+    if not subdomain:
+        return redirect(url_for('user.settings'))
+    else:
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
+
+        if d is not None:
+            feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+
+            feedbacks.sort(key=lambda x: x.created_on, reverse=True)
+            return render_template('user/approval.html',
+                                   current_user=current_user,
+                                   feedbacks=feedbacks,
+                                   domain=d,
+                                   subdomain=subdomain,
+                                   use_username=use_username)
+        return redirect(url_for('user.settings', subdomain=subdomain))
+
 # Comments -------------------------------------------------------------------
 '''
 Get comments
