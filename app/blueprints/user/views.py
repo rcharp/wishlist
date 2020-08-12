@@ -356,6 +356,7 @@ def update_credentials(subdomain=None):
 
 @user.route('/dashboard', methods=['GET','POST'])
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
+@user.route('/dashboard/<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
 def dashboard(subdomain=None):
