@@ -38,108 +38,18 @@
           {% include '/user/includes/mobile.html' ignore missing %}
           {% with page='404' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
-            <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-              <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
-                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-              </button>
-              <div class="flex-1 px-4 flex justify-between">
-                <div class="flex-1 flex">
-                  <div class="w-full flex md:ml-0">
-                    <label for="search_field" class="sr-only">Search</label>
-                    <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-                      <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                        </svg>#}
+              <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="py-4 text-center">
+                      <div class="rounded-lg h-96 text-center" style="display:flex; align-items:center;">
+                          <img class="h-96 block" src="{{ url_for('static', filename='images/404.png') }}" style="float:none; margin:auto;display:block;" /><br />
                       </div>
-                        <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
+                        <span class="text-center rounded-md text-gray-400" style="float:none;margin:0 auto;font-size:24px;">
+                            <span style="clear:both">Sorry, the page you're looking for doesn't exist!</span>
+                        </span>
                     </div>
-                  </div>
                 </div>
-                <div class="ml-4 flex items-center md:ml-6">
-                  {% if current_user.is_authenticated %}
-                      {% include '/user/includes/user_dropdown.html' ignore missing %}
-                  {% else %}
-                      {% include '/user/includes/header_buttons.html' ignore missing %}
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-
-          <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <div class="py-4 text-center">
-                  <div class="rounded-lg h-96 text-center" style="display:flex; align-items:center;">
-                      <img class="h-96 block" src="{{ url_for('static', filename='images/404.png') }}" style="float:none; margin:auto;display:block;" /><br />
-                  </div>
-                    <span class="text-center rounded-md text-gray-400" style="float:none;margin:0 auto;font-size:24px;">
-                        <span style="clear:both">Sorry, the page you're looking for doesn't exist!</span>
-                    </span>
-                </div>
-            </div>
-          </main>
-
-            {#<main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Settings</h1>
-              </div>
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <!-- Replace with your content -->
-                <br />
-                <h4 class="font-w300 push-15">{{ current_user.email }}</h4><hr />
-                <br />
-                {% if current_user.username %}
-                    Your username is
-                    <strong>{{ current_user.username }}</strong>
-                {% else %}
-                  <span class="inline-flex rounded-md shadow-sm">
-                      <a href="{{ url_for('user.welcome') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                        Pick a username
-                      </a>
-                    </span>
-                {% endif %}
-                <hr />
-                <br />
-                <h4 class="font-w300 push-15">{{ domain.name }}</h4>
-                <br /><br />
-                <span class="inline-flex rounded-md shadow-sm">
-                  <a href="{{ url_for('user.update_credentials') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                    Update email and password
-                  </a>
-                </span>
-                {% if card %}
-                    <h1 class="font-w300">Card on file</h1>
-                    <h3 class="text-muted margin-bottom font-w400">
-                      {{ card['card']['brand']|capitalize }}
-                      ****{{ card['card']['last4'] }}<br />
-                      Exp: {{ card['card']['exp_month'] }}/{{ card['card']['exp_year'] }}
-                    </h3>
-                  {% else %}
-                    {% if current_user.invoices %}
-                      <h3>Previous subscription info</h3>
-                      <div class="list-group">
-                        <a class="list-group-item"
-                          href="{{ url_for('billing.billing_details') }}">
-                          Billing details
-                        </a>
-                      </div>
-                    {% endif %}
-                  {% endif %}
-
-                    <br /><br /><br />
-                    <h3 class="font-w400 push-15" style="margin-bottom:5px !important;">Delete your account</h3>
-                    <h4 class="font-w300 push-15">This will permanently delete your account.</h4><hr />
-                    <br />
-                    <span class="inline-flex rounded-md shadow-sm">
-                      <a href="{{ url_for('billing.cancel') }}" onclick="return ConfirmDeleteAccount();" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                          <span style="color:red">Delete my account</span>
-                      </a>
-                    </span>
-                <!-- /End replace -->
-              </div>
-            </main>#}
+              </main>
           </div>
         </div>
         <!-- END Page Container -->
