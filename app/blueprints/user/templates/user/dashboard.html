@@ -70,7 +70,7 @@
                                   <div>
                                     <span class="rounded-md shadow-sm">
                                       <button id="sort-dropdown-button" type="button" onclick="ShowDropdown('sort-dropdown-menu');" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150">
-                                        {% if sort == 'votes' %}Sorted by: Most votes{% elif sort == 'oldest' %}Sorted by: Oldest{% else %}Sorted by: Most recent{% endif %}
+                                        {% if s == 'votes' %}Sorted by: Most votes{% elif s == 'oldest' %}Sorted by: Oldest{% else %}Sorted by: Most recent{% endif %}
                                         <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                         </svg>
@@ -321,7 +321,7 @@
                                           </div>
                                       </li>
 
-                                      <li class="text-center mb-7">
+                                      <li class="text-center mb-2">
                                         <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="text-sm leading-5 font-medium text-gray-500">
                                             Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
                                         </a>
