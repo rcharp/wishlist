@@ -633,7 +633,7 @@
                 input += e.value;
 
                 var existingItems = document.getElementsByClassName('feedback-item');
-                var newItemsList = document.getElementById('feedback-list').clone(false);
+                var newItemsList = document.getElementById('feedback-list').cloneNode(false);
                 document.getElementById('search-term').innerText = input;
 
                 for (var i = 0; i < existingItems.length; i++) {
