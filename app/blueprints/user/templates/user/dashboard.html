@@ -395,13 +395,13 @@
                                           <div class="-mt-px flex">
                                             <div class="w-0 flex-1 flex border-r border-gray-200">
                                               <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                  <i class="fa fa-comments fa-3x h-10 w-10 mr-5"></i> <span style="font-size:20px;">{{ feedback.comments }} comment{% if feedback.comments != 1 %}s{% endif %}</span>
+                                                  <i class="fa fa-comments fa-2x h-2 w-2 mr-5"></i> <span style="font-size:16px;">{{ feedback.comments }} comment{% if feedback.comments != 1 %}s{% endif %}</span>
                                               </a>
                                             </div>
                                             <div class="-ml-px w-0 flex-1 flex">
                                               <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <span id="votes-{{ feedback.feedback_id }}" class=" {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="margin-bottom:0;cursor:pointer;" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
-                                                  <i class="fa fa-thumbs-o-up fa-3x h-10 w-10 mr-5"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:20px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
+                                                <span id="votes-{{ feedback.feedback_id }}" class="inline-flex items-center justify-center {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="margin-bottom:0;cursor:pointer;" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
+                                                  <i class="fa fa-thumbs-o-up fa-3x h-10 w-10 mr-3"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:20px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
                                                 </span>
                                               </div>
                                             </div>
