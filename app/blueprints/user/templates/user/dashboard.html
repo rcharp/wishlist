@@ -328,7 +328,7 @@
                                       </li>
 
                                       <!-- status filters -->
-                                      <li class="col-span-1 bg-white rounded-lg shadow" style="height:432px;">
+                                      <li class="col-span-1 bg-white rounded-lg shadow" style="height:430px;">
                                         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                                               <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
                                                   <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
@@ -702,6 +702,7 @@
             var user_dropdown = document.getElementById('user-dropdown-menu');
             var sort_dropdown = document.getElementById('sort-dropdown-menu');
             var notification_dropdown = document.getElementById('notification-dropdown-menu');
+            var search_field = document.getElementById('search_field');
 
             if (user_dropdown !== null){
                 body.addEventListener("click", function () {
@@ -743,6 +744,12 @@
                 document.getElementById('notification-menu').addEventListener("click", function (ev) {
                     ev.stopPropagation(); //this is important! If removed, you'll get both alerts
                 }, false);
+            }
+
+            if (search_field !== null){
+                search_field.addEventListener("change", function (e) {
+                    SearchFeedback(e);
+                })
             }
         </script>
     </body>
