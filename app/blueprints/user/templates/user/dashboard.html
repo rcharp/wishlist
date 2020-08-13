@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Dashboard - {{ 'site_name'|site_name_filter }}</title>
+        <title>{{ domain.company|title }}'s dashboard - {{ 'site_name'|site_name_filter }}</title>
 
         <meta name="description" content="Wishlist - Collect and organize user feedback">
         <meta name="author" content="pixelcave">
@@ -32,7 +32,7 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        {% include '/user/includes/mobile.html' ignore missing %}
+{#        {% include '/user/includes/mobile.html' ignore missing %}#}
             <div class="bg-gray-100" style="height:100vh;overflow-y:hidden;">
               {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
                 <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
