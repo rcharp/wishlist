@@ -380,7 +380,7 @@
                                 {% if feedbacks|length > 0 %}
                                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
                                     {% for feedback in feedbacks %}
-                                    <li class="col-span-1 bg-white rounded-lg shadow" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
+                                    <li class="col-span-1 bg-white rounded-lg shadow feedback-item" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3 truncate">
