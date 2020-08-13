@@ -362,10 +362,10 @@
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3">
                                               <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer;">{{ feedback.title }}</h3></a>
-                                              {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
-                                                {% if feedback.status %}
-                                                    <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
-                                                {% endif %}
+                                            {% if feedback.status %}
+                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
+                                            {% endif %}
+                                            {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
                                             </div>
                                             <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
                                               <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }} by
@@ -384,12 +384,12 @@
                                                         {% endif %}
                                                     {% endif %}
                                                 </span>
-                                            </p><br /><br />
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
+                                            </p><br />
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 {#truncate#}">
                                                 {{ feedback.description }}
                                             </p>
                                           </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
+{#                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">#}
                                         </div>
                                         <div class="border-t border-gray-200">
                                           <div class="-mt-px flex">
