@@ -359,7 +359,7 @@ def update_credentials(subdomain=None):
 @user.route('/dashboard/<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
-def dashboard(subdomain='demo'):
+def dashboard(subdomain=None):
     demo = False
 
     if subdomain:
@@ -420,6 +420,13 @@ def dashboard(subdomain='demo'):
                                subdomain=subdomain,
                                demo=demo,
                                use_username=use_username)
+
+
+@user.route('/dashboard/<subdomain>', methods=['GET','POST'])
+@csrf.exempt
+@cross_origin()
+def dashboard_redirect(subdomain):
+    return redirect(url_for('user.dashboard', subdomain=subdomain))
 
 
 @user.route('/dashboard', methods=['GET','POST'])
