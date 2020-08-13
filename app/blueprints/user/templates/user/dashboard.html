@@ -378,7 +378,7 @@
                             <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3">
 
                                 {% if feedbacks|length > 0 %}
-                                <ul class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
+                                <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
                                     {% for feedback in feedbacks %}
                                     <li class="col-span-1 bg-white rounded-lg shadow feedback-item" style="max-height:202px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
@@ -632,18 +632,23 @@
 
                 input += e.value;
 
-                var items = document.getElementsByClassName('feedback-item');
+                var existingItems = document.getElementsByClassName('feedback-item');
+                var newItemsList = document.getElementById('feedback-list').clone(false);
                 document.getElementById('search-term').innerText = input;
 
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
+                for (var i = 0; i < existingItems.length; i++) {
+                    var item = existingItems[i];
                     if(item.textContent.toLowerCase().includes(input.toLowerCase()) === false){
-                        item.style.display = 'none';
+                        //item.style.display = 'none';
+                        newItemsList.appendChild(item);
                     }
-                    else {
-                        item.style.display = '';
-                    }
+                    //else {
+                        //item.style.display = '';
+                    //}
                 }
+
+                // Replace the old ul with the newly built one
+                document.getElementById('feedback-list').parentNode.replaceChild(document.getElementById('feedback-list'), newItemsList);
 
                 if (input){
                     document.getElementById('search-results').style.display = '';
