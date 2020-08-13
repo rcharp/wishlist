@@ -7,7 +7,7 @@
 
         <title>404 - {{ 'site_name'|site_name_filter }}</title>
 
-        <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Wishlist - Collect and organize user feedback">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -24,36 +24,9 @@
         <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="192x192">
         <!-- END Icons -->
 
-{#        <!-- Page JS Plugins CSS -->#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">#}
-{#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css">#}
-{#        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/select2/select2.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/select2/select2-bootstrap.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.skinHTML5.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/dropzonejs/dropzone.min.css">#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.css">#}
-{##}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/datatables/jquery.dataTables.min.css">#}
-{##}
-{#        <!-- Stylesheets -->#}
-{#        <!-- Web fonts -->#}
-{#        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7CRoboto:300,400,400italic,600,700">#}
-        <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
-{##}
-{#        <!-- Bootstrap and OneUI CSS framework -->#}
-{#        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">#}
+
+        <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">\
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
-{##}
-{#        <!-- Shepherd JS -->#}
-{#        <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>#}
-{##}
-{#        <!-- CSS for form -->#}
-{#        <link rel="stylesheet" href="../../../../static/form/form.css"/>#}
 
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
@@ -63,7 +36,7 @@
     <body>
         <div class="h-screen flex overflow-hidden bg-gray-100">
           {% include '/user/includes/mobile.html' ignore missing %}
-          {% with page='404' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
+          {% with page='404' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
           <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
               <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">

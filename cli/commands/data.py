@@ -5,7 +5,8 @@ def statuses():
             {'name': 'Already exists', 'color': 'red'},
             {'name': 'Shipped', 'color': 'yellow'},
             {'name': 'In beta', 'color': 'purple'},
-            {'name': 'Future', 'color': 'gray'}]
+            {'name': 'Future', 'color': 'gray'},
+            {'name': 'General', 'color': 'indigo'}]
 
 
 def generate_comments():

@@ -6,7 +6,7 @@
 
     <title>{{ 'site_name'|site_name_filter }} - Collect and organize user feedback</title>
 
-    <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
+    <meta name="description" content="Wishlist - Collect and organize user feedback">
     <meta name="author" content="pixelcave">
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -53,7 +53,7 @@
     <div class="hidden sm:block sm:absolute sm:inset-y-0 sm:h-full sm:w-full">
 
         <!-- Header -->
-        {% include '/page/includes/header.html' ignore missing %}
+        {% include '/page/includes/index_header.html' ignore missing %}
 
         <!-- Main content -->
         <div class="py-16 bg-gray-50 overflow-hidden lg:py-24">
@@ -507,7 +507,8 @@
               </p>
             </div>
           </div>
-        
+
+          {% import 'billing/macros/billing.html' as billing with context %}
           <div class="mt-16 bg-white pb-12 lg:mt-20 lg:pb-20">
             <div class="relative z-0">
               <div class="absolute inset-0 h-5/6 bg-gray-900 lg:h-2/3"></div>
@@ -555,7 +556,7 @@
                                 </svg>
                               </div>
                               <p class="ml-3 text-base leading-6 font-medium text-gray-300">
-                                5 domains
+                                5 feedback dashboards
                               </p>
                             </li>
                             <li class="mt-4 flex items-start">
@@ -619,7 +620,7 @@
                             </span>
                           </div>#}
                           <div class="flex items-center justify-center text-6xl font-extrabold">FREE</div>
-                          <div class="flex items-center justify-center">normally $19/month</div>
+                          <div class="flex items-center justify-center">during beta. Then $19/month.</div>
                         </div>
                       </div>
                       <div class="border-t-2 border-gray-100 rounded-b-lg pt-10 pb-8 px-6 bg-gray-50 sm:px-10 sm:py-10">
@@ -641,7 +642,7 @@
                               </svg>
                             </div>
                             <p class="ml-3 text-base leading-6 font-medium text-gray-500">
-                              1 domain
+                              1 feedback dashboard
                             </p>
                           </li>
                           <li class="mt-4 flex items-start">
@@ -727,7 +728,7 @@
                                 </svg>
                               </div>
                               <p class="ml-3 text-base leading-6 font-medium text-gray-300">
-                                Unlimited domains
+                                Unlimited feedback dashboards
                               </p>
                             </li>
                             <li class="mt-4 flex items-start">

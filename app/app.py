@@ -86,35 +86,14 @@ def create_app(settings_override=None):
     app.config.from_object('config.settings')
     app.config.from_pyfile('settings.py', silent=True)
 
-    if os.environ.get('PRODUCTION') == 'true':
-        # Set the app server name
-        app.config['SERVER_NAME'] = 'getwishlist.io'
-        app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
-
-        # # Set the http -> https redirect
-        # @app.before_request
-        # def before_request():
-        #     # if not request.is_secure:
-        #     #     url = request.url.replace("http://", "https://", 1)
-        #     #     code = 301
-        #     #     return redirect(url, code=code)
-        #     """Redirect incoming requests to HTTPS."""
-        #     # Should we redirect?
-        #     criteria = [
-        #         request.is_secure,
-        #         request.headers.get('X-Forwarded-Proto', 'http') == 'https'
-        #     ]
-
-        #     if not any(criteria):
-        #         if request.url.startswith('http://'):
-        #             url = request.url.replace('http://', 'https://', 1)
-        #             code = 301
-        #             r = redirect(url, code=code)
-        #             return r 
-    else:
+    if os.environ.get('PRODUCTION') == 'Development':
         # Set the app server name
         app.config['SERVER_NAME'] = 'localhost:5000'
         app.config['REMEMBER_COOKIE_DOMAIN'] = '.localhost:5000'
+    # else:
+        # Set the app server name
+        # app.config['SERVER_NAME'] = 'getwishlist.io'
+        # app.config['REMEMBER_COOKIE_DOMAIN'] = '.getwishlist.io'
 
     # Keeps the app from crashing on reload
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
@@ -220,6 +199,7 @@ def template_processors(app):
     app.jinja_env.filters['today_filter'] = today_filter
     app.jinja_env.filters['site_name_filter'] = site_name_filter
     app.jinja_env.filters['site_url_filter'] = site_url_filter
+    app.jinja_env.filters['site_version_filter'] = site_version_filter
     app.jinja_env.filters['site_color_filter'] = site_color_filter
     app.jinja_env.filters['shuffle_filter'] = shuffle_filter
     app.jinja_env.filters['percent_filter'] = percent_filter
@@ -373,11 +353,18 @@ def today_filter(arg):
 
 
 def site_name_filter(arg):
-    return 'Wishlist'
+    from flask import current_app
+    return current_app.config.get('SITE_NAME')
+
+
+def site_version_filter(arg):
+    # return 'v1.0'
+    return 'Beta'
 
 
 def site_url_filter(arg):
-    return 'getwishlist.io'
+    from flask import current_app
+    return current_app.config.get('SERVER_NAME') # 'getwishlist.io'
 
 
 def site_color_filter(arg):

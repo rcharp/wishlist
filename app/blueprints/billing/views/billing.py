@@ -31,7 +31,7 @@ def pricing():
 
     form = UpdateSubscriptionForm()
 
-    return render_template('page/pricing.html', form=form,
+    return render_template('billing/pricing.html', form=form,
                            plans=settings.STRIPE_PLANS)
 
 

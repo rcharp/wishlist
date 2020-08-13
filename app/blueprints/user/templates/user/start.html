@@ -5,9 +5,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Get started - {{ 'site_name'|site_name_filter }}</title>
+        <title>Dashboard - {{ 'site_name'|site_name_filter }}</title>
 
-        <meta name="description" content="OneUI - Admin Settings Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Wishlist - Collect and organize user feedback">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -47,6 +47,7 @@
 {##}
 {#        <!-- Bootstrap and OneUI CSS framework -->#}
 {#        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">#}
+{#        <link rel="stylesheet" id="css-main" href="../../../../static/icons/icons.css">#}
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
 {##}
 {#        <!-- Shepherd JS -->#}
@@ -61,242 +62,84 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        <div class="h-screen flex overflow-hidden bg-gray-100">
-          {% include '/user/includes/mobile.html' ignore missing %}
-          {% with page='settings' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
-          <div class="flex flex-col w-0 flex-1 overflow-hidden">
-            <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-              <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
-                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-              </button>
-              <div class="flex-1 px-4 flex justify-between">
-                <div class="flex-1 flex">
-                  <div class="w-full flex md:ml-0">
-                    <label for="search_field" class="sr-only">Search</label>
-                    <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-                      <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                        {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                        </svg>#}
+        {% include '/user/includes/mobile.html' ignore missing %}
+            <div class="bg-gray-100" style="height:100vh;">
+              {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
+                  <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="height:auto;">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-20" style="height:80vh;">
+                        <!-- Replace with your content -->
+                        <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">
+                            <!-- submit box -->
+                            <div class="sm:col-span-1">
+                                <div class="bg-white overflow-hidden shadow rounded-lg  mb-4">
+                                  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                    <form action="{{ url_for('user.add_feedback', subdomain=subdomain) }}" method="post" onsubmit="SaveEmail()">
+                                      <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                          <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                              Submit feedback
+                                          </div>
+
+                                      {% if not current_user.is_authenticated %}
+                                          <div class="sm:col-span-6">
+                                              <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                                <input id="email" name="email" autofocus="autofocus" placeholder="Your email" required type="email" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                              </div>
+                                          </div>
+                                      {% endif %}
+                                        <div class="sm:col-span-6">
+                                          <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                            <input id="title" name="title" autofocus="autofocus" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                          </div>
+                                        </div>
+
+                                        <div class="sm:col-span-6">
+                                          <div class="mt-1 rounded-md shadow-sm">
+                                            <textarea id="description" name="description" required placeholder="What would you like to share?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="mt-4 mb-4 border-t border-gray-200 pt-3 pb-2">
+                                        <div class="flex justify-end">
+                                          <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                              Submit
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+
+                                <div class="mt-2 mb-4 text-center">
+                                    <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="text-sm leading-5 font-medium text-gray-500">
+                                        Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- end submit box -->
+
+                            <div class="sm:col-span-3">
+                                <div class="py-4 mt-20">
+                                  <div class="rounded-lg h-96 text-center" style="align-items:center;">
+                                      <span class="inline-flex text-sm leading-5 font-medium text-gray-500 text-center" style="float:none;margin:0 auto;">
+                                          <span>There is no feedback for {{ domain.company }} yet.</span>
+                                      </span><br /><br />
+                                      <span class="inline-flex text-sm leading-5 font-medium text-gray-500 text-center" style="float:none;margin:0 auto;">
+                                          <span>Your public dashboard link is: <span class="text-indigo-600" style="font-size:16px;font-family:'Baloo Bhaina 2"><u>https://{{ domain.name|lower }}.{{ 'site'|site_url_filter }}</u>.</span></span>
+                                      </span><br /><br />
+                                      <span class="inline-flex text-sm leading-5 font-medium text-gray-500 text-center" style="float:none;margin:0 auto;">
+                                          <span>Share it with your users so they can start leaving feedback!</span>
+                                      </span>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /End replace -->
                       </div>
-                        <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="ml-4 flex items-center md:ml-6">
-                  {% if current_user.is_authenticated %}
-                      {% include '/user/includes/user_dropdown.html' ignore missing %}
-                  {% else %}
-                      {% include '/user/includes/header_buttons.html' ignore missing %}
-                  {% endif %}
-                </div>
-              </div>
+                  </main>
             </div>
 
-          <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
-                    <dl>
-                      <div class="px-4 py-5 sm:grid sm:grid-cols-12 border-b border-gray-200 sm:px-6">
-                        <dt class="mr-5 sm:col-span-2">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            {{ current_user.name }}
-                          </h3>
-                            {% if current_user.username %}
-                              <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-900">
-                                @{{ current_user.username }}
-                              </p>
-                            {% endif %}
-                        </dt>
-                        <dd class="sm:col-span-1">
-                            <span class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gray-200">
-                                <span class="text-lg font-medium leading-none text-gray-500">{{ current_user.name|initial_filter }}</span>
-                            </span>
-                        </dd>
-                        <dd class="sm:col-span-5"></dd>
-                        <dd class="sm:col-span-4 text-left">
-                            <span id="dashboard-button-text" class="text-sm leading-6 font-medium text-green-500">Setting up your domain, please wait...</span>
-                        </dd>
-                      </div>
-                    </dl>
-                  <div class="px-4 py-5 sm:p-0">
-                    <dl>
-                      <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Email
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.email }}
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Username
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                            {% if not current_user.username %}
-                              <span class="mb-4">You don't have a username yet.</span><br /><br />
-                              <span class="inline-flex rounded-md shadow-sm">
-                                  <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Create username
-                                  </a>
-                              </span>
-                            {% else %}
-                                <span class="mb-4">{{ current_user.username }}</span><br /><br />
-                                <span class="inline-flex rounded-md shadow-sm">
-                                  <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                    Update username
-                                  </a>
-                                </span>
-                            {% endif %}
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Update email/password
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{{ url_for('user.update_credentials', subdomain=subdomain) }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                Update email and password
-                              </a>
-                          </span>
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Membership type
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ current_user.role|title }}
-                        </dd>
-                      </div>
-                      {% if domain and current_user.role == 'creator' %}
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Domain
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.name|title }} ({{ domain.name }}.getwishlist.io)
-                        </dd>
-                      </div>
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Domain Id
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          {{ domain.domain_id }}
-                        </dd>
-                      </div>
-                          {% if domain.private_key %}
-                          <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                              Private Key
-                            </dt>
-                            <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                              {{ domain.private_key|deserialize_private_key }}
-                            </dd>
-                          </div>
-                          {% endif %}
-                      {% endif %}
-                      {% if current_user.subscription %}
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Payment info
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <h3 class="text-muted margin-bottom font-w400">
-                              {{ current_user.credit_card.brand }}
-                              ****{{ current_user.credit_card.last4 }}
-                              ({{ current_user.credit_card.exp_date.strftime('%m/%Y') }})
-                          </h3>
-                        </dd>
-                      </div>
-                      {% endif %}
-                      <div class="mt-8 sm:mt-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
-                        <dt class="text-sm leading-5 font-medium text-gray-500">
-                          Delete my account
-                        </dt>
-                        <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                          <span class="inline-flex rounded-md shadow-sm">
-                              <a href="{{ url_for('billing.cancel') }}" onclick="return ConfirmDeleteAccount();" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                  <span style="color:red">Delete my account</span>
-                              </a>
-                          </span>
-                        </dd>
-                      </div>
-                    </dl>
-                  </div>
-                </div>
-            </div>
-          </main>
-
-            {#<main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 class="text-2xl font-semibold text-gray-900">Settings</h1>
-              </div>
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <!-- Replace with your content -->
-                <br />
-                <h4 class="font-w300 push-15">{{ current_user.email }}</h4><hr />
-                <br />
-                {% if current_user.username %}
-                    Your username is
-                    <strong>{{ current_user.username }}</strong>
-                {% else %}
-                  <span class="inline-flex rounded-md shadow-sm">
-                      <a href="{{ url_for('user.welcome') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                        Pick a username
-                      </a>
-                    </span>
-                {% endif %}
-                <hr />
-                <br />
-                <h4 class="font-w300 push-15">{{ domain.name }}</h4>
-                <br /><br />
-                <span class="inline-flex rounded-md shadow-sm">
-                  <a href="{{ url_for('user.update_credentials') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                    Update email and password
-                  </a>
-                </span>
-                {% if card %}
-                    <h1 class="font-w300">Card on file</h1>
-                    <h3 class="text-muted margin-bottom font-w400">
-                      {{ card['card']['brand']|capitalize }}
-                      ****{{ card['card']['last4'] }}<br />
-                      Exp: {{ card['card']['exp_month'] }}/{{ card['card']['exp_year'] }}
-                    </h3>
-                  {% else %}
-                    {% if current_user.invoices %}
-                      <h3>Previous subscription info</h3>
-                      <div class="list-group">
-                        <a class="list-group-item"
-                          href="{{ url_for('billing.billing_details') }}">
-                          Billing details
-                        </a>
-                      </div>
-                    {% endif %}
-                  {% endif %}
-
-                    <br /><br /><br />
-                    <h3 class="font-w400 push-15" style="margin-bottom:5px !important;">Delete your account</h3>
-                    <h4 class="font-w300 push-15">This will permanently delete your account.</h4><hr />
-                    <br />
-                    <span class="inline-flex rounded-md shadow-sm">
-                      <a href="{{ url_for('billing.cancel') }}" onclick="return ConfirmDeleteAccount();" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                          <span style="color:red">Delete my account</span>
-                      </a>
-                    </span>
-                <!-- /End replace -->
-              </div>
-            </main>#}
-          </div>
-        </div>
-        <!-- END Page Container -->
-
-        {% include '/user/includes/setup_overlay.html' ignore missing %}
 
         <!-- jQuery -->
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
@@ -322,82 +165,115 @@
                 }
             }
 
-            function ConfirmDeleteAccount(){
-                return confirm("Are you sure you want to delete your account? This can't be undone.");
-            }
-
-            function LoadingMessage(){
-
-                var message = document.getElementById('dashboard-button-text');
-
-                if (!message.innerText.includes('.')){
-                    message.innerText = 'Setting up your domain, please wait.';
+            function ShowLoginModal(action, feedback_id){
+                if ('{{ demo }}' === 'True'){
+                    return false;
                 }
 
-                if (!message.innerText.endsWith('....')){
-                    message.innerText += '.';
+                var login_overlay = document.getElementById('login-overlay-' + action);
+                login_overlay.style.display = '';
+                document.getElementById('feedback_id').value = feedback_id;
+
+                var login_overlay_modal = document.getElementById('login-overlay-modal');
+
+                if (login_overlay_modal !== null){
+                    login_overlay_modal.addEventListener("click", function () {
+                        login_overlay.style.display = 'none';
+                    }, false);
                 }
-                else {
-                    message.innerText = 'Setting up your domain, please wait.';
-                }
-
-                setTimeout(() => { LoadingMessage(); }, 500);
-            }
-
-            function SubdomainSiteExists(){
-                LoadingMessage();
-                var redirect = ReplaceSubdomain("{{ url_for('user.dashboard', subdomain='DUMMY_VALUE') }}");
-                var url = 'https://' + '{{ subdomain }}' + '.getwishlist.io';
-
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    //data: {'subdomain': '{{ subdomain }}', 'user_id': '{{ current_user.id }}'},
-                    statusCode: {
-                        200: function() {
-                            window.location.href = redirect;
-                        }
-                    }
-                });
-            }
-
-            function UpdateDashboardButton(){
-                var message = document.getElementById('dashboard-button-text');
-                // message.classList.add('text-green-500');
-                // message.innerText = 'Success! Click here to be taken to your dashboard!';
-                message.style.display = 'none';
-                document.getElementById('dashboard-button').style.display = '';
             }
 
             function ReplaceSubdomain(url){
                 var new_url = url.replace(/DUMMY_VALUE/, '{{ subdomain }}').toLowerCase();
                 return new_url;
             }
+
+            function TogglePrivacy(){
+                var public_toggle = document.getElementById('public-toggle');
+                var private_toggle = document.getElementById('private-toggle');
+                var privacy;
+
+                if (public_toggle.classList.contains('bg-green-400')){
+                    public_toggle.classList.remove('bg-green-400');
+                    public_toggle.classList.add('bg-gray-200');
+
+                    private_toggle.classList.remove('translate-x-5');
+                    private_toggle.classList.add('translate-x-0');
+
+                    privacy = false;
+                }else{
+                    public_toggle.classList.remove('bg-gray-200');
+                    public_toggle.classList.add('bg-green-400');
+
+                    private_toggle.classList.remove('translate-x-0');
+                    private_toggle.classList.add('translate-x-5');
+
+                    privacy = true;
+                }
+
+                SetPrivacy(privacy, '{{ domain.domain_id }}')
+            }
+
+            function SetPrivacy(privacy, domain_id){
+                var url = "{{ url_for('user.set_domain_privacy') }}";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'domain_id': domain_id, 'privacy': privacy},
+                    success: function (response) {
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
         </script>
         <script>
             var body = document.getElementsByTagName("body")[0];
-            var except = document.getElementById('user-dropdown-menu');
+            var user_dropdown = document.getElementById('user-dropdown-menu');
+            var sort_dropdown = document.getElementById('sort-dropdown-menu');
+            var notification_dropdown = document.getElementById('notification-dropdown-menu');
 
-            body.addEventListener("click", function () {
-                except.classList.remove('opacity-100');
-                except.classList.remove('scale-100');
-                except.classList.add('opacity-0');
-                except.classList.add('scale-95');
+            if (user_dropdown !== null){
+                body.addEventListener("click", function () {
+                    // Hide the user dropdown when you click outside of it
+                    user_dropdown.classList.remove('opacity-100');
+                    user_dropdown.classList.remove('scale-100');
+                    user_dropdown.classList.add('opacity-0');
+                    user_dropdown.classList.add('scale-95');
+                    user_dropdown.style.display = 'none';
+                }, false);
+                document.getElementById('user-menu').addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
 
-                except.style.display = 'none';
-            }, false);
-            document.getElementById('user-menu').addEventListener("click", function (ev) {
-                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-            }, false);
-        </script>
-        <script>
-            $( document ).ready(function() {
-                //var ready = false;
-                setInterval(SubdomainSiteExists, 5000);
-                {#if (x === true){
-                    clearInterval(x);
-                }#}
-            });
+            if (sort_dropdown !== null){
+                body.addEventListener("click", function () {
+                    // Hide the sort dropdown when you click outside of it
+                    sort_dropdown.classList.remove('opacity-100');
+                    sort_dropdown.classList.remove('scale-100');
+                    sort_dropdown.classList.add('opacity-0');
+                    sort_dropdown.classList.add('scale-95');
+                    sort_dropdown.style.display = 'none';
+                }, false);
+                document.getElementById('sort-dropdown-button').addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
+
+            if (notification_dropdown !== null){
+                body.addEventListener("click", function () {
+                    // Hide the user dropdown when you click outside of it
+                    notification_dropdown.classList.remove('opacity-100');
+                    notification_dropdown.classList.remove('scale-100');
+                    notification_dropdown.classList.add('opacity-0');
+                    notification_dropdown.classList.add('scale-95');
+                    notification_dropdown.style.display = 'none';
+                }, false);
+                document.getElementById('notification-menu').addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
         </script>
     </body>
 </html>
