@@ -633,26 +633,26 @@
                 input += e.value;
 
                 var existingItems = document.getElementsByClassName('feedback-item');
-                var oldItemsList = document.getElementById('feedback-list');
-                var newItemsList = oldItemsList.cloneNode(false);
+                //var oldItemsList = document.getElementById('feedback-list');
+                //var newItemsList = oldItemsList.cloneNode(false);
                 document.getElementById('search-term').innerText = input;
 
                 for (var i = 0; i < existingItems.length; i++) {
                     var item = existingItems[i];
                     if(item.textContent.toLowerCase().includes(input.toLowerCase()) === false){
-                        //item.style.display = 'none';
-                        newItemsList.appendChild(item);
+                        item.style.display = 'none';
+                        //newItemsList.appendChild(item);
                     }
-                    //else {
-                        //item.style.display = '';
-                    //}
+                    else {
+                        item.style.display = '';
+                    }
                 }
 
-                // Replace the old ul with the newly built one
+                {#// Replace the old ul with the newly built one
                 oldItemsList.innerHTML = '';
                 for (var i = 0; i < newItemsList.length; i++){
                     oldItemsList.appendChild(newItemsList[i]);
-                }
+                }#}
 
                 if (input){
                     document.getElementById('search-results').style.display = '';
