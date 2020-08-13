@@ -356,7 +356,6 @@ def update_credentials(subdomain=None):
 
 @user.route('/dashboard', methods=['GET','POST'])
 @user.route('/dashboard', subdomain='<subdomain>', methods=['GET','POST'])
-@user.route('/dashboard/<subdomain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
 def dashboard(subdomain=None):
@@ -862,12 +861,17 @@ def roadmap(subdomain=None):
 @login_required
 @csrf.exempt
 def settings(subdomain=None):
+    new_feedback = list()
     if subdomain:
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
+        if d is not None and current_user.is_authenticated and current_user.domain == d.name and current_user.role == 'creator':
+            new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
-        return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain)
+        return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain, new_feedback=new_feedback)
     else:
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
-        return render_template('user/settings.html', current_user=current_user, domain=domain)
+        return render_template('user/settings.html', current_user=current_user, domain=domain, new_feedback=new_feedback)
 
 
 # Actions -------------------------------------------------------------------
