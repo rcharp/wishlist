@@ -131,7 +131,7 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <span id="success-message" class="text-green-400" style="display:none; font-size:14px;">Your feedback has been submitted!</span>
+                                      <span id="success-message" class="text-green-400" style="display:none; font-size:14px;">Your feedback has been submitted {% if domain.requires_approval %}for approval{% endif %}!</span>
                                       <div class="mt-5 mb-4 border-t border-gray-200 pt-3 pb-2">
                                         <div class="flex justify-end">
                                           <span class="ml-3 inline-flex rounded-md shadow-sm">
