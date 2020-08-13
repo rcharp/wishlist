@@ -401,7 +401,7 @@
                                             <div class="-ml-px w-0 flex-1 flex">
                                               <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
                                                 <span id="votes-{{ feedback.feedback_id }}" class="inline-flex items-center justify-center {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="margin-bottom:0;cursor:pointer;" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
-                                                  <i class="fa fa-thumbs-o-up fa-2x h-10 w-10 mr-3"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:20px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
+                                                  <i class="fa fa-thumbs-o-up fa-2x h-6 w-6 mr-3"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:16px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
                                                 </span>
                                               </div>
                                             </div>
@@ -504,12 +504,12 @@
                 var count = parseInt(votes);
 
                 if (document.getElementById('votes-' + feedback_id).classList.contains('text-indigo-600')){
-                    document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+                    document.getElementById(feedback_id + '-votes').innerText = (count + 1 === 1) ? String(count + 1) + 'vote' : String(count + 1) + 'votes';
                     document.getElementById('votes-' + feedback_id).classList.remove('text-indigo-600');
                     document.getElementById('votes-' + feedback_id).classList.add('text-green-400');
                 }
                 else{
-                    document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
+                    document.getElementById(feedback_id + '-votes').innerText = (count - 1 === 1) ? String(count - 1) + 'vote' : String(count - 1) + 'votes';
                     document.getElementById('votes-' + feedback_id).classList.remove('text-green-400');
                     document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
                 }
