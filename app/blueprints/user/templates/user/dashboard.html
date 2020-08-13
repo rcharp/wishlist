@@ -361,7 +361,7 @@
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3">
-                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer;">{{ feedback.title }}</h3></a>
+                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer; font-size:18px;">{{ feedback.title }}</h3></a>
                                             {% if feedback.status %}
                                                 <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
                                             {% endif %}
@@ -385,7 +385,7 @@
                                                     {% endif %}
                                                 </span>
                                             </p><br />
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 {#truncate#}">
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
                                                 {{ feedback.description }}
                                             </p>
                                           </div>
