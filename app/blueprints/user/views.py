@@ -361,6 +361,7 @@ def update_credentials(subdomain=None):
 @cross_origin()
 def dashboard(subdomain=None):
     demo = False
+    new_feedback = list()
 
     if subdomain:
         from app.blueprints.api.functions import site_exists
@@ -375,9 +376,11 @@ def dashboard(subdomain=None):
 
         if d is not None:
             feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
-            new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
 
             if current_user.is_authenticated:
+                if current_user.domain == d.name:
+                    new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
             else:
                 votes = None
@@ -657,6 +660,9 @@ def feedback_approval(subdomain=None):
     else:
         d = Domain.query.filter(Domain.name == subdomain).scalar()
 
+        if not (current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'):
+            return redirect(url_for('user.settings'))
+
         if d is not None:
             feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
 
@@ -681,7 +687,8 @@ def approve_feedback():
                 approve = True if request.form['approve'] == 'true' else False
 
                 f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
-                if approve:
+                d = Domain.query.filter(Domain.domain_id == f.domain_id).scalar
+                if approve and f is not None and d is not None and current_user.is_authenticated and current_user.domain == d.name and current_user.role == 'creator':
                     f.approved = True
                     f.save()
                 else:
