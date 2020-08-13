@@ -56,12 +56,9 @@
         <div id="user-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-100 rounded-md shadow-lg transform opacity-0 scale-95" style="display:none; z-index:999;width:300px;">
           <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                 <div class="px-4 py-3">
-                    <p class="text-sm leading-5">
-                      Signed in as
-                    </p>
                     <p class="text-sm leading-5 font-medium text-gray-900 truncate">
                         {% if current_user.is_authenticated and current_user.name %}
-                            {{ current_user.name|title }}{% if current_user.role == 'creator' and current_user.domain == subdomain %} (Admin){% endif %}<br />
+                            {{ current_user.name|title }}{% if current_user.role == 'creator' %} (Admin){% endif %}<br />
                         {% endif %}
                         {{ current_user.email }}
                     </p>
@@ -69,8 +66,7 @@
             <div class="border-t border-gray-100"></div>
             {% if current_user.role == 'creator' and current_user.domain %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
-                    <i class="si si-globe mr-2"></i>
-                    {{ current_user.domain }}.{{ 'site'|site_url_filter }}
+                    My dashboard: {{ current_user.domain }}.{{ 'site'|site_url_filter }}
                 </div>
                 <div class="border-t border-gray-100"></div>
 {#                <a href="{{ url_for('user.send_invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem" onclick="ShowInviteModal()"><i class="si si-share-alt mr-2"></i>Invite an admin</a>#}
