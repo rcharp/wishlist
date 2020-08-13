@@ -362,8 +362,9 @@
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3">
                                               <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer;">{{ feedback.title }}</h3></a>
+                                              {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
                                                 {% if feedback.status %}
-                                                    <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium {{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
+                                                    <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
                                                 {% endif %}
                                             </div>
                                             <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
@@ -396,7 +397,7 @@
                                             </div>
                                             <div class="-ml-px w-0 flex-1 flex">
                                               <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
-                                                <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
+                                                <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-20 {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
                                                   <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span>
                                                 </span>
                                                 <span class="ml-3">vote{% if feedback.votes != 1 %}s{% endif %}</span>
@@ -407,6 +408,16 @@
                                       </li>
                                     {% endfor %}
                                 </ul>
+                                {% else %}
+                                    <div class="py-4">
+                                      <div class="rounded-lg h-96 text-center" style="display:flex; align-items:center;">
+                                          <span class="inline-flex text-sm leading-5 font-medium text-gray-500" style="float:none;margin:0 auto;">
+                                              There is no feedback for {{ domain.company }} yet.<br /><br />
+
+                                              Be the first to leave feedback!
+                                          </span>
+                                      </div>
+                                    </div>
                                 {% endif %}
                             </li>
                         </ul>
