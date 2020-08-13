@@ -32,7 +32,7 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        {% include '/user/includes/mobile.html' ignore missing %}
+{#        {% include '/user/includes/mobile.html' ignore missing %}#}
             <div class="bg-gray-100" style="height:100vh;overflow-y:hidden;">
               {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
                 <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -315,53 +315,75 @@
                                       </li>
 
                                       <!-- status box -->
-                                      <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
-                                          </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
+{#                                      <li class="col-span-1 bg-white rounded-lg shadow">#}
+{#                                        <div class="w-full flex items-center justify-between p-6 space-x-6">#}
+{#                                          <div class="flex-1 truncate">#}
+{#                                            <div class="flex items-center space-x-3">#}
+{#                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>#}
+{#                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>#}
+{#                                            </div>#}
+{#                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>#}
+{#                                          </div>#}
+{#                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">#}
+{#                                        </div>#}
+{#                                        <div class="border-t border-gray-200">#}
+{#                                          <div class="-mt-px flex">#}
+{#                                            <div class="w-0 flex-1 flex border-r border-gray-200">#}
+{#                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
+{#                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">#}
+{#                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />#}
+{#                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />#}
+{#                                                </svg>#}
+{#                                                <span class="ml-3">Email</span>#}
+{#                                              </a>#}
+{#                                            </div>#}
+{#                                            <div class="-ml-px w-0 flex-1 flex">#}
+{#                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
+{#                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">#}
+{#                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />#}
+{#                                                </svg>#}
+{#                                                <span class="ml-3">Call</span>#}
+{#                                              </a>#}
+{#                                            </div>#}
+{#                                          </div>#}
+{#                                        </div>#}
+{#                                      </li>#}
                                 </ul>
                             </li>
 
                             <!-- feedbacks -->
                             <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3">
+
+                                {% if feedbacks|length > 0 %}
                                 <ul class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
-                                    <li class="col-span-1 bg-white rounded-lg shadow">
+                                    {% for feedback in feedbacks %}
+                                    <li class="col-span-1 bg-white rounded-lg shadow" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
+                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer;">{{ feedback.title }}</h3></a>
+                                                {% if feedback.status %}
+                                                    <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium {{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
+                                                {% endif %}
                                             </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
+                                              <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }} by
+                                            <span style="font-weight:900">
+                                                {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                                    You
+                                                {% elif feedback.username and use_username %}
+                                                    {{ feedback.username }}
+                                                {% elif feedback.fullname %}
+                                                    {{ feedback.fullname }}
+                                                {% else %}
+                                                    {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
+                                                        {{ feedback.email }}
+                                                    {% else %}
+                                                        An anonymous user
+                                                    {% endif %}
+                                                {% endif %}
+                                            </span>
+                                            </p>
                                           </div>
                                           <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
                                         </div>
@@ -369,160 +391,23 @@
                                           <div class="-mt-px flex">
                                             <div class="w-0 flex-1 flex border-r border-gray-200">
                                               <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
+                                                <i class="fa fa-comments"></i> {{ feedback.comments }} {% if feedback.comments != 1 %}comments{% else %}comment{% endif %}
                                               </a>
                                             </div>
                                             <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
+                                              <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150" style="cursor:pointer" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
+                                                <span id="votes-{{ feedback.feedback_id }}" class="h-10 w-10 {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="font-size:24px;margin-bottom:0;">
+                                                  <i class="fa fa-thumbs-o-up" style="margin-right:5px;"></i> <span id="{{ feedback.feedback_id }}-votes">{{ feedback.votes }}</span>
+                                                </span>
+                                                <span class="ml-3">vote{% if feedback.votes != 1 %}s{% endif %}</span>
                                               </a>
                                             </div>
                                           </div>
                                         </div>
                                       </li>
-                                      <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
-                                          </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                      <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
-                                          </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                      <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
-                                          </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
-
-                                      <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
-                                          </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </li>
+                                    {% endfor %}
                                 </ul>
+                                {% endif %}
                             </li>
                         </ul>
                         <!-- /End replace -->
