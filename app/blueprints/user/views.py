@@ -426,11 +426,11 @@ def dashboard(subdomain=None):
                                use_username=use_username)
 
 
-@user.route('/dashboard/<subdomain>', methods=['GET','POST'])
+@user.route('/dashboard/<domain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
-def dashboard_redirect(subdomain):
-    return redirect(url_for('user.dashboard', subdomain=subdomain))
+def dashboard_redirect(domain):
+    return redirect(url_for('user.dashboard', subdomain=domain))
 
 
 @user.route('/dashboard', methods=['GET','POST'])
