@@ -401,9 +401,10 @@ def dashboard(subdomain=None):
                                    use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
     else:
+        subdomain = 'demo'
         demo = True
 
-        d = Domain.query.filter(Domain.name == 'demo').scalar()
+        d = Domain.query.filter(Domain.name == subdomain).scalar()
         feedbacks = Feedback.query.all()
         statuses = Status.query.all()
 
@@ -416,7 +417,7 @@ def dashboard(subdomain=None):
                                feedbacks=feedbacks,
                                statuses=statuses,
                                domain=d,
-                               subdomain='demo',
+                               subdomain=subdomain,
                                demo=demo,
                                use_username=use_username)
 
