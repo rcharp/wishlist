@@ -633,7 +633,8 @@
                 input += e.value;
 
                 var existingItems = document.getElementsByClassName('feedback-item');
-                var newItemsList = document.getElementById('feedback-list').cloneNode(false);
+                var oldItemsList = document.getElementById('feedback-list');
+                var newItemsList = oldItemsList.cloneNode(false);
                 document.getElementById('search-term').innerText = input;
 
                 for (var i = 0; i < existingItems.length; i++) {
@@ -648,7 +649,10 @@
                 }
 
                 // Replace the old ul with the newly built one
-                document.getElementById('feedback-list').parentNode.replaceChild(document.getElementById('feedback-list'), newItemsList);
+                oldItemsList.innerHTML = '';
+                for (var i = 0; i < newItemsList.length; i++){
+                    oldItemsList.append(newItemsList[i]);
+                }
 
                 if (input){
                     document.getElementById('search-results').style.display = '';
