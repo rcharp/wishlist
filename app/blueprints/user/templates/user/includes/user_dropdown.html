@@ -66,7 +66,7 @@
             <div class="border-t border-gray-100"></div>
             {% if current_user.role == 'creator' and current_user.domain %}
                 <div class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem">
-                    My dashboard: {{ current_user.domain }}.{{ 'site'|site_url_filter }}
+                    My dashboard: <a href="{{ url_for('user.dashboard', subdomain=current_user.domain) }}" class="text-indigo-600 font-w500"><u>{{ current_user.domain }}.{{ 'site'|site_url_filter }}</u></a>
                 </div>
                 <div class="border-t border-gray-100"></div>
 {#                <a href="{{ url_for('user.send_invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem" onclick="ShowInviteModal()"><i class="si si-share-alt mr-2"></i>Invite an admin</a>#}
