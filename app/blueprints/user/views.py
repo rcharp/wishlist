@@ -377,8 +377,10 @@ def dashboard(subdomain=None):
             feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
 
             if current_user.is_authenticated:
-                if current_user.domain == d.name:
-                    new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+                if current_user.domain and current_user.role == 'creator':
+                    u = Domain.query.filter(Domain.name == current_user.domain).scalar()
+                    if u is not None:
+                        new_feedback = Feedback.query.filter(and_(Feedback.domain_id == u.domain_id, Feedback.approved.is_(False))).all()
 
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
             else:
@@ -863,9 +865,10 @@ def roadmap(subdomain=None):
 def settings(subdomain=None):
     new_feedback = list()
     if subdomain:
-        d = Domain.query.filter(Domain.name == subdomain).scalar()
-        if d is not None and current_user.is_authenticated and current_user.domain == d.name and current_user.role == 'creator':
-            new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+        if current_user.is_authenticated and current_user.domain and current_user.role == 'creator':
+            d = Domain.query.filter(Domain.name == current_user.domain).scalar()
+            if d is not None:
+                new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
 
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
         return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain, new_feedback=new_feedback)
