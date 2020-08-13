@@ -32,7 +32,7 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-{#        {% include '/user/includes/mobile.html' ignore missing %}#}
+        {#{% include '/user/includes/mobile.html' ignore missing %}#}
             <div class="bg-gray-100" style="height:100vh;overflow-y:hidden;">
               {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
                 <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
@@ -61,7 +61,7 @@
                   <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="max-height:100%;padding-bottom:0">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style="height:80vh;">
                         <!-- Replace with your content -->
-                        <div class="mt-1 mb-4 grid lg:grid-cols-4 gap-5 sm:grid-cols-2 text-right">
+                        <div class="mt-1 mb-4 grid lg:grid-cols-4 sm:gap-1 lg:gap-5 sm:grid-cols-2 text-right">
                             <div class="sm:col-span-2 lg:col-span-3 text-lg leading-5 font-medium">
                                 <div id="search-results" class="text-gray-500 text-left" style="display:none">Showing results for: '<span id="search-term" class="text-gray-700"></span>'</div>
                             </div>
