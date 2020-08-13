@@ -369,21 +369,24 @@
                                             </div>
                                             <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
                                               <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }} by
-                                            <span style="font-weight:900">
-                                                {% if current_user.is_authenticated and feedback.email == current_user.email %}
-                                                    You
-                                                {% elif feedback.username and use_username %}
-                                                    {{ feedback.username }}
-                                                {% elif feedback.fullname %}
-                                                    {{ feedback.fullname }}
-                                                {% else %}
-                                                    {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
-                                                        {{ feedback.email }}
+                                                <span style="font-weight:900">
+                                                    {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                                        You
+                                                    {% elif feedback.username and use_username %}
+                                                        {{ feedback.username }}
+                                                    {% elif feedback.fullname %}
+                                                        {{ feedback.fullname }}
                                                     {% else %}
-                                                        An anonymous user
+                                                        {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
+                                                            {{ feedback.email }}
+                                                        {% else %}
+                                                            An anonymous user
+                                                        {% endif %}
                                                     {% endif %}
-                                                {% endif %}
-                                            </span>
+                                                </span>
+                                            </p>
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
+                                                {{ feedback.description }}
                                             </p>
                                           </div>
                                           <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
