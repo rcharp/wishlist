@@ -289,19 +289,19 @@
                                                   </div>
 
                                               {% if not current_user.is_authenticated %}
-                                                  <div class="sm:col-span-6">
+                                                  <div class="col-span-6">
                                                       <div class="mt-1 mb-3 rounded-md shadow-sm">
                                                         <input id="email" name="email" autofocus="autofocus" placeholder="Your email" required type="email" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                                       </div>
                                                   </div>
                                               {% endif %}
-                                                <div class="sm:col-span-6">
+                                                <div class="col-span-6">
                                                   <div class="mt-1 mb-3 rounded-md shadow-sm">
                                                     <input id="title" name="title" autofocus="autofocus" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                                   </div>
                                                 </div>
 
-                                                <div class="sm:col-span-6">
+                                                <div class="col-span-6">
                                                   <div class="mt-1 rounded-md shadow-sm">
                                                     <textarea id="description" name="description" required placeholder="What would you like to share with {{ domain.company|title }}?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                                                   </div>
