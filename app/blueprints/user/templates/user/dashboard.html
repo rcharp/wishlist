@@ -376,7 +376,7 @@
                             <!-- Right grid -->
                             <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3 mb-5">
                                 {% if feedbacks|length > 0 %}
-                                <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
+                                <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1" style="max-height:202px;">
                                     {% for feedback in feedbacks %}
                                     <li class="col-span-1 bg-white rounded-lg shadow feedback-item" style="max-height:202px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
