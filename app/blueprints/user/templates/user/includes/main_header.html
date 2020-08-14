@@ -49,5 +49,19 @@
           </div>
         </div>
       </nav>
+
+        <script>
+            function OpenSidebar(){
+                var sidebar = document.getElementById('sidebar');
+
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                    sidebar.classList.add('block');
+                }else{
+                    sidebar.classList.remove('block');
+                    sidebar.classList.add('hidden');
+                }
+            }
+        </script>
 </body>
 </html>

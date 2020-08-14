@@ -475,18 +475,6 @@
                 }
             }
 
-            function OpenSidebar(){
-                var sidebar = document.getElementById('sidebar');
-
-                if (sidebar.classList.contains('hidden')) {
-                    sidebar.classList.remove('hidden');
-                    sidebar.classList.add('block');
-                }else{
-                    sidebar.classList.remove('block');
-                    sidebar.classList.add('hidden');
-                }
-            }
-
             function ShowSuccessMessage(){
                 document.getElementById('success-message').style.display = '';
                 setTimeout(function() {return true}, 4000);
