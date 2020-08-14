@@ -14,18 +14,20 @@
                     <span style="display:none;font-size:14px;">{{ 'site'|site_version_filter }}</span>
                   </div>
               </div>
-            <div class="{#hidden#} md:absolute md:flex text-right {#md:items-center md:justify-end#} md:inset-y-0 md:right-0">
-              <span class="inline-flex rounded-md shadow" {% if page=='login' %}style="display:none"{% endif %}>
-                <a href="{{ url_for('user.login') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
-                  Login
-                </a>
-              </span>
-              <span class="inline-flex rounded-md shadow ml-5" {% if page=='signup' %}style="display:none"{% endif %}>
-                <a href="{{ url_for('user.signup') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
-                  Sign up
-                </a>
-              </span>
-            </div>
+              {% if page=='index' %}
+                <div class="{#hidden#} md:absolute md:flex text-right {#md:items-center md:justify-end#} md:inset-y-0 md:right-0">
+                  <span class="inline-flex rounded-md shadow">
+                    <a href="{{ url_for('user.login') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-indigo-600 bg-white hover:text-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
+                      Login
+                    </a>
+                  </span>
+                  <span class="inline-flex rounded-md shadow ml-5">
+                    <a href="{{ url_for('user.signup') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-gray-50 active:text-indigo-700 transition duration-150 ease-in-out">
+                      Sign up
+                    </a>
+                  </span>
+                </div>
+              {% endif %}
           </nav>
         </div>
 
