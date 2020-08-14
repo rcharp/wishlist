@@ -42,6 +42,7 @@ from app.blueprints.base.models.feedback import Feedback
 from app.blueprints.base.models.status import Status
 from app.blueprints.base.models.vote import Vote
 from app.blueprints.base.models.comment import Comment
+from app.blueprints.base.functions import is_admin
 
 user = Blueprint('user', __name__, template_folder='templates')
 use_username = False
@@ -375,7 +376,10 @@ def dashboard(subdomain=None):
             d = Domain.query.filter(Domain.name == subdomain).scalar()
 
         if d is not None:
-            feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
+            if is_admin(current_user, d.name):
+                feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True), Feedback.status != 'General')).all()
+            else:
+                feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
 
             if current_user.is_authenticated:
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
@@ -459,7 +463,7 @@ def feedback(feedback_id, subdomain):
 
     # If the feedback isn't approved yet, only let creators view it
     if not f.approved:
-        if not (current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'):
+        if not is_admin(current_user, subdomain):
             return redirect(url_for('user.dashboard', subdomain=subdomain))
 
     # Redirect if feedback no longer exists
@@ -619,7 +623,10 @@ Sort the feedback by newest, oldest, or most votes
 @cross_origin()
 def sort_feedback(s, subdomain=None):
     if subdomain:
-        feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
+        if is_admin(current_user, subdomain):
+            feedbacks = Feedback.query.filter(and_(Feedback.domain == subdomain, Feedback.status != 'General')).all()
+        else:
+            feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
         d = Domain.query.filter(Domain.name == subdomain).scalar()
         statuses = Status.query.all()
 
@@ -664,7 +671,7 @@ def feedback_approval(subdomain=None):
     else:
         d = Domain.query.filter(Domain.name == subdomain).scalar()
 
-        if not (current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'):
+        if not is_admin(current_user, subdomain):
             return redirect(url_for('user.settings'))
 
         if d is not None:
@@ -693,7 +700,7 @@ def approve_feedback():
 
                 f = Feedback.query.filter(Feedback.feedback_id == feedback_id).scalar()
                 d = Domain.query.filter(Domain.domain_id == f.domain_id).scalar
-                if approve and f is not None and d is not None and current_user.is_authenticated and current_user.domain == d.name and current_user.role == 'creator':
+                if approve and f is not None and d is not None and is_admin(current_user, d.name):
                     f.approved = True
                     f.save()
                 else:

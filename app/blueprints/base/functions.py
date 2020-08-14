@@ -84,7 +84,7 @@ def create_domain(user, domain, company):
 def create_feedback(user, domain, email, title, description):
     try:
         d = Domain.query.filter(Domain.name == domain).scalar()
-        s = Status.query.filter(Status.name == 'General Feedback').scalar()
+        s = Status.query.filter(Status.name == 'In Backlog').scalar()
 
         feedback_id = generate_id(Feedback, size=8)
 
@@ -264,6 +264,11 @@ def remove_vote(f, vote):
     except Exception as e:
         print_traceback(e)
         return None
+
+
+# Admin ###################################################
+def is_admin(current_user, subdomain):
+    return current_user.is_authenticated and current_user.domain == subdomain and current_user.role == 'creator'
 
 
 # Users ###################################################
