@@ -62,7 +62,7 @@
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style="height:80vh;">
                         <!-- Replace with your content -->
                         <div class="mt-1 mb-4 grid lg:grid-cols-4 sm:gap-1 lg:gap-5 sm:grid-cols-2 text-right">
-                            <div class="sm:col-span-2 lg:col-span-3 text-lg leading-5 font-medium">
+                            <div class="sm:col-span-2 lg:col-span-3 text-lg leading-5 font-medium py-3">
                                 <div id="search-results" class="text-gray-500 text-left" style="display:none">Showing results for: '<span id="search-term" class="text-gray-700"></span>'</div>
                             </div>
                             <div class="pull-right sm:col-span-2 lg:col-span-1">
@@ -375,8 +375,7 @@
                             </li>
 
                             <!-- Right grid -->
-                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3">
-
+                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3 mb-5">
                                 {% if feedbacks|length > 0 %}
                                 <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
                                     {% for feedback in feedbacks %}
