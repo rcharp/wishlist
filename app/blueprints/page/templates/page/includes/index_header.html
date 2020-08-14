@@ -10,9 +10,9 @@
           <nav class="relative flex justify-between sm:h-10">
               <div class="w-1/3" style="font-family:'Baloo Bhaina 2', sans-serif !important; font-weight:200;font-size:38px;vertical-align:bottom;">
                   <img src="{{ url_for('static', filename='logo/logo.png') }}" style="height:60px;display:none;margin-right:5px;" />
-                  <div class="text-indigo-600" style="display:inline-block;">{{ 'site'|site_name_filter }}
+                  <a href="{{ url_for('page.home') }}" class="text-indigo-600" style="display:inline-block;">{{ 'site'|site_name_filter }}
                     <span style="display:none;font-size:14px;">{{ 'site'|site_version_filter }}</span>
-                  </div>
+                  </a>
               </div>
               {% if page=='index' %}
                 <div class="{#hidden#} md:absolute md:flex text-right {#md:items-center md:justify-end#} md:inset-y-0 md:right-0">
