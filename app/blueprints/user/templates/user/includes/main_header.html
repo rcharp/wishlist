@@ -47,22 +47,6 @@
             <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="px-3 py-2 rounded-md text-sm font-medium {% if page == 'dashboard' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Dashboard</a>
             <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {% if page == 'settings' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
           </div>
-          <div class="pt-4 pb-3 border-t border-indigo-800">
-            <div class="flex items-center px-5">
-              <div class="flex-shrink-0">
-                <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-              </div>
-              <div class="ml-3">
-                <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-                <div class="mt-1 text-sm font-medium leading-none text-indigo-300">tom@example.com</div>
-              </div>
-            </div>
-            <div class="mt-3 px-2">
-              <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Your Profile</a>
-              <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
-              <a href="#" class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-indigo-300 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Sign out</a>
-            </div>
-          </div>
         </div>
       </nav>
 </body>
