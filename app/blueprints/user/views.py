@@ -377,7 +377,7 @@ def dashboard(subdomain=None):
 
         if d is not None:
             if is_admin(current_user, d.name):
-                feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True), Feedback.status != 'General')).all()
+                feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True), Feedback.status_id != 5964768)).all()
             else:
                 feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
 
@@ -624,7 +624,7 @@ Sort the feedback by newest, oldest, or most votes
 def sort_feedback(s, subdomain=None):
     if subdomain:
         if is_admin(current_user, subdomain):
-            feedbacks = Feedback.query.filter(and_(Feedback.domain == subdomain, Feedback.status != 'General')).all()
+            feedbacks = Feedback.query.filter(and_(Feedback.domain == subdomain, Feedback.status_id != 5964768)).all()
         else:
             feedbacks = Feedback.query.filter(Feedback.domain == subdomain).all()
         d = Domain.query.filter(Domain.name == subdomain).scalar()
