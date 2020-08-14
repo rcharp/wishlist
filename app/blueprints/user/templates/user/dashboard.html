@@ -32,11 +32,11 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-{#        {% include '/user/includes/mobile.html' ignore missing %}#}
+        {#{% include '/user/includes/mobile.html' ignore missing %}#}
             <div class="bg-gray-100" style="height:100vh;overflow-y:hidden;">
               {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
                 <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-                  <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
+                  <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar" onclick="OpenSidebar()">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
@@ -55,22 +55,21 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
-                  <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="max-height:100%;padding-bottom:0">
+                  <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="max-height:100%;">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style="height:80vh;">
                         <!-- Replace with your content -->
-                        <div class="mt-1 mb-4 grid grid-cols-4 gap-5 sm:grid-cols-4 text-right">
-                            <div class="sm:col-span-3 text-lg leading-5 font-medium">
+                        <div class="mt-1 mb-4 grid lg:grid-cols-4 sm:gap-1 lg:gap-5 sm:grid-cols-2 text-right">
+                            <div class="sm:col-span-2 lg:col-span-3 text-lg leading-5 font-medium py-3">
                                 <div id="search-results" class="text-gray-500 text-left" style="display:none">Showing results for: '<span id="search-term" class="text-gray-700"></span>'</div>
                             </div>
-                            <div class="pull-right sm:col-span-1">
+                            <div class="pull-right sm:col-span-2 lg:col-span-1">
                                 <div class="relative inline-block text-left">
                                   <div>
                                     <span class="rounded-md shadow-sm">
                                       <button id="sort-dropdown-button" type="button" onclick="ShowDropdown('sort-dropdown-menu');" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150">
-                                        {% if sort == 'votes' %}Sorted by: Most votes{% elif sort == 'oldest' %}Sorted by: Oldest{% else %}Sorted by: Most recent{% endif %}
+                                        {% if s == 'votes' %}Sorted by: Most votes{% elif s == 'oldest' %}Sorted by: Oldest{% else %}Sorted by: Most recent{% endif %}
                                         <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                           <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                         </svg>
@@ -275,95 +274,117 @@
 
 
 
-                        <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                            <!-- submit boxes -->
-                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
-                                <ul class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
+                        <ul class="grid grid-cols-1 sm:gap-1 lg:gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-5">
+                            <!-- Left grid -->
+                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1 mb-10">
+                                <ul class="grid grid-cols-1 sm:gap-1 lg:gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1" style="min-height:400px; max-height:1000px;">
                                     <!-- submit box -->
-                                    <li class="col-span-1 bg-white rounded-lg shadow">
-                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                                          <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>
-                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>
-                                            </div>
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>
+                                    <li class="col-span-1 bg-white rounded-lg shadow mb-2" style="min-height:333px; max-height:350px;">
+                                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                            <form action="{{ url_for('user.add_feedback', subdomain=subdomain) }}" method="post" onsubmit="ShowSuccessMessage()">
+                                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                                      Submit feedback
+                                                  </div>
+
+                                              {% if not current_user.is_authenticated %}
+                                                  <div class="col-span-6">
+                                                      <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                                        <input id="email" name="email" autofocus="autofocus" placeholder="Your email" required type="email" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                                      </div>
+                                                  </div>
+                                              {% endif %}
+                                                <div class="col-span-6">
+                                                  <div class="mt-1 mb-3 rounded-md shadow-sm">
+                                                    <input id="title" name="title" autofocus="autofocus" placeholder="Title" required type="text" class="form-input w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                                  </div>
+                                                </div>
+
+                                                <div class="col-span-6">
+                                                  <div class="mt-1 rounded-md shadow-sm">
+                                                    <textarea id="description" name="description" required placeholder="What would you like to share with {{ domain.company|title }}?" rows="5" class="form-textarea w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <span id="success-message" class="text-green-400" style="display:none; font-size:14px;">Your feedback has been submitted {% if domain.requires_approval %}for approval{% endif %}!</span>
+                                              <div class="mt-5 mb-4 border-t border-gray-200 pt-3 pb-2">
+                                                <div class="flex justify-end">
+                                                  <span class="ml-3 inline-flex rounded-md shadow-sm">
+                                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                                      Submit
+                                                    </button>
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </form>
                                           </div>
-                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">
-                                        </div>
-                                        <div class="border-t border-gray-200">
-                                          <div class="-mt-px flex">
-                                            <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                                </svg>
-                                                <span class="ml-3">Email</span>
-                                              </a>
-                                            </div>
-                                            <div class="-ml-px w-0 flex-1 flex">
-                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                                                </svg>
-                                                <span class="ml-3">Call</span>
-                                              </a>
-                                            </div>
-                                          </div>
-                                        </div>
                                       </li>
 
-                                      <!-- status box -->
-{#                                      <li class="col-span-1 bg-white rounded-lg shadow">#}
-{#                                        <div class="w-full flex items-center justify-between p-6 space-x-6">#}
-{#                                          <div class="flex-1 truncate">#}
-{#                                            <div class="flex items-center space-x-3">#}
-{#                                              <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Jane Cooper</h3>#}
-{#                                              <span class="flex-shrink-0 inline-block px-2 py-0.5 text-teal-800 text-xs leading-4 font-medium bg-teal-100 rounded-full">Admin</span>#}
-{#                                            </div>#}
-{#                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Regional Paradigm Technician</p>#}
-{#                                          </div>#}
-{#                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">#}
-{#                                        </div>#}
-{#                                        <div class="border-t border-gray-200">#}
-{#                                          <div class="-mt-px flex">#}
-{#                                            <div class="w-0 flex-1 flex border-r border-gray-200">#}
-{#                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
-{#                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">#}
-{#                                                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />#}
-{#                                                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />#}
-{#                                                </svg>#}
-{#                                                <span class="ml-3">Email</span>#}
-{#                                              </a>#}
-{#                                            </div>#}
-{#                                            <div class="-ml-px w-0 flex-1 flex">#}
-{#                                              <a href="#" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
-{#                                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">#}
-{#                                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />#}
-{#                                                </svg>#}
-{#                                                <span class="ml-3">Call</span>#}
-{#                                              </a>#}
-{#                                            </div>#}
-{#                                          </div>#}
-{#                                        </div>#}
-{#                                      </li>#}
+                                      <li class="text-center mb-2">
+                                        <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="text-sm leading-5 font-medium text-gray-500">
+                                            Powered by <span class="font-medium text-indigo-600"><u>Wishlist</u></span>
+                                        </a>
+                                      </li>
+
+                                      <!-- status filters -->
+                                      <li class="col-span-1 bg-white rounded-lg shadow" style="height:430px;">
+                                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                                              <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
+                                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                                      Filter by Status
+                                                  </div>
+                                                  {% for status in statuses %}
+                                                      <div class="col-span-6 {% if loop.last %}mb-6{% else %}mb-3{% endif %} ml-1">
+                                                          <div class="flex items-center">
+                                                            <input id="status-{{ status.status_id }}" name="{{ status.name }}" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out status-checkbox" onchange="FilterByStatus()" />
+                                                            <label for="status-{{ status.status_id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                              {{ status.name }}
+                                                            </label>
+                                                          </div>
+                                                      </div>
+                                                  {% endfor %}
+
+                                                  {% if current_user.is_authenticated %}
+                                                      <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                                          Other
+                                                      </div>
+
+                                                      <div class="col-span-6 mb-3 ml-1">
+                                                          <div class="flex items-center">
+                                                            <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                                            <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                              My feedback
+                                                            </label>
+                                                          </div>
+                                                      </div>
+
+                                                      <div class="col-span-6 mb-6 ml-1">
+                                                          <div class="flex items-center">
+                                                            <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
+                                                            <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                              Feedback I've voted on
+                                                            </label>
+                                                          </div>
+                                                      </div>
+                                                  {% endif %}
+                                              </div>
+                                          </div>
+                                      </li>
                                 </ul>
                             </li>
 
-                            <!-- feedbacks -->
-                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3">
-
+                            <!-- Right grid -->
+                            <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3 mb-5">
                                 {% if feedbacks|length > 0 %}
-                                <ul class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
+                                <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1">
                                     {% for feedback in feedbacks %}
-                                    <li class="col-span-1 bg-white rounded-lg shadow" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
+                                    <li class="col-span-1 bg-white rounded-lg shadow feedback-item" style="max-height:202px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
                                         <div class="w-full flex items-center justify-between p-6 space-x-6">
                                           <div class="flex-1 truncate">
-                                            <div class="flex items-center space-x-3">
-                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><h3 class="text-indigo-900 text-sm leading-5 font-medium truncate" style="cursor:pointer;">{{ feedback.title }}</h3></a>
+                                            <div class="flex items-center space-x-3 truncate">
+                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" class="truncate w-4/5 mr-5"><h3 class="text-indigo-600 text-sm leading-5 font-medium truncate" style="cursor:pointer; font-size:18px;">{{ feedback.title }}</h3></a>
                                             {% if feedback.status %}
-                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }} rounded-full">{{ feedback.status }}</span>
+                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs mr-3 leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800 rounded-full">{{ feedback.status }}</span>
                                             {% endif %}
                                             {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
                                             </div>
@@ -385,7 +406,7 @@
                                                     {% endif %}
                                                 </span>
                                             </p><br />
-                                            <p class="mt-1 text-gray-500 text-sm leading-5 {#truncate#}">
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
                                                 {{ feedback.description }}
                                             </p>
                                           </div>
@@ -394,14 +415,14 @@
                                         <div class="border-t border-gray-200">
                                           <div class="-mt-px flex">
                                             <div class="w-0 flex-1 flex border-r border-gray-200">
-                                              <a href="#" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                  <i class="fa fa-comments fa-3x h-10 w-10 mr-5"></i> <span style="font-size:20px;">{{ feedback.comments }} comment{% if feedback.comments != 1 %}s{% endif %}</span>
+                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
+                                                  <i class="fa fa-comments fa-2x h-6 w-6 mr-5"></i> <span style="font-size:16px;">{{ feedback.comments }} comment{% if feedback.comments != 1 %}s{% endif %}</span>
                                               </a>
                                             </div>
                                             <div class="-ml-px w-0 flex-1 flex">
                                               <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                                <span id="votes-{{ feedback.feedback_id }}" class=" {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="margin-bottom:0;cursor:pointer;" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
-                                                  <i class="fa fa-thumbs-o-up fa-3x h-10 w-10 mr-5"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:20px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
+                                                <span id="votes-{{ feedback.feedback_id }}" class="inline-flex items-center justify-center {% if not votes|any_votes_filter(feedback.feedback_id) %}text-indigo-600{% else %}text-green-400{% endif %}" style="margin-bottom:0;cursor:pointer;" {% if current_user.is_authenticated %}onclick="Vote('{{ feedback.feedback_id }}', true)" {% else %}onclick="Vote('{{ feedback.feedback_id }}', false)" {% endif %}>
+                                                  <i class="fa fa-thumbs-o-up fa-2x h-6 w-6 mr-3"></i> <span id="{{ feedback.feedback_id }}-votes" style="font-size:16px;">{{ feedback.votes }} vote{% if feedback.votes != 1 %}s{% endif %}</span>
                                                 </span>
                                               </div>
                                             </div>
@@ -504,12 +525,12 @@
                 var count = parseInt(votes);
 
                 if (document.getElementById('votes-' + feedback_id).classList.contains('text-indigo-600')){
-                    document.getElementById(feedback_id + '-votes').innerText = String(count + 1);
+                    document.getElementById(feedback_id + '-votes').innerText = (count + 1 === 1) ? String(count + 1) + ' vote' : String(count + 1) + ' votes';
                     document.getElementById('votes-' + feedback_id).classList.remove('text-indigo-600');
                     document.getElementById('votes-' + feedback_id).classList.add('text-green-400');
                 }
                 else{
-                    document.getElementById(feedback_id + '-votes').innerText = String(count - 1);
+                    document.getElementById(feedback_id + '-votes').innerText = (count - 1 === 1) ? String(count - 1) + ' vote' : String(count - 1) + ' votes';
                     document.getElementById('votes-' + feedback_id).classList.remove('text-green-400');
                     document.getElementById('votes-' + feedback_id).classList.add('text-indigo-600');
                 }
@@ -609,18 +630,27 @@
 
                 input += e.value;
 
-                var items = document.getElementsByClassName('feedback-item');
+                var existingItems = document.getElementsByClassName('feedback-item');
+                //var oldItemsList = document.getElementById('feedback-list');
+                //var newItemsList = oldItemsList.cloneNode(false);
                 document.getElementById('search-term').innerText = input;
 
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
+                for (var i = 0; i < existingItems.length; i++) {
+                    var item = existingItems[i];
                     if(item.textContent.toLowerCase().includes(input.toLowerCase()) === false){
                         item.style.display = 'none';
+                        //newItemsList.appendChild(item);
                     }
                     else {
                         item.style.display = '';
                     }
                 }
+
+                {#// Replace the old ul with the newly built one
+                oldItemsList.innerHTML = '';
+                for (var i = 0; i < newItemsList.length; i++){
+                    oldItemsList.appendChild(newItemsList[i]);
+                }#}
 
                 if (input){
                     document.getElementById('search-results').style.display = '';
@@ -679,6 +709,7 @@
             var user_dropdown = document.getElementById('user-dropdown-menu');
             var sort_dropdown = document.getElementById('sort-dropdown-menu');
             var notification_dropdown = document.getElementById('notification-dropdown-menu');
+            var search_field = document.getElementById('search_field');
 
             if (user_dropdown !== null){
                 body.addEventListener("click", function () {
@@ -721,6 +752,12 @@
                     ev.stopPropagation(); //this is important! If removed, you'll get both alerts
                 }, false);
             }
+
+            {#if (search_field !== null){
+                search_field.addEventListener("change", function (e) {
+                    SearchFeedback(e);
+                })
+            }#}
         </script>
     </body>
 </html>

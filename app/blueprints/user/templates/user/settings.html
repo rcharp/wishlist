@@ -33,13 +33,13 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        <div>
-            {% include '/user/includes/mobile.html' ignore missing %}
+        <div style="height:100vh; overflow-y:hidden;">
+            {#{% include '/user/includes/mobile.html' ignore missing %}#}
             {% with page='settings' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
-            <div class="h-screen flex overflow-hidden bg-gray-100">
+            <div class="h-screen flex overflow-hidden bg-gray-100" style="height:93vh;">
               <div class="flex flex-col w-0 flex-1 overflow-hidden">
                 <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-                  <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
+                  <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar" onclick="OpenSidebar()">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
@@ -94,7 +94,7 @@
                                   </span>
                               </dd>
                               <dd class="sm:col-span-6"></dd>
-                              <dd class="sm:col-span-3 text-right">
+                              <dd class="sm:col-span-3 sm:text-left lg:text-right mt-5">
                                   {% if domain %}
                                     <span class="inline-flex rounded-md mr-4 shadow-sm">
                                       <a href="{{ url_for('user.dashboard', subdomain=domain.name) }}" class="inline-flex items-center text-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">

@@ -14,7 +14,7 @@
   <div class="row" style="margin-top:50px;">
     <div class="block-content" style="width:50%;min-width:300px;max-width:350px;margin:0 auto;
     border:1px solid #c5c5c5;border-radius:4px; padding:20px;float:none;margin-top:50px; background-color:#fff;">
-    {% include '/user/includes/mobile.html' ignore missing %}
+    {#{% include '/user/includes/mobile.html' ignore missing %}#}
     {% if subdomain %}
       {% call f.form_tag('user.signup', subdomain=subdomain) %}
           <legend class="text-center" style="padding-bottom:15px;">Sign up to leave feedback for <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}"><span class="text-indigo-800"><u>{{ subdomain }}.{{ 'site'|site_url_filter }}</u></span></a></legend>

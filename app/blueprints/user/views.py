@@ -360,7 +360,8 @@ def update_credentials(subdomain=None):
 @cross_origin()
 def dashboard(subdomain=None):
     demo = False
-    new_feedback = list()
+    from app.blueprints.base.functions import get_new_feedback
+    new_feedback = get_new_feedback(current_user)
 
     if subdomain:
         from app.blueprints.api.functions import site_exists
@@ -377,11 +378,6 @@ def dashboard(subdomain=None):
             feedbacks = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(True))).all()
 
             if current_user.is_authenticated:
-                if current_user.domain and current_user.role == 'creator':
-                    u = Domain.query.filter(Domain.name == current_user.domain).scalar()
-                    if u is not None:
-                        new_feedback = Feedback.query.filter(and_(Feedback.domain_id == u.domain_id, Feedback.approved.is_(False))).all()
-
                 votes = Vote.query.filter(and_(Vote.user_id == current_user.id, Vote.domain_id == d.domain_id)).all()
             else:
                 votes = None
@@ -426,11 +422,11 @@ def dashboard(subdomain=None):
                                use_username=use_username)
 
 
-@user.route('/dashboard/<subdomain>', methods=['GET','POST'])
+@user.route('/dashboard/<domain>', methods=['GET','POST'])
 @csrf.exempt
 @cross_origin()
-def dashboard_redirect(subdomain):
-    return redirect(url_for('user.dashboard', subdomain=subdomain))
+def dashboard_redirect(domain):
+    return redirect(url_for('user.dashboard', subdomain=domain))
 
 
 @user.route('/dashboard', methods=['GET','POST'])
@@ -451,6 +447,9 @@ View feedback details
 @csrf.exempt
 @cross_origin()
 def feedback(feedback_id, subdomain):
+    from app.blueprints.base.functions import get_new_feedback
+    new_feedback = get_new_feedback(current_user)
+
     demo = False
     if subdomain == 'demo':
         demo = True
@@ -488,6 +487,7 @@ def feedback(feedback_id, subdomain):
                            subdomain=subdomain,
                            voted=voted,
                            demo=demo,
+                           new_feedback=new_feedback,
                            use_username=use_username)
 
 
@@ -656,6 +656,9 @@ def sort_feedback(s, subdomain=None):
 @csrf.exempt
 @cross_origin()
 def feedback_approval(subdomain=None):
+    from app.blueprints.base.functions import get_new_feedback
+    new_feedback = get_new_feedback(current_user)
+
     if not subdomain:
         return redirect(url_for('user.settings'))
     else:
@@ -673,6 +676,7 @@ def feedback_approval(subdomain=None):
                                    feedbacks=feedbacks,
                                    domain=d,
                                    subdomain=subdomain,
+                                   new_feedback=new_feedback,
                                    use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
 
@@ -863,13 +867,10 @@ def roadmap(subdomain=None):
 @login_required
 @csrf.exempt
 def settings(subdomain=None):
-    new_feedback = list()
-    if subdomain:
-        if current_user.is_authenticated and current_user.domain and current_user.role == 'creator':
-            d = Domain.query.filter(Domain.name == current_user.domain).scalar()
-            if d is not None:
-                new_feedback = Feedback.query.filter(and_(Feedback.domain_id == d.domain_id, Feedback.approved.is_(False))).all()
+    from app.blueprints.base.functions import get_new_feedback
+    new_feedback = get_new_feedback(current_user)
 
+    if subdomain:
         domain = Domain.query.filter(Domain.user_id == current_user.id).scalar()
         return render_template('user/settings.html', current_user=current_user, domain=domain, subdomain=subdomain, new_feedback=new_feedback)
     else:

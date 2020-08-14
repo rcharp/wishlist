@@ -40,13 +40,10 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-        <div class="h-screen flex overflow-hidden bg-gray-100">
-          {% include '/user/includes/mobile.html' ignore missing %}
-
-          {% with page='feedback' %}{% include '/user/includes/sidebar.html' ignore missing %}{% endwith %}
-          <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <div style="height:100vh;">
+        {% with page='view' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-              <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
+              <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar" onclick="OpenSidebar()">
                 <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                 </svg>
@@ -65,20 +62,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="ml-4 flex items-center md:ml-6">
-                  {% if current_user.is_authenticated %}
-                        {% include '/user/includes/user_dropdown.html' ignore missing %}
-                  {% else %}
-                    {% include '/user/includes/header_buttons.html' ignore missing %}
-                  {% endif %}
-                </div>
               </div>
             </div>
-
-            <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none" tabindex="0">
-              <br /><br />
-              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-
+            <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none bg-gray-100" tabindex="0">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
                 {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
                 <span class="text-gray-900">
                     <div class="pull-right">
@@ -176,7 +163,7 @@
                                 {% endif %}
                             </dd>
                           </div>
-                          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5">
+                          <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:border-t sm:border-gray-200 sm:px-6 sm:py-5 mt-2">
                             <dt class="text-sm leading-5 font-medium text-gray-500">
                               Status
                             </dt>
@@ -261,21 +248,20 @@
                 <!-- /End replace -->
               </div>
             </main>
-          </div>
-        </div>
-        <!-- END Page Container -->
+            <!-- END Page Container -->
 
-        {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
-            <div id="private-overlay">
-                {% include '/user/includes/private_overlay.html' ignore missing %}
-                <script>
-                    document.getElementById('search_field').readOnly = true;
-                </script>
+            {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
+                <div id="private-overlay">
+                    {% include '/user/includes/private_overlay.html' ignore missing %}
+                    <script>
+                        document.getElementById('search_field').readOnly = true;
+                    </script>
+                </div>
+            {% endif %}
+
+            <div id="login-overlay" style="display:none">
+                {% include '/user/includes/login_overlay.html' ignore missing %}
             </div>
-        {% endif %}
-
-        <div id="login-overlay" style="display:none">
-            {% include '/user/includes/login_overlay.html' ignore missing %}
         </div>
 
 

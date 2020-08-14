@@ -25,7 +25,7 @@
             {% if page == 'dashboard' and current_user.authenticated and current_user.domain == subdomain and current_user.role == 'creator' %}
                 {% include '/user/includes/privacy_switch.html' ignore missing %}
             {% endif %}
-            <div class="hidden md:block">
+            <div class="md:block">
                 <div class="ml-4 flex items-center md:ml-6">
                     {% if current_user.is_authenticated %}
                         {% include '/user/includes/user_dropdown.html' ignore missing %}
@@ -36,6 +36,32 @@
             </div>
           </div>
         </div>
+
+        <!--
+          Mobile menu, toggle classes based on menu state.
+
+          Open: "block", closed: "hidden"
+        -->
+        <div id="sidebar" class="hidden md:hidden">
+          <div class="px-2 pt-2 pb-3 sm:px-3">
+            <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="px-3 py-2 rounded-md text-sm font-medium {% if page == 'dashboard' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Dashboard</a>
+            <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {% if page == 'settings' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
+          </div>
+        </div>
       </nav>
+
+        <script>
+            function OpenSidebar(){
+                var sidebar = document.getElementById('sidebar');
+
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                    sidebar.classList.add('block');
+                }else{
+                    sidebar.classList.remove('block');
+                    sidebar.classList.add('hidden');
+                }
+            }
+        </script>
 </body>
 </html>

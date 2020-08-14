@@ -140,6 +140,15 @@ def update_feedback(feedback_id, domain, title, description, status_id):
         return None
 
 
+def get_new_feedback(current_user):
+    if current_user.is_authenticated:
+        if current_user.domain and current_user.role == 'creator':
+            u = Domain.query.filter(Domain.name == current_user.domain).scalar()
+            if u is not None:
+                return Feedback.query.filter(and_(Feedback.domain_id == u.domain_id, Feedback.approved.is_(False))).all()
+
+    return list()
+
 # Comments ################################################
 def add_comment(feedback_id, content, domain_id, user_id, email, parent_id, created_by_user):
     try:
