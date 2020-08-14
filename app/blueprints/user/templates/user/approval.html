@@ -40,9 +40,71 @@
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style="height:80vh;">
                         <!-- Replace with your content -->
                         <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">
-
                             <div class="sm:col-span-4">
-                            {% if feedbacks|length > 0 %}
+                                <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-3 mb-5">
+                                {% if feedbacks|length > 0 %}
+                                <ul id="feedback-list" class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1" style="max-height:202px;">
+                                    {% for feedback in feedbacks %}
+                                    <li class="col-span-1 bg-white rounded-lg shadow feedback-item" style="max-height:202px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}" data-voted="{% if not votes|any_votes_filter(feedback.feedback_id) %}false{% else %}true{% endif %}">
+                                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                                          <div class="flex-1 truncate">
+                                            <div class="flex items-center space-x-3 truncate">
+                                              <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" class="truncate w-4/5 mr-5"><h3 class="text-indigo-600 text-sm leading-5 font-medium truncate" style="cursor:pointer; font-size:18px;">{{ feedback.title }}</h3></a>
+                                            {% if feedback.status %}
+                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs mr-3 leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800 rounded-full">{{ feedback.status }}</span>
+                                            {% endif %}
+                                            {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
+                                            </div>
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
+                                              <i class="si si-clock mr-2"></i>Posted {{ feedback.created_on|datetime_filter }} by
+                                                <span style="font-weight:900">
+                                                    {% if current_user.is_authenticated and feedback.email == current_user.email %}
+                                                        You
+                                                    {% elif feedback.username and use_username %}
+                                                        {{ feedback.username }}
+                                                    {% elif feedback.fullname %}
+                                                        {{ feedback.fullname }}
+                                                    {% else %}
+                                                        {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
+                                                            {{ feedback.email }}
+                                                        {% else %}
+                                                            An anonymous user
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </span>
+                                            </p><br />
+                                            <p class="mt-1 text-gray-500 text-sm leading-5 truncate">
+                                                {{ feedback.description }}
+                                            </p>
+                                          </div>
+{#                                          <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=60" alt="">#}
+                                        </div>
+                                        <div class="border-t border-gray-200">
+                                          <div class="-mt-px flex">
+                                            <div class="w-0 flex-1 flex border-r border-gray-200">
+                                              <span class="mr-5" style="cursor:pointer" onclick="ApproveFeedback({{ feedback.feedback_id }}, false)"><i class="fa fa-trash-o text-red-400"></i> Deny</span>
+                                            </div>
+                                            <div class="-ml-px w-0 flex-1 flex">
+                                              <div class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
+                                                <span style="cursor:pointer" onclick="ApproveFeedback({{ feedback.feedback_id }}, true)"><i class="fa fa-check text-green-400"></i> Approve</span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                    <div class="py-4">
+                                      <div class="rounded-lg h-96 text-center" style="display:flex; align-items:center;">
+                                          <span class="inline-flex text-sm leading-5 font-medium text-gray-500" style="float:none;margin:0 auto;">
+                                              There is no unapproved feedback for {{ domain.company }}.<br /><br />
+                                          </span>
+                                      </div>
+                                    </div>
+                                {% endif %}
+                            </li>
+                            {#{% if feedbacks|length > 0 %}
                                 {% for feedback in feedbacks %}
                                     <div class="bg-white overflow-hidden shadow rounded-lg feedback-item" style="margin-bottom:20px;" data-status="{{ feedback.status }}" data-submitted="{% if feedback.user_id != current_user.id %}false{% else %}true{% endif %}">
                                       <div class="border-b border-gray-200 px-4 py-5 sm:px-6">
@@ -101,10 +163,11 @@
                                   </div>
                                 </div>
                             {% endif %}
-                            </div>
+                            </div>#}
                         </div>
                         <!-- /End replace -->
                       </div>
+                    </div>
                   </main>
             </div>
 
