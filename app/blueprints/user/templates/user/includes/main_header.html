@@ -15,10 +15,7 @@
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline">
                   <a href="{{ url_for('user.dashboard', subdomain=subdomain) }}" class="px-3 py-2 rounded-md text-sm font-medium {% if page == 'dashboard' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Dashboard</a>
-                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="ml-4 px-3 py-2 rounded-md text-sm font-medium {% if page == 'settings' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
-                  {#<a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Projects</a>
-                  <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Calendar</a>
-                  <a href="#" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none focus:text-white focus:bg-indigo-600">Reports</a>#}
+                  <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="ml-2 px-3 py-2 rounded-md text-sm font-medium {% if page == 'settings' %}text-white bg-indigo-800{% else %}text-indigo-200 hover:text-white hover:bg-indigo-600{% endif %} focus:outline-none focus:text-white focus:bg-indigo-600">Settings</a>
                 </div>
               </div>
             </div>
