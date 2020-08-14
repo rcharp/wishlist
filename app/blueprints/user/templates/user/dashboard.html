@@ -478,8 +478,14 @@
 
             function OpenSidebar(){
                 var sidebar = document.getElementById('sidebar');
-                sidebar.classList.remove('hidden');
-                sidebar.classList.add('block');
+
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                    sidebar.classList.add('block');
+                }else{
+                    sidebar.classList.remove('block');
+                    sidebar.classList.add('hidden');
+                }
             }
 
             function ShowSuccessMessage(){
