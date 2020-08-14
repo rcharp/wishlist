@@ -68,10 +68,10 @@ class TestServerHandler(BaseHTTPRequestHandler):
 if __name__ == '__main__':
     server_class = HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), TestServerHandler)
-    print(time.asctime(), f"Server Starts - {HOST_NAME}:{PORT_NUMBER}")
+    print(time.asctime(), "Server Starts - {HOST_NAME}:{PORT_NUMBER}")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    print(time.asctime(), f"Server Stops - {HOST_NAME}:{PORT_NUMBER}")
+    print(time.asctime(), "Server Stops - {HOST_NAME}:{PORT_NUMBER}")
