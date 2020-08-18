@@ -204,7 +204,7 @@ def signup(subdomain=None):
 
                 if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
                     flash('That domain is already in use. Please try another.', 'error')
-                    return render_template('user/signup.html', subdomain=subdomain, form=form)
+                    return render_template('user/signup.html', form=form)
 
                 u = User()
 
