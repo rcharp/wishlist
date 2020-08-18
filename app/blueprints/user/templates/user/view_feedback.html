@@ -171,14 +171,14 @@
                             <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-2">
                                 {% if feedback.approved %}
                                     {% if statuses and statuses|length > 0 %}
-                                        {% set status_list = statuses|selectattr('name', 'equalto', feedback.status ) | list %}
+                                        {% set status_list = statuses|selectattr('id', 'equalto', feedback.status_id ) | list %}
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 {% if status_list|length > 0 %}bg-{{ (status_list | first).color }}-100 text-{{ (status_list | first).color }}-800{% endif %}">
                                           {{ feedback.status }}
                                         </span>
                                     {% endif %}
                                 {% else %}
                                     {% if statuses and statuses|length > 0 %}
-                                        {% set status_list = statuses|selectattr('name', 'equalto', feedback.status ) | list %}
+                                        {% set status_list = statuses|selectattr('status_id', 'equalto', feedback.status_id ) | list %}
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 {% if status_list|length > 0 %}bg-{{ (status_list | first).color }}-100 text-{{ (status_list | first).color }}-800{% endif %}">
                                           Needs approval
                                         </span>
