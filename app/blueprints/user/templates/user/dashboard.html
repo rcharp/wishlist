@@ -383,7 +383,7 @@
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3 truncate">
                                               <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" class="truncate w-4/5 mr-5"><h3 class="text-indigo-600 text-sm leading-5 font-medium truncate" style="cursor:pointer; font-size:18px;">{{ feedback.title }}</h3></a>
-                                            {% if feedback.status and statuses %}
+                                            {% if feedback.status and statuses and statuses|length > 0 %}
                                                 <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs mr-3 leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800 rounded-full">{{ feedback.status }}</span>
                                             {% endif %}
                                             {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}

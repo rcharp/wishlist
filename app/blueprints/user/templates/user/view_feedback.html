@@ -169,14 +169,16 @@
                             </dt>
                             <input id="status" type="hidden" name="status" value="{{ feedback.status_id }}" />
                             <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-2">
-                                {% if feedback.approved %}
+                                {% if feedback.approved and statuses and statuses|length > 0 %}
                                 <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
                                   {{ feedback.status }}
                                 </span>
                                 {% else %}
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
-                                      Needs approval
-                                    </span>
+                                    {% if statuses and statuses|length > 0 %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
+                                          Needs approval
+                                        </span>
+                                    {% endif %}
                                 {% endif %}
                             </dd>
                           </div>
