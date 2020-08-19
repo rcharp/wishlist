@@ -257,13 +257,8 @@
             </main>
             <!-- END Page Container -->
 
-            {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
-                <div id="private-overlay">
-                    {% include '/user/includes/private_overlay.html' ignore missing %}
-                    <script>
-                        document.getElementById('search_field').readOnly = true;
-                    </script>
-                </div>
+            {% if (domain and domain.is_private) and not current_user.is_authenticated or not admin %}
+                {% include '/user/includes/private_overlay.html' ignore missing %}
             {% endif %}
 
             <div id="login-overlay" style="display:none">

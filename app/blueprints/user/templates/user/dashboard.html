@@ -448,12 +448,12 @@
                   </main>
             </div>
 
-        % if (domain and domain.is_private) and not current_user.is_authenticated or not admin %
+        {% if (domain and domain.is_private) and not current_user.is_authenticated or not admin %}
             {% include '/user/includes/private_overlay.html' ignore missing %}
             <script>
                 document.getElementById('search_field').readOnly = true;
             </script>
-        % endif %
+        {% endif %}
 
 
 
