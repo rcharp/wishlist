@@ -65,7 +65,7 @@
               </div>
             </div>
             <main class="flex-1 relative z-0 overflow-y-auto pb-6 focus:outline-none bg-gray-100" tabindex="0">
-            {#{{ flash.render() }}#}
+            {{ flash.render() }}
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
                 {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
                 <span class="text-gray-900">
