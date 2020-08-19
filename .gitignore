@@ -8,3 +8,4 @@ app/blueprints/api/sdk.html
 /venv
 /build
 .idea
+ngrok.exe
