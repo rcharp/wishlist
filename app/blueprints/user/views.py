@@ -383,6 +383,7 @@ def dashboard(subdomain=None):
                                    demo=demo,
                                    subdomain=subdomain,
                                    votes=votes,
+                                   admin=is_admin(current_user, d.name),
                                    use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
     else:
@@ -404,6 +405,7 @@ def dashboard(subdomain=None):
                                domain=d,
                                subdomain=subdomain,
                                demo=demo,
+                               admin=is_admin(current_user, d.name),
                                use_username=use_username)
 
 
