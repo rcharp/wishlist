@@ -448,6 +448,11 @@
                   </main>
             </div>
 
+        {% if (domain and domain.is_private) and not current_user.is_authenticated or not admin %}
+            {% include '/user/includes/privacy_overlay.html' ignore missing %}
+        {% endif %}
+
+
 
         <!-- jQuery -->
         <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
