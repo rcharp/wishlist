@@ -3,7 +3,8 @@
   {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
       <div id="flash-messages" class="row sm-margin-top" style="margin-top:0;">
-        {% for category, msg in messages %}
+        {% set message = '' %}
+        {% for category, msg in messages|unique %}
           <div class="alert alert-{{ category }}" role="alert">
             {{ msg }}
           </div>
