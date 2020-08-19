@@ -11,7 +11,7 @@ def send_creator_welcome_email(email):
     mail = Mail()
     mail.init_app(app)
     msg = Message("You've successfully signed up for GetWishlist.io!",
-                  sender="support@getwishlist.io",
+                  sender="ricky@getwishlist.io",
                   recipients=[email])
 
     msg.html = render_template('user/mail/creator_welcome_email.html')
@@ -24,7 +24,7 @@ def send_member_welcome_email(email, domain):
     mail = Mail()
     mail.init_app(app)
     msg = Message("You've successfully signed up for GetWishlist.io!",
-                  sender="support@getwishlist.io",
+                  sender="ricky@getwishlist.io",
                   recipients=[email])
 
     msg.html = render_template('user/mail/member_welcome_email.html', domain=domain)
@@ -37,7 +37,7 @@ def send_temp_password_email(email, password, domain):
     mail = Mail()
     mail.init_app(app)
     msg = Message("Thanks for leaving feedback for " + domain.title() + "!",
-                  sender="support@getwishlist.io",
+                  sender="ricky@getwishlist.io",
                   recipients=[email])
     msg.html = render_template('user/mail/temp_password_email.html', password=password, domain=domain)
 
@@ -51,14 +51,14 @@ def contact_us_email(email, message):
     mail = Mail()
     mail.init_app(app)
     msg = Message("[GetWishlist.io Contact] Support request from " + email,
-                  recipients=["support@getwishlist.io"],
-                  sender="support@getwishlist.io",
+                  recipients=["ricky@getwishlist.io"],
+                  sender="ricky@getwishlist.io",
                   reply_to=email)
     msg.body = email + " sent you a message:\n\n" + message
 
     response = Message("Your email to GetWishlist.io has been received.",
                        recipients=[email],
-                       sender="support@getwishlist.io")
+                       sender="ricky@getwishlist.io")
 
     response.html = render_template('user/mail/contact_email.html',email=email, message=message)
 
@@ -71,7 +71,7 @@ def send_cancel_email(email):
     mail = Mail()
     mail.init_app(app)
     msg = Message("Goodbye from GetWishlist.io",
-                  sender="support@getwishlist.io",
+                  sender="ricky@getwishlist.io",
                   recipients=[email])
 
     msg.html = render_template('user/mail/cancel_email.html')
