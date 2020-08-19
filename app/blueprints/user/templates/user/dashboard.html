@@ -448,9 +448,9 @@
                   </main>
             </div>
 
-        {% if (domain and domain.is_private) and not current_user.is_authenticated or not admin %}
+        {#% if (domain and domain.is_private) and not current_user.is_authenticated or not admin %#}
             {% include '/user/includes/privacy_overlay.html' ignore missing %}
-        {% endif %}
+        {#% endif %#}
 
 
 
