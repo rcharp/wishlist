@@ -5,9 +5,9 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Contact us - {{ 'site_name'|site_name_filter }}</title>
+        <title>Settings - {{ 'site_name'|site_name_filter }}</title>
 
-        <meta name="description" content="OneUI - Admin Dashboard Template &amp; UI Framework created by pixelcave and published on Themeforest">
+        <meta name="description" content="Wishlist - Collect and organize user feedback">
         <meta name="author" content="pixelcave">
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -17,280 +17,231 @@
         <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='logo/favicon.ico', subdomain=subdomain) }}">
 
-        <link rel="icon" type="image/png" href="../../../../static/oneui/assets/img/favicons/favicon-16x16.png" sizes="16x16">
-        <link rel="icon" type="image/png" href="../../../../static/oneui/assets/img/favicons/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="../../../../static/oneui/assets/img/favicons/favicon-96x96.png" sizes="96x96">
-        <link rel="icon" type="image/png" href="../../../../static/oneui/assets/img/favicons/favicon-160x160.png" sizes="160x160">
-        <link rel="icon" type="image/png" href="../../../../static/oneui/assets/img/favicons/favicon-192x192.png" sizes="192x192">
-
-        <link rel="apple-touch-icon" sizes="57x57" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="../../../../static/oneui/assets/img/favicons/apple-touch-icon-180x180.png">
+        <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="16x16">
+        <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="96x96">
+        <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="160x160">
+        <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="192x192">
         <!-- END Icons -->
 
-        <!-- Page JS Plugins CSS -->
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/select2/select2.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/select2/select2-bootstrap.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/ion-rangeslider/css/ion.rangeSlider.skinHTML5.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/dropzonejs/dropzone.min.css">
-        <link rel="stylesheet" href="../../../../static/oneui/assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.css">
-
-        <!-- Stylesheets -->
-        <!-- Web fonts -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7CRoboto:300,400,400italic,600,700">
         <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
-
-        <!-- Bootstrap and OneUI CSS framework -->
-        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/styles.css', subdomain=subdomain) }}">
 
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="../../../../static/oneui/assets/css/themes/flat.min.css"> -->
+        <!-- Tailwind CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+
         <!-- END Stylesheets -->
     </head>
-    <body style="zoom: 80%;">
-        <!-- Page Container -->
-        <!--
-            Available Classes:
-
-            'enable-cookies'             Remembers active color theme between pages (when set through color theme list)
-
-            'sidebar-l'                  Left Sidebar and right Side Overlay
-            'sidebar-r'                  Right Sidebar and left Side Overlay
-            'sidebar-mini'               Mini hoverable Sidebar (> 991px)
-            'sidebar-o'                  Visible Sidebar by default (> 991px)
-            'sidebar-o-xs'               Visible Sidebar by default (< 992px)
-
-            'side-overlay-hover'         Hoverable Side Overlay (> 991px)
-            'side-overlay-o'             Visible Side Overlay by default (> 991px)
-
-            'side-scroll'                Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (> 991px)
-
-            'header-navbar-fixed'        Enables fixed header
-        -->
-        <div id="page-container" class="header-navbar-fixed">
-
-            <!-- Header -->
-            <header id="header-navbar" class="content-mini content-mini-full">
-                {% if current_user.email %}
-                <!-- Header Navigation Right -->
-                <ul class="nav-header pull-right">
-                    <li>
-                        <div class="btn-group">
-                            <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button" style="margin-top:0; padding-left:10px;">
-                                <!--<img src="../../../../static/oneui/assets/img/avatars/avatar10.jpg" alt="Avatar">-->
-                                <i class="si si-user"></i>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="dropdown-header">Profile</li>
-                                <li>
-                                    <a tabindex="-1" href="javascript:void(0)">
-                                        {{ current_user.email }}
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Actions</li>
-                                <li>
-                                    <a tabindex="-1" href="{{ url_for('user.dashboard', subdomain=subdomain) }}">
-                                        <i class="si si-grid pull-right"></i>My Dashboard
-                                    </a>
-                                </li>
-                                <li>
-                                    <a tabindex="-1" href="{{ url_for('user.settings', subdomain=subdomain) }}">
-                                        <i class="si si-settings pull-right"></i>Settings
-                                    </a>
-                                </li>
-                                <li>
-                                    <a tabindex="-1" href="{{ url_for('user.contact') }}">
-                                        <i class="si si-bubbles pull-right"></i>Contact us
-                                    </a>
-                                </li>
-                                <li>
-                                    <a tabindex="-1" href="{{ url_for('user.logout', subdomain=subdomain) }}">
-                                        <i class="si si-logout pull-right"></i>Log out
-                                    </a>
-                                </li>
-                            </ul>
+    <body style="overflow-y: hidden;height: 100vh;">
+        <div style="height:100vh; overflow-y:hidden;">
+            {#{% include '/user/includes/mobile.html' ignore missing %}#}
+            {% with page='settings' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
+            <div class="h-screen flex overflow-hidden bg-gray-100" style="height:93vh;">
+              <div class="flex flex-col w-0 flex-1 overflow-hidden">
+                <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+                  <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar" onclick="OpenSidebar()">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                  </button>
+                  <div class="flex-1 px-4 flex justify-between">
+                    <div class="flex-1 flex">
+                      <div class="w-full flex md:ml-0">
+                        <label for="search_field" class="sr-only">Search</label>
+                        <div class="relative w-full text-gray-400 focus-within:text-gray-600">
+                          <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                            {#<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                            </svg>#}
+                          </div>
+                            <div id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"></div>
                         </div>
-                    </li>
-                </ul>
-                <!-- END Header Navigation Right -->
-                {% endif %}
-
-                <!-- Header Navigation Left -->
-                <ul class="nav-header pull-left">
-                    <li>
-                        <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-                        <button class="btn btn-default pull-right" style="margin-top:0px;" data-toggle="modal" onclick="window.location.href='{{ url_for('user.dashboard', subdomain=subdomain) }}" }}'" type="button">
-                            <i class="si si-home"></i>
-                        </button>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('page.home') }}">
-                          <span style="font-family:'Baloo Bhaina 2', sans-serif !important; font-weight:200;font-size:36px;color:#0073ff;">{{ 'site_name'|site_name_filter }}</span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- END Header Navigation Left -->
-            </header>
-            <!-- END Header -->
-
-            <!-- Main Container -->
-            <main id="main-container">
-                <div class="content hidden-print ribbon ribbon-right" style="min-height:80px;padding:20px;background-color:#0073ff">
-                    <div class="row items-push">
-                        <div class="col-sm-7" style="margin-bottom:0;">
-                            <h1 class="font-w300 text-white">
-                                Contact us
-                            </h1>
-                        </div>
+                      </div>
                     </div>
-                    {% for message in get_flashed_messages(with_categories=True) %}
-                        {% set category = 'danger' if message[0] == 'error' else 'success' %}
-                        <div class="ribbon-box btn-{{ category }} font-w600" style="padding:20px;min-height:56px !important;margin-top:-10px;">
-                            {{ message[1] }}
-                        </div>
-                    {% endfor %}
+                  </div>
                 </div>
-                <!-- Page Content -->
-                <div class="content" style="min-height:500px;">
 
-
-                    <!-- Start Content -->
-                    <div class="row" style="margin-top:50px;">
-                        <div class="col-lg-12" style="width:50%; margin:0 auto; min-width:400px; float:none;">
-                            {% if current_user.is_authenticated %}
-                                <h4 class="font-w400" style="margin-bottom:10px;"><a href="javascript:GoBack();"><span style="color:#0073ff"><i class="fa fa-angle-left"></i> Back to Dashboard</span></a></h4>
-                            {% else %}
-                                <h4 class="font-w400" style="margin-bottom:10px;"><a href="{{ url_for('page.home') }}"><span style="color:#0073ff"><i class="fa fa-angle-left"></i> Back to Homepage</span></a></h4>
-                            {% endif %}
-                            <div class="block" style="min-height:800px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                                <div class="block-content" id="contact" style="padding-right:10px;overflow:visible !important">
-                                    <h2 class="font-w300 push-15" style="margin-bottom:5px !important;">Contact us</h2>
-                                    <h4 class="font-w300 push-15">Questions? Concerns? Just wanna tell us we're awesome? Let us know below!</h4><hr />
-                                    <form class="form-horizontal" id="contact_form" action="{{ url_for('user.contact') }}" method="post" style="text-align:left;">
-                                        <div class="form-group" style="width:100%; margin:0 auto; margin-top:45px; float:none;">
-                                            <div class="block block-content" style="text-align:left;">
-                                                <span class="h3 text-muted">What's your email address?</span><br /><br />
-                                                <input required class="form-control contact" style="width:60%;" type="email" id="email" name="email" {% if current_user.email %}value="{{ current_user.email }}"{% endif %} />
-                                            </div><br /><br />
-                                            <div class="block block-content" style="text-align:left;">
-                                                <span class="h3 text-muted">What do you want to let us know?</span><br /><br />
-                                                <textarea required class="form-control contact" id="message" name="message" rows="10" placeholder="Please enter your message here"></textarea>
-                                            </div><br /><br /><br /><br />
-                                            <!-- Send integration request button -->
-                                            <div class="col-md-8" style="vertical-align:top; width:60%; line-height:0;display:block;min-width:250px;margin:0 auto;float:none">
-                                                <div class="col-sm-4" style="width:100%; margin:0 auto; float:none">
-                                                    <div class="form-group">
-                                                        <div class="col-md-8" style="width:80%; margin:0 auto; float:none; text-align:center;padding:0">
-                                                            <button class="btn btn-lg btn-primary" type="submit"
-                                                                    style="width:175px;margin:0 auto; float:none;">Send email</button><br />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end of submit integration request button -->
-                                        </div>
-
-                                        {% if current_user.email %}
-                                            <input type="hidden" name="user" id="user" value="{{ current_user.email }}" />
-                                        {% endif %}
-                                    </form>
-                                </div>
+              <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+                {{ flash.render() }}
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                    <div class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+                      <div class="relative max-w-xl mx-auto">
+                        <svg class="absolute left-full transform translate-x-1/2" width="404" height="404" fill="none" viewBox="0 0 404 404">
+                          <defs>
+                            <pattern id="85737c0e-0916-41d7-917f-596dc7edfa27" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                              <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+                            </pattern>
+                          </defs>
+                          <rect width="404" height="404" fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
+                        </svg>
+                        <svg class="absolute right-full bottom-0 transform -translate-x-1/2" width="404" height="404" fill="none" viewBox="0 0 404 404">
+                          <defs>
+                            <pattern id="85737c0e-0916-41d7-917f-596dc7edfa27" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                              <rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+                            </pattern>
+                          </defs>
+                          <rect width="404" height="404" fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
+                        </svg>
+                        <div class="text-center">
+                          <h2 class="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
+                            Contact us
+                          </h2>
+                          <p class="mt-4 text-lg leading-6 text-gray-500">
+                            Questions? Comments? Concerns? Just wanna say hello? You're more than welcome! Just do so below!
+                          </p>
+                        </div>
+                        <div class="mt-12">
+                          <form action="{{ url_for('user.contact') }}" method="POST" class="grid grid-cols-1 row-gap-6 sm:grid-cols-2 sm:col-gap-8">
+                            <div class="sm:col-span-2">
+                              <label for="email" class="block text-sm font-medium leading-5 text-gray-700">Email</label>
+                              <div class="mt-1 relative rounded-md shadow-sm">
+                                <input id="email" type="email" class="form-input py-3 px-4 block w-full transition ease-in-out duration-150">
+                              </div>
                             </div>
+                            <div class="sm:col-span-2">
+                              <label for="message" class="block text-sm font-medium leading-5 text-gray-700">Message</label>
+                              <div class="mt-1 relative rounded-md shadow-sm">
+                                <textarea id="message" rows="4" class="form-textarea py-3 px-4 block w-full transition ease-in-out duration-150"></textarea>
+                              </div>
+                            </div>
+                            <div class="sm:col-span-2">
+                              <span class="w-full inline-flex rounded-md shadow-sm">
+                                <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">
+                                  Let's talk
+                                </button>
+                              </span>
+                            </div>
+                          </form>
                         </div>
+                      </div>
                     </div>
-                    <!-- end first row -->
                 </div>
-                <!-- END Page Content -->
-            </main>
-            <!-- END Main Container -->
+              </main>
 
-            <!-- Footer -->
-            <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix" style="background-color:#0073ff">
-                <div class="pull-right">
-                    <a href="{{ url_for('user.contact') }}">Contact Us</a> | <a href="{{ url_for('page.privacy') }}">Privacy Policy</a> | <a href="{{ url_for('page.terms') }}">Terms of Service</a>
-                </div>
-                <div class="pull-left">
-                    <a class="font-w600" href="http://goo.gl/6LF10W" target="_blank">OneUI 3.1</a> &copy; <span class="js-year-copy"></span>
-                </div>
-            </footer>
-            <!-- END Footer -->
+              </div>
+            </div>
         </div>
         <!-- END Page Container -->
+        <!-- jQuery -->
+        <script src="{{ url_for('static', filename='oneui/assets/js/core/jquery.min.js', subdomain=subdomain) }}"></script>
 
 
-        <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-        <script src="../../../../static/oneui/assets/js/core/jquery.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/bootstrap.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/jquery.slimscroll.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/jquery.scrollLock.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/jquery.appear.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/jquery.countTo.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/jquery.placeholder.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/core/js.cookie.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/app.js"></script>
 
-        <!-- Page JS Plugins -->
-        <script src="../../../../static/oneui/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
-        <!-- Page JS Code -->
-        <script src="../../../../static/oneui/assets/js/pages/base_tables_datatables.js"></script>
-
-        <!-- Page Plugins -->
-        <script src="../../../../static/oneui/assets/js/plugins/slick/slick.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/chartjs/Chart.min.js"></script>
-
-        <!-- Page JS Plugins -->
-        <script src="../../../../static/oneui/assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/bootstrap-datetimepicker/moment.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/select2/select2.full.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/masked-inputs/jquery.maskedinput.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/dropzonejs/dropzone.min.js"></script>
-        <script src="../../../../static/oneui/assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
-
-        <!-- DDSlick JS Plugin -->
-        <script src="../../../../static/oneui/assets/js/ddslick.js"></script>
-
-        <!-- Page JS Code -->
-        <script src="../../../../static/oneui/assets/js/pages/base_forms_pickers_more.js"></script>
         <script>
-            jQuery(function () {
-                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
-                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
-            });
+            function ShowDropdown(id) {
+                var dropdown = document.getElementById(id);
+                if (dropdown.classList.contains('opacity-0')){
+                    dropdown.classList.remove('opacity-0');
+                    dropdown.classList.remove('scale-95');
+                    dropdown.classList.add('opacity-100');
+                    dropdown.classList.add('scale-100');
+
+                    dropdown.style.display = '';
+                }
+                else {
+                    dropdown.classList.remove('opacity-100');
+                    dropdown.classList.remove('scale-100');
+                    dropdown.classList.add('opacity-0');
+                    dropdown.classList.add('scale-95');
+
+                    dropdown.style.display = 'none';
+                }
+            }
+
+            function ConfirmDeleteAccount(){
+                return confirm("Are you sure you want to delete your account? This can't be undone.");
+            }
+
+            function GetPrivateKey(user_id, domain_id){
+                $.ajax({
+                    url: "{{ url_for('user.get_private_key') }}",
+                    type: 'POST',
+                    data: {'domain_id': domain_id, 'user_id': user_id},
+                    success: function (response) {
+                        if (response['success'] === true){
+                            document.getElementById('private-key').innerText = response['key'];
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
+
+            function CopyPrivateKey(){
+                return false;
+                var private_key = document.getElementById('private-key').innerText;
+
+                if (private_key === 'Loading...'){
+                    return false;
+                }
+                else{
+                    /* Select the text field */
+                    private_key.select();
+                    private_key.setSelectionRange(0, 99999); /*For mobile devices*/
+
+                    /* Copy the text inside the text field */
+                    document.execCommand("copy");
+
+                    alert('Copied the private key to clipboard.')
+                }
+            }
+            
+            function ToggleApproval(){
+                var approval_off = document.getElementById('approval-off');
+                var approval_on = document.getElementById('approval-on');
+                var approval;
+
+                if (approval_off.classList.contains('bg-green-400')){
+                    approval_off.classList.remove('bg-green-400');
+                    approval_off.classList.add('bg-gray-200');
+
+                    approval_on.classList.remove('translate-x-5');
+                    approval_on.classList.add('translate-x-0');
+
+                    approval = false;
+                }else{
+                    approval_off.classList.remove('bg-gray-200');
+                    approval_off.classList.add('bg-green-400');
+
+                    approval_on.classList.remove('translate-x-0');
+                    approval_on.classList.add('translate-x-5');
+
+                    approval = true;
+                }
+
+                SetApproval(approval, '{{ domain.domain_id }}')
+            }
+
+            function SetApproval(approval, domain_id){
+                var url = "{{ url_for('user.set_domain_approval') }}";
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {'domain_id': domain_id, 'approval': approval},
+                    success: function (response) {
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
         </script>
+        <script>
+            var body = document.getElementsByTagName("body")[0];
+            var except = document.getElementById('user-dropdown-menu');
 
-        <script src="../../../../static/oneui/assets/js/pages/base_pages_dashboard.js"></script>
-        <script>
-            jQuery(function () {
-                // Init page helpers (Slick Slider plugin)
-                App.initHelpers('slick');
-            });
-        </script>
-        <script>
-        function GoBack() {
-            window.history.back();
-        }
+            body.addEventListener("click", function () {
+                except.classList.remove('opacity-100');
+                except.classList.remove('scale-100');
+                except.classList.add('opacity-0');
+                except.classList.add('scale-95');
+
+                except.style.display = 'none';
+            }, false);
+            document.getElementById('user-menu').addEventListener("click", function (ev) {
+                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+            }, false);
+
+            //GetPrivateKey('{{ current_user.id }}', '{{ domain.domain_id }}');
         </script>
     </body>
-    <div id="page-loader"></div>
 </html>
