@@ -61,10 +61,10 @@
                   </div>
                 </div>
 
-              <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+              <main class="flex-1 relative z-0 overflow-y-auto pb-6 focus:outline-none" tabindex="0">
                 {{ flash.render() }}
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                    <div class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+                    <div class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24 mt-20">
                       <div class="relative max-w-xl mx-auto">
                         <svg class="absolute left-full transform translate-x-1/2" width="404" height="404" fill="none" viewBox="0 0 404 404">
                           <defs>
@@ -162,10 +162,12 @@
                     except.style.display = 'none';
                 }, false);
             }
+            if (document.getElementById('user-menu') !== null){
+                document.getElementById('user-menu').addEventListener("click", function (ev) {
+                    ev.stopPropagation(); //this is important! If removed, you'll get both alerts
+                }, false);
+            }
 
-            document.getElementById('user-menu').addEventListener("click", function (ev) {
-                ev.stopPropagation(); //this is important! If removed, you'll get both alerts
-            }, false);
         </script>
     </body>
 </html>
