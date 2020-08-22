@@ -25,7 +25,7 @@
         <!-- END Icons -->
 
         <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/styles.css', subdomain=subdomain) }}">
 
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
@@ -62,6 +62,7 @@
                 </div>
 
               <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0">
+                {{ flash.render() }}
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                     <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
                         <dl>

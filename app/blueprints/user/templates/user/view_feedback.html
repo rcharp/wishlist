@@ -27,7 +27,7 @@
         <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
 
         <!-- Icons -->
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/styles.css', subdomain=subdomain) }}">
 
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
@@ -64,7 +64,8 @@
                 </div>
               </div>
             </div>
-            <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none bg-gray-100" tabindex="0">
+            <main class="flex-1 relative z-0 overflow-y-auto pb-6 focus:outline-none bg-gray-100" tabindex="0">
+            {{ flash.render() }}
               <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-10">
                 {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}
                 <span class="text-gray-900">
@@ -170,13 +171,19 @@
                             <input id="status" type="hidden" name="status" value="{{ feedback.status_id }}" />
                             <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-2">
                                 {% if feedback.approved %}
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
-                                  {{ feedback.status }}
-                                </span>
+                                    {% if statuses and statuses|length > 0 %}
+                                        {% set status_list = statuses|selectattr('status_id', 'equalto', feedback.status_id ) | list %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 {% if status_list|length > 0 %}bg-{{ (status_list | first).color }}-100 text-{{ (status_list | first).color }}-800{% endif %}">
+                                          {{ feedback.status }}
+                                        </span>
+                                    {% endif %}
                                 {% else %}
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800">
-                                      Needs approval
-                                    </span>
+                                    {% if statuses and statuses|length > 0 %}
+                                        {% set status_list = statuses|selectattr('status_id', 'equalto', feedback.status_id ) | list %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium leading-4 {% if status_list|length > 0 %}bg-{{ (status_list | first).color }}-100 text-{{ (status_list | first).color }}-800{% endif %}">
+                                          Needs approval
+                                        </span>
+                                    {% endif %}
                                 {% endif %}
                             </dd>
                           </div>
@@ -250,13 +257,8 @@
             </main>
             <!-- END Page Container -->
 
-            {% if not (current_user.role == 'creator' and current_user.domain == subdomain) and (domain and domain.private) %}
-                <div id="private-overlay">
-                    {% include '/user/includes/private_overlay.html' ignore missing %}
-                    <script>
-                        document.getElementById('search_field').readOnly = true;
-                    </script>
-                </div>
+            {% if (domain and domain.name != 'demo' and domain.is_private) and (not current_user.is_authenticated or not admin) %}
+                {% include '/user/includes/private_overlay.html' ignore missing %}
             {% endif %}
 
             <div id="login-overlay" style="display:none">

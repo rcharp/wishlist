@@ -72,6 +72,7 @@
 {#                <a href="{{ url_for('user.send_invite', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem" onclick="ShowInviteModal()"><i class="si si-share-alt mr-2"></i>Invite an admin</a>#}
             {% endif %}
             <a href="{{ url_for('user.settings', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-settings mr-2"></i>Settings</a>
+            <a href="{{ url_for('user.contact') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-bubble mr-2"></i>Contact us</a>
             <a href="{{ url_for('user.logout', subdomain=subdomain) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150 remove-margin" role="menuitem"><i class="si si-logout mr-2"></i>Sign out</a>
           </div>
         </div>

@@ -204,7 +204,7 @@ def signup(subdomain=None):
 
                 if db.session.query(exists().where(func.lower(Domain.name) == subdomain.lower())).scalar():
                     flash('That domain is already in use. Please try another.', 'error')
-                    return render_template('user/signup.html', subdomain=subdomain, form=form)
+                    return render_template('user/signup.html', form=form)
 
                 u = User()
 
@@ -297,25 +297,6 @@ def password_reset():
     return render_template('user/password_reset.html', form=form)
 
 
-@user.route('/welcome', subdomain='<subdomain>', methods=['GET', 'POST'])
-@login_required
-def welcome(subdomain=None):
-    if current_user.username:
-        flash('You already picked a username.', 'warning')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
-
-    form = WelcomeForm()
-
-    if form.validate_on_submit():
-        current_user.username = request.form.get('username')
-        current_user.save()
-
-        flash('Your username has been set.', 'success')
-        return redirect(url_for('user.dashboard', subdomain=subdomain))
-
-    return render_template('user/welcome.html', form=form, subdomain=subdomain)
-
-
 @user.route('/start', methods=['GET', 'POST'])
 @user.route('/start/<subdomain>', methods=['GET', 'POST'])
 @login_required
@@ -402,6 +383,7 @@ def dashboard(subdomain=None):
                                    demo=demo,
                                    subdomain=subdomain,
                                    votes=votes,
+                                   admin=is_admin(current_user, d.name),
                                    use_username=use_username)
         return redirect(url_for('user.settings', subdomain=subdomain))
     else:
@@ -423,6 +405,7 @@ def dashboard(subdomain=None):
                                domain=d,
                                subdomain=subdomain,
                                demo=demo,
+                               admin=is_admin(current_user, d.name),
                                use_username=use_username)
 
 

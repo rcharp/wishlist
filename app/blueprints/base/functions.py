@@ -68,7 +68,7 @@ def create_domain(user, domain, company):
     d = Domain()
     d.domain_id = generate_id(Domain, 8)
     d.name = domain
-    d.company = company.title
+    d.company = company.title()
     d.user_id = user.id
     d.admin_email = user.email
     d.save()

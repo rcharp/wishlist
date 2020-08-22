@@ -9,3 +9,4 @@ app/blueprints/api/sdk.html
 /build
 /dist
 .idea
+ngrok.exe

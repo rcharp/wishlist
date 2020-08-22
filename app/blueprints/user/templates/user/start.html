@@ -47,8 +47,8 @@
 {##}
 {#        <!-- Bootstrap and OneUI CSS framework -->#}
 {#        <link rel="stylesheet" href="../../../../static/oneui/assets/css/bootstrap.min.css">#}
-{#        <link rel="stylesheet" id="css-main" href="../../../../static/icons/icons.css">#}
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
+{#        <link rel="stylesheet" id="css-main" href="../../../../static/icons/styles.css">#}
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/styles.css', subdomain=subdomain) }}">
 {##}
 {#        <!-- Shepherd JS -->#}
 {#        <link rel="stylesheet" href="../../../../static/shepherd.js/dist/css/shepherd-theme-square.css"/>#}
@@ -65,7 +65,8 @@
         {#{% include '/user/includes/mobile.html' ignore missing %}#}
             <div class="bg-gray-100" style="height:100vh;">
               {% with page='dashboard' %}{% include '/user/includes/main_header.html' ignore missing %}{% endwith %}
-                  <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="height:auto;">
+                  <main class="flex-1 relative z-0 overflow-y-auto pb-6 focus:outline-none font-w400" style="height:auto;">
+                    {{ flash.render() }}
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-20" style="height:80vh;">
                         <!-- Replace with your content -->
                         <div class="mt-1 grid grid-cols-4 gap-5 sm:grid-cols-4">

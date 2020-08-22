@@ -24,7 +24,7 @@
         <link rel="icon" type="image/png" href="../../../../static/logo/logo.png" sizes="192x192">
         <!-- END Icons -->
         <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina+2" rel="stylesheet">
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/icons.css', subdomain=subdomain) }}">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='icons/styles.css', subdomain=subdomain) }}">
 
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
@@ -57,7 +57,8 @@
                     </div>
                   </div>
                 </div>
-                  <main class="flex-1 relative z-0 overflow-y-auto py-6 focus:outline-none font-w400" style="max-height:100%;">
+                  <main class="flex-1 relative z-0 overflow-y-auto pb-6 focus:outline-none font-w400" style="max-height:100%;">
+                    {{ flash.render() }}
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8" style="height:80vh;">
                         <!-- Replace with your content -->
                         <div class="mt-1 mb-4 grid lg:grid-cols-4 sm:gap-1 lg:gap-5 sm:grid-cols-2 text-right">
@@ -279,7 +280,7 @@
                             <li class="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1 mb-10">
                                 <ul class="grid grid-cols-1 sm:gap-1 lg:gap-6 sm:grid-cols-1 lg:grid-cols-1 col-span-1" style="min-height:400px; max-height:1000px;">
                                     <!-- submit box -->
-                                    <li class="col-span-1 bg-white rounded-lg shadow mb-2" style="min-height:333px; max-height:350px;">
+                                    <li class="col-span-1 bg-white rounded-lg shadow mb-2" style="min-height:333px;">
                                         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                                             <form action="{{ url_for('user.add_feedback', subdomain=subdomain) }}" method="post" onsubmit="ShowSuccessMessage()">
                                               <div class="mt-6 grid grid-cols-6 col-gap-4 sm:grid-cols-6">
@@ -343,30 +344,27 @@
                                                           </div>
                                                       </div>
                                                   {% endfor %}
+                                                  <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
+                                                      Other
+                                                  </div>
 
-                                                  {% if current_user.is_authenticated %}
-                                                      <div class="text-lg mb-3 leading-5 font-medium text-indigo-600 col-span-6">
-                                                          Other
+                                                  <div class="col-span-6 mb-3 ml-1">
+                                                      <div class="flex items-center">
+                                                        <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" {% if current_user.is_authenticated %}onchange="FilterByOther()"{% endif %} />
+                                                        <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                          My feedback
+                                                        </label>
                                                       </div>
+                                                  </div>
 
-                                                      <div class="col-span-6 mb-3 ml-1">
-                                                          <div class="flex items-center">
-                                                            <input id="submitted-{{ current_user.id }}" name="submitted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
-                                                            <label for="submitted-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
-                                                              My feedback
-                                                            </label>
-                                                          </div>
+                                                  <div class="col-span-6 mb-6 ml-1">
+                                                      <div class="flex items-center">
+                                                        <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" {% if current_user.is_authenticated %}onchange="FilterByOther(){% endif %}" />
+                                                        <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
+                                                          Feedback I've voted on
+                                                        </label>
                                                       </div>
-
-                                                      <div class="col-span-6 mb-6 ml-1">
-                                                          <div class="flex items-center">
-                                                            <input id="vote-{{ current_user.id }}" name="voted" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out filter-checkbox" onchange="FilterByOther()" />
-                                                            <label for="vote-{{ current_user.id }}" class="ml-3 text-sm leading-5 font-medium text-gray-500 col-span-6">
-                                                              Feedback I've voted on
-                                                            </label>
-                                                          </div>
-                                                      </div>
-                                                  {% endif %}
+                                                  </div>
                                               </div>
                                           </div>
                                       </li>
@@ -383,8 +381,9 @@
                                           <div class="flex-1 truncate">
                                             <div class="flex items-center space-x-3 truncate">
                                               <a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}" class="truncate w-4/5 mr-5"><h3 class="text-indigo-600 text-sm leading-5 font-medium truncate" style="cursor:pointer; font-size:18px;">{{ feedback.title }}</h3></a>
-                                            {% if feedback.status %}
-                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs mr-3 leading-4 font-medium bg-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-100 text-{{ (statuses|selectattr('name', 'equalto', feedback.status ) | list | first).color }}-800 rounded-full">{{ feedback.status }}</span>
+                                            {% if feedback.status and statuses and statuses|length > 0 %}
+                                                {% set status_list = statuses|selectattr('status_id', 'equalto', feedback.status_id ) | list %}
+                                                <span class="flex-shrink-0 inline-block px-2 py-0.5 text-xs mr-3 leading-4 font-medium {% if status_list|length > 0 %}bg-{{ (status_list | first).color }}-100 text-{{ (status_list | first).color }}-800{% endif %} rounded-full">{{ feedback.status }}</span>
                                             {% endif %}
                                             {% if current_user.is_authenticated and current_user.role == 'creator' and current_user.domain == subdomain %}<a href="{{ url_for('user.feedback', feedback_id=feedback.feedback_id, subdomain=subdomain) }}"><small><u>Edit</u></small></a>{% endif %}
                                             </div>
@@ -448,6 +447,14 @@
                       </div>
                   </main>
             </div>
+
+        {% if (domain and domain.name != 'demo' and domain.is_private) and (not current_user.is_authenticated or not admin) %}
+            {% include '/user/includes/private_overlay.html' ignore missing %}
+            <script>
+                document.getElementById('search_field').readOnly = true;
+            </script>
+        {% endif %}
+
 
 
         <!-- jQuery -->
