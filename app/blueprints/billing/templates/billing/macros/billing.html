@@ -16,49 +16,7 @@
 {%- endmacro %}
 
 
-{% macro plan(plan) -%}
-    <div class="mx-auto max-w-md lg:mx-0 lg:max-w-none lg:col-start-1 lg:col-end-3 lg:row-start-2 lg:row-end-3">
-        <div class="h-full flex flex-col rounded-lg shadow-lg overflow-hidden lg:rounded-none lg:rounded-l-lg">
-          <div class="flex-1 flex flex-col">
-            <div class="bg-white px-6 py-10">
-              <div>
-                <h3 class="text-center text-2xl leading-8 font-medium text-gray-300" id="tier-hobby">
-                    {{ plan.name }}
-                </h3>
-                <div class="mt-4 flex items-center justify-center">
-                  <span class="px-3 flex items-start text-6xl leading-none tracking-tight text-gray-900">
-                    <span class="mt-2 mr-2 text-4xl font-medium text-gray-300">
-                      $
-                    </span>
-                    <span class="font-extrabold text-gray-300">
-                      {{ plan.amount|format_currency|int }}
-                    </span>
-                  </span>
-                  <span class="text-xl leading-7 font-medium text-gray-300">
-                    /month
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="flex-1 flex flex-col justify-between border-t-2 border-gray-100 p-6 bg-gray-50 sm:p-10 lg:p-6 xl:p-10">
-                <!-- list of features goes here -->
-                <ul>
-                    <li class="flex items-start">
-                      <div class="flex-shrink-0">
-                        <svg class="h-6 w-6 text-green-500" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <p class="ml-3 text-base leading-6 font-medium text-gray-300">
-                        5 admin accounts
-                      </p>
-                    </li>
-                </ul>
-            </div>
-          </div>
-        </div>
-    </div>
-{%- endmacro %}
+<!-- Original plan macro -->
 {#{% macro plan(plan) -%}#}
 {#  {% if request.path == '/' or request.path == '/subscription/pricing' %}#}
 {#  <div class="col-md-12{{ ' quarter-faded' if plan.metadata.recommended }} {{ ' quarter-faded' if not plan.metadata#}
@@ -117,6 +75,108 @@
 {#    </div>#}
 {#  </div>#}
 {#{%- endmacro %}#}
+
+
+<!-- New plan macro -->
+{% macro plan(plan) -%}
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+      <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h1 class="text-lg leading-6 font-medium text-gray-900">
+          {{ plan.name }}
+        </h1>
+        <h3 class="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
+          ${{ plan.amount|format_currency|int }} / {{ plan.interval }}
+        </h3>
+      </div>
+      <div class="px-4 py-5 sm:p-0">
+          {{ caller () }}
+
+          {% if current_user.is_authenticated %}
+             {% if current_user.subscription %}
+                {% if plan == active_plan %}
+                  <div class="border-t border-gray-200">
+                      <div class="-mt-px flex">
+                        <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">
+                          <strong class="ml-3 text-indigo-700 font-bold">Current plan</strong>
+                        </div>
+                      </div>
+                  </div>
+                {% else %}
+                    <div class="border-t border-gray-200 bg-indigo-600">
+                      <div class="-mt-px flex">
+                        <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">
+                          <button id="submit_{{ plan.id }}" name="submit_{{ plan.id }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
+                            <span class="ml-3 text-white">Choose plan</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                 <div class="border-t border-gray-200 bg-indigo-600">
+                     <div class="-mt-px flex">
+                         <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">
+                             <a href="{{ url_for('billing.create', plan=plan.id) }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
+                                 <span class="ml-3 text-white">Sign up now</span>
+                             </a>
+                         </div>
+                     </div>
+                 </div>
+            {% endif %}
+          {% else %}
+              <div class="border-t border-gray-200 bg-indigo-600">
+                 <div class="-mt-px flex">
+                     <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">
+                         <a href="{{ url_for('user.signup') }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
+                             <span class="ml-3 text-white">Sign up now</span>
+                         </a>
+                     </div>
+                 </div>
+              </div>
+          {% endif %}
+
+{#        <div class="border-t border-gray-200 bg-indigo-600">#}
+{#          <div class="-mt-px flex">#}
+{#            <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">#}
+{#              <a href="{{ url_for('billing.create', plan=plan.id) }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
+{#                <span class="ml-3 text-white">Sign up now</span>#}
+{#              </a>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+
+{#          {% if current_user.is_authenticated %}#}
+{#          {% if current_user.subscription %}#}
+{#            {% if plan == active_plan %}#}
+{#              <strong class="btn btn-default btn-lg btn-block">#}
+{#                Current plan#}
+{#              </strong>#}
+{#            {% else %}#}
+{#              <button id="submit_{{ plan.id }}" name="submit_{{ plan.id }}"#}
+{#                      class="btn btn-primary btn-lg btn-block">#}
+{#                <img src="{{ url_for('static', filename='images/spinner.gif') }}"#}
+{#                     class="spinner"#}
+{#                     width="16" height="11" alt="Spinner"/>#}
+{#                Choose plan#}
+{#              </button>#}
+{#            {% endif %}#}
+{#          {% else %}#}
+{#            <a href="{{ url_for('billing.create', plan=plan.id) }}"#}
+{#               class="btn btn-primary btn-lg btn-block">Sign up now</a>#}
+{#          {% endif %}#}
+{#        {% else %}#}
+{#          <a href="{{ url_for('user.signup') }}"#}
+{#             class="btn btn-primary btn-lg btn-block">#}
+{#          {% if request.path == '/' %}#}
+{#            Try for free#}
+{#          {% else %}#}
+{#              Sign up now#}
+{#              {% endif %}#}
+{#          </a>#}
+{#        {% endif %}#}
+      </div>
+    </div>
+{%- endmacro %}
 
 
 {% macro coupon_data(coupon) -%}

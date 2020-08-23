@@ -23,8 +23,12 @@
 
 
 {# Render a form field. #}
-{%- macro field(f, css_class='form-control') -%}
-  {{ f(class=css_class, **kwargs) }}
+{%- macro field(f, css_class) -%}
+    {% if 'payment' in css_class %}
+        {{ f(class=css_class, **kwargs) }}
+    {% else %}
+        {{ f(class='form-control', **kwargs) }}
+    {% endif %}
 {%- endmacro -%}
 
 
@@ -44,7 +48,11 @@
     <div class="checkbox {{ css_class }}" style="margin-left:20px;">
     {{ checkbox_field(f, **kwargs) }}
   {% else %}
-    <div class="form-group {{ css_class }}">
+      {% if 'payment' in css_class %}
+        <div class="{{ css_class }}">
+      {% else %}
+        <div class="form-group {{ css_class }}">
+      {% endif %}
 {#    {{ field_label(f) }}#}
     {{ field(f, **kwargs) }}
   {% endif %}

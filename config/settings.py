@@ -155,14 +155,14 @@ STRIPE_PLANS = {
         }
     },
     '3': {
-        'id': 'professional',
-        'name': 'Professional',
+        'id': 'business',
+        'name': 'Business',
         'amount': 14900,
         'currency': 'usd',
         'interval': 'month',
         'interval_count': 1,
         'trial_period_days': 0,
-        'statement_descriptor': 'PROFESSIONAL',
+        'statement_descriptor': 'BUSINESS',
         'metadata': {}
     },
     '4': {
