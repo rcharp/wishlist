@@ -6,8 +6,8 @@ from wtforms.validators import DataRequired, Optional, Length
 class CreditCardForm(Form):
     stripe_key = HiddenField('Stripe publishable key',
                              [DataRequired(), Length(1, 254)])
-    # plan = HiddenField('Plan',
-    #                    [DataRequired(), Length(1, 254)])
+    plan = HiddenField('Plan',
+                       [DataRequired(), Length(1, 254)])
     # number = HiddenField('Card number',
     #                          [DataRequired(), Length(1, 254)])
     coupon_code = StringField('Do you have a coupon code?',
