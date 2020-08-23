@@ -88,7 +88,27 @@
                     {% endblock %}
                     {% block body %}
                       {% call f.form_tag('billing.update', class='text-center') %}
-                          <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+                          <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 {% if current_user.is_authenticated and current_user.id < 4 %}md:grid-cols-4 lg:grid-cols-4{% else %}md:grid-cols-3 lg:grid-cols-3{% endif %}">
+                              {% if current_user.is_authenticated and current_user.id < 4 %}
+                                {% call billing.plan(plans['0']) %}
+                                  <li class="col-span-1 flex flex-col text-center bg-white">
+                                    <div class="flex-1 flex flex-col p-8">
+                                      <dl class="mt-1 flex-grow flex flex-col justify-between">
+                                        <dt class="sr-only">Title</dt>
+                                        <dd class="text-gray-500 text-md leading-5 mb-5">1 admin account</dd>
+                                        <dt class="sr-only">Title</dt>
+                                        <dd class="text-gray-500 text-md leading-5 mb-5">1 feedback dashboard</dd>
+                                        <dt class="sr-only">Title</dt>
+                                        <dd class="text-gray-500 text-md leading-5 mb-5">1 public roadmap (coming soon)</dd>
+                                        <dt class="sr-only">Title</dt>
+                                        <dd class="text-gray-500 text-md leading-5 mb-5">500 comments/votes</dd>
+                                        <dt class="sr-only">Title</dt>
+                                        <dd class="text-gray-500 text-md leading-5">1 embeddable widget to collect feedback from anywhere (coming soon)</dd>
+                                      </dl>
+                                    </div>
+                                  </li>
+                                {% endcall %}
+                              {% endif %}
                             {% call billing.plan(plans['1']) %}
                               <li class="col-span-1 flex flex-col text-center bg-white">
                                 <div class="flex-1 flex flex-col p-8">
@@ -143,7 +163,7 @@
                                 </div>
                               </li>
                             {% endcall %}
-                            </ul>
+                          </ul>
                       {% endcall %}
                     {% endblock %}
                 </div>

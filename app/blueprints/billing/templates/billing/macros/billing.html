@@ -117,7 +117,7 @@
                      <div class="-mt-px flex">
                          <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">
                              <a href="{{ url_for('billing.create', plan=plan.id) }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">
-                                 <span class="ml-3 text-white">Sign up now</span>
+                                 <span class="ml-3 text-white">Choose plan</span>
                              </a>
                          </div>
                      </div>
@@ -134,46 +134,6 @@
                  </div>
               </div>
           {% endif %}
-
-{#        <div class="border-t border-gray-200 bg-indigo-600">#}
-{#          <div class="-mt-px flex">#}
-{#            <div class="w-0 flex-1 flex border-b border-gray-200 rounded-lg shadow">#}
-{#              <a href="{{ url_for('billing.create', plan=plan.id) }}" class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm leading-5 text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 focus:z-10 transition ease-in-out duration-150">#}
-{#                <span class="ml-3 text-white">Sign up now</span>#}
-{#              </a>#}
-{#            </div>#}
-{#          </div>#}
-{#        </div>#}
-
-{#          {% if current_user.is_authenticated %}#}
-{#          {% if current_user.subscription %}#}
-{#            {% if plan == active_plan %}#}
-{#              <strong class="btn btn-default btn-lg btn-block">#}
-{#                Current plan#}
-{#              </strong>#}
-{#            {% else %}#}
-{#              <button id="submit_{{ plan.id }}" name="submit_{{ plan.id }}"#}
-{#                      class="btn btn-primary btn-lg btn-block">#}
-{#                <img src="{{ url_for('static', filename='images/spinner.gif') }}"#}
-{#                     class="spinner"#}
-{#                     width="16" height="11" alt="Spinner"/>#}
-{#                Choose plan#}
-{#              </button>#}
-{#            {% endif %}#}
-{#          {% else %}#}
-{#            <a href="{{ url_for('billing.create', plan=plan.id) }}"#}
-{#               class="btn btn-primary btn-lg btn-block">Sign up now</a>#}
-{#          {% endif %}#}
-{#        {% else %}#}
-{#          <a href="{{ url_for('user.signup') }}"#}
-{#             class="btn btn-primary btn-lg btn-block">#}
-{#          {% if request.path == '/' %}#}
-{#            Try for free#}
-{#          {% else %}#}
-{#              Sign up now#}
-{#              {% endif %}#}
-{#          </a>#}
-{#        {% endif %}#}
       </div>
     </div>
 {%- endmacro %}
