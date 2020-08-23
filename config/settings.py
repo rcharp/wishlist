@@ -120,7 +120,7 @@ STRIPE_KEY = STRIPE_SECRET_KEY
 
 STRIPE_PLANS = {
     '0': {
-        'id': 'free',
+        'id': os.environ.get('STRIPE_ID_FREE', None),
         'name': 'Free',
         'amount': 0000,
         'currency': 'usd',
@@ -131,7 +131,7 @@ STRIPE_PLANS = {
         'metadata': {}
     },
     '1': {
-        'id': 'hobby',
+        'id': os.environ.get('STRIPE_ID_HOBBY', None),
         'name': 'Hobby',
         'amount': 1900,
         'currency': 'usd',
@@ -142,7 +142,7 @@ STRIPE_PLANS = {
         'metadata': {}
     },
     '2': {
-        'id': 'startup',
+        'id': os.environ.get('STRIPE_ID_STARTUP', None),
         'name': 'Startup',
         'amount': 4900,
         'currency': 'usd',
@@ -155,7 +155,7 @@ STRIPE_PLANS = {
         }
     },
     '3': {
-        'id': 'business',
+        'id': os.environ.get('STRIPE_ID_BUSINESS', None),
         'name': 'Business',
         'amount': 14900,
         'currency': 'usd',
