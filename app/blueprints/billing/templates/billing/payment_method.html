@@ -314,7 +314,7 @@
 
                                   <div class="alert alert-small alert-danger payment-errors"></div>
 
-                                  {% call f.form_group(form.name, css_class='payment flex-1 form-input block w-1/3 min-w-0 rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5', autofocus='autofocus') %}
+                                  {% call f.field(form.name, css_class='payment flex-1 form-input block w-1/3 min-w-0 rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5', autofocus='autofocus') %}
                                   {% endcall %}
                               </div>
                               <div class="mt-6 sm:mt-5">
@@ -325,7 +325,7 @@
                                   </label>
                                   <div class="mt-1 sm:mt-0 sm:col-span-2">
                                     <div class="max-w-lg rounded-md shadow-sm sm:max-w-xs">
-
+                                        {% call f.field(form.name, css_class='payment flex-1 form-input block w-1/3 min-w-0 rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5', autofocus='autofocus') %}
                                     </div>
                                   </div>
                                 </div>
