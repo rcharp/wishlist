@@ -58,11 +58,17 @@ def create():
 
         if form.validate_on_submit():
             subscription = Subscription()
+            print(request.form.get('name'))
+            print(request.form.get('plan'))
+            print(request.form.get('coupon_code'))
+            print(request.form.get('stripe_token'))
             created = subscription.create(user=current_user,
                                         name=request.form.get('name'),
                                         plan=request.form.get('plan'),
                                         coupon=request.form.get('coupon_code'),
                                         token=request.form.get('stripe_token'))
+
+            print(created)
 
             if created:
                 from app.blueprints.billing.billing_functions import signup_limits
