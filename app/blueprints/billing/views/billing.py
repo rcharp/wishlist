@@ -54,7 +54,6 @@ def create():
             return redirect(url_for('billing.pricing'))
 
         stripe_key = current_app.config.get('STRIPE_PUBLISHABLE_KEY')
-        print(stripe_key)
         form = CreditCardForm(stripe_key=stripe_key, plan=plan)
 
         if form.validate_on_submit():
