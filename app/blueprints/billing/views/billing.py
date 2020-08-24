@@ -73,8 +73,8 @@ def create():
                 current_user.trial = False
                 current_user.save()
 
-                from app.blueprints.user.tasks import send_plan_signup_email
-                send_plan_signup_email.delay(current_user.email, subscription.plan)
+                # from app.blueprints.user.tasks import send_plan_signup_email
+                # send_plan_signup_email.delay(current_user.email, subscription.plan)
 
                 flash('Your account has been upgraded!', 'success')
             else:
