@@ -81,7 +81,7 @@ def create():
 
             return redirect(url_for('user.dashboard'))
 
-        return render_template('billing/payment_method_old.html',
+        return render_template('billing/payment_method.html',
                             form=form, plan=subscription_plan)
     except Exception as e:
 
