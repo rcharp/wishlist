@@ -52,7 +52,7 @@ repos==0.0.1
 names==0.3.0
 Flask-SSLify==0.1.5
 flask-talisman==0.7.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 # jwt==0.5.2
 # pycurl==7.43.0.5
 
